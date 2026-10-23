@@ -22,7 +22,7 @@ export function PathBar({ folderPath, currentTitle }: PathBarProps) {
     <nav className="path-bar" aria-label={t('browse.pathLabel')}>
       <ol className="path-bar__list">
         <li className="path-bar__part">
-          <Link to="/browse" className="path-bar__link" aria-current={trail.length === 0 && !currentTitle ? 'page' : undefined}>
+          <Link to="/" className="path-bar__link" aria-current={trail.length === 0 && !currentTitle ? 'page' : undefined}>
             <Icon name="folder" size={18} />
             {t('browse.allRecipes')}
           </Link>

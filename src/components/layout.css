@@ -77,7 +77,7 @@
   display: none;
 }
 
-/* On the cover the masthead is the title; the header keeps only the round book mark. */
+/* On the contents page the book title sits right below; the header keeps only the round book mark. */
 .running-head__title[data-mark-only='true'] {
   padding: 0;
   background: transparent;

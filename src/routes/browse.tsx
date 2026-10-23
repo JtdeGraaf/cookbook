@@ -1,6 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { BrowsePage } from '@/features/browse/BrowsePage'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
+/** The folder browser became the contents page; old links still land there. */
 export const Route = createFileRoute('/browse')({
-  component: BrowsePage,
+  beforeLoad: () => {
+    throw redirect({ to: '/', replace: true })
+  },
 })

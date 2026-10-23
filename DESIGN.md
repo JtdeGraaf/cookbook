@@ -143,7 +143,7 @@ The book refuses the cream-paper serif cookbook and the recipe-card grid. Recipe
 **Key Characteristics:**
 - Neutral coated paper and warm sumi ink; one chapter colour per page, switched by `data-color`.
 - Rounded gothic throughout: Zen Maru Gothic at 900/700 for headings, numbers and labels, Zen Kaku Gothic New for reading.
-- Circles and pills: step numbers, ticks, seals, buttons, chips, the lead dish cut into a circle.
+- Circles and pills: step numbers, ticks, seals, buttons, chips.
 - Print devices: thumb-index tabs, folios, dotted leaders, a dashed prep box, a centre-fold gutter.
 - Motion moves things with transform only. The one authored motion is the page-turn on cook steps; finished timers shake like a bell.
 
@@ -182,7 +182,7 @@ Each colour comes in three tokens: the fill (`--tomato`), a darker or lighter **
 **Character:** A soft, round, heavy display face against a plain, clear Japanese gothic for reading. It is friendly at 900 and legible at arm's length.
 
 ### Hierarchy
-- **Display** (900, clamp(3rem-3.5rem, 11-12vw, 6rem), 0.95, -0.03em): the cover masthead and chapter-opener titles only. The finished page uses a smaller version (up to 5rem).
+- **Display** (900, clamp(2.25rem, 6vw, 3.25rem), 1, -0.03em): the book title line on the contents page. Folder bands use clamp(2rem, 5vw, 2.75rem). The finished page goes up to 5rem.
 - **Headline** (900, clamp(2rem, 6vw, 3.25rem), -0.02em): prep and cook page heads, the contents title, the recipe spread title (up to 3.5rem).
 - **Title** (900, 1.375-1.625rem): ingredient box, method, dialog and chapter-band titles.
 - **Step** (body face, 400, clamp(1.375rem, 3.4vw, 1.875rem), 1.45, max 34ch): the single cook-step instruction, sized to read from the counter.
@@ -196,8 +196,7 @@ Each colour comes in three tokens: the fill (`--tomato`), a darker or lighter **
 
 The page is a centred column up to 1180px (`--page-width`) with 16px gutters on phones. From 760px it gets 32px gutters, with an extra 44px (`--tab-width`) on the right where the thumb index sits. Spacing follows a 4-8-12-16-24-32-48-72 scale. Sections are separated by 48-72px, and a folio closes each page 72px below the content.
 
-- **Cover:** masthead words left and a three-column photo collage right (5fr/6fr from 900px, min(68vh, 620px) tall). It stacks on smaller screens.
-- **Contents:** chapter blocks in one column, two columns from 1000px.
+- **Index pages** (contents, every folder, search) share one shell: from 900px a sticky 260px folder tree on the left beside one main column; below 900px the main column alone. The contents page is the top folder: a one-line title with tagline and a 92px tilted seal, the filter row, then chapters stacked in one column. Folder pages: path bar, the folder band opened up, then the same rows.
 - **Recipe spread:** one sheet, split into two pages with a centre fold from 1024px.
 - **Prep and cook:** a main column plus a sticky 340px ingredient box from 1024px. Below that, a floating ingredients pill opens a bottom sheet (max 560px, 86dvh).
 - **Chrome:** a sticky, blurred running head on top and a fixed 76px timer shelf at the bottom (the page pads itself to make room). On recipe pages under 760px, search collapses to an icon and the tabs hide so the step gets the room.
@@ -259,10 +258,10 @@ Line styles carry meaning:
 - **Folio:** a hairline-topped foot with the page number in a chapter pill.
 
 ### Contents Row (signature)
-Contents are rows, not a card grid: a 64px rounded thumbnail, the title in the display face, a dotted leader, and the page number in chapter ink. Hover tints the row with the chapter wash. Each chapter heads its rows with a chapter-colour band (12px, title at 1.625rem/900) that slides 4px right on hover. On a chapter page the rows grow to a 4:3 photo and a summary.
+Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Each chapter heads its rows with the folder band.
 
-### Chapter Opener (signature)
-A full chapter-colour band with 20px corners. It holds a display-size title, an intro (34ch) and a recipe-count pill. The lead dish is cut into a circle hanging off the bottom-right corner, with a 10px translucent on-chapter halo.
+### Folder Band (signature)
+One element in two sizes, so the contents and the folder pages read as the same book. On the contents it is a chapter-colour bar (12px corners, title 1.625rem/900, page number right) linking to the folder and sliding 4px right on hover. On the folder page it opens up: a larger title, the intro, and a recipe-count pill. Sections inside a chapter use the chapter wash instead of the full colour.
 
 ### Point (signature)
 A paper-coloured hint box (12px) beside a step, with a yolk "Point" label in the display face at 900.

@@ -1,10 +1,9 @@
-import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
-import { Photo } from '@/components/Photo'
 import { allRecipes, type Folder } from '@/lib/book'
 import { NO_FILTERS, filterBook, hasFilters, matchesFilters, type RecipeFilters } from '@/lib/filters'
+import { BookShell } from '@/features/browse/BookShell'
 import { useFavourites } from '@/features/favourites/useFavourites'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { book, pageOf } from './book-data'
@@ -14,43 +13,27 @@ import './book.css'
 
 type ContentsProps = { filters: RecipeFilters; onFiltersChange: (filters: RecipeFilters) => void }
 
-/** The opening of the book: masthead with a photo collage, then the table of contents, which can be filtered. */
+/** The top of the book: a short title line, then the contents, laid out like every folder page. */
 export function Contents({ filters, onFiltersChange }: ContentsProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const { favourites } = useFavourites()
-  const coverPictures = allRecipes(book).flatMap((recipe) => (recipe.cover ? [recipe.cover] : [])).slice(0, 5)
   const shownBook = filterBook(book, (recipe) => matchesFilters(recipe, filters, favourites))
   return (
-    <>
-      <section className="masthead">
-        <div className="masthead__words">
-          <h1 className="masthead__title">{t('book.title')}</h1>
-          <p className="masthead__tagline">{t('book.tagline')}</p>
-          <p className="masthead__seal" aria-hidden="true">
-            <span>{t('book.seal')}</span>
-          </p>
+    <BookShell currentPath="">
+      <header className="book-head">
+        <div className="book-head__words">
+          <h1 className="book-head__title">{t('book.title')}</h1>
+          <p className="book-head__tagline">{t('book.tagline')}</p>
         </div>
-        <ul className="masthead__collage" aria-hidden="true">
-          {coverPictures.map((picture, index) => (
-            <li key={picture.file.src} className={`masthead__photo masthead__photo--${index}`}>
-              <Photo picture={picture} sizes="(min-width: 760px) 30vw, 50vw" showCredit={false} eager />
-            </li>
-          ))}
-        </ul>
-      </section>
+        <p className="book-head__seal" aria-hidden="true">
+          {t('book.seal')}
+        </p>
+      </header>
 
-      <section className="contents" aria-labelledby="contents-title">
-        <div className="contents__heading">
-          <h2 id="contents-title" className="contents__title">
-            {t('book.contents')}
-          </h2>
-          <Link to="/browse" className="contents__browse">
-            <Icon name="folder" size={20} />
-            {t('header.browse')}
-          </Link>
-        </div>
-        <RecipeFilterBar filters={filters} onFiltersChange={onFiltersChange} matchingRecipes={allRecipes(shownBook)} />
+      <RecipeFilterBar filters={filters} onFiltersChange={onFiltersChange} matchingRecipes={allRecipes(shownBook)} />
+
+      <section aria-label={t('book.contents')}>
         {shownBook.chapters.length === 0 ? (
           <div className="contents__empty">
             <p>{t('filters.noMatches')}</p>
@@ -63,10 +46,12 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
         ) : (
           <ol className="contents__chapters">
             {shownBook.chapters.map((chapter) => (
-              <li key={chapter.path} className="contents__chapter" data-color={chapter.color}>
-                <BookLink path={chapter.path} className="contents__band">
-                  <span className="contents__band-title">{localized(chapter.title)}</span>
-                  <span className="contents__band-page numbers">{t('book.page', { page: pageOf(chapter.path) })}</span>
+              <li key={chapter.path} data-color={chapter.color}>
+                <BookLink path={chapter.path} className="folder-band folder-band--link">
+                  <span className="folder-band__top">
+                    <span className="folder-band__title">{localized(chapter.title)}</span>
+                    <span className="folder-band__page numbers">{t('book.page', { page: pageOf(chapter.path) })}</span>
+                  </span>
                 </BookLink>
                 {chapter.intro && <p className="contents__intro">{localized(chapter.intro)}</p>}
                 <FolderContents folder={chapter} />
@@ -75,7 +60,7 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
           </ol>
         )}
       </section>
-    </>
+    </BookShell>
   )
 }
 

@@ -22,8 +22,7 @@
     "chapters": "Hoofdstukken",
     "shoppingList": "Boodschappenlijst",
     "shoppingListCount_one": "Boodschappenlijst, {{count}} recept",
-    "shoppingListCount_other": "Boodschappenlijst, {{count}} recepten",
-    "browse": "Mappen bekijken"
+    "shoppingListCount_other": "Boodschappenlijst, {{count}} recepten"
   },
   "search": {
     "title": "Zoeken",
@@ -142,7 +141,6 @@
   },
   "browse": {
     "allRecipes": "Alle recepten",
-    "intro": "De receptenmap zoals hij in de repository staat: open een map, en dan nog een.",
     "treeLabel": "Receptenmappen",
     "pathLabel": "Waar je bent",
     "open": "Open {{name}}",

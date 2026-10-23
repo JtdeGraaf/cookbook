@@ -16,10 +16,10 @@ export function FolderRow({ folder }: { folder: Folder }) {
     ...(folder.folders.length > 0 ? [t('browse.folderCount', { count: folder.folders.length })] : []),
   ].join(' · ')
   return (
-    <li className="recipe-row recipe-row--large folder-row" data-color={folder.color}>
+    <li className="recipe-row folder-row" data-color={folder.color}>
       <BookLink path={folder.path} className="recipe-row__link">
         <span className="folder-row__tile" aria-hidden="true">
-          <Icon name="folder" size={34} />
+          <Icon name="folder" size={28} />
         </span>
         <span className="recipe-row__text">
           <span className="recipe-row__title">{localized(folder.title)}</span>

@@ -20,7 +20,7 @@ A personal cookbook, in English and Dutch, that reads like a real book and cooks
 - **Search** across titles, ingredients, tags and chapters in both languages at once: "eieren" and "eggs" both find the shakshuka. Press `/` anywhere to jump to the search box.
 - **English and Dutch** for the interface and every recipe. Your choice is remembered.
 - **Light and dark** follow your system until you pick one.
-- **Browse the folders.** "Browse folders" shows the `recipes/` folder like a file manager: a tree you can open and close, a clickable path bar (All recipes › Mains › Pasta), and each folder's sub-folders and recipes. Folders can be nested as deep as you like.
+- **Browse the folders.** The contents and every folder page share one layout, like a file manager: the `recipes/` folder as a tree you can open and close beside the page (on wider screens), a clickable path bar (All recipes › Mains › Pasta), and each folder's sub-folders and recipes. Folders can be nested as deep as you like.
 - **Filters and "Surprise me".** On the contents page: under 30 minutes, under an hour, favourites, or any tag. "Surprise me" opens a random recipe from what is left. Filters are in the address, so a filtered page can be bookmarked.
 - **Favourites and notes.** Heart a recipe. Each recipe keeps your own notes for next time and remembers when you cooked it (finishing the last step counts).
 - **Shopping list.** Put recipes on the list with their servings; the list adds up the same ingredient across recipes (200 g + 0.5 kg spaghetti becomes 0.7 kg) for ticking off in the shop, or copying into a chat.

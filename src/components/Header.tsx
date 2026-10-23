@@ -7,7 +7,7 @@ import { ThemeSwitch } from '@/features/settings/ThemeSwitch'
 import { ShoppingListLink } from '@/features/shopping/ShoppingListLink'
 import { Icon } from './Icon'
 
-/** On the cover the masthead is the title, so the header shows only the round book mark. */
+/** On the contents page the book title sits right below, so the header shows only the round book mark. */
 export function Header({ pageKind }: { pageKind: PageKind }) {
   const { t } = useTranslation()
   return (

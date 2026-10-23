@@ -22,8 +22,7 @@
     "chapters": "Chapters",
     "shoppingList": "Shopping list",
     "shoppingListCount_one": "Shopping list, {{count}} recipe",
-    "shoppingListCount_other": "Shopping list, {{count}} recipes",
-    "browse": "Browse folders"
+    "shoppingListCount_other": "Shopping list, {{count}} recipes"
   },
   "search": {
     "title": "Search",
@@ -142,7 +141,6 @@
   },
   "browse": {
     "allRecipes": "All recipes",
-    "intro": "The recipes folder as it is in the repository: open a folder, then another.",
     "treeLabel": "Recipe folders",
     "pathLabel": "Where you are",
     "open": "Open {{name}}",

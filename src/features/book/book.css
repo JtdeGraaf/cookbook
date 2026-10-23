@@ -1,190 +1,170 @@
-/* Masthead: the cover of the mook. */
+/* Index pages (the contents, folders, search) share one anatomy: a head, a coloured band per folder, then rows. */
 
-.masthead {
-  display: grid;
-  gap: var(--space-6);
+/* The top of the book: one short title line. This is a personal book, so the contents come first. */
+
+.book-head {
+  display: flex;
   align-items: center;
-  margin-bottom: var(--space-8);
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-5);
 }
 
-@media (min-width: 900px) {
-  .masthead {
-    grid-template-columns: 5fr 6fr;
-    gap: var(--space-7);
-    min-height: min(68vh, 620px);
-  }
-}
-
-.masthead__words {
-  position: relative;
-}
-
-@media (max-width: 899px) {
-  .masthead__words {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    column-gap: var(--space-4);
-  }
-
-  .masthead__title {
-    grid-column: 1 / -1;
-  }
-
-  .masthead__seal.masthead__seal {
-    width: 112px;
-    height: 112px;
-    margin-top: var(--space-5);
-    padding: var(--space-3);
-    font-size: 0.875rem;
-  }
-}
-
-.masthead__title {
-  font-size: clamp(3.5rem, 12vw, 6rem);
-  line-height: 0.95;
+.book-head__title {
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  line-height: 1;
   letter-spacing: -0.03em;
 }
 
-.masthead__tagline {
-  max-width: 30ch;
-  margin-top: var(--space-5);
-  font-size: 1.1875rem;
+.book-head__tagline {
+  max-width: 46ch;
+  margin-top: var(--space-2);
   color: var(--ink-soft);
 }
 
-.masthead__seal {
+.book-head__seal {
   display: grid;
   place-items: center;
-  width: 148px;
-  height: 148px;
-  margin-top: var(--space-6);
-  padding: var(--space-4);
+  flex: none;
+  width: 92px;
+  height: 92px;
+  padding: var(--space-2);
   border-radius: 50%;
   background: var(--tomato);
   color: var(--on-tomato);
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.0625rem;
+  font-size: 0.75rem;
   line-height: 1.15;
   text-align: center;
   transform: rotate(-9deg);
   box-shadow:
-    0 0 0 5px var(--paper),
-    0 0 0 7px var(--tomato),
-    0 10px 24px -8px var(--shade);
+    0 0 0 4px var(--paper),
+    0 0 0 6px var(--tomato);
 }
 
-@media (min-width: 900px) {
-  .masthead__seal {
-    position: absolute;
-    right: calc(var(--space-7) * -1 - 40px);
-    bottom: -40px;
-    z-index: 2;
-    width: 164px;
-    height: 164px;
-    font-size: 1.125rem;
+@media (max-width: 559px) {
+  .book-head__seal {
+    width: 76px;
+    height: 76px;
+    font-size: 0.6875rem;
+  }
+
+  .book-head__tagline {
+    font-size: 0.9375rem;
   }
 }
 
-.masthead__collage {
+/* The folder band: a bar of chapter colour. On the contents it is a link line; on a folder page it opens up. */
+
+.folder-band {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: clamp(92px, 18vw, 150px);
   gap: var(--space-2);
-}
-
-.masthead__photo .photo,
-.masthead__photo .photo__image {
-  height: 100%;
-}
-
-.masthead__photo--0 {
-  grid-column: 1 / 3;
-  grid-row: 1 / 3;
-}
-.masthead__photo--3 {
-  grid-column: 1 / 2;
-}
-.masthead__photo--4 {
-  grid-column: 2 / 4;
-}
-
-/* Contents */
-
-.contents__title {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  margin-bottom: var(--space-6);
-}
-
-.contents__title::after {
-  content: '';
-  flex: 1;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--ink);
-}
-
-.contents__chapters {
-  display: grid;
-  gap: var(--space-7);
-}
-
-@media (min-width: 1000px) {
-  .contents__chapters {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-7) var(--space-6);
-  }
-}
-
-.contents__band {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-4);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius);
   background: var(--chapter);
   color: var(--on-chapter);
   text-decoration: none;
+}
+
+.folder-band--link {
   transition: transform 200ms var(--ease-out);
 }
 
-.contents__band:hover {
+.folder-band--link:hover {
   transform: translateX(4px);
 }
 
-.contents__band-title {
+header.folder-band {
+  padding: var(--space-5) var(--space-5) var(--space-4);
+}
+
+.folder-band--section {
+  background: var(--chapter-wash);
+  color: var(--ink);
+}
+
+.folder-band__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.folder-band__title {
   font-family: var(--font-display);
   font-weight: 900;
   font-size: 1.625rem;
   line-height: 1.2;
 }
 
-.contents__band-page {
+header.folder-band .folder-band__title {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.folder-band__page {
+  flex: none;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.9375rem;
 }
 
+.folder-band--section .folder-band__page {
+  color: var(--chapter-ink);
+}
+
+.folder-band__intro {
+  max-width: 52ch;
+}
+
+.folder-band__count {
+  justify-self: start;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  background: var(--on-chapter);
+  color: var(--chapter-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+:root[data-theme='dark'] .folder-band__count {
+  color: var(--chapter);
+}
+
+.folder-band--section .folder-band__count,
+:root[data-theme='dark'] .folder-band--section .folder-band__count {
+  background: var(--chapter);
+  color: var(--on-chapter);
+}
+
+/* The contents: chapters stacked in one column, like the folder pages. */
+
+.contents__chapters {
+  display: grid;
+  gap: var(--space-7);
+}
+
 .contents__intro {
-  margin: var(--space-3) var(--space-1) var(--space-2);
+  margin: var(--space-3) var(--space-1) var(--space-1);
   color: var(--ink-soft);
   max-width: 52ch;
 }
 
-/* One line of the contents. */
+/* One line of the contents, the same size on every index page. */
 
 .recipe-rows {
   display: grid;
 }
 
+.folder-listing {
+  margin-top: var(--space-4);
+}
+
 .recipe-row__link {
   display: grid;
-  grid-template-columns: 64px minmax(0, auto) 1fr auto;
+  grid-template-columns: 72px minmax(0, auto) 1fr auto;
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-3) var(--space-2);
@@ -199,16 +179,37 @@
 }
 
 .recipe-row__thumb {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--radius);
   object-fit: cover;
+  background: var(--chapter-wash);
+}
+
+.recipe-row__thumb--empty,
+.folder-row__tile {
+  display: grid;
+  place-items: center;
+  color: var(--chapter-ink);
+}
+
+.recipe-row__thumb--empty {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.75rem;
+}
+
+.folder-row__tile {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius);
   background: var(--chapter-wash);
 }
 
 .recipe-row__text {
   display: grid;
   min-width: 0;
+  max-width: 34rem;
 }
 
 .recipe-row__title {
@@ -218,9 +219,17 @@
   line-height: 1.3;
 }
 
-.recipe-row__meta {
+.recipe-row__summary {
+  overflow: hidden;
   color: var(--ink-soft);
   font-size: 0.9375rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.recipe-row__meta {
+  color: var(--ink-soft);
+  font-size: 0.875rem;
 }
 
 .recipe-row__leader {
@@ -237,207 +246,21 @@
   white-space: nowrap;
 }
 
-/* Chapter opener: a full band of chapter colour, its lead dish cut into a circle off the corner. */
-
-.chapter-opener {
-  position: relative;
-  overflow: hidden;
-  min-height: 300px;
-  padding: var(--space-7) var(--space-5) var(--space-6);
-  border-radius: var(--radius-large);
-  background: var(--chapter);
-  color: var(--on-chapter);
-}
-
-@media (min-width: 760px) {
-  .chapter-opener {
-    min-height: 380px;
-    padding: var(--space-8) var(--space-7) var(--space-7);
-  }
-}
-
-.chapter-opener__words {
-  position: relative;
-  z-index: 1;
-  max-width: 60%;
-}
-
-.chapter-opener__dish {
-  position: absolute;
-  right: -56px;
-  bottom: -72px;
-  width: clamp(180px, 34vw, 400px);
-  aspect-ratio: 1;
-}
-
-.chapter-opener__dish .photo__image {
-  border-radius: 50%;
-  aspect-ratio: 1;
-  box-shadow: 0 0 0 10px color-mix(in srgb, var(--on-chapter) 22%, transparent);
-}
-
 @media (max-width: 559px) {
-  .chapter-opener {
-    min-height: 0;
-    padding-bottom: var(--space-6);
+  .recipe-row__link {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
   }
 
-  .chapter-opener__words {
-    max-width: none;
+  .recipe-row__thumb,
+  .folder-row__tile {
+    width: 64px;
+    height: 64px;
   }
 
-  /* On phones the dish sits beside the recipe count instead of under it, so the first recipe stays in view. */
-  .chapter-opener__dish {
-    right: -36px;
-    bottom: -44px;
-    width: 160px;
-  }
-}
-
-.chapter-opener__title {
-  font-size: clamp(3rem, 11vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-}
-
-.chapter-opener__intro {
-  max-width: 34ch;
-  margin-top: var(--space-4);
-  font-size: 1.1875rem;
-}
-
-.chapter-opener__count {
-  display: inline-block;
-  margin-top: var(--space-5);
-  padding: var(--space-1) var(--space-3);
-  border-radius: 999px;
-  background: var(--on-chapter);
-  color: var(--chapter-ink);
-  font-family: var(--font-display);
-  font-weight: 700;
-}
-
-:root[data-theme='dark'] .chapter-opener__count {
-  color: var(--chapter);
-}
-
-/* The chapter's own contents: larger rows with the summary. */
-
-.chapter-recipes {
-  margin-top: var(--space-7);
-}
-
-.recipe-row--large .recipe-row__link {
-  grid-template-columns: clamp(96px, 22vw, 200px) minmax(0, 32rem) 1fr auto;
-  gap: var(--space-5);
-  padding: var(--space-4) var(--space-2);
-}
-
-.recipe-row--large .recipe-row__thumb {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-}
-
-.recipe-row--large .recipe-row__title {
-  font-weight: 900;
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-}
-
-.recipe-row__summary {
-  margin: var(--space-1) 0;
-  color: var(--ink-soft);
-}
-
-@media (max-width: 559px) {
-  .recipe-row--large .recipe-row__link {
-    grid-template-columns: 96px 1fr auto;
-  }
-
-  .recipe-row--large .recipe-row__leader {
+  .recipe-row__leader,
+  .recipe-row__summary {
     display: none;
   }
-
-  .recipe-row--large .recipe-row__summary {
-    display: none;
-  }
-}
-
-/* Search */
-
-.search-page__title {
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  margin-bottom: var(--space-3);
-}
-
-.search-page__hint {
-  color: var(--ink-soft);
-  max-width: 52ch;
-  margin-bottom: var(--space-6);
-}
-
-/* Sections inside a chapter: a lighter band, same layout. */
-
-.chapter-opener--section {
-  min-height: 0;
-  background: var(--chapter-wash);
-  color: var(--ink);
-}
-
-.chapter-opener--section .chapter-opener__title {
-  font-size: clamp(2.25rem, 7vw, 4rem);
-}
-
-.chapter-opener--section .chapter-opener__count {
-  background: var(--chapter);
-  color: var(--on-chapter);
-}
-
-.chapter-opener--section .chapter-opener__dish {
-  width: clamp(150px, 24vw, 260px);
-}
-
-.recipe-row__thumb--empty {
-  display: grid;
-  place-items: center;
-  background: var(--chapter-wash);
-  color: var(--chapter-ink);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.75rem;
-}
-
-/* Contents heading with the way into the folder browser. */
-
-.contents__heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3) var(--space-5);
-  margin-bottom: var(--space-4);
-}
-
-.contents__heading .contents__title {
-  flex: 1;
-  margin-bottom: 0;
-}
-
-.contents__browse {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: 0 var(--space-4);
-  border-radius: 999px;
-  box-shadow: inset 0 0 0 2px var(--ink);
-  font-family: var(--font-display);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.contents__browse:hover {
-  background: var(--ink);
-  color: var(--paper);
 }
 
 .contents__section {
@@ -481,22 +304,24 @@
   color: var(--ink-soft);
 }
 
-/* Filter chips and "Surprise me". */
+/* Filter chips and "Surprise me": one line under the title, swiped sideways when there are many tags. */
 
 .filter-bar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-3) var(--space-5);
+  align-items: center;
+  gap: var(--space-3);
   margin-bottom: var(--space-6);
 }
 
 .filter-bar__chips {
   display: flex;
-  flex-wrap: wrap;
+  flex: 1;
   gap: var(--space-2);
-  flex: 1 1 320px;
+  min-width: 0;
+  padding: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
 }
 
 .chip-toggle {
@@ -513,6 +338,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.875rem;
+  white-space: nowrap;
 }
 
 .chip-toggle:hover {
@@ -529,18 +355,25 @@
   flex: none;
 }
 
-/* On phones the chips become one row you can swipe, so the contents start right away. */
-@media (max-width: 759px) {
-  .filter-bar__chips {
-    flex-wrap: nowrap;
-    flex-basis: 100%;
-    margin: 0 calc(var(--space-4) * -1);
-    padding: 2px var(--space-4);
-    overflow-x: auto;
-    scrollbar-width: none;
+@media (max-width: 559px) {
+  .filter-bar {
+    flex-wrap: wrap;
   }
 
-  .chip-toggle {
-    white-space: nowrap;
+  .filter-bar__chips {
+    flex-basis: 100%;
   }
+}
+
+/* Search */
+
+.search-page__title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  margin-bottom: var(--space-3);
+}
+
+.search-page__hint {
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin-bottom: var(--space-6);
 }

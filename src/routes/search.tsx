@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { BookShell } from '@/features/browse/BookShell'
 import { SearchResults } from '@/features/search/SearchResults'
 
 export const Route = createFileRoute('/search')({
@@ -10,5 +11,9 @@ export const Route = createFileRoute('/search')({
 
 function SearchPage() {
   const { q } = Route.useSearch()
-  return <SearchResults query={q} />
+  return (
+    <BookShell currentPath="">
+      <SearchResults query={q} />
+    </BookShell>
+  )
 }

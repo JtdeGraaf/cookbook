@@ -10,26 +10,26 @@ type RecipeRowProps = {
   recipe: Recipe
   /** Shown under the title in search results: which ingredients matched. */
   matchedIngredients?: LocalizedText[]
-  /** Folder pages show the summary and a bigger photo. */
-  large?: boolean
+  /** Folder pages add a line of the summary under the title. */
+  showSummary?: boolean
   /** Rows near the top load their photo straight away instead of waiting to be scrolled to. */
   eager?: boolean
 }
 
 /** One line of the table of contents: thumbnail, title, time, dotted leader, page number. */
-export function RecipeRow({ recipe, matchedIngredients = [], large = false, eager = false }: RecipeRowProps) {
+export function RecipeRow({ recipe, matchedIngredients = [], showSummary = false, eager = false }: RecipeRowProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const page = pageOf(recipe.path)
   return (
-    <li className={large ? 'recipe-row recipe-row--large' : 'recipe-row'} data-color={recipe.color}>
+    <li className="recipe-row" data-color={recipe.color}>
       <BookLink path={recipe.path} className="recipe-row__link">
         {recipe.cover ? (
           <img
             className="recipe-row__thumb"
             src={recipe.cover.file.src}
             srcSet={recipe.cover.file.srcset}
-            sizes={large ? '200px' : '96px'}
+            sizes="96px"
             alt=""
             loading={eager ? 'eager' : 'lazy'}
             decoding="async"
@@ -41,7 +41,7 @@ export function RecipeRow({ recipe, matchedIngredients = [], large = false, eage
         )}
         <span className="recipe-row__text">
           <span className="recipe-row__title">{localized(recipe.title)}</span>
-          {large && <span className="recipe-row__summary">{localized(recipe.summary)}</span>}
+          {showSummary && <span className="recipe-row__summary">{localized(recipe.summary)}</span>}
           <span className="recipe-row__meta">
             {t('book.totalTime', { count: recipe.prepMinutes + recipe.cookMinutes })}
             {matchedIngredients.length > 0 && (

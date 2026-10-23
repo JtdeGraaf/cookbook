@@ -1,34 +1,25 @@
 import { useTranslation } from 'react-i18next'
-import { Photo } from '@/components/Photo'
 import { recipesInside, type Folder } from '@/lib/book'
 import { useLocalized } from '@/features/settings/useLanguage'
+import { pageOf } from './book-data'
 import './book.css'
 
 /**
- * The opening of a folder: a full band of chapter colour with its lead dish cut into a circle. Sections inside a
- * chapter get a lighter band, so you can tell a chapter from a section at a glance.
+ * The head of a folder page: the same coloured band the contents page lists the chapter with, opened up to hold
+ * its intro. Sections inside a chapter get a lighter band, so a chapter and a section are told apart at a glance.
  */
 export function ChapterBand({ folder }: { folder: Folder }) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const isSection = folder.path.includes('/')
-  const leadPhoto = recipesInside(folder).find((recipe) => recipe.cover)?.cover ?? null
   return (
-    <header className={isSection ? 'chapter-opener chapter-opener--section' : 'chapter-opener'}>
-      <div className="chapter-opener__words">
-        <h1 className="chapter-opener__title">{localized(folder.title)}</h1>
-        {folder.intro && <p className="chapter-opener__intro">{localized(folder.intro)}</p>}
-        <p className="chapter-opener__count">{t('book.recipeCount', { count: recipesInside(folder).length })}</p>
+    <header className={isSection ? 'folder-band folder-band--section' : 'folder-band'}>
+      <div className="folder-band__top">
+        <h1 className="folder-band__title">{localized(folder.title)}</h1>
+        <span className="folder-band__page numbers">{t('book.page', { page: pageOf(folder.path) })}</span>
       </div>
-      {leadPhoto && (
-        <Photo
-          picture={leadPhoto}
-          sizes="(min-width: 760px) 360px, 60vw"
-          className="chapter-opener__dish"
-          showCredit={false}
-          eager
-        />
-      )}
+      {folder.intro && <p className="folder-band__intro">{localized(folder.intro)}</p>}
+      <p className="folder-band__count">{t('book.recipeCount', { count: recipesInside(folder).length })}</p>
     </header>
   )
 }
