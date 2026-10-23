@@ -203,7 +203,7 @@
   height: 64px;
   border-radius: var(--radius);
   object-fit: cover;
-  background: var(--rule);
+  background: var(--chapter-wash);
 }
 
 .recipe-row__text {
@@ -237,11 +237,12 @@
   white-space: nowrap;
 }
 
-/* Chapter opener: a full band of chapter colour. */
+/* Chapter opener: a full band of chapter colour, its lead dish cut into a circle off the corner. */
 
 .chapter-opener {
   position: relative;
   overflow: hidden;
+  min-height: 300px;
   padding: var(--space-7) var(--space-5) var(--space-6);
   border-radius: var(--radius-large);
   background: var(--chapter);
@@ -250,19 +251,45 @@
 
 @media (min-width: 760px) {
   .chapter-opener {
+    min-height: 380px;
     padding: var(--space-8) var(--space-7) var(--space-7);
   }
 }
 
-.chapter-opener::after {
-  content: '';
+.chapter-opener__words {
+  position: relative;
+  z-index: 1;
+  max-width: 60%;
+}
+
+.chapter-opener__dish {
   position: absolute;
-  right: -60px;
-  bottom: -90px;
-  width: 280px;
-  height: 280px;
+  right: -56px;
+  bottom: -72px;
+  width: clamp(180px, 34vw, 400px);
+  aspect-ratio: 1;
+}
+
+.chapter-opener__dish .photo__image {
   border-radius: 50%;
-  border: 28px solid color-mix(in srgb, var(--on-chapter) 14%, transparent);
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 10px color-mix(in srgb, var(--on-chapter) 22%, transparent);
+}
+
+@media (max-width: 559px) {
+  .chapter-opener {
+    padding-bottom: 170px;
+  }
+
+  .chapter-opener__words {
+    max-width: none;
+  }
+
+  .chapter-opener__dish {
+    right: -30px;
+    bottom: -60px;
+    width: 210px;
+  }
 }
 
 .chapter-opener__title {
@@ -292,69 +319,46 @@
   color: var(--chapter);
 }
 
-/* Recipes in a chapter, laid out like plates on a page. */
+/* The chapter's own contents: larger rows with the summary. */
 
-.plates {
-  display: grid;
-  gap: var(--space-7) var(--space-6);
+.chapter-recipes {
   margin-top: var(--space-7);
 }
 
-@media (min-width: 700px) {
-  .plates {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.recipe-row--large .recipe-row__link {
+  grid-template-columns: clamp(96px, 22vw, 200px) minmax(0, 32rem) 1fr auto;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-2);
 }
 
-.plate__link {
-  position: relative;
-  display: grid;
-  gap: var(--space-2);
-  text-decoration: none;
-}
-
-.plate__link .photo__image {
+.recipe-row--large .recipe-row__thumb {
+  width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
-  transition: transform 300ms var(--ease-out);
 }
 
-.plate__link:hover .photo__image {
-  transform: scale(1.015);
-}
-
-.plate__page {
-  position: absolute;
-  top: -14px;
-  left: -10px;
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--chapter);
-  color: var(--on-chapter);
-  font-family: var(--font-display);
+.recipe-row--large .recipe-row__title {
   font-weight: 900;
-  font-size: 1.125rem;
-  box-shadow: 0 0 0 4px var(--paper);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
 }
 
-.plate__title {
-  margin-top: var(--space-2);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.625rem;
-  line-height: 1.15;
-}
-
-.plate__summary {
+.recipe-row__summary {
+  margin: var(--space-1) 0;
   color: var(--ink-soft);
 }
 
-.plate__time {
-  font-family: var(--font-display);
-  font-weight: 700;
-  color: var(--chapter-ink);
+@media (max-width: 559px) {
+  .recipe-row--large .recipe-row__link {
+    grid-template-columns: 96px 1fr auto;
+  }
+
+  .recipe-row--large .recipe-row__leader {
+    display: none;
+  }
+
+  .recipe-row--large .recipe-row__summary {
+    display: none;
+  }
 }
 
 /* Search */

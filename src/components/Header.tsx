@@ -1,19 +1,26 @@
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import type { PageKind } from '@/lib/page-kind'
 import { SearchField } from '@/features/search/SearchField'
 import { LanguageSwitch } from '@/features/settings/LanguageSwitch'
 import { ThemeSwitch } from '@/features/settings/ThemeSwitch'
+import { Icon } from './Icon'
 
-export function Header() {
+/** On the cover the masthead is the title, so the header shows only the round book mark. */
+export function Header({ pageKind }: { pageKind: PageKind }) {
   const { t } = useTranslation()
   return (
     <header className="running-head">
       <div className="running-head__inner">
-        <Link to="/" className="running-head__title" aria-label={t('header.home')}>
-          {t('book.title')}
+        <Link to="/" className="running-head__title" data-mark-only={pageKind === 'cover'} aria-label={t('header.home')}>
+          <span className="running-head__mark" aria-hidden="true" />
+          <span className="running-head__name">{t('book.title')}</span>
         </Link>
         <SearchField />
         <div className="running-head__settings">
+          <Link to="/search" search={{ q: '' }} className="icon-button search-shortcut" aria-label={t('header.searchLabel')}>
+            <Icon name="search" />
+          </Link>
           <LanguageSwitch />
           <ThemeSwitch />
         </div>

@@ -9,15 +9,19 @@ type RecipeRowProps = {
   recipe: Recipe
   /** Shown under the title in search results: which ingredients matched. */
   matchedIngredients?: LocalizedText[]
+  /** Chapter pages show the summary and a bigger photo. */
+  large?: boolean
+  /** Rows near the top load their photo straight away instead of waiting to be scrolled to. */
+  eager?: boolean
 }
 
 /** One line of the table of contents: thumbnail, title, time, dotted leader, page number. */
-export function RecipeRow({ recipe, matchedIngredients = [] }: RecipeRowProps) {
+export function RecipeRow({ recipe, matchedIngredients = [], large = false, eager = false }: RecipeRowProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const page = recipePage(recipe)
   return (
-    <li className="recipe-row">
+    <li className={large ? 'recipe-row recipe-row--large' : 'recipe-row'}>
       <Link
         to="/$chapter/$recipe"
         params={{ chapter: recipe.chapterSlug, recipe: recipe.slug }}
@@ -27,13 +31,14 @@ export function RecipeRow({ recipe, matchedIngredients = [] }: RecipeRowProps) {
           className="recipe-row__thumb"
           src={recipe.cover.file.src}
           srcSet={recipe.cover.file.srcset}
-          sizes="96px"
+          sizes={large ? '200px' : '96px'}
           alt=""
-          loading="lazy"
+          loading={eager ? 'eager' : 'lazy'}
           decoding="async"
         />
         <span className="recipe-row__text">
           <span className="recipe-row__title">{localized(recipe.title)}</span>
+          {large && <span className="recipe-row__summary">{localized(recipe.summary)}</span>}
           <span className="recipe-row__meta">
             {t('book.totalTime', { count: recipe.prepMinutes + recipe.cookMinutes })}
             {matchedIngredients.length > 0 && (

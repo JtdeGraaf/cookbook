@@ -406,7 +406,6 @@
 @keyframes sheet-up {
   from {
     transform: translateY(40%);
-    opacity: 0;
   }
 }
 
@@ -731,7 +730,6 @@
 /* The one authored motion: each step arrives like a turned page. */
 @keyframes turn-page {
   from {
-    opacity: 0.4;
     transform: perspective(1400px) rotateY(-12deg) translateX(24px);
   }
 }

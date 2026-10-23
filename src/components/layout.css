@@ -67,6 +67,55 @@
   letter-spacing: -0.01em;
 }
 
+.running-head__title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.running-head__mark {
+  display: none;
+}
+
+/* On the cover the masthead is the title; the header keeps only the round book mark. */
+.running-head__title[data-mark-only='true'] {
+  padding: 0;
+  background: transparent;
+}
+
+.running-head__title[data-mark-only='true'] .running-head__name {
+  display: none;
+}
+
+.running-head__title[data-mark-only='true'] .running-head__mark {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--yolk) 0 7px, var(--sheet) 7.5px 14px, var(--tomato) 14.5px);
+}
+
+.search-shortcut {
+  display: none;
+}
+
+/* While cooking on a phone, the step gets the room: search shrinks to an icon and the tabs step aside. */
+@media (max-width: 759px) {
+  .book[data-page='recipe'] .running-head__inner {
+    grid-template-areas: 'title settings';
+    padding-bottom: var(--space-2);
+  }
+
+  .book[data-page='recipe'] .search-field,
+  .book[data-page='recipe'] .chapter-tabs {
+    display: none;
+  }
+
+  .book[data-page='recipe'] .search-shortcut {
+    display: inline-grid;
+  }
+}
+
 .running-head__settings {
   grid-area: settings;
   display: flex;

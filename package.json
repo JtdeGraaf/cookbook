@@ -10,7 +10,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
-    "schemas": "node build/write-json-schemas.ts"
+    "schemas": "node build/write-json-schemas.ts",
+    "lint": "oxlint"
   },
   "dependencies": {
     "@fontsource/zen-kaku-gothic-new": "^5.3.1",

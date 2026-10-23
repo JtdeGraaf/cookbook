@@ -6,7 +6,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius);
-  background: var(--rule);
+  background: var(--chapter-wash);
 }
 .photo__credit {
   margin-top: var(--space-1);
