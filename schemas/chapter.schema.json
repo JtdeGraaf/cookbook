@@ -47,10 +47,10 @@
       "type": "integer",
       "minimum": -9007199254740991,
       "maximum": 9007199254740991,
-      "description": "Chapters are sorted by this number, low first."
+      "description": "Folders are sorted by this number, low first."
     },
     "color": {
-      "description": "Colour of the chapter tab.",
+      "description": "Colour of the chapter tab. Sections use their chapter colour unless given.",
       "type": "string",
       "enum": [
         "tomato",
@@ -66,6 +66,6 @@
     "order"
   ],
   "additionalProperties": false,
-  "description": "Optional details for a chapter folder.",
+  "description": "Optional details for a chapter or section folder.",
   "title": "Cookbook chapter"
 }

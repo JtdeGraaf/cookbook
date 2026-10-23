@@ -65,7 +65,7 @@ export const recipeFileSchema = z
     prepMinutes: z.number().int().min(0),
     cookMinutes: z.number().int().min(0),
     tags: z.array(localizedTextSchema).optional(),
-    cover: imageSchema,
+    cover: imageSchema.optional().describe('The main photo. Leave out until you have one.'),
     ingredients: z.array(ingredientSchema).min(1),
     prep: z
       .array(stepSchema)
@@ -73,17 +73,17 @@ export const recipeFileSchema = z
       .describe('Mise en place: everything to do before anything goes on the heat.'),
     cook: z.array(stepSchema).min(1).describe('The cooking steps, done one at a time after all prep.'),
   })
-  .describe('One recipe. The folder it sits in is its chapter.')
+  .describe('One recipe. The folders it sits in are its chapter and sections.')
 
 export const chapterFileSchema = z
   .strictObject({
     $schema: z.string().optional(),
     title: localizedTextSchema,
     intro: localizedTextSchema.optional(),
-    order: z.number().int().describe('Chapters are sorted by this number, low first.'),
-    color: z.enum(CHAPTER_COLORS).optional().describe('Colour of the chapter tab.'),
+    order: z.number().int().describe('Folders are sorted by this number, low first.'),
+    color: z.enum(CHAPTER_COLORS).optional().describe('Colour of the chapter tab. Sections use their chapter colour unless given.'),
   })
-  .describe('Optional details for a chapter folder.')
+  .describe('Optional details for a chapter or section folder.')
 
 export type RecipeFile = z.infer<typeof recipeFileSchema>
 export type ChapterFile = z.infer<typeof chapterFileSchema>
@@ -114,5 +114,5 @@ export function findCrossReferenceProblems(recipe: RecipeFile): string[] {
 /** Every image file a recipe points at, cover first. */
 export function listImageFiles(recipe: RecipeFile): string[] {
   const stepImages = [...recipe.prep, ...recipe.cook].flatMap((step) => (step.image ? [step.image.file] : []))
-  return [recipe.cover.file, ...stepImages]
+  return recipe.cover ? [recipe.cover.file, ...stepImages] : stepImages
 }

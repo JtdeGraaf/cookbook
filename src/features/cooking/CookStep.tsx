@@ -1,8 +1,8 @@
-import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { Photo } from '@/components/Photo'
-import type { Recipe } from '@/lib/book'
+import { recipeViewPath, type Recipe } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
@@ -19,22 +19,20 @@ export function CookStep({ recipe, controls, stepNumber }: CookStepProps) {
   const navigation = useStepNavigation(recipe, stepNumber)
   const step = recipe.cook[stepNumber - 1]
   const total = recipe.cook.length
-  const recipeParams = { chapter: recipe.chapterSlug, recipe: recipe.slug }
 
   return (
     <section className="cook">
       <header className="phase-head">
-        <Link to="/$chapter/$recipe" params={recipeParams} className="phase-head__back">
+        <BookLink path={recipe.path} className="phase-head__back">
           <Icon name="left" size={18} />
           {localized(recipe.title)}
-        </Link>
+        </BookLink>
         <p className="cook__position numbers">{t('cook.stepOf', { step: stepNumber, total })}</p>
         <ol className="cook__dots">
           {recipe.cook.map((_step, index) => (
             <li key={index}>
-              <Link
-                to="/$chapter/$recipe/cook/$step"
-                params={{ ...recipeParams, step: String(index + 1) }}
+              <BookLink
+                path={recipeViewPath(recipe, { name: 'cook', stepNumber: index + 1 })}
                 className="cook__dot"
                 aria-label={t('cook.stepOf', { step: index + 1, total })}
                 aria-current={index + 1 === stepNumber ? 'step' : undefined}

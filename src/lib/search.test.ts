@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { both, makeBook, makeChapter, makeIngredient, makeRecipe } from '@/test/fixtures'
+import { both, makeBook, makeFolder, makeIngredient, makeRecipe } from '@/test/fixtures'
 import { buildSearchIndex, searchRecipes } from './search'
 
 const shakshuka = makeRecipe({
   slug: 'shakshuka',
+  folderPath: 'breakfast',
   title: both('Shakshuka'),
   tags: [both('vegetarian', 'vegetarisch')],
   ingredients: [makeIngredient({ id: 'eggs', name: both('eggs', 'eieren') })],
@@ -16,12 +17,18 @@ const stamppot = makeRecipe({
 })
 const eggPasta = makeRecipe({
   slug: 'egg-pasta',
+  folderPath: 'mains/pasta',
   title: both('Egg pasta', 'Eierpasta'),
 })
 const index = buildSearchIndex(
   makeBook([
-    makeChapter({ slug: 'breakfast', title: both('Breakfast', 'Ontbijt'), recipes: [shakshuka] }),
-    makeChapter({ slug: 'mains', title: both('Mains', 'Hoofdgerechten'), recipes: [stamppot, eggPasta] }),
+    makeFolder({ path: 'breakfast', title: both('Breakfast', 'Ontbijt'), recipes: [shakshuka] }),
+    makeFolder({
+      path: 'mains',
+      title: both('Mains', 'Hoofdgerechten'),
+      recipes: [stamppot],
+      folders: [makeFolder({ path: 'mains/pasta', title: both('Pasta'), recipes: [eggPasta] })],
+    }),
   ]),
 )
 
@@ -41,8 +48,9 @@ describe('searchRecipes', () => {
     expect(slugs('vegetarisch')).toEqual(['shakshuka'])
   })
 
-  it('finds recipes by chapter name', () => {
+  it('finds recipes by the name of any folder above them', () => {
     expect(slugs('ontbijt')).toEqual(['shakshuka'])
+    expect(slugs('hoofdgerechten')).toEqual(['egg-pasta', 'kale-stamppot'])
   })
 
   it('needs every word of the query to match', () => {

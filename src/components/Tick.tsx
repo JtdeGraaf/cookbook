@@ -1,4 +1,5 @@
 import { Icon } from './Icon'
+import '@/features/cooking/cooking.css'
 
 type TickProps = { checked: boolean; onChange: () => void; large?: boolean }
 

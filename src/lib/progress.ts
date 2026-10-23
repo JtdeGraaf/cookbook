@@ -58,6 +58,6 @@ export function parseSavedProgress(value: unknown): RecipeProgress | null {
   return result.success ? result.data : null
 }
 
-export function progressKey(chapterSlug: string, recipeSlug: string): string {
-  return `progress:${chapterSlug}/${recipeSlug}`
+export function progressKey(recipePath: string): string {
+  return `progress:${recipePath}`
 }

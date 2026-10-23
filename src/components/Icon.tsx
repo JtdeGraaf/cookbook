@@ -8,6 +8,7 @@ const PATHS = {
   check: 'M5 12.5l4.5 4.5L19 7.5',
   left: 'M14.5 5l-7 7 7 7',
   right: 'M9.5 5l7 7-7 7',
+  down: 'M5 9.5l7 7 7-7',
   close: 'M6 6l12 12M18 6L6 18',
   play: 'M8 5.5v13l10.5-6.5L8 5.5Z',
   pause: 'M8.5 5.5v13M15.5 5.5v13',
@@ -16,17 +17,31 @@ const PATHS = {
   minus: 'M6 12h12',
   plus: 'M12 6v12M6 12h12',
   undo: 'M4.5 9.5h10a5 5 0 0 1 0 10H9M8.5 5.5l-4 4 4 4',
+  heart: 'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z',
+  basket: 'M3.5 9.5h17l-1.8 9a2 2 0 0 1-2 1.5H7.3a2 2 0 0 1-2-1.5l-1.8-9ZM8 9.5l3-5.5M16 9.5l-3-5.5M9.5 13v3.5M14.5 13v3.5',
+  folder: 'M3.5 6.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2V6.5Z',
+  recipe: 'M6.5 3.5h8l3.5 3.5v13.5h-11.5V3.5ZM14.5 3.5V7H18M9.5 11.5h5M9.5 15h5',
+  share: 'M12 15V3.5M7.5 8 12 3.5 16.5 8M5 12.5v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6',
+  print: 'M7 8.5V3.5h10v5M7 17.5H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v6.5H7V14Z',
+  pencil: 'M15.5 4.5l4 4L9 19H5v-4L15.5 4.5ZM13 7l4 4',
+  shuffle: 'M3.5 7h3.5c4.5 0 5.5 10 10 10h3.5M3.5 17h3.5c1.4 0 2.4-.9 3.2-2.2M13.8 9.2c.8-1.3 1.8-2.2 3.2-2.2h3.5M18 4.5 20.5 7 18 9.5M18 14.5l2.5 2.5-2.5 2.5',
+  screen: 'M7.5 2.5h9a1.5 1.5 0 0 1 1.5 1.5v16a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20V4a1.5 1.5 0 0 1 1.5-1.5ZM11 18.5h2',
 } as const
+
+/** Icons that are filled instead of outlined, to show an "on" state. */
+const FILLED: Partial<Record<IconName | 'heartFilled', IconName>> = { heartFilled: 'heart' }
 
 export type IconName = keyof typeof PATHS
 
-export function Icon({ name, size = 22 }: { name: IconName; size?: number }) {
+export function Icon({ name, size = 22 }: { name: IconName | 'heartFilled'; size?: number }) {
+  const filledFrom = FILLED[name]
+  const path = filledFrom ? PATHS[filledFrom] : PATHS[name as IconName]
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill="none"
+      fill={filledFrom ? 'currentColor' : 'none'}
       stroke="currentColor"
       strokeWidth={2}
       strokeLinecap="round"
@@ -34,7 +49,7 @@ export function Icon({ name, size = 22 }: { name: IconName; size?: number }) {
       aria-hidden="true"
       focusable="false"
     >
-      <path d={PATHS[name]} />
+      <path d={path} />
     </svg>
   )
 }

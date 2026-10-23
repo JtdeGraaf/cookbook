@@ -3,7 +3,7 @@ import type { LocalizedText } from './recipe-rules'
 
 /** A kitchen timer started from a recipe step. Times are epoch milliseconds, so a timer survives a page reload. */
 export type KitchenTimer = {
-  /** One timer per step: `<chapter>/<recipe>/<phase>/<step number>`. */
+  /** One timer per step: `<recipe path>/<phase>/<step number>`. */
   id: string
   label: LocalizedText
   recipeTitle: LocalizedText
@@ -20,8 +20,8 @@ export type TimerState =
 
 export type NewTimer = Omit<KitchenTimer, 'state'>
 
-export function timerId(chapterSlug: string, recipeSlug: string, phase: 'prep' | 'cook', stepNumber: number): string {
-  return `${chapterSlug}/${recipeSlug}/${phase}/${stepNumber}`
+export function timerId(recipePath: string, phase: 'prep' | 'cook', stepNumber: number): string {
+  return `${recipePath}/${phase}/${stepNumber}`
 }
 
 /** Starts a timer, or restarts it from the top if this step's timer already exists. */

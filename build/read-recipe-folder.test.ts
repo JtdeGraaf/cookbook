@@ -22,11 +22,11 @@ function validRecipe(): Record<string, unknown> {
 
 let root: string
 
-function addRecipe(chapter: string, slug: string, recipe: unknown, images: string[] = ['cover.jpg']) {
-  const folder = join(root, chapter, slug)
-  mkdirSync(folder, { recursive: true })
-  writeFileSync(join(folder, 'recipe.json'), JSON.stringify(recipe))
-  for (const image of images) writeFileSync(join(folder, image), '')
+function addRecipe(folder: string, slug: string, recipe: unknown, images: string[] = ['cover.jpg']) {
+  const recipeFolder = join(root, folder, slug)
+  mkdirSync(recipeFolder, { recursive: true })
+  writeFileSync(join(recipeFolder, 'recipe.json'), JSON.stringify(recipe))
+  for (const image of images) writeFileSync(join(recipeFolder, image), '')
 }
 
 function problems(): string[] {
@@ -62,7 +62,38 @@ describe('readRecipeFolder', () => {
 
     expect(chapter.slug).toBe('quick-bites')
     expect(chapter.title).toEqual({ en: 'Quick bites', nl: 'Quick bites' })
-    expect(chapter.recipes[0].chapterSlug).toBe('quick-bites')
+    expect(chapter.recipes[0]).toMatchObject({ path: 'quick-bites/toast', folderPath: 'quick-bites' })
+  })
+
+  it('reads folders inside chapters as sections, at any depth', () => {
+    addRecipe('mains/pasta/fresh', 'tagliatelle', validRecipe())
+    addRecipe('mains', 'stew', validRecipe())
+
+    const [mains] = readRecipeFolder(root).chapters
+
+    expect(mains.recipes.map((recipe) => recipe.path)).toEqual(['mains/stew'])
+    expect(mains.folders[0].path).toBe('mains/pasta')
+    expect(mains.folders[0].folders[0].recipes[0]).toMatchObject({
+      path: 'mains/pasta/fresh/tagliatelle',
+      folderPath: 'mains/pasta/fresh',
+    })
+  })
+
+  it('gives sections and their recipes the colour of their chapter', () => {
+    addRecipe('mains/pasta', 'carbonara', validRecipe())
+    writeFileSync(join(root, 'mains', 'chapter.json'), JSON.stringify({ title: both('Mains'), order: 1, color: 'plum' }))
+
+    const [mains] = readRecipeFolder(root).chapters
+
+    expect(mains.folders[0].color).toBe('plum')
+    expect(mains.folders[0].recipes[0].color).toBe('plum')
+  })
+
+  it('accepts a recipe without a cover photo', () => {
+    const { cover: _cover, ...withoutCover } = validRecipe()
+    addRecipe('mains', 'toast', withoutCover, [])
+
+    expect(readRecipeFolder(root).chapters[0].recipes[0].cover).toBeNull()
   })
 
   it('uses chapter.json for title and order', () => {
@@ -87,7 +118,7 @@ describe('readRecipeFolder', () => {
     const recipe = readRecipeFolder(root).chapters[0].recipes[0]
 
     expect(recipe.tags).toEqual([])
-    expect(recipe.cover.credit).toBeNull()
+    expect(recipe.cover?.credit).toBeNull()
     expect(recipe.cook[0]).toMatchObject({ ingredientIds: [], tip: null, image: null })
   })
 
@@ -131,11 +162,18 @@ describe('readRecipeFolder', () => {
     expect(problems()).toEqual([`${join('mains', 'toast', 'recipe.json')}: image "cover.jpg" not found next to recipe.json.`])
   })
 
-  it('rejects a recipe folder without recipe.json', () => {
+  it('rejects an empty folder', () => {
     addRecipe('mains', 'toast', validRecipe())
     mkdirSync(join(root, 'mains', 'empty'))
 
-    expect(problems()).toEqual([`${join('mains', 'empty')}: missing recipe.json.`])
+    expect(problems()).toEqual(['mains/empty: folder has no recipes.'])
+  })
+
+  it('rejects folders inside a recipe folder', () => {
+    addRecipe('mains', 'toast', validRecipe())
+    mkdirSync(join(root, 'mains', 'toast', 'photos'))
+
+    expect(problems()).toEqual(['mains/toast: a recipe folder cannot hold other folders; move them next to it.'])
   })
 
   it('rejects a chapter named after a page of the app', () => {

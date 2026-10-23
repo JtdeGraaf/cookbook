@@ -82,6 +82,7 @@
       }
     },
     "cover": {
+      "description": "The main photo. Leave out until you have one.",
       "type": "object",
       "properties": {
         "file": {
@@ -532,12 +533,11 @@
     "servings",
     "prepMinutes",
     "cookMinutes",
-    "cover",
     "ingredients",
     "prep",
     "cook"
   ],
   "additionalProperties": false,
-  "description": "One recipe. The folder it sits in is its chapter.",
+  "description": "One recipe. The folders it sits in are its chapter and sections.",
   "title": "Cookbook recipe"
 }

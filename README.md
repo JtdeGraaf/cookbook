@@ -20,6 +20,14 @@ A personal cookbook, in English and Dutch, that reads like a real book and cooks
 - **Search** across titles, ingredients, tags and chapters in both languages at once: "eieren" and "eggs" both find the shakshuka. Press `/` anywhere to jump to the search box.
 - **English and Dutch** for the interface and every recipe. Your choice is remembered.
 - **Light and dark** follow your system until you pick one.
+- **Browse the folders.** "Browse folders" shows the `recipes/` folder like a file manager: a tree you can open and close, a clickable path bar (All recipes › Mains › Pasta), and each folder's sub-folders and recipes. Folders can be nested as deep as you like.
+- **Filters and "Surprise me".** On the contents page: under 30 minutes, under an hour, favourites, or any tag. "Surprise me" opens a random recipe from what is left. Filters are in the address, so a filtered page can be bookmarked.
+- **Favourites and notes.** Heart a recipe. Each recipe keeps your own notes for next time and remembers when you cooked it (finishing the last step counts).
+- **Shopping list.** Put recipes on the list with their servings; the list adds up the same ingredient across recipes (200 g + 0.5 kg spaghetti becomes 0.7 kg) for ticking off in the shop, or copying into a chat.
+- **Share for a number of people.** "Share" sends a link like `/mains/pasta/carbonara?servings=6` that opens the recipe already scaled.
+- **Screen stays on** while you prep and cook (where the browser allows it).
+- **Print** a recipe as one clean page with the amounts for your servings.
+- **Works offline** and can be added to your phone's home screen; the whole book, photos included, is saved on the first visit.
 
 Everything you tick or choose is stored in your browser only. There is no backend.
 
@@ -27,9 +35,9 @@ Everything you tick or choose is stored in your browser only. There is no backen
 
 ```
 recipes/
-  breakfast/                  <- a chapter: the folder name is the chapter
+  breakfast/                  <- a chapter: a top-level folder
     chapter.json              <- optional: title, intro, order, tab colour
-    shakshuka/                <- a recipe: the folder name is its web address
+    shakshuka/                <- a recipe: any folder with a recipe.json
       recipe.json
       cover.jpg               <- images live next to recipe.json
       sauce.jpg
@@ -37,18 +45,26 @@ recipes/
     kale-stamppot/
       recipe.json
       cover.jpg
+    pasta/                    <- a section: a folder inside a chapter, nested as deep as you like
+      chapter.json            <- optional here too
+      carbonara/
+        recipe.json
+        cover.jpg
 ```
 
-**The chapter is the folder a recipe sits in.** There is no chapter field in `recipe.json`. Move the folder, and the recipe moves chapter. A chapter folder without `chapter.json` uses its folder name as its title (`quick-bites` becomes "Quick bites") and is sorted after the chapters that do have an order.
+**The folders are the book.** A folder with a `recipe.json` is a recipe; any other folder holds recipes or more folders. Top-level folders are the chapters (each with its tab colour); folders inside them are sections, which use their chapter's colour. There is no chapter field in `recipe.json`: move the folder and the recipe moves. The web address is the folder path, so `recipes/mains/pasta/carbonara` is at `/mains/pasta/carbonara`. A folder without `chapter.json` uses its folder name as its title (`quick-bites` becomes "Quick bites") and comes after the folders that do have an order. Top-level folders can't be called `search`, `browse` or `shopping-list`, and a recipe folder can't hold other folders.
 
 Every file is checked when the site is built. A typo in a field name, a missing Dutch translation, a step that uses an ingredient that doesn't exist, or a photo that isn't in the folder all **stop the build** with a message saying exactly which file and what is wrong. A broken recipe never reaches the site.
 
 ### Add a recipe
 
-1. Make a folder: `recipes/<chapter>/<recipe-name>/` (lowercase letters, digits and dashes).
-2. Put a photo in it, e.g. `cover.jpg`. Any `.jpg`, `.png` or `.webp` works; the build resizes it and converts it to webp.
-3. Create `recipe.json` next to it (copy one of the existing recipes as a start). Your editor autocompletes and checks it thanks to the `$schema` line.
-4. Run `npm run dev` to see it, or just push to `main`: GitHub Actions checks, builds and deploys it.
+Three ways, all ending in a `recipe.json` that already passes the checks, so the site keeps building while you fill it in:
+
+- **From the site:** every folder page has "Add a recipe to this folder". It opens GitHub's new-file page in that folder with a filled-in `new-recipe/recipe.json`; rename the folder, fill it in, commit. Every recipe also has "Edit on GitHub" under your notes.
+- **From the terminal:** `npm run new-recipe -- mains/pasta/lasagne` creates the folder and the file.
+- **By hand:** make a folder `recipes/<folders>/<recipe-name>/` (lowercase letters, digits and dashes) and copy a `recipe.json` from another recipe. Your editor autocompletes and checks it thanks to the `$schema` line.
+
+Then add a photo next to it (any `.jpg`, `.png` or `.webp`; the build resizes it and converts it to webp) and point `cover` at it. Until then the recipe shows a block of chapter colour with its first letter. Run `npm run dev` to see it, or just push to `main`: GitHub Actions checks, builds and deploys it.
 
 ### `recipe.json`
 
@@ -61,7 +77,7 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 | `servings` | yes | How many people the amounts are for (1–24) |
 | `prepMinutes`, `cookMinutes` | yes | Rough times, shown on the recipe |
 | `tags` | no | List of texts, e.g. `{ "en": "vegetarian", "nl": "vegetarisch" }`; searchable |
-| `cover` | yes | `{ "file", "alt", "credit"? }`, see images below |
+| `cover` | no | `{ "file", "alt", "credit"? }`, see images below; leave out until you have a photo |
 | `ingredients` | yes | List of `{ "id", "name", "amount"?, "unit"?, "note"? }` |
 | `prep` | yes, at least one | The *mise en place*: everything done before anything goes on the heat |
 | `cook` | yes, at least one | The cooking steps, shown one at a time |
@@ -84,7 +100,7 @@ Only `text` is required. `ingredients` shows those ingredients with their scaled
 
 **Images.** `file` is a file next to `recipe.json`; `alt` describes the photo for people who can't see it. `credit` (`{ "author", "license", "source" }`) is shown under the photo; leave it out for your own photos.
 
-### `chapter.json` (optional)
+### `chapter.json` (optional, in any folder)
 
 ```json
 {
@@ -96,13 +112,13 @@ Only `text` is required. `ingredients` shows those ingredients with their scaled
 }
 ```
 
-`color` is one of `tomato`, `matcha`, `yolk`, `plum`, `sea`; without it, chapters take the next colour in that list. A chapter may not be called `search`.
+Works the same for chapters and sections. `color` is one of `tomato`, `matcha`, `yolk`, `plum`, `sea`; without it, a chapter takes the next colour in that list and a section uses its chapter's colour.
 
 The JSON Schemas in `schemas/` are generated from the checks in `src/lib/recipe-file.ts` (`npm run schemas`); a test fails if they drift apart.
 
 ## Starter recipes and photo credits
 
-Shakshuka, Dutch bacon pancakes (spekpannenkoeken), kale stamppot with smoked sausage (boerenkoolstamppot), spaghetti carbonara and chocolate mousse. All photos come from Wikimedia Commons under Creative Commons licences; author, licence and source link are in each `recipe.json` and shown under every photo.
+Shakshuka, Dutch bacon pancakes (spekpannenkoeken), kale stamppot with smoked sausage (boerenkoolstamppot), spaghetti carbonara and spaghetti aglio e olio (in the `mains/pasta` section) and chocolate mousse. All photos come from Wikimedia Commons under Creative Commons licences; author, licence and source link are in each `recipe.json` and shown under every photo.
 
 ## Develop
 
@@ -113,6 +129,7 @@ npm test           # Vitest: scaling, search, timers, progress, recipe checks, t
 npm run typecheck
 npm run build      # checks every recipe, optimises images, builds to dist/
 npm run deploy     # build + wrangler deploy (needs CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID)
+npm run new-recipe -- mains/pasta/lasagne   # start a new recipe
 ```
 
 Every push to `main` runs typecheck, tests and build in GitHub Actions and deploys to Cloudflare Workers (static assets) on both domains.

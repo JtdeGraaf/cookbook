@@ -1,4 +1,4 @@
-import type { Book, Chapter, Ingredient, Picture, Recipe, Step } from '@/lib/book'
+import type { Book, Folder, Ingredient, Picture, Recipe, Step } from '@/lib/book'
 import type { LocalizedText } from '@/lib/recipe-rules'
 
 export function both(en: string, nl: string = en): LocalizedText {
@@ -19,9 +19,13 @@ export function makeStep(overrides: Partial<Step> = {}): Step {
   return { text: both('Do something'), ingredientIds: [], timer: null, tip: null, image: null, ...overrides }
 }
 
+/** A recipe in folder `folderPath` (default "mains"); its path is worked out from the two. */
 export function makeRecipe(overrides: Partial<Recipe> & Pick<Recipe, 'slug'>): Recipe {
+  const folderPath = overrides.folderPath ?? 'mains'
   return {
-    chapterSlug: 'mains',
+    path: `${folderPath}/${overrides.slug}`,
+    folderPath,
+    color: 'tomato',
     title: both(overrides.slug),
     summary: both('A summary'),
     servings: 2,
@@ -36,10 +40,11 @@ export function makeRecipe(overrides: Partial<Recipe> & Pick<Recipe, 'slug'>): R
   }
 }
 
-export function makeChapter(overrides: Partial<Chapter> & Pick<Chapter, 'slug'>): Chapter {
-  return { title: both(overrides.slug), intro: null, color: 'tomato', recipes: [], ...overrides }
+export function makeFolder(overrides: Partial<Folder> & Pick<Folder, 'path'>): Folder {
+  const slug = overrides.path.split('/').at(-1) ?? overrides.path
+  return { slug, title: both(slug), intro: null, color: 'tomato', folders: [], recipes: [], ...overrides }
 }
 
-export function makeBook(chapters: Chapter[]): Book {
+export function makeBook(chapters: Folder[]): Book {
   return { chapters }
 }

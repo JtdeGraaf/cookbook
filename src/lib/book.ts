@@ -31,57 +31,137 @@ export type Step<File = ResponsiveImage> = {
 
 export type Recipe<File = ResponsiveImage> = {
   slug: string
-  chapterSlug: string
+  /** Folder names from `recipes/` down to this recipe, like "mains/pasta/carbonara". Also its web address. */
+  path: string
+  /** Path of the folder the recipe sits in, like "mains/pasta". */
+  folderPath: string
+  /** Colour of the chapter the recipe is in. */
+  color: ChapterColor
   title: LocalizedText
   summary: LocalizedText
   servings: number
   prepMinutes: number
   cookMinutes: number
   tags: LocalizedText[]
-  cover: Picture<File>
+  /** Null until someone adds a photo. */
+  cover: Picture<File> | null
   ingredients: Ingredient[]
   prep: Step<File>[]
   cook: Step<File>[]
 }
 
-export type Chapter<File = ResponsiveImage> = {
+/** A folder under `recipes/`. Top-level folders are the chapters; folders inside them are sections. */
+export type Folder<File = ResponsiveImage> = {
   slug: string
+  path: string
   title: LocalizedText
   intro: LocalizedText | null
   color: ChapterColor
+  folders: Folder<File>[]
   recipes: Recipe<File>[]
 }
 
-export type Book<File = ResponsiveImage> = { chapters: Chapter<File>[] }
+export type Book<File = ResponsiveImage> = { chapters: Folder<File>[] }
 
-export function findChapter(book: Book, chapterSlug: string): Chapter | null {
-  return book.chapters.find((chapter) => chapter.slug === chapterSlug) ?? null
+export type RecipeView = { name: 'overview' } | { name: 'prep' } | { name: 'cook'; stepNumber: number } | { name: 'done' }
+
+/** What a web address inside the book points at. */
+export type BookPage = { kind: 'folder'; folder: Folder } | { kind: 'recipe'; recipe: Recipe; view: RecipeView }
+
+export function findFolder(book: Book, path: string): Folder | null {
+  return allFolders(book).find((folder) => folder.path === path) ?? null
 }
 
-export function findRecipe(book: Book, chapterSlug: string, recipeSlug: string): Recipe | null {
-  return findChapter(book, chapterSlug)?.recipes.find((recipe) => recipe.slug === recipeSlug) ?? null
+export function findRecipe(book: Book, path: string): Recipe | null {
+  return allRecipes(book).find((recipe) => recipe.path === path) ?? null
+}
+
+export function allFolders(book: Book): Folder[] {
+  return book.chapters.flatMap(foldersInside)
+}
+
+function foldersInside(folder: Folder): Folder[] {
+  return [folder, ...folder.folders.flatMap(foldersInside)]
 }
 
 export function allRecipes(book: Book): Recipe[] {
-  return book.chapters.flatMap((chapter) => chapter.recipes)
+  return book.chapters.flatMap(recipesInside)
+}
+
+/** Every recipe in a folder and all folders below it, in book order. */
+export function recipesInside(folder: Folder): Recipe[] {
+  return [...folder.recipes, ...folder.folders.flatMap(recipesInside)]
+}
+
+/** The folders from the chapter down to `path`, for a path bar. */
+export function folderTrail(book: Book, path: string): Folder[] {
+  return parentPaths(path).flatMap((ancestor) => {
+    const folder = findFolder(book, ancestor)
+    return folder ? [folder] : []
+  })
+}
+
+/** "mains/pasta/carbonara" becomes ["mains", "mains/pasta", "mains/pasta/carbonara"]. */
+export function parentPaths(path: string): string[] {
+  const parts = path.split('/').filter(Boolean)
+  return parts.map((_part, index) => parts.slice(0, index + 1).join('/'))
 }
 
 export function ingredientsForStep(recipe: Recipe, step: Step): Ingredient[] {
   return step.ingredientIds.flatMap((id) => recipe.ingredients.filter((ingredient) => ingredient.id === id))
 }
 
-/** Page numbers like a printed book: each chapter opens on one page, each recipe takes a two-page spread. */
+/** Page numbers like a printed book: each folder opens on one page, each recipe takes a two-page spread. */
 export function numberPages(book: Book): Map<string, number> {
   const pages = new Map<string, number>()
   // Page 1 is the contents.
   let nextPage = 2
-  for (const chapter of book.chapters) {
-    pages.set(chapter.slug, nextPage)
+  const numberFolder = (folder: Folder) => {
+    pages.set(folder.path, nextPage)
     nextPage += 1
-    for (const recipe of chapter.recipes) {
-      pages.set(`${chapter.slug}/${recipe.slug}`, nextPage)
+    for (const recipe of folder.recipes) {
+      pages.set(recipe.path, nextPage)
       nextPage += 2
     }
+    folder.folders.forEach(numberFolder)
   }
+  book.chapters.forEach(numberFolder)
   return pages
+}
+
+/** The part of the address after the recipe: nothing, "prep", "cook/<step>" or "done". */
+export function recipeViewPath(recipe: Recipe, view: RecipeView): string {
+  switch (view.name) {
+    case 'overview':
+      return recipe.path
+    case 'prep':
+      return `${recipe.path}/prep`
+    case 'cook':
+      return `${recipe.path}/cook/${view.stepNumber}`
+    case 'done':
+      return `${recipe.path}/done`
+  }
+}
+
+/** Works out whether an address is a folder, a recipe or one of a recipe's pages. Null when nothing matches. */
+export function resolveBookPath(book: Book, address: string): BookPage | null {
+  const parts = address.split('/').filter(Boolean)
+  const path = parts.join('/')
+  const folder = findFolder(book, path)
+  if (folder) return { kind: 'folder', folder }
+
+  const recipe = findRecipe(book, path)
+  if (recipe) return { kind: 'recipe', recipe, view: { name: 'overview' } }
+
+  const last = parts.at(-1)
+  if (last === 'prep' || last === 'done') {
+    const owner = findRecipe(book, parts.slice(0, -1).join('/'))
+    return owner ? { kind: 'recipe', recipe: owner, view: { name: last } } : null
+  }
+
+  if (parts.at(-2) !== 'cook') return null
+  const owner = findRecipe(book, parts.slice(0, -2).join('/'))
+  const stepNumber = Number(last)
+  if (!owner || !Number.isInteger(stepNumber) || stepNumber < 1 || stepNumber > owner.cook.length) return null
+  return { kind: 'recipe', recipe: owner, view: { name: 'cook', stepNumber } }
 }

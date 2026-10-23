@@ -10,16 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
+import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as SearchRouteImport } from './routes/search'
-import { Route as ChapterIndexRouteImport } from './routes/$chapter/index'
-import { Route as ChapterRecipeIndexRouteImport } from './routes/$chapter/$recipe/index'
-import { Route as ChapterRecipeDoneRouteImport } from './routes/$chapter/$recipe/done'
-import { Route as ChapterRecipePrepRouteImport } from './routes/$chapter/$recipe/prep'
-import { Route as ChapterRecipeCookStepRouteImport } from './routes/$chapter/$recipe/cook.$step'
+import { Route as ShoppingListRouteImport } from './routes/shopping-list'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrowseRoute = BrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -27,98 +35,48 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ChapterIndexRoute = ChapterIndexRouteImport.update({
-  id: '/$chapter/',
-  path: '/$chapter/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChapterRecipeIndexRoute = ChapterRecipeIndexRouteImport.update({
-  id: '/$chapter/$recipe/',
-  path: '/$chapter/$recipe/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChapterRecipeDoneRoute = ChapterRecipeDoneRouteImport.update({
-  id: '/$chapter/$recipe/done',
-  path: '/$chapter/$recipe/done',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChapterRecipePrepRoute = ChapterRecipePrepRouteImport.update({
-  id: '/$chapter/$recipe/prep',
-  path: '/$chapter/$recipe/prep',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChapterRecipeCookStepRoute = ChapterRecipeCookStepRouteImport.update({
-  id: '/$chapter/$recipe/cook/$step',
-  path: '/$chapter/$recipe/cook/$step',
+const ShoppingListRoute = ShoppingListRouteImport.update({
+  id: '/shopping-list',
+  path: '/shopping-list',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/browse': typeof BrowseRoute
   '/search': typeof SearchRoute
-  '/$chapter/': typeof ChapterIndexRoute
-  '/$chapter/$recipe/done': typeof ChapterRecipeDoneRoute
-  '/$chapter/$recipe/prep': typeof ChapterRecipePrepRoute
-  '/$chapter/$recipe/': typeof ChapterRecipeIndexRoute
-  '/$chapter/$recipe/cook/$step': typeof ChapterRecipeCookStepRoute
+  '/shopping-list': typeof ShoppingListRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/browse': typeof BrowseRoute
   '/search': typeof SearchRoute
-  '/$chapter': typeof ChapterIndexRoute
-  '/$chapter/$recipe/done': typeof ChapterRecipeDoneRoute
-  '/$chapter/$recipe/prep': typeof ChapterRecipePrepRoute
-  '/$chapter/$recipe': typeof ChapterRecipeIndexRoute
-  '/$chapter/$recipe/cook/$step': typeof ChapterRecipeCookStepRoute
+  '/shopping-list': typeof ShoppingListRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/browse': typeof BrowseRoute
   '/search': typeof SearchRoute
-  '/$chapter/': typeof ChapterIndexRoute
-  '/$chapter/$recipe/done': typeof ChapterRecipeDoneRoute
-  '/$chapter/$recipe/prep': typeof ChapterRecipePrepRoute
-  '/$chapter/$recipe/': typeof ChapterRecipeIndexRoute
-  '/$chapter/$recipe/cook/$step': typeof ChapterRecipeCookStepRoute
+  '/shopping-list': typeof ShoppingListRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/search'
-    | '/$chapter/'
-    | '/$chapter/$recipe/done'
-    | '/$chapter/$recipe/prep'
-    | '/$chapter/$recipe/'
-    | '/$chapter/$recipe/cook/$step'
+  fullPaths: '/' | '/$' | '/browse' | '/search' | '/shopping-list'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/search'
-    | '/$chapter'
-    | '/$chapter/$recipe/done'
-    | '/$chapter/$recipe/prep'
-    | '/$chapter/$recipe'
-    | '/$chapter/$recipe/cook/$step'
-  id:
-    | '__root__'
-    | '/'
-    | '/search'
-    | '/$chapter/'
-    | '/$chapter/$recipe/done'
-    | '/$chapter/$recipe/prep'
-    | '/$chapter/$recipe/'
-    | '/$chapter/$recipe/cook/$step'
+  to: '/' | '/$' | '/browse' | '/search' | '/shopping-list'
+  id: '__root__' | '/' | '/$' | '/browse' | '/search' | '/shopping-list'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
+  BrowseRoute: typeof BrowseRoute
   SearchRoute: typeof SearchRoute
-  ChapterIndexRoute: typeof ChapterIndexRoute
-  ChapterRecipeDoneRoute: typeof ChapterRecipeDoneRoute
-  ChapterRecipePrepRoute: typeof ChapterRecipePrepRoute
-  ChapterRecipeIndexRoute: typeof ChapterRecipeIndexRoute
-  ChapterRecipeCookStepRoute: typeof ChapterRecipeCookStepRoute
+  ShoppingListRoute: typeof ShoppingListRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,6 +88,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/browse': {
+      id: '/browse'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof BrowseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/search': {
       id: '/search'
       path: '/search'
@@ -137,39 +109,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$chapter/': {
-      id: '/$chapter/'
-      path: '/$chapter'
-      fullPath: '/$chapter/'
-      preLoaderRoute: typeof ChapterIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$chapter/$recipe/': {
-      id: '/$chapter/$recipe/'
-      path: '/$chapter/$recipe'
-      fullPath: '/$chapter/$recipe/'
-      preLoaderRoute: typeof ChapterRecipeIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$chapter/$recipe/done': {
-      id: '/$chapter/$recipe/done'
-      path: '/$chapter/$recipe/done'
-      fullPath: '/$chapter/$recipe/done'
-      preLoaderRoute: typeof ChapterRecipeDoneRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$chapter/$recipe/prep': {
-      id: '/$chapter/$recipe/prep'
-      path: '/$chapter/$recipe/prep'
-      fullPath: '/$chapter/$recipe/prep'
-      preLoaderRoute: typeof ChapterRecipePrepRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$chapter/$recipe/cook/$step': {
-      id: '/$chapter/$recipe/cook/$step'
-      path: '/$chapter/$recipe/cook/$step'
-      fullPath: '/$chapter/$recipe/cook/$step'
-      preLoaderRoute: typeof ChapterRecipeCookStepRouteImport
+    '/shopping-list': {
+      id: '/shopping-list'
+      path: '/shopping-list'
+      fullPath: '/shopping-list'
+      preLoaderRoute: typeof ShoppingListRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -177,12 +121,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
+  BrowseRoute: BrowseRoute,
   SearchRoute: SearchRoute,
-  ChapterIndexRoute: ChapterIndexRoute,
-  ChapterRecipeDoneRoute: ChapterRecipeDoneRoute,
-  ChapterRecipePrepRoute: ChapterRecipePrepRoute,
-  ChapterRecipeIndexRoute: ChapterRecipeIndexRoute,
-  ChapterRecipeCookStepRoute: ChapterRecipeCookStepRoute,
+  ShoppingListRoute: ShoppingListRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

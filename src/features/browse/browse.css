@@ -1,0 +1,242 @@
+/* The folder browser: a tree panel beside the folder's contents, like a file manager laid out as a book page. */
+
+.path-bar {
+  margin-bottom: var(--space-5);
+}
+
+.path-bar__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+.path-bar__part {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.path-bar__part + .path-bar__part::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin: 0 var(--space-2) 0 var(--space-1);
+  border-top: 2px solid var(--rule-strong);
+  border-right: 2px solid var(--rule-strong);
+  transform: rotate(45deg);
+}
+
+.path-bar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition:
+    background-color 160ms,
+    color 160ms;
+}
+
+.path-bar__link:hover {
+  background: var(--chapter-wash);
+  color: var(--ink);
+}
+
+.path-bar__link[aria-current='page'],
+.path-bar__current {
+  color: var(--ink);
+}
+
+.path-bar__current {
+  padding: 0 var(--space-3);
+}
+
+.browser {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.browser__tree {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .browser {
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-7);
+  }
+
+  .browser__tree {
+    display: block;
+    position: sticky;
+    top: 88px;
+    max-height: calc(100dvh - 120px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: var(--space-3) var(--space-2);
+    border-radius: var(--radius);
+    background: var(--sheet);
+    box-shadow: inset 0 0 0 1.5px var(--rule);
+  }
+}
+
+/* Tree */
+
+.folder-tree__list,
+.folder-tree__children {
+  display: grid;
+  gap: 2px;
+}
+
+.folder-tree__children {
+  margin-left: 15px;
+  padding-left: var(--space-2);
+  border-left: 2px dotted var(--rule-strong);
+}
+
+.folder-tree__row {
+  display: flex;
+  align-items: center;
+}
+
+.folder-tree__toggle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-small);
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.folder-tree__toggle:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.folder-tree__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-small);
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.folder-tree__link--recipe {
+  margin-left: 30px;
+  color: var(--ink-soft);
+}
+
+.folder-tree__link:hover {
+  background: var(--chapter-wash);
+  color: var(--ink);
+}
+
+.folder-tree__link[aria-current='page'] {
+  background: var(--chapter);
+  color: var(--on-chapter);
+}
+
+.folder-tree__icon {
+  display: grid;
+  flex: none;
+  color: var(--chapter-ink);
+}
+
+.folder-tree__link[aria-current='page'] .folder-tree__icon {
+  color: inherit;
+}
+
+.folder-tree__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.folder-tree__link--recipe .folder-tree__name {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+.folder-tree__count {
+  font-size: 0.8125rem;
+  opacity: 0.75;
+}
+
+/* Folder listing */
+
+.folder-listing {
+  margin-top: var(--space-6);
+}
+
+.folder-row__tile {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  background: var(--chapter-wash);
+  color: var(--chapter-ink);
+}
+
+.browse-title {
+  font-size: clamp(2.25rem, 7vw, 4rem);
+  letter-spacing: -0.02em;
+}
+
+.browse-intro {
+  margin-top: var(--space-3);
+  max-width: 48ch;
+  color: var(--ink-soft);
+}
+
+.add-recipe {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+  margin-top: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border: 2px dashed var(--rule-strong);
+  border-radius: var(--radius-large);
+}
+
+.add-recipe__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--chapter-ink);
+  text-decoration: none;
+}
+
+.add-recipe__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.add-recipe__hint {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}

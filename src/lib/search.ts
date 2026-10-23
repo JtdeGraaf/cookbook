@@ -1,35 +1,35 @@
-import type { Book, Chapter, Recipe } from './book'
+import { allRecipes, folderTrail, type Book, type Recipe } from './book'
 import type { LocalizedText } from './recipe-rules'
 
 /** Where a word was found decides how high the recipe ranks. */
-const FIELD_WEIGHTS = { title: 10, tag: 5, ingredient: 4, chapter: 2, summary: 1 } as const
+const FIELD_WEIGHTS = { title: 10, tag: 5, ingredient: 4, folder: 2, summary: 1 } as const
 
 type FieldKind = keyof typeof FIELD_WEIGHTS
 
 type SearchField = { kind: FieldKind; text: string; source: LocalizedText }
 
-export type SearchEntry = { recipe: Recipe; chapter: Chapter; fields: SearchField[] }
+export type SearchEntry = { recipe: Recipe; fields: SearchField[] }
 
-export type SearchHit = { recipe: Recipe; chapter: Chapter; matchedIngredients: LocalizedText[] }
+export type SearchHit = { recipe: Recipe; matchedIngredients: LocalizedText[] }
 
 /** Both languages go into one index, so "eieren" and "eggs" both find the shakshuka. */
 export function buildSearchIndex(book: Book): SearchEntry[] {
-  return book.chapters.flatMap((chapter) =>
-    chapter.recipes.map((recipe) => ({
-      recipe,
-      chapter,
-      fields: [
-        ...fieldsFor('title', [recipe.title]),
-        ...fieldsFor('tag', recipe.tags),
-        ...fieldsFor(
-          'ingredient',
-          recipe.ingredients.map((ingredient) => ingredient.name),
-        ),
-        ...fieldsFor('chapter', [chapter.title]),
-        ...fieldsFor('summary', [recipe.summary]),
-      ],
-    })),
-  )
+  return allRecipes(book).map((recipe) => ({
+    recipe,
+    fields: [
+      ...fieldsFor('title', [recipe.title]),
+      ...fieldsFor('tag', recipe.tags),
+      ...fieldsFor(
+        'ingredient',
+        recipe.ingredients.map((ingredient) => ingredient.name),
+      ),
+      ...fieldsFor(
+        'folder',
+        folderTrail(book, recipe.folderPath).map((folder) => folder.title),
+      ),
+      ...fieldsFor('summary', [recipe.summary]),
+    ],
+  }))
 }
 
 function fieldsFor(kind: FieldKind, texts: LocalizedText[]): SearchField[] {
@@ -53,7 +53,7 @@ export function searchRecipes(index: SearchEntry[], query: string): SearchHit[] 
         .map((field) => field.source),
     )
     const score = wordScores.reduce((sum, wordScore) => sum + wordScore, 0)
-    return [{ hit: { recipe: entry.recipe, chapter: entry.chapter, matchedIngredients }, score }]
+    return [{ hit: { recipe: entry.recipe, matchedIngredients }, score }]
   })
 
   return scored

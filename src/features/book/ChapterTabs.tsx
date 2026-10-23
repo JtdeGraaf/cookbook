@@ -1,5 +1,6 @@
-import { Link, useParams } from '@tanstack/react-router'
+import { useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { BookLink } from '@/components/BookLink'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { book } from './book-data'
 
@@ -7,20 +8,20 @@ import { book } from './book-data'
 export function ChapterTabs() {
   const { t } = useTranslation()
   const localized = useLocalized()
-  const params = useParams({ strict: false })
+  // The chapter is the first folder in the address, at any depth below it.
+  const currentChapter = useRouterState({ select: (state) => state.location.pathname.split('/')[1] ?? '' })
   return (
     <nav className="chapter-tabs" aria-label={t('header.chapters')}>
       <ul className="chapter-tabs__list">
         {book.chapters.map((chapter) => (
-          <li key={chapter.slug} data-color={chapter.color}>
-            <Link
-              to="/$chapter"
-              params={{ chapter: chapter.slug }}
+          <li key={chapter.path} data-color={chapter.color}>
+            <BookLink
+              path={chapter.path}
               className="chapter-tabs__tab"
-              aria-current={params.chapter === chapter.slug ? 'page' : undefined}
+              aria-current={currentChapter === chapter.slug ? 'page' : undefined}
             >
               {localized(chapter.title)}
-            </Link>
+            </BookLink>
           </li>
         ))}
       </ul>

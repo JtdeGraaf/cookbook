@@ -16,7 +16,7 @@ import { readSaved, save } from '@/lib/storage'
 
 /** Ticks and servings for one recipe, kept in localStorage so they survive a reload mid-cooking. */
 export function useRecipeProgress(recipe: Recipe) {
-  const key = progressKey(recipe.chapterSlug, recipe.slug)
+  const key = progressKey(recipe.path)
   const [progress, setProgress] = useState<RecipeProgress>(() => readSaved(key, parseSavedProgress) ?? EMPTY_PROGRESS)
   const [loadedKey, setLoadedKey] = useState(key)
 

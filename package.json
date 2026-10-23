@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
     "schemas": "node build/write-json-schemas.ts",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "new-recipe": "node build/new-recipe.ts"
   },
   "dependencies": {
     "@fontsource/zen-kaku-gothic-new": "^5.3.1",

@@ -869,3 +869,114 @@
   gap: var(--space-4);
   margin-top: var(--space-6);
 }
+
+/* Things to do with a recipe besides cooking it. */
+
+.recipe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.recipe-actions__button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.recipe-actions__button:hover {
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
+.recipe-actions__button[aria-pressed='true'] {
+  background: var(--chapter-wash);
+  box-shadow: inset 0 0 0 1.5px var(--chapter);
+}
+
+.favourite-button {
+  color: var(--chapter-ink);
+}
+
+.favourite-button[aria-pressed='true'] {
+  color: var(--tomato);
+}
+
+/* The cook's own margin on the spread. */
+
+.recipe-notes {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 2px dotted var(--rule);
+}
+
+.recipe-notes__title {
+  font-size: 1.25rem;
+}
+
+.recipe-notes__cooked {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.recipe-notes__input {
+  width: 100%;
+  min-height: 88px;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1.5px var(--rule);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.recipe-notes__input:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--chapter);
+}
+
+.recipe-notes__input::placeholder {
+  color: var(--ink-soft);
+}
+
+.recipe-notes__edit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-self: start;
+  min-height: 40px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.recipe-notes__edit:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.workspace__screen-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}

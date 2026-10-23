@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { z } from 'zod'
-import type { Book, Chapter, Picture, Recipe, Step } from '../src/lib/book.ts'
+import type { Book, Folder, Picture, Recipe, Step } from '../src/lib/book.ts'
 import { CHAPTER_COLORS, RESERVED_CHAPTER_NAMES, type ChapterColor } from '../src/lib/recipe-rules.ts'
 import {
   chapterFileSchema,
@@ -25,77 +25,120 @@ export class RecipeFolderError extends Error {
   }
 }
 
-/** Reads and checks every chapter and recipe under `root`. Throws one error listing every problem found. */
+/** A folder as read from disk, before colours are handed down from the chapter. */
+type FolderOnDisk = Omit<Folder<ImagePath>, 'color' | 'folders' | 'recipes'> & {
+  color: ChapterColor | null
+  order: number | null
+  folders: FolderOnDisk[]
+  recipes: Omit<Recipe<ImagePath>, 'color'>[]
+}
+
+/**
+ * Reads and checks every folder and recipe under `root`. A folder with a recipe.json is a recipe; any other folder
+ * holds recipes or more folders. Throws one error listing every problem found.
+ */
 export function readRecipeFolder(root: string): Book<ImagePath> {
   const problems: string[] = []
-  const chapters: (Omit<Chapter<ImagePath>, 'color'> & { color: ChapterColor | null; order: number | null })[] = []
-
-  for (const chapterSlug of listFolders(root)) {
-    const chapterFolder = join(root, chapterSlug)
-    const where = relative(root, chapterFolder)
-    if (!slugSchema.safeParse(chapterSlug).success) {
-      problems.push(`${where}: folder name must be lowercase letters, digits and dashes.`)
-      continue
+  const chapters = listFolders(root).flatMap((slug) => {
+    if ((RESERVED_CHAPTER_NAMES as readonly string[]).includes(slug)) {
+      problems.push(`${slug}: "${slug}" is taken by a page of the app; pick another chapter name.`)
+      return []
     }
-    if ((RESERVED_CHAPTER_NAMES as readonly string[]).includes(chapterSlug)) {
-      problems.push(`${where}: "${chapterSlug}" is taken by a page of the app; pick another chapter name.`)
-      continue
-    }
+    const chapter = readFolder(join(root, slug), slug, root, problems)
+    return chapter ? [chapter] : []
+  })
 
-    const chapterFile = readChapterFile(chapterFolder, root, problems)
-    const recipeFolders = listFolders(chapterFolder)
-    if (recipeFolders.length === 0) problems.push(`${where}: chapter has no recipes.`)
-    const recipes = recipeFolders.flatMap((recipeSlug) => {
-      const recipe = readRecipe(join(chapterFolder, recipeSlug), chapterSlug, recipeSlug, root, problems)
-      return recipe ? [recipe] : []
-    })
-
-    chapters.push({
-      slug: chapterSlug,
-      title: chapterFile?.title ?? { en: titleFromSlug(chapterSlug), nl: titleFromSlug(chapterSlug) },
-      intro: chapterFile?.intro ?? null,
-      color: chapterFile?.color ?? null,
-      order: chapterFile?.order ?? null,
-      recipes,
-    })
+  if (chapters.length === 0 && problems.length === 0) {
+    problems.push('No chapters found. Add a folder like recipes/mains/my-recipe/recipe.json.')
   }
-
-  if (chapters.length === 0) problems.push('No chapters found. Add a folder like recipes/mains/my-recipe/recipe.json.')
   if (problems.length > 0) throw new RecipeFolderError(problems)
 
   // Chapters without a colour take the next one in line, by their place in the book.
   return {
-    chapters: sortChapters(chapters).map(({ order: _order, color, ...chapter }, index) => ({
-      ...chapter,
-      color: color ?? CHAPTER_COLORS[index % CHAPTER_COLORS.length],
-    })),
+    chapters: sortFolders(chapters).map((chapter, index) =>
+      handDownColor(chapter, CHAPTER_COLORS[index % CHAPTER_COLORS.length]),
+    ),
   }
 }
 
-function readChapterFile(chapterFolder: string, root: string, problems: string[]): ChapterFile | null {
-  const path = join(chapterFolder, 'chapter.json')
+function readFolder(absolutePath: string, path: string, root: string, problems: string[]): FolderOnDisk | null {
+  const slug = path.split('/').at(-1) ?? path
+  if (!slugSchema.safeParse(slug).success) {
+    problems.push(`${path}: folder name must be lowercase letters, digits and dashes.`)
+    return null
+  }
+
+  const children = listFolders(absolutePath)
+  if (children.length === 0) {
+    problems.push(`${path}: folder has no recipes.`)
+    return null
+  }
+
+  const folderFile = readFolderFile(absolutePath, root, problems)
+  const folders: FolderOnDisk[] = []
+  const recipes: Omit<Recipe<ImagePath>, 'color'>[] = []
+  for (const child of children) {
+    const childPath = `${path}/${child}`
+    const childAbsolutePath = join(absolutePath, child)
+    if (!existsSync(join(childAbsolutePath, 'recipe.json'))) {
+      const folder = readFolder(childAbsolutePath, childPath, root, problems)
+      if (folder) folders.push(folder)
+      continue
+    }
+    const recipe = readRecipe(childAbsolutePath, childPath, path, root, problems)
+    if (recipe) recipes.push(recipe)
+  }
+
+  return {
+    slug,
+    path,
+    title: folderFile?.title ?? { en: titleFromSlug(slug), nl: titleFromSlug(slug) },
+    intro: folderFile?.intro ?? null,
+    color: folderFile?.color ?? null,
+    order: folderFile?.order ?? null,
+    folders: sortFolders(folders),
+    recipes,
+  }
+}
+
+/** Folders without their own colour use the colour of the folder they sit in. */
+function handDownColor(folder: FolderOnDisk, inherited: ChapterColor): Folder<ImagePath> {
+  const color = folder.color ?? inherited
+  return {
+    slug: folder.slug,
+    path: folder.path,
+    title: folder.title,
+    intro: folder.intro,
+    color,
+    folders: folder.folders.map((child) => handDownColor(child, color)),
+    recipes: folder.recipes.map((recipe) => ({ ...recipe, color })),
+  }
+}
+
+function readFolderFile(folder: string, root: string, problems: string[]): ChapterFile | null {
+  const path = join(folder, 'chapter.json')
   if (!existsSync(path)) return null
   return parseJsonFile(path, chapterFileSchema, root, problems)
 }
 
 function readRecipe(
   folder: string,
-  chapterSlug: string,
-  recipeSlug: string,
+  path: string,
+  folderPath: string,
   root: string,
   problems: string[],
-): Recipe<ImagePath> | null {
-  const where = relative(root, folder)
-  if (!slugSchema.safeParse(recipeSlug).success) {
-    problems.push(`${where}: folder name must be lowercase letters, digits and dashes.`)
+): Omit<Recipe<ImagePath>, 'color'> | null {
+  const slug = path.split('/').at(-1) ?? path
+  if (!slugSchema.safeParse(slug).success) {
+    problems.push(`${path}: folder name must be lowercase letters, digits and dashes.`)
     return null
   }
-  const path = join(folder, 'recipe.json')
-  if (!existsSync(path)) {
-    problems.push(`${where}: missing recipe.json.`)
+  if (listFolders(folder).length > 0) {
+    problems.push(`${path}: a recipe folder cannot hold other folders; move them next to it.`)
     return null
   }
-  const file = parseJsonFile(path, recipeFileSchema, root, problems)
+  const filePath = join(folder, 'recipe.json')
+  const file = parseJsonFile(filePath, recipeFileSchema, root, problems)
   if (!file) return null
 
   const fileProblems = [
@@ -105,14 +148,20 @@ function readRecipe(
       .map((image) => `image "${image}" not found next to recipe.json.`),
   ]
   if (fileProblems.length > 0) {
-    problems.push(...fileProblems.map((problem) => `${relative(root, path)}: ${problem}`))
+    problems.push(...fileProblems.map((problem) => `${relative(root, filePath)}: ${problem}`))
     return null
   }
-  return toRecipe(file, folder, chapterSlug, recipeSlug)
+  return toRecipe(file, folder, slug, path, folderPath)
 }
 
-function toRecipe(file: RecipeFile, folder: string, chapterSlug: string, recipeSlug: string): Recipe<ImagePath> {
-  const toPicture = (image: RecipeFile['cover']): Picture<ImagePath> => ({
+function toRecipe(
+  file: RecipeFile,
+  folder: string,
+  slug: string,
+  path: string,
+  folderPath: string,
+): Omit<Recipe<ImagePath>, 'color'> {
+  const toPicture = (image: NonNullable<RecipeFile['cover']>): Picture<ImagePath> => ({
     file: join(folder, image.file),
     alt: image.alt,
     credit: image.credit ?? null,
@@ -125,15 +174,16 @@ function toRecipe(file: RecipeFile, folder: string, chapterSlug: string, recipeS
     image: step.image ? toPicture(step.image) : null,
   })
   return {
-    slug: recipeSlug,
-    chapterSlug,
+    slug,
+    path,
+    folderPath,
     title: file.title,
     summary: file.summary,
     servings: file.servings,
     prepMinutes: file.prepMinutes,
     cookMinutes: file.cookMinutes,
     tags: file.tags ?? [],
-    cover: toPicture(file.cover),
+    cover: file.cover ? toPicture(file.cover) : null,
     ingredients: file.ingredients.map((ingredient) => ({
       id: ingredient.id,
       name: ingredient.name,
@@ -165,9 +215,9 @@ function parseJsonFile<T>(path: string, schema: z.ZodType<T>, root: string, prob
   return result.data
 }
 
-/** Chapters with an order come first, low to high; the rest follow by folder name. */
-function sortChapters<T extends { slug: string; order: number | null }>(chapters: T[]): T[] {
-  return [...chapters].sort((a, b) => {
+/** Folders with an order come first, low to high; the rest follow by folder name. */
+function sortFolders<T extends { slug: string; order: number | null }>(folders: T[]): T[] {
+  return [...folders].sort((a, b) => {
     if (a.order !== null && b.order !== null) return a.order - b.order
     if (a.order !== null) return -1
     if (b.order !== null) return 1

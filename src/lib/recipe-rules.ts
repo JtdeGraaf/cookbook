@@ -10,7 +10,7 @@ export const MIN_SERVINGS = 1
 export const MAX_SERVINGS = 24
 
 /** Chapter folders may not use these names: they are pages of the app. */
-export const RESERVED_CHAPTER_NAMES = ['search'] as const
+export const RESERVED_CHAPTER_NAMES = ['search', 'browse', 'shopping-list'] as const
 
 export type Language = (typeof LANGUAGES)[number]
 export type Unit = (typeof UNITS)[number]

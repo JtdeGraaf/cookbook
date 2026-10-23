@@ -89,6 +89,9 @@
 
 .running-head__title[data-mark-only='true'] .running-head__mark {
   display: block;
+}
+
+.running-head__mark {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -113,6 +116,19 @@
 
   .book[data-page='recipe'] .search-shortcut {
     display: inline-grid;
+  }
+
+  .book[data-page='recipe'] .running-head__title {
+    padding: 0;
+    background: transparent;
+  }
+
+  .book[data-page='recipe'] .running-head__name {
+    display: none;
+  }
+
+  .book[data-page='recipe'] .running-head__mark {
+    display: block;
   }
 }
 
@@ -324,4 +340,27 @@
 .not-found__body {
   margin: var(--space-4) 0 var(--space-6);
   color: var(--ink-soft);
+}
+
+/* The header basket */
+
+.shopping-link {
+  position: relative;
+}
+
+.shopping-link__count {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--tomato);
+  color: var(--on-tomato);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.6875rem;
 }

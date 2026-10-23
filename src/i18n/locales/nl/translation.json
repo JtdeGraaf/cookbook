@@ -19,7 +19,11 @@
     "language": "Taal",
     "switchToDark": "Schakel naar donkere modus",
     "switchToLight": "Schakel naar lichte modus",
-    "chapters": "Hoofdstukken"
+    "chapters": "Hoofdstukken",
+    "shoppingList": "Boodschappenlijst",
+    "shoppingListCount_one": "Boodschappenlijst, {{count}} recept",
+    "shoppingListCount_other": "Boodschappenlijst, {{count}} recepten",
+    "browse": "Mappen bekijken"
   },
   "search": {
     "title": "Zoeken",
@@ -56,7 +60,23 @@
     "confirmClear": "Vinkjes wissen",
     "showIngredients": "Ingrediënten",
     "closeIngredients": "Ingrediënten sluiten",
-    "checkedCount": "{{checked}} van {{total}} klaar"
+    "checkedCount": "{{checked}} van {{total}} klaar",
+    "favourite": "Toevoegen aan favorieten",
+    "unfavourite": "Verwijderen uit favorieten",
+    "share": "Delen",
+    "linkCopied": "Link gekopieerd",
+    "shareText": "{{title}} voor {{count}} personen",
+    "print": "Afdrukken",
+    "editOnGithub": "Bewerken op GitHub",
+    "addToList": "Op de boodschappenlijst",
+    "removeFromList": "Op je lijst · weghalen",
+    "notesTitle": "Jouw aantekeningen",
+    "notesLabel": "Aantekeningen voor de volgende keer",
+    "notesPlaceholder": "Volgende keer minder zout, probeer het met…",
+    "cookedCount_one": "Eén keer gemaakt, laatst op {{date}}",
+    "cookedCount_other": "{{count}} keer gemaakt, laatst op {{date}}",
+    "neverCooked": "Nog niet gemaakt",
+    "screenOn": "Je scherm blijft aan terwijl je kookt"
   },
   "prep": {
     "title": "Mise en place",
@@ -119,5 +139,42 @@
   "languages": {
     "en": "Engels",
     "nl": "Nederlands"
+  },
+  "browse": {
+    "allRecipes": "Alle recepten",
+    "intro": "De receptenmap zoals hij in de repository staat: open een map, en dan nog een.",
+    "treeLabel": "Receptenmappen",
+    "pathLabel": "Waar je bent",
+    "open": "Open {{name}}",
+    "close": "Sluit {{name}}",
+    "folderCount_one": "{{count}} map",
+    "folderCount_other": "{{count}} mappen",
+    "addRecipe": "Recept toevoegen aan deze map",
+    "addRecipeHint": "Opent GitHub met een recipe.json die klaarstaat om in te vullen."
+  },
+  "filters": {
+    "label": "Recepten filteren",
+    "under30": "Onder 30 min",
+    "under60": "Onder een uur",
+    "favourites": "Favorieten",
+    "surprise": "Verras me",
+    "noMatches": "Geen recept past bij deze filters.",
+    "clear": "Filters wissen"
+  },
+  "shopping": {
+    "title": "Boodschappenlijst",
+    "empty": "Je boodschappenlijst is leeg.",
+    "emptyHint": "Zet recepten erop vanaf hun pagina en doe alle boodschappen in één keer.",
+    "recipes": "Recepten",
+    "toBuy": "Te kopen",
+    "copy": "Lijst kopiëren",
+    "copied": "Gekopieerd",
+    "clear": "Lijst leegmaken",
+    "clearQuestion": "De boodschappenlijst leegmaken?",
+    "clearExplain": "Alle recepten en vinkjes gaan van de lijst af.",
+    "cancel": "Laat staan",
+    "remove": "Verwijder {{title}}",
+    "forRecipes": "Voor {{titles}}",
+    "progress": "{{checked}} van {{total}} in het mandje"
   }
 }

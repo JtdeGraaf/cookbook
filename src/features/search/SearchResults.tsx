@@ -36,7 +36,7 @@ export function SearchResults({ query }: { query: string }) {
       <ol className="recipe-rows">
         {hits.map((hit) => (
           <RecipeRow
-            key={`${hit.recipe.chapterSlug}/${hit.recipe.slug}`}
+            key={hit.recipe.path}
             recipe={hit.recipe}
             matchedIngredients={hit.matchedIngredients}
           />

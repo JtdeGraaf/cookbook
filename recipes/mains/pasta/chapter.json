@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../schemas/chapter.schema.json",
+  "title": { "en": "Pasta", "nl": "Pasta" },
+  "intro": {
+    "en": "Done in the time the water takes to boil and the pasta to cook.",
+    "nl": "Klaar in de tijd dat het water kookt en de pasta gaar wordt."
+  },
+  "order": 1
+}

@@ -19,7 +19,11 @@
     "language": "Language",
     "switchToDark": "Switch to dark mode",
     "switchToLight": "Switch to light mode",
-    "chapters": "Chapters"
+    "chapters": "Chapters",
+    "shoppingList": "Shopping list",
+    "shoppingListCount_one": "Shopping list, {{count}} recipe",
+    "shoppingListCount_other": "Shopping list, {{count}} recipes",
+    "browse": "Browse folders"
   },
   "search": {
     "title": "Search",
@@ -56,7 +60,23 @@
     "confirmClear": "Clear ticks",
     "showIngredients": "Ingredients",
     "closeIngredients": "Close ingredients",
-    "checkedCount": "{{checked}} of {{total}} ready"
+    "checkedCount": "{{checked}} of {{total}} ready",
+    "favourite": "Add to favourites",
+    "unfavourite": "Remove from favourites",
+    "share": "Share",
+    "linkCopied": "Link copied",
+    "shareText": "{{title}} for {{count}} people",
+    "print": "Print",
+    "editOnGithub": "Edit on GitHub",
+    "addToList": "Add to shopping list",
+    "removeFromList": "On your list · remove",
+    "notesTitle": "Your notes",
+    "notesLabel": "Notes for next time",
+    "notesPlaceholder": "Less salt next time, try it with…",
+    "cookedCount_one": "Cooked once, last on {{date}}",
+    "cookedCount_other": "Cooked {{count}} times, last on {{date}}",
+    "neverCooked": "Not cooked yet",
+    "screenOn": "Your screen stays on while you cook"
   },
   "prep": {
     "title": "Mise en place",
@@ -119,5 +139,42 @@
   "languages": {
     "en": "English",
     "nl": "Dutch"
+  },
+  "browse": {
+    "allRecipes": "All recipes",
+    "intro": "The recipes folder as it is in the repository: open a folder, then another.",
+    "treeLabel": "Recipe folders",
+    "pathLabel": "Where you are",
+    "open": "Open {{name}}",
+    "close": "Close {{name}}",
+    "folderCount_one": "{{count}} folder",
+    "folderCount_other": "{{count}} folders",
+    "addRecipe": "Add a recipe to this folder",
+    "addRecipeHint": "Opens GitHub with a recipe.json ready to fill in."
+  },
+  "filters": {
+    "label": "Filter recipes",
+    "under30": "Under 30 min",
+    "under60": "Under 1 hour",
+    "favourites": "Favourites",
+    "surprise": "Surprise me",
+    "noMatches": "No recipe matches these filters.",
+    "clear": "Clear filters"
+  },
+  "shopping": {
+    "title": "Shopping list",
+    "empty": "Your shopping list is empty.",
+    "emptyHint": "Add recipes from their page, then shop for all of them at once.",
+    "recipes": "Recipes",
+    "toBuy": "To buy",
+    "copy": "Copy list",
+    "copied": "Copied",
+    "clear": "Clear list",
+    "clearQuestion": "Clear the shopping list?",
+    "clearExplain": "All recipes and ticks are taken off the list.",
+    "cancel": "Keep it",
+    "remove": "Remove {{title}}",
+    "forRecipes": "For {{titles}}",
+    "progress": "{{checked}} of {{total}} in the basket"
   }
 }

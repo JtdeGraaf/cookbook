@@ -1,8 +1,8 @@
-import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { Tick } from '@/components/Tick'
-import type { Recipe } from '@/lib/book'
+import { recipeViewPath, type Recipe } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
@@ -19,10 +19,10 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
   return (
     <section className="prep">
       <header className="phase-head">
-        <Link to="/$chapter/$recipe" params={{ chapter: recipe.chapterSlug, recipe: recipe.slug }} className="phase-head__back">
+        <BookLink path={recipe.path} className="phase-head__back">
           <Icon name="left" size={18} />
           {localized(recipe.title)}
-        </Link>
+        </BookLink>
         <h1 className="phase-head__title">{t('recipe.prepTitle')}</h1>
         <p className="phase-head__intro">{t('recipe.prepIntro')}</p>
         <p className="prep__progress numbers" aria-live="polite">
@@ -55,14 +55,10 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
         {controls.prepDone ? (
           <>
             <p className="phase-foot__note">{t('prep.ready')}</p>
-            <Link
-              to="/$chapter/$recipe/cook/$step"
-              params={{ chapter: recipe.chapterSlug, recipe: recipe.slug, step: '1' }}
-              className="button"
-            >
+            <BookLink path={recipeViewPath(recipe, { name: 'cook', stepNumber: 1 })} className="button">
               {t('recipe.startCooking')}
               <Icon name="right" />
-            </Link>
+            </BookLink>
           </>
         ) : (
           <>

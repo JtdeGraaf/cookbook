@@ -1,0 +1,114 @@
+{
+  "$schema": "../../../../schemas/recipe.schema.json",
+  "title": { "en": "Spaghetti aglio e olio", "nl": "Spaghetti aglio e olio" },
+  "summary": {
+    "en": "Garlic, olive oil, chili and parsley. The midnight pasta: five ingredients from the cupboard and dinner in fifteen minutes.",
+    "nl": "Knoflook, olijfolie, peper en peterselie. De pasta van middernacht: vijf ingrediënten uit de kast en binnen een kwartier eten."
+  },
+  "servings": 2,
+  "prepMinutes": 10,
+  "cookMinutes": 12,
+  "tags": [
+    { "en": "pasta", "nl": "pasta" },
+    { "en": "quick", "nl": "snel" },
+    { "en": "vegetarian", "nl": "vegetarisch" },
+    { "en": "Italian", "nl": "Italiaans" }
+  ],
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A plate of spaghetti glossy with oil, flecked with parsley and red chili.",
+      "nl": "Een bord glanzende spaghetti met olie, peterselie en stukjes rode peper."
+    },
+    "credit": {
+      "author": "Bairuilong",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Spaghetti_aglio_e_olio_KB.jpg"
+    }
+  },
+  "ingredients": [
+    { "id": "water", "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
+    { "id": "salt", "name": { "en": "coarse salt", "nl": "grof zout" }, "amount": 1, "unit": "tbsp" },
+    { "id": "spaghetti", "name": { "en": "spaghetti", "nl": "spaghetti" }, "amount": 200, "unit": "g" },
+    { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 4, "unit": "clove" },
+    { "id": "olive-oil", "name": { "en": "good olive oil", "nl": "goede olijfolie" }, "amount": 5, "unit": "tbsp" },
+    {
+      "id": "chili",
+      "name": { "en": "dried chili flakes", "nl": "gedroogde chilivlokken" },
+      "amount": 0.5,
+      "unit": "tsp"
+    },
+    { "id": "parsley", "name": { "en": "flat-leaf parsley", "nl": "platte peterselie" }, "amount": 4, "unit": "sprig" }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Put a large pan with the water on a high heat, lid on.",
+        "nl": "Zet een grote pan met het water op hoog vuur, deksel erop."
+      },
+      "ingredients": ["water"],
+      "timer": { "minutes": 10, "label": { "en": "Water to the boil", "nl": "Water aan de kook" } }
+    },
+    {
+      "text": {
+        "en": "Peel the garlic and slice it as thinly as you can.",
+        "nl": "Pel de knoflook en snijd hem zo dun als je kunt."
+      },
+      "ingredients": ["garlic"],
+      "tip": {
+        "en": "Thin slices turn golden all at once. Thick ones burn on the outside first.",
+        "nl": "Dunne plakjes kleuren tegelijk goudbruin. Dikke verbranden eerst aan de buitenkant."
+      }
+    },
+    {
+      "text": {
+        "en": "Pick the parsley leaves and chop them finely.",
+        "nl": "Pluk de peterselieblaadjes en hak ze fijn."
+      },
+      "ingredients": ["parsley"]
+    },
+    {
+      "text": {
+        "en": "Measure the olive oil into a cold frying pan and put the chili flakes next to it.",
+        "nl": "Doe de olijfolie in een koude koekenpan en zet de chilivlokken ernaast."
+      },
+      "ingredients": ["olive-oil", "chili"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Salt the boiling water and cook the spaghetti for a minute less than the packet says.",
+        "nl": "Doe het zout in het kokende water en kook de spaghetti een minuut korter dan op de verpakking staat."
+      },
+      "ingredients": ["salt", "spaghetti"],
+      "timer": { "minutes": 9, "label": { "en": "Spaghetti", "nl": "Spaghetti" } }
+    },
+    {
+      "text": {
+        "en": "Meanwhile, put the garlic in the cold oil and heat it gently until the slices turn pale gold. Take the pan off the heat and stir in the chili.",
+        "nl": "Doe intussen de knoflook in de koude olie en verwarm rustig tot de plakjes lichtgoud kleuren. Haal de pan van het vuur en roer de chili erdoor."
+      },
+      "ingredients": ["garlic", "chili"],
+      "timer": { "minutes": 4, "label": { "en": "Golden garlic", "nl": "Knoflook goudgeel" } },
+      "tip": {
+        "en": "Brown garlic tastes bitter. Pale gold is the moment.",
+        "nl": "Bruine knoflook smaakt bitter. Lichtgoud is het moment."
+      }
+    },
+    {
+      "text": {
+        "en": "Lift the spaghetti into the oil with a splash of pasta water and toss over a low heat until it looks glossy.",
+        "nl": "Schep de spaghetti met een scheut pastawater in de olie en hussel op laag vuur tot het glanst."
+      },
+      "ingredients": ["spaghetti"]
+    },
+    {
+      "text": {
+        "en": "Toss in the parsley and serve straight away.",
+        "nl": "Hussel de peterselie erdoor en serveer meteen."
+      },
+      "ingredients": ["parsley"]
+    }
+  ]
+}
