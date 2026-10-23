@@ -37,7 +37,7 @@
       90deg,
       transparent,
       var(--gutter-shadow) 46%,
-      color-mix(in srgb, var(--gutter-shadow) 160%, transparent) 50%,
+      var(--gutter-crease) 50%,
       var(--gutter-shadow) 54%,
       transparent
     );
@@ -695,9 +695,7 @@
   height: 10px;
   border-radius: 5px;
   background: var(--rule);
-  transition:
-    background-color 200ms,
-    width 300ms var(--ease-out);
+  transition: background-color 200ms;
 }
 
 .cook__dot[data-past='true'] {

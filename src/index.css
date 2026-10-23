@@ -11,6 +11,7 @@
   --rule-strong: #aca89e;
   --shade: rgb(28 27 25 / 0.12);
   --gutter-shadow: rgb(28 27 25 / 0.1);
+  --gutter-crease: rgb(28 27 25 / 0.18);
   --focus: #1f5fbf;
 
   --tomato: #c93f1f;
@@ -65,6 +66,7 @@
   --rule-strong: #5c5950;
   --shade: rgb(0 0 0 / 0.45);
   --gutter-shadow: rgb(0 0 0 / 0.5);
+  --gutter-crease: rgb(0 0 0 / 0.75);
   --focus: #8cc2ff;
 
   --tomato: #f26849;

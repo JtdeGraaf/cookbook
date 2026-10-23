@@ -278,17 +278,19 @@
 
 @media (max-width: 559px) {
   .chapter-opener {
-    padding-bottom: 170px;
+    min-height: 0;
+    padding-bottom: var(--space-6);
   }
 
   .chapter-opener__words {
     max-width: none;
   }
 
+  /* On phones the dish sits beside the recipe count instead of under it, so the first recipe stays in view. */
   .chapter-opener__dish {
-    right: -30px;
-    bottom: -60px;
-    width: 210px;
+    right: -36px;
+    bottom: -44px;
+    width: 160px;
   }
 }
 
