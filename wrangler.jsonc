@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cookbook",
+  "compatibility_date": "2026-10-23",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    { "pattern": "cookbook.graaf.dev", "custom_domain": true },
+    { "pattern": "kookboek.graaf.dev", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false
+}

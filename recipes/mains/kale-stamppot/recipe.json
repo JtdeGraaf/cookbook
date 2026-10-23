@@ -1,0 +1,136 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Kale stamppot with smoked sausage", "nl": "Boerenkoolstamppot met rookworst" },
+  "summary": {
+    "en": "The Dutch winter dish: potatoes and kale mashed together with crisp bacon and mustard, a smoked sausage on top.",
+    "nl": "Het Hollandse winterkostje: aardappels en boerenkool door elkaar gestampt met knapperige spekjes en mosterd, een rookworst erbovenop."
+  },
+  "servings": 4,
+  "prepMinutes": 20,
+  "cookMinutes": 30,
+  "tags": [
+    { "en": "Dutch classic", "nl": "Hollands klassiek" },
+    { "en": "winter", "nl": "winter" },
+    { "en": "comfort food", "nl": "comfortfood" }
+  ],
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A plate of green kale stamppot with a whole smoked sausage on top, on a flowered plate.",
+      "nl": "Een bord groene boerenkoolstamppot met een hele rookworst erop, op een bord met bloemen."
+    },
+    "credit": {
+      "author": "M.Minderhoud",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Boerenkool_stamppot.jpg"
+    }
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": { "en": "floury potatoes", "nl": "kruimige aardappels" },
+      "amount": 1.5,
+      "unit": "kg"
+    },
+    { "id": "salt", "name": { "en": "salt", "nl": "zout" }, "amount": 1, "unit": "tsp" },
+    { "id": "kale", "name": { "en": "shredded kale", "nl": "gesneden boerenkool" }, "amount": 600, "unit": "g" },
+    {
+      "id": "smoked-sausage",
+      "name": { "en": "smoked sausage", "nl": "rookworst" },
+      "amount": 1,
+      "unit": "piece",
+      "note": { "en": "about 275 g", "nl": "ongeveer 275 g" }
+    },
+    { "id": "bacon", "name": { "en": "bacon lardons", "nl": "spekblokjes" }, "amount": 150, "unit": "g" },
+    { "id": "milk", "name": { "en": "milk", "nl": "melk" }, "amount": 150, "unit": "ml" },
+    { "id": "butter", "name": { "en": "butter", "nl": "boter" }, "amount": 30, "unit": "g" },
+    { "id": "mustard", "name": { "en": "mild mustard", "nl": "grove mosterd" }, "amount": 1, "unit": "tbsp" },
+    { "id": "nutmeg", "name": { "en": "nutmeg", "nl": "nootmuskaat" }, "amount": 1, "unit": "pinch" },
+    { "id": "pepper", "name": { "en": "black pepper", "nl": "zwarte peper" } }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Peel the potatoes and cut them into even chunks of about 4 cm. Put them in a large pan, cover with cold water and add the salt.",
+        "nl": "Schil de aardappels en snijd ze in gelijke stukken van ongeveer 4 cm. Doe ze in een grote pan, zet ze net onder koud water en voeg het zout toe."
+      },
+      "ingredients": ["potatoes", "salt"]
+    },
+    {
+      "text": {
+        "en": "Rinse the kale in a colander and pull out any thick stalks.",
+        "nl": "Spoel de boerenkool af in een vergiet en haal de dikke stelen eruit."
+      },
+      "ingredients": ["kale"]
+    },
+    {
+      "text": {
+        "en": "Fill a second pan with water for the sausage. Leave the sausage in its packet next to it.",
+        "nl": "Vul een tweede pan met water voor de rookworst. Leg de rookworst in de verpakking ernaast."
+      },
+      "ingredients": ["smoked-sausage"]
+    },
+    {
+      "text": {
+        "en": "Put the bacon lardons in a cold, dry frying pan.",
+        "nl": "Doe de spekblokjes in een koude, droge koekenpan."
+      },
+      "ingredients": ["bacon"]
+    },
+    {
+      "text": {
+        "en": "Measure the milk into a small pan. Set out the butter, mustard, nutmeg and pepper next to the masher.",
+        "nl": "Meet de melk af in een steelpannetje. Zet de boter, mosterd, nootmuskaat en peper klaar naast de stamper."
+      },
+      "ingredients": ["milk", "butter", "mustard", "nutmeg", "pepper"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Bring the potatoes to the boil. Lay the kale on top, put the lid on and cook until the potatoes are tender.",
+        "nl": "Breng de aardappels aan de kook. Leg de boerenkool erbovenop, deksel erop, en kook tot de aardappels gaar zijn."
+      },
+      "ingredients": ["potatoes", "kale"],
+      "timer": { "minutes": 20, "label": { "en": "Potatoes and kale", "nl": "Aardappels en boerenkool" } },
+      "tip": {
+        "en": "Steaming the kale on top of the potatoes keeps its flavour and saves a pan.",
+        "nl": "De boerenkool bovenop de aardappels stomen houdt de smaak erin en scheelt een pan."
+      }
+    },
+    {
+      "text": {
+        "en": "At the same time, heat the water for the sausage until it steams but does not bubble, and let the sausage warm through in it.",
+        "nl": "Verwarm tegelijk het water voor de rookworst tot het dampt maar niet borrelt, en laat de rookworst er rustig in opwarmen."
+      },
+      "ingredients": ["smoked-sausage"],
+      "timer": { "minutes": 20, "label": { "en": "Warm the sausage", "nl": "Rookworst warm" } },
+      "tip": {
+        "en": "Boiling water splits the skin. Hot is enough.",
+        "nl": "Kokend water laat het velletje knappen. Heet is genoeg."
+      }
+    },
+    {
+      "text": {
+        "en": "Fry the bacon over medium heat until crisp, then turn off the heat.",
+        "nl": "Bak de spekjes op middelhoog vuur knapperig en zet het vuur dan uit."
+      },
+      "ingredients": ["bacon"],
+      "timer": { "minutes": 6, "label": { "en": "Crisp the bacon", "nl": "Spekjes uitbakken" } }
+    },
+    {
+      "text": {
+        "en": "Warm the milk. Drain the potatoes and kale and mash them with the butter and warm milk until smooth.",
+        "nl": "Verwarm de melk. Giet de aardappels en boerenkool af en stamp ze met de boter en warme melk tot een smeuïge stamppot."
+      },
+      "ingredients": ["milk", "butter", "potatoes", "kale"]
+    },
+    {
+      "text": {
+        "en": "Stir in the bacon with its fat and the mustard. Season with nutmeg, pepper and salt. Slice the sausage and serve it on top.",
+        "nl": "Roer de spekjes met het vet en de mosterd erdoor. Breng op smaak met nootmuskaat, peper en zout. Snijd de rookworst in plakken en leg ze erop."
+      },
+      "ingredients": ["bacon", "mustard", "nutmeg", "pepper", "smoked-sausage"]
+    }
+  ]
+}

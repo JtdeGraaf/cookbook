@@ -1,0 +1,222 @@
+/* The timer printed on a step. */
+
+.step-timer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  min-height: 52px;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+  border: 0;
+  border-radius: 999px;
+  background: var(--sheet);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--chapter);
+  text-align: left;
+}
+
+.step-timer--idle {
+  padding-right: var(--space-5);
+  transition: background-color 160ms;
+}
+
+.step-timer--idle:hover {
+  background: var(--chapter-wash);
+}
+
+.step-timer__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.step-timer__clock {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--chapter-ink);
+}
+
+.step-timer--running,
+.step-timer--paused,
+.step-timer--finished {
+  background: var(--chapter);
+  color: var(--on-chapter);
+  box-shadow: 0 8px 18px -10px var(--shade);
+}
+
+.step-timer--running .step-timer__clock,
+.step-timer--paused .step-timer__clock,
+.step-timer--finished .step-timer__clock {
+  color: var(--on-chapter);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.step-timer--paused {
+  opacity: 0.75;
+}
+
+.step-timer--finished {
+  animation: ring 900ms ease-in-out infinite;
+}
+
+.step-timer .icon-button {
+  color: inherit;
+}
+
+.step-timer__controls {
+  display: inline-flex;
+  align-items: center;
+}
+
+.step-timer__stop {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: 999px;
+  background: var(--on-chapter);
+  color: var(--chapter-ink);
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+:root[data-theme='dark'] .step-timer__stop {
+  color: var(--chapter);
+}
+
+/* The tray of kitchen timers, on every page. */
+
+/* A shelf docked to the bottom of the screen; the page makes room for it so nothing hides underneath. */
+.timer-tray {
+  --shelf-height: 76px;
+  position: fixed;
+  z-index: 30;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--shelf-height);
+  padding: var(--space-2) var(--space-4);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--rule);
+}
+
+body:has(.timer-tray) .book {
+  padding-bottom: 76px;
+}
+
+body:has(.timer-tray) .ingredients-button {
+  bottom: calc(76px + var(--space-3));
+}
+
+body:has(.timer-tray) .workspace__side {
+  max-height: calc(100dvh - 104px - 76px);
+}
+
+.timer-tray__list {
+  display: flex;
+  gap: var(--space-2);
+  max-width: var(--page-width);
+  height: 100%;
+  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.timer-ticket {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-1);
+  width: min(300px, 82vw);
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  animation: ticket-in 320ms var(--ease-out);
+}
+
+.timer-ticket .icon-button {
+  color: inherit;
+}
+
+.timer-ticket .icon-button:hover {
+  background: color-mix(in srgb, var(--paper) 14%, transparent);
+}
+
+.timer-ticket__link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'clock label'
+    'clock recipe';
+  align-items: center;
+  column-gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.timer-ticket__clock {
+  grid-area: clock;
+  min-width: 4.2ch;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.625rem;
+  line-height: 1;
+}
+
+.timer-ticket__label {
+  grid-area: label;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.timer-ticket__recipe {
+  grid-area: recipe;
+  overflow: hidden;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  opacity: 0.75;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.timer-ticket--paused .timer-ticket__clock {
+  opacity: 0.6;
+}
+
+.timer-ticket--finished {
+  background: var(--tomato);
+  color: var(--on-tomato);
+  animation: ring 900ms ease-in-out infinite;
+}
+
+@keyframes ticket-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* A finished timer shakes like a bell until it is stopped. */
+@keyframes ring {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0);
+  }
+  10%,
+  30%,
+  50% {
+    transform: rotate(-1.5deg);
+  }
+  20%,
+  40% {
+    transform: rotate(1.5deg);
+  }
+}

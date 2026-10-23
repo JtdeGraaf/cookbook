@@ -1,0 +1,149 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Shakshuka", "nl": "Shakshuka" },
+  "summary": {
+    "en": "Eggs gently poached in a smoky, spiced tomato and pepper sauce. One pan, straight to the table, bread for dipping.",
+    "nl": "Eieren zacht gepocheerd in een rokerige, gekruide saus van tomaat en paprika. Eén pan, zo op tafel, brood om te dippen."
+  },
+  "servings": 2,
+  "prepMinutes": 10,
+  "cookMinutes": 25,
+  "tags": [
+    { "en": "vegetarian", "nl": "vegetarisch" },
+    { "en": "eggs", "nl": "eieren" },
+    { "en": "one pan", "nl": "één pan" }
+  ],
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A black frying pan of red tomato sauce with six eggs set on top, sprinkled with parsley.",
+      "nl": "Een zwarte koekenpan met rode tomatensaus en zes eieren erop, bestrooid met peterselie."
+    },
+    "credit": {
+      "author": "Calliopejen1",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Shakshuka_by_Calliopejen1.jpg"
+    }
+  },
+  "ingredients": [
+    { "id": "olive-oil", "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 2, "unit": "tbsp" },
+    { "id": "onion", "name": { "en": "onion", "nl": "ui" }, "amount": 1, "unit": "piece" },
+    { "id": "red-pepper", "name": { "en": "red bell pepper", "nl": "rode paprika" }, "amount": 1, "unit": "piece" },
+    { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 3, "unit": "clove" },
+    { "id": "cumin", "name": { "en": "ground cumin", "nl": "gemalen komijn" }, "amount": 1, "unit": "tsp" },
+    { "id": "paprika", "name": { "en": "smoked paprika", "nl": "gerookt paprikapoeder" }, "amount": 1, "unit": "tsp" },
+    { "id": "chili-flakes", "name": { "en": "chili flakes", "nl": "chilivlokken" }, "amount": 1, "unit": "pinch" },
+    {
+      "id": "tomatoes",
+      "name": { "en": "chopped tomatoes", "nl": "tomatenblokjes" },
+      "amount": 1,
+      "unit": "can",
+      "note": { "en": "400 g", "nl": "400 g" }
+    },
+    { "id": "sugar", "name": { "en": "sugar", "nl": "suiker" }, "amount": 0.5, "unit": "tsp" },
+    { "id": "eggs", "name": { "en": "eggs", "nl": "eieren" }, "amount": 4, "unit": "piece" },
+    { "id": "feta", "name": { "en": "feta", "nl": "feta" }, "amount": 50, "unit": "g" },
+    { "id": "parsley", "name": { "en": "flat-leaf parsley", "nl": "platte peterselie" }, "amount": 4, "unit": "sprig" },
+    { "id": "salt-pepper", "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } },
+    { "id": "bread", "name": { "en": "crusty bread", "nl": "knapperig brood" }, "amount": 4, "unit": "slice" }
+  ],
+  "prep": [
+    {
+      "text": { "en": "Peel the onion and chop it finely.", "nl": "Pel de ui en snipper hem fijn." },
+      "ingredients": ["onion"]
+    },
+    {
+      "text": {
+        "en": "Seed the pepper and cut it into thin strips.",
+        "nl": "Haal de zaadlijsten uit de paprika en snijd hem in dunne reepjes."
+      },
+      "ingredients": ["red-pepper"]
+    },
+    {
+      "text": { "en": "Peel the garlic and slice it thinly.", "nl": "Pel de knoflook en snijd hem in dunne plakjes." },
+      "ingredients": ["garlic"]
+    },
+    {
+      "text": {
+        "en": "Measure the cumin, smoked paprika and chili flakes into one small bowl. They go into the pan together.",
+        "nl": "Doe de komijn, het paprikapoeder en de chilivlokken samen in één schaaltje. Ze gaan tegelijk de pan in."
+      },
+      "ingredients": ["cumin", "paprika", "chili-flakes"]
+    },
+    {
+      "text": {
+        "en": "Open the tin of tomatoes. Crack each egg into its own small cup.",
+        "nl": "Open het blik tomaten. Breek elk ei in een eigen kopje."
+      },
+      "ingredients": ["tomatoes", "eggs"],
+      "tip": {
+        "en": "A cup per egg means no shell in the sauce and no rush at the stove.",
+        "nl": "Een kopje per ei betekent geen schaal in de saus en geen haast bij het fornuis."
+      }
+    },
+    {
+      "text": {
+        "en": "Crumble the feta, chop the parsley and slice the bread.",
+        "nl": "Verkruimel de feta, hak de peterselie en snijd het brood."
+      },
+      "ingredients": ["feta", "parsley", "bread"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Heat the olive oil in a wide frying pan with a lid over medium heat. Add the onion and pepper and cook until soft and sweet.",
+        "nl": "Verhit de olijfolie in een brede koekenpan met deksel op middelhoog vuur. Bak de ui en paprika tot ze zacht en zoet zijn."
+      },
+      "ingredients": ["olive-oil", "onion", "red-pepper"],
+      "timer": { "minutes": 8, "label": { "en": "Soften onion and pepper", "nl": "Ui en paprika zacht" } }
+    },
+    {
+      "text": {
+        "en": "Add the garlic and the bowl of spices. Stir until it smells wonderful.",
+        "nl": "Voeg de knoflook en het schaaltje kruiden toe. Roer tot het heerlijk ruikt."
+      },
+      "ingredients": ["garlic", "cumin", "paprika", "chili-flakes"],
+      "timer": { "minutes": 1, "label": { "en": "Toast the spices", "nl": "Kruiden roosteren" } }
+    },
+    {
+      "text": {
+        "en": "Pour in the tomatoes, add the sugar and season with salt and pepper. Simmer without a lid until thick.",
+        "nl": "Schenk de tomaten erbij, voeg de suiker toe en breng op smaak met zout en peper. Laat zonder deksel inkoken tot het dik is."
+      },
+      "ingredients": ["tomatoes", "sugar", "salt-pepper"],
+      "timer": { "minutes": 10, "label": { "en": "Simmer the sauce", "nl": "Saus inkoken" } },
+      "tip": {
+        "en": "It is thick enough when a spoon dragged through it leaves a path for a second.",
+        "nl": "Dik genoeg als een lepel door de saus een spoor trekt dat even blijft staan."
+      },
+      "image": {
+        "file": "sauce.jpg",
+        "alt": {
+          "en": "Thick tomato and pepper sauce simmering in a pan on a gas stove.",
+          "nl": "Dikke saus van tomaat en paprika die staat te pruttelen op een gasfornuis."
+        },
+        "credit": {
+          "author": "Joe Mahoney",
+          "license": "CC BY 2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Shakshuka_sauce_cooking.jpg"
+        }
+      }
+    },
+    {
+      "text": {
+        "en": "Make four hollows in the sauce with the back of a spoon and slide an egg into each. Put the lid on, turn the heat to low and cook until the whites are set and the yolks still soft.",
+        "nl": "Maak vier kuiltjes in de saus met de bolle kant van een lepel en laat in elk kuiltje een ei glijden. Deksel erop, vuur laag, en garen tot het eiwit gestold is en de dooier nog zacht."
+      },
+      "ingredients": ["eggs"],
+      "timer": { "minutes": 6, "label": { "en": "Set the eggs", "nl": "Eieren laten stollen" } }
+    },
+    {
+      "text": {
+        "en": "Scatter over the feta and parsley and bring the pan to the table with the bread.",
+        "nl": "Strooi de feta en peterselie erover en zet de pan met het brood op tafel."
+      },
+      "ingredients": ["feta", "parsley", "bread"]
+    }
+  ]
+}

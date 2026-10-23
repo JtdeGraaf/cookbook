@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/chapter.schema.json",
+  "title": { "en": "Desserts", "nl": "Nagerechten" },
+  "intro": {
+    "en": "Made ahead, so the evening ends without anyone at the stove.",
+    "nl": "Van tevoren gemaakt, zodat de avond eindigt zonder dat iemand bij het fornuis staat."
+  },
+  "order": 3,
+  "color": "plum"
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/chapter.schema.json",
+  "title": { "en": "Mains", "nl": "Hoofdgerechten" },
+  "intro": {
+    "en": "Weeknight dinners that taste like effort and are not.",
+    "nl": "Doordeweekse avondmaaltijden die naar moeite smaken, maar het niet zijn."
+  },
+  "order": 2,
+  "color": "tomato"
+}

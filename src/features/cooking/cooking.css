@@ -1,0 +1,875 @@
+/* The open book: two white pages with a soft fold in the middle. */
+
+.spread {
+  display: grid;
+  background: var(--sheet);
+  border-radius: var(--radius-large);
+  box-shadow: 0 18px 40px -24px var(--shade);
+}
+
+.spread__page {
+  display: grid;
+  align-content: start;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-4);
+}
+
+.spread .folio {
+  margin: 0 var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .spread {
+    position: relative;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .spread::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 40px);
+    width: 80px;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--gutter-shadow) 46%,
+      color-mix(in srgb, var(--gutter-shadow) 160%, transparent) 50%,
+      var(--gutter-shadow) 54%,
+      transparent
+    );
+  }
+
+  .spread__page {
+    padding: var(--space-7) var(--space-7) var(--space-6);
+  }
+
+  .spread__page--left {
+    padding-right: var(--space-8);
+  }
+
+  .spread__page--right {
+    padding-left: var(--space-8);
+  }
+
+  .spread .folio {
+    grid-column: 1 / -1;
+    margin: 0 var(--space-7);
+  }
+}
+
+.spread__photo .photo__image {
+  aspect-ratio: 4 / 3;
+}
+
+.spread__title {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  letter-spacing: -0.02em;
+}
+
+.spread__second-title {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--chapter-ink);
+}
+
+.spread__summary {
+  margin-top: var(--space-4);
+  font-size: 1.125rem;
+  max-width: 46ch;
+}
+
+.spread__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+}
+
+.spread__times div {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4);
+  border-radius: 999px;
+  background: var(--chapter-wash);
+}
+
+.spread__times dt {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.spread__times dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.spread__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.spread__tags li {
+  padding: 2px var(--space-3);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1.5px var(--rule-strong);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.spread__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Ingredient box: header bar in chapter colour, dotted leaders to the amounts. */
+
+.ingredient-box {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 2px var(--chapter);
+}
+
+.ingredient-box__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  background: var(--chapter);
+  color: var(--on-chapter);
+}
+
+.ingredient-box__title {
+  font-size: 1.375rem;
+}
+
+.ingredient-box__list {
+  padding: var(--space-2) var(--space-4);
+}
+
+.ingredient-line {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+  padding: var(--space-1) 0;
+  cursor: pointer;
+}
+
+.ingredient-line__name {
+  line-height: 1.35;
+}
+
+.ingredient-line__note {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+.ingredient-line__leader {
+  min-width: var(--space-3);
+  border-bottom: 3px dotted var(--rule-strong);
+  transform: translateY(5px);
+}
+
+.ingredient-line__amount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ingredient-line:has(:checked) .ingredient-line__name,
+.ingredient-line:has(:checked) .ingredient-line__amount {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: var(--chapter);
+}
+
+.ingredient-box__count {
+  padding: var(--space-2) var(--space-5) var(--space-4);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+/* Servings counter inside the ingredient box header. */
+
+.servings {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--sheet);
+  color: var(--ink);
+}
+
+.servings__button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--chapter-wash);
+  color: var(--ink);
+}
+
+.servings__button:hover:not(:disabled) {
+  background: var(--chapter);
+  color: var(--on-chapter);
+}
+
+.servings__button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.servings__count {
+  min-width: 9ch;
+  padding: 0 var(--space-1);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Round tick box */
+
+.tick {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+}
+
+.tick--large {
+  width: 34px;
+  height: 34px;
+}
+
+.tick__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  appearance: none;
+  border-radius: 50%;
+  border: 2px solid var(--rule-strong);
+  background: var(--sheet);
+  cursor: pointer;
+  transition:
+    background-color 160ms,
+    border-color 160ms;
+}
+
+.tick__input:hover {
+  border-color: var(--chapter);
+}
+
+.tick__input:checked {
+  border-color: var(--chapter);
+  background: var(--chapter);
+}
+
+.tick__mark {
+  position: relative;
+  display: grid;
+  color: var(--on-chapter);
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+  transition:
+    opacity 160ms,
+    transform 220ms var(--ease-out);
+}
+
+.tick__input:checked + .tick__mark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tick__input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Prep and cook pages: the page beside a pinned ingredient box. */
+
+.workspace {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.workspace__side {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+  }
+
+  .workspace__side {
+    display: block;
+    position: sticky;
+    top: 88px;
+    max-height: calc(100dvh - 104px);
+    overflow-y: auto;
+    border-radius: var(--radius);
+  }
+
+  .ingredients-button {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .workspace {
+    padding-bottom: 96px;
+  }
+}
+
+.ingredients-button {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 25;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: 0 var(--space-4) 0 var(--space-3);
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  box-shadow: 0 10px 24px -8px var(--shade);
+}
+
+.ingredients-button__count {
+  padding: 0 var(--space-2);
+  border-radius: 999px;
+  background: var(--chapter);
+  color: var(--on-chapter);
+  font-size: 0.875rem;
+}
+
+.ingredient-sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  width: 100%;
+  max-width: 560px;
+  max-height: 86dvh;
+  margin: auto auto 0;
+  padding: var(--space-6) var(--space-4) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-large) var(--radius-large) 0 0;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-y: auto;
+}
+
+.ingredient-sheet[open] {
+  animation: sheet-up 320ms var(--ease-out);
+}
+
+.ingredient-sheet::backdrop {
+  background: rgb(10 10 9 / 0.5);
+}
+
+.ingredient-sheet__close {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-2);
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(40%);
+    opacity: 0;
+  }
+}
+
+/* Heads of the prep and cook pages. */
+
+.phase-head {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.phase-head__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  justify-self: start;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--chapter-ink);
+  text-decoration: none;
+}
+
+.phase-head__back:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.phase-head__title {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  letter-spacing: -0.02em;
+}
+
+.phase-head__intro {
+  max-width: 52ch;
+  color: var(--ink-soft);
+}
+
+/* Mise en place list: a dashed box of tasks. */
+
+.prep__progress {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.prep__meter {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.prep__meter li {
+  flex: 1;
+  max-width: 64px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--rule);
+  transition: background-color 220ms;
+}
+
+.prep__meter li.is-done {
+  background: var(--chapter);
+}
+
+.prep__tasks {
+  padding: var(--space-2) var(--space-4);
+  border: 2px dashed var(--rule-strong);
+  border-radius: var(--radius-large);
+  background: var(--sheet);
+}
+
+@media (min-width: 760px) {
+  .prep__tasks {
+    padding: var(--space-3) var(--space-6);
+  }
+}
+
+.prep-task {
+  padding: var(--space-4) 0;
+}
+
+.prep-task + .prep-task {
+  border-top: 2px dotted var(--rule);
+}
+
+.prep-task__check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--space-4);
+  cursor: pointer;
+}
+
+.prep-task__text {
+  padding-top: 3px;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  transition: color 160ms;
+}
+
+.prep-task[data-done='true'] .prep-task__text {
+  color: var(--ink-soft);
+}
+
+.prep-task__extras {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding-left: calc(34px + var(--space-4));
+}
+
+.prep-task__extras:empty {
+  display: none;
+}
+
+.prep-task__extras > :first-child {
+  margin-top: var(--space-3);
+}
+
+.phase-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.phase-foot__note {
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+
+/* Ingredients one step uses. */
+
+.chips__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  padding: 2px var(--space-3);
+  border-radius: 999px;
+  background: var(--chapter-wash);
+  font-size: 0.9375rem;
+}
+
+.chip__amount {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* Point: a hint tag beside a step. */
+
+.point {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  max-width: 56ch;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-size: 0.9375rem;
+}
+
+.point__label {
+  flex: none;
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-small);
+  background: var(--yolk);
+  color: var(--on-yolk);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+/* Before the heat goes on: the boxed prep on the recipe spread. */
+
+.before-heat {
+  position: relative;
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  border: 2px dashed var(--rule-strong);
+  border-radius: var(--radius-large);
+}
+
+.before-heat__title {
+  position: absolute;
+  top: 0;
+  left: var(--space-4);
+  transform: translateY(-50%);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--chapter);
+  color: var(--on-chapter);
+  font-size: 1rem;
+}
+
+.before-heat__list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.before-heat__list li {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: var(--space-3);
+}
+
+.before-heat__marker {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 1px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--chapter);
+  color: var(--chapter-ink);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.875rem;
+}
+
+.before-heat__list li[data-done='true'] {
+  color: var(--ink-soft);
+}
+
+.before-heat__list li[data-done='true'] .before-heat__marker {
+  background: var(--chapter);
+  color: var(--on-chapter);
+  box-shadow: none;
+}
+
+/* Method on the spread: filled number circles. */
+
+.method__title {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-4);
+}
+
+.method__list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.method__step {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: var(--space-3);
+}
+
+.method__number {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--chapter);
+  color: var(--on-chapter);
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+.method__body {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: 3px;
+}
+
+/* One cooking step in focus. */
+
+.cook__position {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--chapter-ink);
+}
+
+.cook__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.cook__dot {
+  display: block;
+  width: 28px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--rule);
+  transition:
+    background-color 200ms,
+    width 300ms var(--ease-out);
+}
+
+.cook__dot[data-past='true'] {
+  background: color-mix(in srgb, var(--chapter) 45%, var(--rule));
+}
+
+.cook__dot[aria-current='step'] {
+  width: 56px;
+  background: var(--chapter);
+}
+
+.cook-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4) var(--space-5);
+  padding: var(--space-6) var(--space-5);
+  border-radius: var(--radius-large);
+  background: var(--sheet);
+  box-shadow: 0 18px 40px -24px var(--shade);
+  transform-origin: left center;
+  animation: turn-page 520ms var(--ease-out);
+}
+
+@media (min-width: 760px) {
+  .cook-step {
+    padding: var(--space-7);
+  }
+}
+
+/* The one authored motion: each step arrives like a turned page. */
+@keyframes turn-page {
+  from {
+    opacity: 0.4;
+    transform: perspective(1400px) rotateY(-12deg) translateX(24px);
+  }
+}
+
+.cook-step__number {
+  display: grid;
+  place-items: center;
+  width: clamp(56px, 12vw, 84px);
+  height: clamp(56px, 12vw, 84px);
+  border-radius: 50%;
+  background: var(--chapter);
+  color: var(--on-chapter);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+.cook-step__body {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+@media (max-width: 559px) {
+  .cook-step {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cook-step__text {
+  font-size: clamp(1.375rem, 3.4vw, 1.875rem);
+  line-height: 1.45;
+  max-width: 34ch;
+}
+
+.cook-step__photo {
+  width: 100%;
+  max-width: 560px;
+}
+
+.cook-step__photo .photo__image {
+  aspect-ratio: 3 / 2;
+}
+
+.step-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.step-nav .button {
+  flex: 1 1 200px;
+  max-width: 320px;
+}
+
+.step-nav .button:last-child {
+  margin-left: auto;
+}
+
+/* Gate and last page. */
+
+.gate {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+  max-width: 40rem;
+  padding: var(--space-7) var(--space-5);
+  border: 2px dashed var(--rule-strong);
+  border-radius: var(--radius-large);
+}
+
+.gate__title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+.gate__text {
+  color: var(--ink-soft);
+}
+
+.clear-ticks {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.clear-ticks:hover {
+  color: var(--ink);
+}
+
+.finished {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 760px) {
+  .finished {
+    grid-template-columns: 2fr 3fr;
+    gap: var(--space-7);
+  }
+}
+
+.finished__photo .photo__image {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 8px var(--sheet),
+    0 0 0 11px var(--chapter);
+}
+
+.finished__title {
+  font-size: clamp(2.75rem, 9vw, 5rem);
+  letter-spacing: -0.03em;
+}
+
+.finished__text {
+  margin-top: var(--space-4);
+  font-size: 1.1875rem;
+  color: var(--ink-soft);
+  max-width: 42ch;
+}
+
+.finished__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}

@@ -1,0 +1,131 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Spaghetti carbonara", "nl": "Spaghetti carbonara" },
+  "summary": {
+    "en": "The Roman way: guanciale, egg yolks, pecorino and a lot of black pepper. No cream, and no scrambled eggs either.",
+    "nl": "Zoals in Rome: guanciale, eidooiers, pecorino en veel zwarte peper. Geen room, en ook geen roerei."
+  },
+  "servings": 2,
+  "prepMinutes": 10,
+  "cookMinutes": 15,
+  "tags": [
+    { "en": "pasta", "nl": "pasta" },
+    { "en": "quick", "nl": "snel" },
+    { "en": "Italian", "nl": "Italiaans" }
+  ],
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A swirl of glossy spaghetti carbonara with crisp pieces of pork on a black plate.",
+      "nl": "Een nestje glanzende spaghetti carbonara met knapperige stukjes spek op een zwart bord."
+    },
+    "credit": {
+      "author": "Javier Somoza",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Espaguetis_carbonara.jpg"
+    }
+  },
+  "ingredients": [
+    { "id": "water", "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
+    { "id": "salt", "name": { "en": "coarse salt", "nl": "grof zout" }, "amount": 1, "unit": "tbsp" },
+    { "id": "spaghetti", "name": { "en": "spaghetti", "nl": "spaghetti" }, "amount": 200, "unit": "g" },
+    {
+      "id": "guanciale",
+      "name": { "en": "guanciale", "nl": "guanciale" },
+      "amount": 100,
+      "unit": "g",
+      "note": { "en": "or pancetta", "nl": "of pancetta" }
+    },
+    { "id": "egg-yolks", "name": { "en": "egg yolks", "nl": "eidooiers" }, "amount": 3, "unit": "piece" },
+    { "id": "egg", "name": { "en": "whole egg", "nl": "heel ei" }, "amount": 1, "unit": "piece" },
+    { "id": "pecorino", "name": { "en": "pecorino romano", "nl": "pecorino romano" }, "amount": 50, "unit": "g" },
+    {
+      "id": "pepper",
+      "name": { "en": "black pepper", "nl": "zwarte peper" },
+      "amount": 1,
+      "unit": "tsp",
+      "note": { "en": "coarsely ground", "nl": "grof gemalen" }
+    }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Put a large pan with the water on a high heat, lid on, so it is boiling by the time you start cooking.",
+        "nl": "Zet een grote pan met het water op hoog vuur, deksel erop, zodat het kookt tegen de tijd dat je begint."
+      },
+      "ingredients": ["water"],
+      "timer": { "minutes": 10, "label": { "en": "Water to the boil", "nl": "Water aan de kook" } }
+    },
+    {
+      "text": {
+        "en": "Cut the guanciale into strips about 1 cm wide.",
+        "nl": "Snijd de guanciale in reepjes van ongeveer 1 cm breed."
+      },
+      "ingredients": ["guanciale"]
+    },
+    {
+      "text": { "en": "Grate the pecorino finely.", "nl": "Rasp de pecorino fijn." },
+      "ingredients": ["pecorino"]
+    },
+    {
+      "text": {
+        "en": "Whisk the yolks, the whole egg, most of the pecorino and the pepper into a thick paste in a bowl.",
+        "nl": "Klop de dooiers, het hele ei, het grootste deel van de pecorino en de peper in een kom tot een dikke pasta."
+      },
+      "ingredients": ["egg-yolks", "egg", "pecorino", "pepper"],
+      "tip": {
+        "en": "Keep a handful of cheese back for the table.",
+        "nl": "Houd een handje kaas apart voor aan tafel."
+      }
+    },
+    {
+      "text": {
+        "en": "Put a ladle and a mug next to the stove for the pasta water.",
+        "nl": "Leg een soeplepel en zet een mok naast het fornuis voor het pastawater."
+      }
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Salt the boiling water, add the spaghetti and cook for a minute less than the packet says.",
+        "nl": "Doe het zout in het kokende water, voeg de spaghetti toe en kook een minuut korter dan op de verpakking staat."
+      },
+      "ingredients": ["salt", "spaghetti"],
+      "timer": { "minutes": 9, "label": { "en": "Spaghetti", "nl": "Spaghetti" } }
+    },
+    {
+      "text": {
+        "en": "At the same time, put the guanciale in a cold, dry frying pan over medium heat and fry until the fat runs and the edges crisp.",
+        "nl": "Doe tegelijk de guanciale in een koude, droge koekenpan op middelhoog vuur en bak tot het vet eruit loopt en de randjes knapperig zijn."
+      },
+      "ingredients": ["guanciale"],
+      "timer": { "minutes": 6, "label": { "en": "Render the guanciale", "nl": "Guanciale uitbakken" } }
+    },
+    {
+      "text": {
+        "en": "Scoop a mug of pasta water out of the pan, then turn off the heat under the guanciale.",
+        "nl": "Schep een mok pastawater uit de pan en zet daarna het vuur onder de guanciale uit."
+      }
+    },
+    {
+      "text": {
+        "en": "Lift the spaghetti into the guanciale pan and toss. Wait a minute off the heat, then pour in the egg mixture with a splash of pasta water and toss quickly until creamy.",
+        "nl": "Schep de spaghetti in de pan met guanciale en hussel. Wacht een minuut zonder vuur, giet dan het eimengsel erbij met een scheut pastawater en hussel snel tot het romig is."
+      },
+      "ingredients": ["spaghetti", "egg-yolks", "egg", "pecorino"],
+      "timer": { "minutes": 1, "label": { "en": "Cool off the heat", "nl": "Even afkoelen" } },
+      "tip": {
+        "en": "Off the heat is the whole trick: a hot pan scrambles the eggs.",
+        "nl": "Zonder vuur is de hele truc: in een hete pan wordt het roerei."
+      }
+    },
+    {
+      "text": {
+        "en": "Serve straight away with the rest of the pecorino and more black pepper.",
+        "nl": "Serveer meteen met de rest van de pecorino en nog wat zwarte peper."
+      },
+      "ingredients": ["pecorino", "pepper"]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/chapter.schema.json",
+  "title": { "en": "Breakfast", "nl": "Ontbijt" },
+  "intro": {
+    "en": "Slow weekend mornings: one pan, eggs, and something to mop up the plate with.",
+    "nl": "Trage weekendochtenden: één pan, eieren en iets om je bord mee schoon te vegen."
+  },
+  "order": 1,
+  "color": "yolk"
+}

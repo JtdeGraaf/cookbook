@@ -1,0 +1,119 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Chocolate mousse", "nl": "Chocolademousse" },
+  "summary": {
+    "en": "Dark, airy and just sweet enough. Five ingredients and a little patience; make it in the afternoon and forget about it.",
+    "nl": "Donker, luchtig en net zoet genoeg. Vijf ingrediënten en wat geduld; maak hem 's middags en vergeet hem tot het toetje."
+  },
+  "servings": 4,
+  "prepMinutes": 15,
+  "cookMinutes": 15,
+  "tags": [
+    { "en": "make ahead", "nl": "vooraf te maken" },
+    { "en": "chocolate", "nl": "chocolade" },
+    { "en": "vegetarian", "nl": "vegetarisch" }
+  ],
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A small glass filled with chocolate mousse, a spoon beside it.",
+      "nl": "Een klein glas gevuld met chocolademousse, met een lepeltje ernaast."
+    },
+    "credit": {
+      "author": "jules / stonesoup",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Chocolate_mousse_-_stonesoup.jpg"
+    }
+  },
+  "ingredients": [
+    {
+      "id": "chocolate",
+      "name": { "en": "dark chocolate", "nl": "pure chocolade" },
+      "amount": 150,
+      "unit": "g",
+      "note": { "en": "about 70% cocoa", "nl": "ongeveer 70% cacao" }
+    },
+    { "id": "butter", "name": { "en": "butter", "nl": "boter" }, "amount": 20, "unit": "g" },
+    {
+      "id": "eggs",
+      "name": { "en": "eggs", "nl": "eieren" },
+      "amount": 4,
+      "unit": "piece",
+      "note": { "en": "very fresh", "nl": "heel vers" }
+    },
+    { "id": "salt", "name": { "en": "salt", "nl": "zout" }, "amount": 1, "unit": "pinch" },
+    { "id": "sugar", "name": { "en": "caster sugar", "nl": "fijne kristalsuiker" }, "amount": 30, "unit": "g" }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Separate the eggs: whites into a large, clean bowl, yolks into a small one.",
+        "nl": "Splits de eieren: het eiwit in een grote, schone kom, de dooiers in een kleine."
+      },
+      "ingredients": ["eggs"],
+      "tip": {
+        "en": "One speck of yolk stops whites from whipping. Separate each egg over a cup first.",
+        "nl": "Eén spatje dooier en het eiwit wordt niet stijf. Splits elk ei eerst boven een kopje."
+      }
+    },
+    {
+      "text": {
+        "en": "Chop the chocolate finely and put it in a heatproof bowl with the butter.",
+        "nl": "Hak de chocolade fijn en doe hem met de boter in een hittebestendige kom."
+      },
+      "ingredients": ["chocolate", "butter"]
+    },
+    {
+      "text": { "en": "Weigh out the sugar.", "nl": "Weeg de suiker af." },
+      "ingredients": ["sugar", "salt"]
+    },
+    {
+      "text": {
+        "en": "Fill a small pan with 3 cm of water for melting the chocolate. Set out four glasses and a spatula.",
+        "nl": "Vul een steelpannetje met 3 cm water om de chocolade te smelten. Zet vier glazen en een spatel klaar."
+      }
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Bring the water to a gentle simmer and set the bowl of chocolate on top without touching the water. Stir until melted, then take the bowl off the pan.",
+        "nl": "Breng het water zachtjes aan de kook en zet de kom chocolade erop zonder dat hij het water raakt. Roer tot alles gesmolten is en haal de kom van de pan."
+      },
+      "ingredients": ["chocolate", "butter"],
+      "timer": { "minutes": 5, "label": { "en": "Melt the chocolate", "nl": "Chocolade smelten" } }
+    },
+    {
+      "text": {
+        "en": "Let the chocolate cool a little, then stir in the yolks one at a time.",
+        "nl": "Laat de chocolade iets afkoelen en roer dan de dooiers er een voor een door."
+      },
+      "ingredients": ["eggs"],
+      "timer": { "minutes": 3, "label": { "en": "Cool the chocolate", "nl": "Chocolade afkoelen" } }
+    },
+    {
+      "text": {
+        "en": "Whisk the whites with the salt to soft peaks. Add the sugar and keep whisking until firm and glossy.",
+        "nl": "Klop het eiwit met het zout tot zachte pieken. Voeg de suiker toe en klop door tot het stevig is en glanst."
+      },
+      "ingredients": ["eggs", "salt", "sugar"]
+    },
+    {
+      "text": {
+        "en": "Stir a third of the whites into the chocolate to loosen it, then fold in the rest in two goes.",
+        "nl": "Roer een derde van het eiwit door de chocolade om hem losser te maken en spatel de rest er in twee keer door."
+      },
+      "tip": {
+        "en": "Fold, don't stir: cut down through the middle with the spatula and turn the bowl as you go.",
+        "nl": "Spatelen, niet roeren: snijd met de spatel door het midden en draai de kom steeds een stukje."
+      }
+    },
+    {
+      "text": {
+        "en": "Spoon into the glasses and chill until set.",
+        "nl": "Schep de mousse in de glazen en laat opstijven in de koelkast."
+      },
+      "timer": { "minutes": 120, "label": { "en": "Chill the mousse", "nl": "Mousse opstijven" } }
+    }
+  ]
+}

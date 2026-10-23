@@ -1,0 +1,123 @@
+{
+  "book": {
+    "title": "Kookboek",
+    "tagline": "Recepten om te bewaren, zo geschreven dat alles klaarstaat voordat er iets in een hete pan gaat.",
+    "seal": "Eerst voorbereiden, dan de pan",
+    "contents": "Inhoud",
+    "page": "blz. {{page}}",
+    "pageLabel": "Bladzijde {{page}}",
+    "recipeCount_one": "{{count}} recept",
+    "recipeCount_other": "{{count}} recepten",
+    "backToContents": "Terug naar de inhoud",
+    "minutes": "{{count}} min",
+    "totalTime": "{{count}} min in totaal"
+  },
+  "header": {
+    "home": "Kookboek, naar de inhoud",
+    "searchPlaceholder": "Zoek recepten, ingrediënten…",
+    "searchLabel": "Zoek in het kookboek",
+    "language": "Taal",
+    "switchToDark": "Schakel naar donkere modus",
+    "switchToLight": "Schakel naar lichte modus",
+    "chapters": "Hoofdstukken"
+  },
+  "search": {
+    "title": "Zoeken",
+    "resultCount_one": "{{count}} recept voor “{{query}}”",
+    "resultCount_other": "{{count}} recepten voor “{{query}}”",
+    "noResults": "Niets in het boek past bij “{{query}}”.",
+    "noResultsHint": "Probeer één ingrediënt, zoals “eieren” of “kale”. Beide talen werken.",
+    "empty": "Typ een gerecht, een ingrediënt of een label. Nederlands en Engels werken allebei.",
+    "uses": "Met {{ingredients}}"
+  },
+  "recipe": {
+    "prepTime": "Voorbereiden",
+    "cookTime": "Koken",
+    "ingredients": "Ingrediënten",
+    "forPeople_one": "voor {{count}} persoon",
+    "forPeople_other": "voor {{count}} personen",
+    "servings": "Personen",
+    "fewerServings": "Eén persoon minder",
+    "moreServings": "Eén persoon meer",
+    "toTaste": "naar smaak",
+    "prepTitle": "Voordat het vuur aangaat",
+    "prepIntro": "Zet alles gesneden, afgewogen en binnen handbereik klaar. Het koken begint als dit lijstje af is.",
+    "methodTitle": "Bereiding",
+    "startPrep": "Begin met voorbereiden",
+    "continuePrep": "Verder met voorbereiden",
+    "startCooking": "Begin met koken",
+    "point": "Tip",
+    "photoCredit": "Foto: {{author}}, {{license}}",
+    "ingredientsUsed": "Je hebt nodig",
+    "clearTicks": "Vinkjes wissen",
+    "clearTicksQuestion": "Alle vinkjes voor dit recept wissen?",
+    "clearTicksExplain": "Alle afgevinkte ingrediënten en voorbereidingen gaan weer uit, zodat je opnieuw kunt beginnen. Het aantal personen blijft staan.",
+    "cancel": "Laat staan",
+    "confirmClear": "Vinkjes wissen",
+    "showIngredients": "Ingrediënten",
+    "closeIngredients": "Ingrediënten sluiten",
+    "checkedCount": "{{checked}} van {{total}} klaar"
+  },
+  "prep": {
+    "title": "Mise en place",
+    "progress": "{{done}} van {{total}} klaar",
+    "locked": "Vink alle voorbereidingen af om te beginnen met koken.",
+    "ready": "Alles staat klaar. Tijd voor het vuur.",
+    "markDone": "Afvinken",
+    "markNotDone": "Vinkje weghalen"
+  },
+  "cook": {
+    "stepOf": "Stap {{step}} van {{total}}",
+    "previous": "Vorige stap",
+    "next": "Volgende stap",
+    "backToPrep": "Terug naar de voorbereiding",
+    "finish": "Klaar",
+    "prepNotDone": "De voorbereiding is nog niet af",
+    "prepNotDoneExplain": "Dit recept gaat het best als alles klaarstaat voordat het vuur aangaat.",
+    "goToPrep": "Naar de voorbereiding"
+  },
+  "done": {
+    "title": "Eet smakelijk",
+    "body": "{{title}} is klaar. Wis de vinkjes als je de volgende keer opnieuw wilt beginnen.",
+    "again": "Terug naar het recept"
+  },
+  "timer": {
+    "start": "Start wekker · {{time}}",
+    "restart": "Wekker opnieuw starten",
+    "running": "Loopt · nog {{time}}",
+    "pause": "Pauzeer {{label}}",
+    "resume": "Hervat {{label}}",
+    "remove": "Verwijder {{label}}",
+    "stop": "Wekker uit",
+    "done": "Klaar",
+    "trayLabel": "Kookwekkers",
+    "finishedTitle": "Klaar: {{label}}"
+  },
+  "notFound": {
+    "title": "Deze bladzijde staat niet in het boek",
+    "body": "Misschien is het recept naar een ander hoofdstuk verhuisd, of zit er een typfout in de link."
+  },
+  "units": {
+    "g": "g",
+    "kg": "kg",
+    "ml": "ml",
+    "l": "l",
+    "tsp": "tl",
+    "tbsp": "el",
+    "piece": "",
+    "clove_one": "teen",
+    "clove_other": "tenen",
+    "pinch_one": "snuf",
+    "pinch_other": "snufjes",
+    "slice_one": "plak",
+    "slice_other": "plakken",
+    "sprig_one": "takje",
+    "sprig_other": "takjes",
+    "can_one": "blik",
+    "can_other": "blikken"
+  },
+  "languages": {
+    "en": "Engels",
+    "nl": "Nederlands"
+  }
+}

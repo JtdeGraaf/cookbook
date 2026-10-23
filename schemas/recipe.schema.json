@@ -1,0 +1,543 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "title": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "en",
+        "nl"
+      ],
+      "additionalProperties": false,
+      "description": "The same text in English and Dutch."
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "en",
+        "nl"
+      ],
+      "additionalProperties": false,
+      "description": "The same text in English and Dutch."
+    },
+    "servings": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 24,
+      "description": "How many people the amounts are written for."
+    },
+    "prepMinutes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "cookMinutes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "en": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nl": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "en",
+          "nl"
+        ],
+        "additionalProperties": false,
+        "description": "The same text in English and Dutch."
+      }
+    },
+    "cover": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "pattern": "^[\\w-]+\\.(jpe?g|png|webp)$"
+        },
+        "alt": {
+          "type": "object",
+          "properties": {
+            "en": {
+              "type": "string",
+              "minLength": 1
+            },
+            "nl": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "en",
+            "nl"
+          ],
+          "additionalProperties": false,
+          "description": "What the photo shows, for people who cannot see it."
+        },
+        "credit": {
+          "description": "Leave out for your own photos.",
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Short licence name, like \"CC BY-SA 4.0\"."
+            },
+            "source": {
+              "type": "string",
+              "format": "uri",
+              "description": "Where the image comes from."
+            }
+          },
+          "required": [
+            "author",
+            "license",
+            "source"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "file",
+        "alt"
+      ],
+      "additionalProperties": false
+    },
+    "ingredients": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Short name that steps use to point at this ingredient, like \"eggs\"."
+          },
+          "name": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false,
+            "description": "The same text in English and Dutch."
+          },
+          "amount": {
+            "description": "Leave out together with unit for \"to taste\".",
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "g",
+              "kg",
+              "ml",
+              "l",
+              "tsp",
+              "tbsp",
+              "piece",
+              "clove",
+              "pinch",
+              "slice",
+              "sprig",
+              "can"
+            ]
+          },
+          "note": {
+            "description": "Extra detail shown after the name, like \"at room temperature\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "prep": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false,
+            "description": "The same text in English and Dutch."
+          },
+          "ingredients": {
+            "description": "Ids of the ingredients this step uses.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+            }
+          },
+          "timer": {
+            "type": "object",
+            "properties": {
+              "minutes": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1440
+              },
+              "label": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nl": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "en",
+                  "nl"
+                ],
+                "additionalProperties": false,
+                "description": "Short name shown on the running timer, like \"Simmer sauce\"."
+              }
+            },
+            "required": [
+              "minutes",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "tip": {
+            "description": "A short extra hint, shown as a \"Point\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "pattern": "^[\\w-]+\\.(jpe?g|png|webp)$"
+              },
+              "alt": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nl": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "en",
+                  "nl"
+                ],
+                "additionalProperties": false,
+                "description": "What the photo shows, for people who cannot see it."
+              },
+              "credit": {
+                "description": "Leave out for your own photos.",
+                "type": "object",
+                "properties": {
+                  "author": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "license": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Short licence name, like \"CC BY-SA 4.0\"."
+                  },
+                  "source": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Where the image comes from."
+                  }
+                },
+                "required": [
+                  "author",
+                  "license",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "file",
+              "alt"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Mise en place: everything to do before anything goes on the heat."
+    },
+    "cook": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false,
+            "description": "The same text in English and Dutch."
+          },
+          "ingredients": {
+            "description": "Ids of the ingredients this step uses.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+            }
+          },
+          "timer": {
+            "type": "object",
+            "properties": {
+              "minutes": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1440
+              },
+              "label": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nl": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "en",
+                  "nl"
+                ],
+                "additionalProperties": false,
+                "description": "Short name shown on the running timer, like \"Simmer sauce\"."
+              }
+            },
+            "required": [
+              "minutes",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "tip": {
+            "description": "A short extra hint, shown as a \"Point\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "pattern": "^[\\w-]+\\.(jpe?g|png|webp)$"
+              },
+              "alt": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nl": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "en",
+                  "nl"
+                ],
+                "additionalProperties": false,
+                "description": "What the photo shows, for people who cannot see it."
+              },
+              "credit": {
+                "description": "Leave out for your own photos.",
+                "type": "object",
+                "properties": {
+                  "author": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "license": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Short licence name, like \"CC BY-SA 4.0\"."
+                  },
+                  "source": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Where the image comes from."
+                  }
+                },
+                "required": [
+                  "author",
+                  "license",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "file",
+              "alt"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      },
+      "description": "The cooking steps, done one at a time after all prep."
+    }
+  },
+  "required": [
+    "title",
+    "summary",
+    "servings",
+    "prepMinutes",
+    "cookMinutes",
+    "cover",
+    "ingredients",
+    "prep",
+    "cook"
+  ],
+  "additionalProperties": false,
+  "description": "One recipe. The folder it sits in is its chapter.",
+  "title": "Cookbook recipe"
+}

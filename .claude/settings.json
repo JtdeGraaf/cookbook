@@ -1,0 +1,14 @@
+{
+  "enabledPlugins": {
+    "house-style@graaf": true,
+    "react-slices@graaf": true
+  },
+  "extraKnownMarketplaces": {
+    "graaf": {
+      "source": {
+        "source": "github",
+        "repo": "JtdeGraaf/agents"
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "book": {
+    "title": "Cookbook",
+    "tagline": "Recipes worth keeping, written so the prep is done before anything goes in a hot pan.",
+    "seal": "Prep first, then the pan",
+    "contents": "Contents",
+    "page": "p. {{page}}",
+    "pageLabel": "Page {{page}}",
+    "recipeCount_one": "{{count}} recipe",
+    "recipeCount_other": "{{count}} recipes",
+    "backToContents": "Back to contents",
+    "minutes": "{{count}} min",
+    "totalTime": "{{count}} min in total"
+  },
+  "header": {
+    "home": "Cookbook, to the contents",
+    "searchPlaceholder": "Search recipes, ingredients…",
+    "searchLabel": "Search the cookbook",
+    "language": "Language",
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode",
+    "chapters": "Chapters"
+  },
+  "search": {
+    "title": "Search",
+    "resultCount_one": "{{count}} recipe for “{{query}}”",
+    "resultCount_other": "{{count}} recipes for “{{query}}”",
+    "noResults": "Nothing in the book matches “{{query}}”.",
+    "noResultsHint": "Try one ingredient, like “eggs” or “boerenkool”. Both languages work.",
+    "empty": "Type a dish, an ingredient or a tag. English and Dutch both work.",
+    "uses": "Uses {{ingredients}}"
+  },
+  "recipe": {
+    "prepTime": "Prep",
+    "cookTime": "Cook",
+    "ingredients": "Ingredients",
+    "forPeople_one": "for {{count}} person",
+    "forPeople_other": "for {{count}} people",
+    "servings": "Servings",
+    "fewerServings": "One person fewer",
+    "moreServings": "One person more",
+    "toTaste": "to taste",
+    "prepTitle": "Before the heat goes on",
+    "prepIntro": "Get everything chopped, measured and within reach. Cooking starts when this list is done.",
+    "methodTitle": "Method",
+    "startPrep": "Start with the prep",
+    "continuePrep": "Continue the prep",
+    "startCooking": "Start cooking",
+    "point": "Point",
+    "photoCredit": "Photo: {{author}}, {{license}}",
+    "ingredientsUsed": "You need",
+    "clearTicks": "Clear ticks",
+    "clearTicksQuestion": "Clear all ticks for this recipe?",
+    "clearTicksExplain": "Every ticked ingredient and prep task is unticked, so you can cook it again from the start. Your servings stay.",
+    "cancel": "Keep them",
+    "confirmClear": "Clear ticks",
+    "showIngredients": "Ingredients",
+    "closeIngredients": "Close ingredients",
+    "checkedCount": "{{checked}} of {{total}} ready"
+  },
+  "prep": {
+    "title": "Mise en place",
+    "progress": "{{done}} of {{total}} ready",
+    "locked": "Tick off every prep task to start cooking.",
+    "ready": "Everything is ready. Time for the heat.",
+    "markDone": "Mark as done",
+    "markNotDone": "Mark as not done"
+  },
+  "cook": {
+    "stepOf": "Step {{step}} of {{total}}",
+    "previous": "Previous step",
+    "next": "Next step",
+    "backToPrep": "Back to the prep",
+    "finish": "Finish",
+    "prepNotDone": "The prep isn’t finished yet",
+    "prepNotDoneExplain": "This recipe works best when everything is ready before the heat goes on.",
+    "goToPrep": "Go to the prep"
+  },
+  "done": {
+    "title": "Enjoy your meal",
+    "body": "That’s {{title}} done. Clear the ticks if you want to start fresh next time.",
+    "again": "Back to the recipe"
+  },
+  "timer": {
+    "start": "Start timer · {{time}}",
+    "restart": "Restart timer",
+    "running": "Running · {{time}} left",
+    "pause": "Pause {{label}}",
+    "resume": "Resume {{label}}",
+    "remove": "Remove {{label}}",
+    "stop": "Stop alarm",
+    "done": "Done",
+    "trayLabel": "Kitchen timers",
+    "finishedTitle": "Done: {{label}}"
+  },
+  "notFound": {
+    "title": "This page isn’t in the book",
+    "body": "The recipe may have moved to another chapter, or the link has a typo."
+  },
+  "units": {
+    "g": "g",
+    "kg": "kg",
+    "ml": "ml",
+    "l": "l",
+    "tsp": "tsp",
+    "tbsp": "tbsp",
+    "piece": "",
+    "clove_one": "clove",
+    "clove_other": "cloves",
+    "pinch_one": "pinch",
+    "pinch_other": "pinches",
+    "slice_one": "slice",
+    "slice_other": "slices",
+    "sprig_one": "sprig",
+    "sprig_other": "sprigs",
+    "can_one": "can",
+    "can_other": "cans"
+  },
+  "languages": {
+    "en": "English",
+    "nl": "Dutch"
+  }
+}

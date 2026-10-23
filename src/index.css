@@ -1,0 +1,284 @@
+/* Design tokens. Colours, type and spacing live here only; components use these names. */
+
+:root {
+  color-scheme: light;
+
+  --paper: #f2f2ed;
+  --sheet: #ffffff;
+  --ink: #1c1b19;
+  --ink-soft: #57544d;
+  --rule: #d6d3cb;
+  --rule-strong: #aca89e;
+  --shade: rgb(28 27 25 / 0.12);
+  --gutter-shadow: rgb(28 27 25 / 0.1);
+  --focus: #1f5fbf;
+
+  --tomato: #c93f1f;
+  --tomato-ink: #b23517;
+  --on-tomato: #ffffff;
+  --matcha: #4f7a1f;
+  --matcha-ink: #456a1c;
+  --on-matcha: #ffffff;
+  --yolk: #f0b323;
+  --yolk-ink: #8a5b00;
+  --on-yolk: #1c1b19;
+  --plum: #8a3363;
+  --plum-ink: #8a3363;
+  --on-plum: #ffffff;
+  --sea: #23628f;
+  --sea-ink: #23628f;
+  --on-sea: #ffffff;
+
+  --font-display: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Arial Rounded MT Bold', sans-serif;
+  --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', system-ui, sans-serif;
+
+  --radius-small: 6px;
+  --radius: 12px;
+  --radius-large: 20px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --page-width: 1180px;
+  --tab-width: 44px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* The colour of the chapter being read; pages set data-color to switch it. */
+  --chapter: var(--tomato);
+  --chapter-ink: var(--tomato-ink);
+  --on-chapter: var(--on-tomato);
+  --chapter-wash: color-mix(in srgb, var(--chapter) 12%, var(--sheet));
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --paper: #141413;
+  --sheet: #1f1e1c;
+  --ink: #edebe5;
+  --ink-soft: #aaa69d;
+  --rule: #393731;
+  --rule-strong: #5c5950;
+  --shade: rgb(0 0 0 / 0.45);
+  --gutter-shadow: rgb(0 0 0 / 0.5);
+  --focus: #8cc2ff;
+
+  --tomato: #f26849;
+  --tomato-ink: #ff8b70;
+  --on-tomato: #1a0b06;
+  --matcha: #9cc860;
+  --matcha-ink: #add677;
+  --on-matcha: #10160a;
+  --yolk: #f5c04a;
+  --yolk-ink: #f5c04a;
+  --on-yolk: #1a1406;
+  --plum: #d27bad;
+  --plum-ink: #e296c2;
+  --on-plum: #1a0a13;
+  --sea: #6db0e0;
+  --sea-ink: #8cc2ea;
+  --on-sea: #07131c;
+}
+
+[data-color='tomato'] {
+  --chapter: var(--tomato);
+  --chapter-ink: var(--tomato-ink);
+  --on-chapter: var(--on-tomato);
+}
+[data-color='matcha'] {
+  --chapter: var(--matcha);
+  --chapter-ink: var(--matcha-ink);
+  --on-chapter: var(--on-matcha);
+}
+[data-color='yolk'] {
+  --chapter: var(--yolk);
+  --chapter-ink: var(--yolk-ink);
+  --on-chapter: var(--on-yolk);
+}
+[data-color='plum'] {
+  --chapter: var(--plum);
+  --chapter-ink: var(--plum-ink);
+  --on-chapter: var(--on-plum);
+}
+[data-color='sea'] {
+  --chapter: var(--sea);
+  --chapter-ink: var(--sea-ink);
+  --on-chapter: var(--on-sea);
+}
+[data-color] {
+  --chapter-wash: color-mix(in srgb, var(--chapter) 12%, var(--sheet));
+}
+:root[data-theme='dark'] [data-color],
+:root[data-theme='dark'] {
+  --chapter-wash: color-mix(in srgb, var(--chapter) 16%, var(--sheet));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-small);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.numbers {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The shared pill button of the book: a rounded block of chapter colour. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: 0 var(--space-5);
+  border: 0;
+  border-radius: 999px;
+  background: var(--chapter);
+  color: var(--on-chapter);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 3px 6px -2px var(--shade);
+  transition:
+    transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out),
+    background-color 160ms;
+}
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px -4px var(--shade);
+}
+.button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px var(--shade);
+}
+.button[aria-disabled='true'],
+.button:disabled {
+  background: var(--rule);
+  color: var(--ink-soft);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+.button--quiet {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--rule-strong);
+}
+.button--quiet:hover,
+.button--quiet:active {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+}
+.icon-button:hover {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.text-link {
+  color: var(--chapter-ink);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

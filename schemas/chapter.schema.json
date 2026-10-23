@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "title": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "en",
+        "nl"
+      ],
+      "additionalProperties": false,
+      "description": "The same text in English and Dutch."
+    },
+    "intro": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "en",
+        "nl"
+      ],
+      "additionalProperties": false,
+      "description": "The same text in English and Dutch."
+    },
+    "order": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991,
+      "description": "Chapters are sorted by this number, low first."
+    },
+    "color": {
+      "description": "Colour of the chapter tab.",
+      "type": "string",
+      "enum": [
+        "tomato",
+        "matcha",
+        "yolk",
+        "plum",
+        "sea"
+      ]
+    }
+  },
+  "required": [
+    "title",
+    "order"
+  ],
+  "additionalProperties": false,
+  "description": "Optional details for a chapter folder.",
+  "title": "Cookbook chapter"
+}
