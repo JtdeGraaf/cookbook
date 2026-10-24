@@ -55,6 +55,7 @@
     "continuePrep": "Continue the prep",
     "startCooking": "Start cooking",
     "point": "Point",
+    "whatDoesTermMean": "What does “{{term}}” mean?",
     "photoCredit": "Photo: {{author}}, {{license}}",
     "ingredientsUsed": "You need",
     "clearTicks": "Clear ticks",

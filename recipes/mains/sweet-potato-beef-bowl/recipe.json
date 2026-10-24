@@ -28,8 +28,8 @@
   "prep": [
     {
       "text": {
-        "en": "Peel the sweet potato and cut it into cubes of about 1.5 cm.",
-        "nl": "Schil de zoete aardappel en snijd hem in blokjes van ongeveer 1,5 cm."
+        "en": "Peel the sweet potato and cut it [[into cubes|dice]] of about 1.5 cm.",
+        "nl": "Schil de zoete aardappel en snijd hem [[in blokjes|dice]] van ongeveer 1,5 cm."
       },
       "ingredients": ["sweet-potato"],
       "tip": {
@@ -45,7 +45,7 @@
       "ingredients": ["paprika", "garlic-powder", "salt-pepper"]
     },
     {
-      "text": { "en": "Cut the avocado into cubes.", "nl": "Snijd de avocado in blokjes." },
+      "text": { "en": "Cut the avocado [[into cubes|dice]].", "nl": "Snijd de avocado [[in blokjes|dice]]." },
       "ingredients": ["avocado"]
     },
     {

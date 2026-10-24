@@ -15,8 +15,18 @@ export function makeIngredient(overrides: Partial<Ingredient> & Pick<Ingredient,
   return { name: both(overrides.id), plural: null, quantity: { amount: 1, unit: 'piece' }, note: null, pantry: false, ...overrides }
 }
 
+/** A step whose text has no techniques unless `pieces` says otherwise. */
 export function makeStep(overrides: Partial<Step> = {}): Step {
-  return { text: both('Do something'), ingredientIds: [], timer: null, tip: null, image: null, ...overrides }
+  const text = overrides.text ?? both('Do something')
+  return {
+    text,
+    pieces: { en: [{ kind: 'words', text: text.en }], nl: [{ kind: 'words', text: text.nl }] },
+    ingredientIds: [],
+    timer: null,
+    tip: null,
+    image: null,
+    ...overrides,
+  }
 }
 
 /** A recipe in folder `folderPath` (default "mains"); its path is worked out from the two. */

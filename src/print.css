@@ -34,6 +34,8 @@
   .tick,
   .ingredient-box__foot,
   .photo__credit,
+  .technique__button,
+  .technique-note,
   .folio {
     display: none !important;
   }

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "object",
+        "properties": {
+          "en": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nl": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "en",
+          "nl"
+        ],
+        "additionalProperties": false,
+        "description": "The technique as a short heading, like \"Chop finely\"."
+      },
+      "explanation": {
+        "type": "object",
+        "properties": {
+          "en": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nl": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "en",
+          "nl"
+        ],
+        "additionalProperties": false,
+        "description": "How to do it, in one to three short sentences."
+      }
+    },
+    "required": [
+      "name",
+      "explanation"
+    ],
+    "additionalProperties": false
+  },
+  "description": "Cooking techniques that steps explain behind an (i) button, by id.",
+  "title": "Cookbook techniques"
+}

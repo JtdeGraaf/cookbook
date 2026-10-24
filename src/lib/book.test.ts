@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeBook, makeFolder, makeIngredient, makeRecipe, makeStep } from '@/test/fixtures'
+import { both, makeBook, makeFolder, makeIngredient, makeRecipe, makeStep } from '@/test/fixtures'
 import {
   allRecipes,
   findRecipe,
@@ -11,6 +11,8 @@ import {
   recipeViewPath,
   resolveBookPath,
   searchTermForMissingPage,
+  techniquesInStep,
+  type Technique,
 } from './book'
 
 const eggs = makeRecipe({ slug: 'eggs', folderPath: 'breakfast' })
@@ -146,5 +148,26 @@ describe('ingredientsForStep', () => {
     const step = makeStep({ ingredientIds: ['leek', 'salt'] })
 
     expect(ingredientsForStep(recipe, step).map((ingredient) => ingredient.id)).toEqual(['leek', 'salt'])
+  })
+})
+
+describe('techniquesInStep', () => {
+  it('lists each technique once, in the order the text uses them', () => {
+    const chop: Technique = { id: 'chop-finely', name: both('Chop finely'), explanation: both('Small.') }
+    const soften: Technique = { id: 'soften', name: both('Soften'), explanation: both('Gently.') }
+    const step = makeStep({
+      pieces: {
+        en: [
+          { kind: 'technique', text: 'Chop', technique: chop },
+          { kind: 'words', text: ' and ' },
+          { kind: 'technique', text: 'soften', technique: soften },
+          { kind: 'technique', text: 'chop', technique: chop },
+        ],
+        nl: [{ kind: 'technique', text: 'Fruit', technique: soften }],
+      },
+    })
+
+    expect(techniquesInStep(step, 'en').map((technique) => technique.id)).toEqual(['chop-finely', 'soften'])
+    expect(techniquesInStep(step, 'nl').map((technique) => technique.id)).toEqual(['soften'])
   })
 })

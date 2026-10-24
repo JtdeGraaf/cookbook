@@ -20,7 +20,18 @@ function validRecipe(): Record<string, unknown> {
   }
 }
 
+const toastTechnique = { name: { en: 'Toast', nl: 'Roosteren' }, explanation: both('Brown it in the toaster.') }
+
+/** A recipe whose only cooking step has this text. */
+function recipeWithCookText(en: string, nl: string): Record<string, unknown> {
+  return { ...validRecipe(), cook: [{ text: { en, nl } }] }
+}
+
 let root: string
+
+function addTechniques(techniques: unknown) {
+  writeFileSync(join(root, 'techniques.json'), JSON.stringify(techniques))
+}
 
 function addRecipe(folder: string, slug: string, recipe: unknown, images: string[] = ['cover.jpg']) {
   const recipeFolder = join(root, folder, slug)
@@ -214,5 +225,70 @@ describe('readRecipeFolder', () => {
     addRecipe('mains', 'jam', validRecipe(), [])
 
     expect(problems()).toHaveLength(2)
+  })
+})
+
+describe('readRecipeFolder with techniques', () => {
+  const where = () => join('mains', 'toast', 'recipe.json')
+
+  it('splits step text around marked techniques and keeps the plain words as text', () => {
+    addTechniques({ toast: toastTechnique })
+    addRecipe('mains', 'toast', recipeWithCookText('[[Toast|toast]] the bread.', 'Brood [[roosteren|toast]].'))
+
+    const step = readRecipeFolder(root).chapters[0].recipes[0].cook[0]
+
+    expect(step.text).toEqual({ en: 'Toast the bread.', nl: 'Brood roosteren.' })
+    expect(step.pieces.en).toEqual([
+      { kind: 'technique', text: 'Toast', technique: { id: 'toast', ...toastTechnique } },
+      { kind: 'words', text: ' the bread.' },
+    ])
+  })
+
+  it('rejects a technique that is not in techniques.json', () => {
+    addTechniques({ toast: toastTechnique })
+    addRecipe('mains', 'toast', recipeWithCookText('[[Grill|grill]] it.', '[[Grill|grill]] het.'))
+
+    expect(problems()).toEqual([
+      `${where()}: cook step 1 (en) uses unknown technique "grill"; add it to recipes/techniques.json.`,
+      `${where()}: cook step 1 (nl) uses unknown technique "grill"; add it to recipes/techniques.json.`,
+    ])
+  })
+
+  it('rejects any technique when there is no techniques.json', () => {
+    addRecipe('mains', 'toast', recipeWithCookText('[[Toast|toast]] it.', 'Brood [[roosteren|toast]].'))
+
+    expect(problems()).toHaveLength(2)
+  })
+
+  it('rejects English and Dutch text that mark different techniques', () => {
+    addTechniques({ toast: toastTechnique })
+    addRecipe('mains', 'toast', recipeWithCookText('[[Toast|toast]] it.', 'Rooster het brood.'))
+
+    expect(problems()).toEqual([
+      `${where()}: cook step 1 marks different techniques in English (toast) and Dutch (none).`,
+    ])
+  })
+
+  it('rejects a broken mark', () => {
+    addTechniques({ toast: toastTechnique })
+    addRecipe('mains', 'toast', recipeWithCookText('[[Toast it.', 'Brood [[roosteren|toast]].'))
+
+    expect(problems()).toEqual([
+      `${where()}: cook step 1 (en) has a broken technique mark; write it as [[words|technique-id]].`,
+    ])
+  })
+
+  it('rejects a technique id that is not a slug', () => {
+    addTechniques({ 'Toast It': toastTechnique })
+    addRecipe('mains', 'toast', validRecipe())
+
+    expect(problems()[0]).toContain('Technique ids use lowercase letters')
+  })
+
+  it('rejects a technique without its Dutch explanation', () => {
+    addTechniques({ toast: { ...toastTechnique, explanation: { en: 'Brown it.' } } })
+    addRecipe('mains', 'toast', validRecipe())
+
+    expect(problems()[0]).toContain('toast.explanation.nl')
   })
 })

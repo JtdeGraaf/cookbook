@@ -38,17 +38,17 @@
   ],
   "prep": [
     {
-      "text": { "en": "Peel the onion and chop it finely.", "nl": "Pel de ui en snipper hem fijn." },
+      "text": { "en": "Peel the onion and [[chop it finely|chop-finely]].", "nl": "Pel de ui en [[snipper hem fijn|chop-finely]]." },
       "ingredients": ["onion"]
     },
     {
-      "text": { "en": "Cut the chicken into small cubes.", "nl": "Snijd de kipfilet in kleine blokjes." },
+      "text": { "en": "Cut the chicken [[into small cubes|dice]].", "nl": "Snijd de kipfilet [[in kleine blokjes|dice]]." },
       "ingredients": ["chicken"]
     },
     {
       "text": {
-        "en": "Slice the mushrooms and cut the leek into thin rings.",
-        "nl": "Snijd de champignons in plakjes en de prei in dunne ringen."
+        "en": "Slice the mushrooms and cut the leek [[into thin rings|slice-into-rings]].",
+        "nl": "Snijd de champignons in plakjes en de prei [[in dunne ringen|slice-into-rings]]."
       },
       "ingredients": ["mushrooms", "leek"],
       "tip": {
@@ -62,21 +62,21 @@
     },
     {
       "text": {
-        "en": "Make the truffle cream: whisk the protein powder, almond milk, truffle tapenade and a little salt and pepper until smooth, or blend it.",
-        "nl": "Maak de truffelroom: klop het eiwitpoeder, de amandelmelk, de truffeltapenade en wat zout en peper met een garde tot een gladde saus, of mix het in de blender."
+        "en": "Make the truffle cream: [[whisk|whisk]] the protein powder, almond milk, truffle tapenade and a little salt and pepper until smooth, or blend it.",
+        "nl": "Maak de truffelroom: [[klop|whisk]] het eiwitpoeder, de amandelmelk, de truffeltapenade en wat zout en peper met een garde tot een gladde saus, of mix het in de blender."
       },
       "ingredients": ["protein-cream", "almond-milk", "truffle-tapenade", "salt-pepper"]
     },
     {
-      "text": { "en": "Grate the Parmesan.", "nl": "Rasp de Parmezaanse kaas." },
+      "text": { "en": "[[Grate the Parmesan|grate]].", "nl": "[[Rasp de Parmezaanse kaas|grate]]." },
       "ingredients": ["parmesan"]
     }
   ],
   "cook": [
     {
       "text": {
-        "en": "Heat the olive oil in a wide pan and soften the onion briefly. Add the chicken and season with the onion and garlic powder, salt and pepper.",
-        "nl": "Verhit de olijfolie in een brede pan en fruit de ui kort aan. Voeg de kip toe en breng op smaak met het uien- en knoflookpoeder, zout en peper."
+        "en": "Heat the olive oil in a wide pan and [[soften the onion briefly|soften]]. Add the chicken and season with the onion and garlic powder, salt and pepper.",
+        "nl": "Verhit de olijfolie in een brede pan en [[fruit de ui kort aan|soften]]. Voeg de kip toe en breng op smaak met het uien- en knoflookpoeder, zout en peper."
       },
       "ingredients": ["olive-oil", "onion", "chicken", "onion-garlic-powder", "salt-pepper"],
       "timer": { "minutes": 4, "label": { "en": "Brown the chicken", "nl": "Kip aanbakken" } }
@@ -91,8 +91,8 @@
     },
     {
       "text": {
-        "en": "Stir in the orzo, then pour in the stock. Let the orzo cook gently over low to medium heat until it has soaked up the stock. Stir often.",
-        "nl": "Roer de orzo erdoor en giet de bouillon erbij. Laat de orzo op laag tot middelhoog vuur rustig garen tot hij de bouillon heeft opgenomen. Roer regelmatig."
+        "en": "Stir in the orzo, then pour in the stock. Let the orzo [[cook gently|simmer]] over low to medium heat until it has soaked up the stock. Stir often.",
+        "nl": "Roer de orzo erdoor en giet de bouillon erbij. Laat de orzo op laag tot middelhoog vuur [[rustig garen|simmer]] tot hij de bouillon heeft opgenomen. Roer regelmatig."
       },
       "ingredients": ["orzo", "stock"],
       "timer": { "minutes": 12, "label": { "en": "Cook the orzo", "nl": "Orzo garen" } },

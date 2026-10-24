@@ -15,6 +15,7 @@ import { IngredientBox } from './IngredientBox'
 import { OriginalRecipe } from './OriginalRecipe'
 import { Point } from './Point'
 import { RecipeActions } from './RecipeActions'
+import { StepText } from './StepText'
 import { TimesCooked } from './TimesCooked'
 import type { RecipeProgressControls } from './useRecipeProgress'
 import './cooking.css'
@@ -98,7 +99,7 @@ export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadP
                     <span className="before-heat__marker" aria-hidden="true">
                       {done ? <Icon name="check" size={16} /> : PREP_LETTERS[index]}
                     </span>
-                    {localized(step.text)}
+                    <StepText step={step} />
                   </li>
                 )
               })}
@@ -116,7 +117,7 @@ export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadP
                     {index + 1}
                   </span>
                   <div className="method__body">
-                    <p>{localized(step.text)}</p>
+                    <StepText step={step} />
                     {step.tip && <Point tip={step.tip} />}
                   </div>
                 </li>

@@ -1,0 +1,87 @@
+{
+  "$schema": "../schemas/techniques.schema.json",
+  "chop-finely": {
+    "name": { "en": "Chop finely", "nl": "Fijnsnijden" },
+    "explanation": {
+      "en": "Cut into pieces as small as you can manage, a few millimetres at most. Slice first one way, then across, and keep rocking the knife through the pile until it is even.",
+      "nl": "Snijd in zo klein mogelijke stukjes, hooguit een paar millimeter. Snijd eerst de ene kant op, dan dwars, en blijf met het mes door het hoopje wiegen tot alles even fijn is."
+    }
+  },
+  "dice": {
+    "name": { "en": "Dice", "nl": "In blokjes snijden" },
+    "explanation": {
+      "en": "Cut into strips, then cut the strips across into cubes of the same size, so everything cooks at the same pace. Small cubes are about 1 cm.",
+      "nl": "Snijd in reepjes en snijd die reepjes dwars in even grote blokjes, zodat alles even snel gaar is. Kleine blokjes zijn ongeveer 1 cm."
+    }
+  },
+  "grate": {
+    "name": { "en": "Grate", "nl": "Raspen" },
+    "explanation": {
+      "en": "Rub the cheese down over the small holes of a grater. Finely grated cheese melts smoothly into a sauce instead of turning stringy.",
+      "nl": "Wrijf de kaas naar beneden over de kleine gaatjes van een rasp. Fijngeraspte kaas smelt glad in een saus in plaats van draderig te worden."
+    }
+  },
+  "whisk": {
+    "name": { "en": "Whisk", "nl": "Loskloppen" },
+    "explanation": {
+      "en": "Beat quickly with a whisk or fork in small circles until everything is one smooth mixture, with no streaks of white or lumps left.",
+      "nl": "Klop snel met een garde of vork in kleine rondjes tot alles één glad mengsel is, zonder slierten eiwit of klontjes."
+    }
+  },
+  "al-dente": {
+    "name": { "en": "Al dente", "nl": "Beetgaar (al dente)" },
+    "explanation": {
+      "en": "Cooked, but still with a little bite in the middle. Start tasting a minute or two before the time on the packet; the pasta keeps softening in the sauce.",
+      "nl": "Gaar, maar met nog een klein beetje stevigheid in het midden. Proef al een minuut of twee voor de tijd op het pak; de pasta wordt in de saus nog zachter."
+    }
+  },
+  "drain": {
+    "name": { "en": "Drain", "nl": "Afgieten en laten uitlekken" },
+    "explanation": {
+      "en": "Pour pasta into a colander in the sink and give it a shake, without rinsing it. Fried food goes on kitchen paper so the fat can run off.",
+      "nl": "Giet pasta in een vergiet in de gootsteen en schud het even, zonder af te spoelen. Gebakken eten leg je op keukenpapier, zodat het vet eraf loopt."
+    }
+  },
+  "soften": {
+    "name": { "en": "Soften", "nl": "Fruiten" },
+    "explanation": {
+      "en": "Cook gently in a little fat over low to medium heat, stirring now and then, until soft and glassy but not brown. Onion takes about 5 minutes; add garlic later, as it burns quickly.",
+      "nl": "Bak zachtjes in een beetje vet op laag tot middelhoog vuur en roer af en toe, tot het zacht en glazig is maar niet bruin. Ui duurt zo'n 5 minuten; doe knoflook er later bij, want die verbrandt snel."
+    }
+  },
+  "simmer": {
+    "name": { "en": "Simmer", "nl": "Zachtjes laten koken" },
+    "explanation": {
+      "en": "Keep it just below the boil: small bubbles now and then, not a rolling boil. Turn the heat down as soon as it starts to bubble hard.",
+      "nl": "Houd het net onder de kook: af en toe een klein belletje, geen bruisende kook. Zet het vuur lager zodra het hard begint te borrelen."
+    }
+  },
+  "slice-into-rings": {
+    "name": { "en": "Slice into rings", "nl": "In ringen snijden" },
+    "explanation": {
+      "en": "Cut across the leek into slices about half a centimetre thick. Rinse the rings in a colander afterwards, as sand likes to hide between the layers.",
+      "nl": "Snijd de prei dwars in plakjes van ongeveer een halve centimeter. Spoel de ringen daarna in een vergiet af, want tussen de laagjes zit vaak zand."
+    }
+  },
+  "prick-pastry": {
+    "name": { "en": "Prick the pastry", "nl": "Gaatjes prikken in het deeg" },
+    "explanation": {
+      "en": "Push a fork into the base all over, every few centimetres. The holes let steam escape, so the base stays flat instead of puffing up.",
+      "nl": "Prik met een vork om de paar centimeter gaatjes in de hele bodem. Zo kan de stoom ontsnappen en blijft de bodem plat in plaats van op te bollen."
+    }
+  },
+  "egg-wash": {
+    "name": { "en": "Egg wash", "nl": "Bestrijken met ei" },
+    "explanation": {
+      "en": "Brush a thin layer of beaten egg over the pastry with a pastry brush, or the back of a spoon. It bakes into a shiny golden crust; too much drips and burns.",
+      "nl": "Smeer met een kwastje, of de bolle kant van een lepel, een dun laagje losgeklopt ei over het deeg. Dat bakt tot een glanzend goudbruin korstje; te veel druipt af en verbrandt."
+    }
+  },
+  "toss": {
+    "name": { "en": "Toss through", "nl": "Doorscheppen" },
+    "explanation": {
+      "en": "Lift and turn the pasta through the sauce with tongs or two spoons until every piece is coated. Keep going for a moment so the sauce clings.",
+      "nl": "Schep de pasta met een tang of twee lepels door de saus tot elk stukje bedekt is. Blijf nog even scheppen, zodat de saus goed blijft hangen."
+    }
+  }
+}

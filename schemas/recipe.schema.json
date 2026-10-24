@@ -286,7 +286,7 @@
               "nl"
             ],
             "additionalProperties": false,
-            "description": "The same text in English and Dutch."
+            "description": "Mark a cooking term with [[words|technique-id]], like \"[[chop it finely|chop-finely]]\", to explain it from techniques.json."
           },
           "ingredients": {
             "description": "Ids of the ingredients this step uses.",
@@ -439,7 +439,7 @@
               "nl"
             ],
             "additionalProperties": false,
-            "description": "The same text in English and Dutch."
+            "description": "Mark a cooking term with [[words|technique-id]], like \"[[chop it finely|chop-finely]]\", to explain it from techniques.json."
           },
           "ingredients": {
             "description": "Ids of the ingredients this step uses.",

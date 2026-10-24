@@ -36,6 +36,7 @@ Everything you tick or choose is stored in your browser only. There is no backen
 
 ```
 recipes/
+  techniques.json             <- cooking terms the steps explain behind an (i) button
   breakfast/                  <- a chapter: a top-level folder
     chapter.json              <- optional: title, intro, order, tab colour
     shakshuka/                <- a recipe: any folder with a recipe.json
@@ -55,7 +56,7 @@ recipes/
 
 **The folders are the book.** A folder with a `recipe.json` is a recipe; any other folder holds recipes or more folders. Top-level folders are the chapters (each with its tab colour); folders inside them are sections, which use their chapter's colour. There is no chapter field in `recipe.json`: move the folder and the recipe moves. The web address is the folder path, so `recipes/mains/pasta/carbonara` is at `/mains/pasta/carbonara`. A folder without `chapter.json` uses its folder name as its title (`quick-bites` becomes "Quick bites") and comes after the folders that do have an order. Top-level folders can't be called `search`, `browse` or `shopping-list`, and a recipe folder can't hold other folders.
 
-Every file is checked when the site is built. A typo in a field name, a missing Dutch translation, a step that uses an ingredient that doesn't exist, or a photo that isn't in the folder all **stop the build** with a message saying exactly which file and what is wrong. A broken recipe never reaches the site.
+Every file is checked when the site is built. A typo in a field name, a missing Dutch translation, a step that uses an ingredient or technique that doesn't exist, or a photo that isn't in the folder all **stop the build** with a message saying exactly which file and what is wrong. A broken recipe never reaches the site.
 
 ### Add a recipe
 
@@ -99,6 +100,8 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 
 Only `text` is required. `ingredients` shows those ingredients with their scaled amounts on the step; `timer` adds a startable kitchen timer; `tip` shows a "Point" note; `image` adds a step photo.
 
+**Cooking terms.** Mark a term in a step's text as `[[words|technique-id]]` to put a small (i) button after it that opens a short explanation from `recipes/techniques.json`, hidden until pressed: `"Peel the onion and [[chop it finely|chop-finely]]."` / `"Pel de ui en [[snijd hem fijn|chop-finely]]."`. Readers only see the words before the `|`. Mark the same techniques in English and Dutch; an unknown id, a broken mark or a mismatch between the languages stops the build.
+
 **Images.** `file` is a file next to `recipe.json`; `alt` describes the photo for people who can't see it. `credit` (`{ "author", "license", "source" }`) is shown under the photo; leave it out for your own photos.
 
 ### `chapter.json` (optional, in any folder)
@@ -114,6 +117,20 @@ Only `text` is required. `ingredients` shows those ingredients with their scaled
 ```
 
 Works the same for chapters and sections. `color` is one of `tomato`, `matcha`, `yolk`, `plum`, `sea`; without it, a chapter takes the next colour in that list and a section uses its chapter's colour.
+
+### `techniques.json` (next to the chapters)
+
+```json
+{
+  "$schema": "../schemas/techniques.schema.json",
+  "chop-finely": {
+    "name": { "en": "Chop finely", "nl": "Fijnsnijden" },
+    "explanation": { "en": "Cut into pieces as small as you can manage…", "nl": "Snijd in zo klein mogelijke stukjes…" }
+  }
+}
+```
+
+Each key is a technique id (lowercase letters, digits and dashes) that steps point at with `[[words|id]]`. The explanation is one to three short, practical sentences; the (i) shows it under the step with the name in bold.
 
 The JSON Schemas in `schemas/` are generated from the checks in `src/lib/recipe-file.ts` (`npm run schemas`); a test fails if they drift apart.
 

@@ -1,14 +1,16 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { z } from 'zod'
-import type { Book, Folder, Picture, Recipe, Step } from '../src/lib/book.ts'
+import type { Book, Folder, Picture, Recipe, Step, StepTextPiece, Technique } from '../src/lib/book.ts'
 import { CHAPTER_COLORS, RESERVED_CHAPTER_NAMES, type ChapterColor } from '../src/lib/recipe-rules.ts'
+import { plainText, splitTechniqueMarks } from '../src/lib/technique-marks.ts'
 import {
   chapterFileSchema,
   findCrossReferenceProblems,
   listImageFiles,
   recipeFileSchema,
   slugSchema,
+  techniqueFileSchema,
   type ChapterFile,
   type RecipeFile,
 } from '../src/lib/recipe-file.ts'
@@ -33,18 +35,22 @@ type FolderOnDisk = Omit<Folder<ImagePath>, 'color' | 'folders' | 'recipes'> & {
   recipes: Omit<Recipe<ImagePath>, 'color'>[]
 }
 
+/** Techniques by id, from recipes/techniques.json. */
+type Techniques = ReadonlyMap<string, Technique>
+
 /**
  * Reads and checks every folder and recipe under `root`. A folder with a recipe.json is a recipe; any other folder
  * holds recipes or more folders. Throws one error listing every problem found.
  */
 export function readRecipeFolder(root: string): Book<ImagePath> {
   const problems: string[] = []
+  const techniques = readTechniques(root, problems)
   const chapters = listFolders(root).flatMap((slug) => {
     if ((RESERVED_CHAPTER_NAMES as readonly string[]).includes(slug)) {
       problems.push(`${slug}: "${slug}" is taken by a page of the app; pick another chapter name.`)
       return []
     }
-    const chapter = readFolder(join(root, slug), slug, root, problems)
+    const chapter = readFolder(join(root, slug), slug, root, techniques, problems)
     return chapter ? [chapter] : []
   })
 
@@ -61,7 +67,23 @@ export function readRecipeFolder(root: string): Book<ImagePath> {
   }
 }
 
-function readFolder(absolutePath: string, path: string, root: string, problems: string[]): FolderOnDisk | null {
+/** The glossary next to the chapters. Without one, no step may mark a technique. */
+function readTechniques(root: string, problems: string[]): Techniques {
+  const path = join(root, 'techniques.json')
+  if (!existsSync(path)) return new Map()
+  const file = parseJsonFile(path, techniqueFileSchema, root, problems)
+  if (!file) return new Map()
+  const { $schema: _schema, ...byId } = file
+  return new Map(Object.entries(byId).map(([id, technique]) => [id, { id, ...technique }]))
+}
+
+function readFolder(
+  absolutePath: string,
+  path: string,
+  root: string,
+  techniques: Techniques,
+  problems: string[],
+): FolderOnDisk | null {
   const slug = path.split('/').at(-1) ?? path
   if (!slugSchema.safeParse(slug).success) {
     problems.push(`${path}: folder name must be lowercase letters, digits and dashes.`)
@@ -81,11 +103,11 @@ function readFolder(absolutePath: string, path: string, root: string, problems: 
     const childPath = `${path}/${child}`
     const childAbsolutePath = join(absolutePath, child)
     if (!existsSync(join(childAbsolutePath, 'recipe.json'))) {
-      const folder = readFolder(childAbsolutePath, childPath, root, problems)
+      const folder = readFolder(childAbsolutePath, childPath, root, techniques, problems)
       if (folder) folders.push(folder)
       continue
     }
-    const recipe = readRecipe(childAbsolutePath, childPath, path, root, problems)
+    const recipe = readRecipe(childAbsolutePath, childPath, path, root, techniques, problems)
     if (recipe) recipes.push(recipe)
   }
 
@@ -126,6 +148,7 @@ function readRecipe(
   path: string,
   folderPath: string,
   root: string,
+  techniques: Techniques,
   problems: string[],
 ): Omit<Recipe<ImagePath>, 'color'> | null {
   const slug = path.split('/').at(-1) ?? path
@@ -142,7 +165,7 @@ function readRecipe(
   if (!file) return null
 
   const fileProblems = [
-    ...findCrossReferenceProblems(file),
+    ...findCrossReferenceProblems(file, new Set(techniques.keys())),
     ...listImageFiles(file)
       .filter((image) => !existsSync(join(folder, image)))
       .map((image) => `image "${image}" not found next to recipe.json.`),
@@ -151,7 +174,7 @@ function readRecipe(
     problems.push(...fileProblems.map((problem) => `${relative(root, filePath)}: ${problem}`))
     return null
   }
-  return toRecipe(file, folder, slug, path, folderPath)
+  return toRecipe(file, folder, slug, path, folderPath, techniques)
 }
 
 function toRecipe(
@@ -160,19 +183,29 @@ function toRecipe(
   slug: string,
   path: string,
   folderPath: string,
+  techniques: Techniques,
 ): Omit<Recipe<ImagePath>, 'color'> {
   const toPicture = (image: NonNullable<RecipeFile['cover']>): Picture<ImagePath> => ({
     file: join(folder, image.file),
     alt: image.alt,
     credit: image.credit ?? null,
   })
-  const toStep = (step: RecipeFile['cook'][number]): Step<ImagePath> => ({
-    text: step.text,
-    ingredientIds: step.ingredients ?? [],
-    timer: step.timer ?? null,
-    tip: step.tip ?? null,
-    image: step.image ? toPicture(step.image) : null,
-  })
+  // findCrossReferenceProblems has checked every mark and technique id by now.
+  const toPieces = (text: string): StepTextPiece[] =>
+    (splitTechniqueMarks(text) ?? []).map((piece) =>
+      piece.kind === 'words' ? piece : { kind: 'technique', text: piece.text, technique: techniques.get(piece.techniqueId)! },
+    )
+  const toStep = (step: RecipeFile['cook'][number]): Step<ImagePath> => {
+    const pieces = { en: toPieces(step.text.en), nl: toPieces(step.text.nl) }
+    return {
+      text: { en: plainText(pieces.en), nl: plainText(pieces.nl) },
+      pieces,
+      ingredientIds: step.ingredients ?? [],
+      timer: step.timer ?? null,
+      tip: step.tip ?? null,
+      image: step.image ? toPicture(step.image) : null,
+    }
+  }
   return {
     slug,
     path,

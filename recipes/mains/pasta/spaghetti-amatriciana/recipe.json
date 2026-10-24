@@ -42,8 +42,8 @@
     },
     {
       "text": {
-        "en": "Peel the onion and chop it finely. Peel the garlic and chop it finely.",
-        "nl": "Pel de ui en snipper hem fijn. Pel de knoflook en snijd hem fijn."
+        "en": "Peel the onion and [[chop it finely|chop-finely]]. Peel the garlic and [[chop it finely|chop-finely]].",
+        "nl": "Pel de ui en [[snipper hem fijn|chop-finely]]. Pel de knoflook en [[snijd hem fijn|chop-finely]]."
       },
       "ingredients": ["red-onion", "garlic"]
     },
@@ -55,7 +55,7 @@
       "ingredients": ["tomatoes", "chili-flakes"]
     },
     {
-      "text": { "en": "Grate the pecorino finely.", "nl": "Rasp de pecorino fijn." },
+      "text": { "en": "[[Grate the pecorino finely|grate]].", "nl": "[[Rasp de pecorino fijn|grate]]." },
       "ingredients": ["pecorino"]
     },
     {
@@ -76,15 +76,15 @@
     },
     {
       "text": {
-        "en": "Lift the guanciale out with the slotted spoon and let it drain on the kitchen paper. Leave the fat in the pan.",
-        "nl": "Schep de guanciale met de schuimspaan uit de pan en laat uitlekken op het keukenpapier. Laat het vet in de pan."
+        "en": "Lift the guanciale out with the slotted spoon and let it [[drain on the kitchen paper|drain]]. Leave the fat in the pan.",
+        "nl": "Schep de guanciale met de schuimspaan uit de pan en [[laat uitlekken op het keukenpapier|drain]]. Laat het vet in de pan."
       },
       "ingredients": ["guanciale"]
     },
     {
       "text": {
-        "en": "Salt the boiling water, add the spaghetti and cook until al dente.",
-        "nl": "Doe zout in het kokende water, voeg de spaghetti toe en kook hem beetgaar."
+        "en": "Salt the boiling water, add the spaghetti and [[cook until al dente|al-dente]].",
+        "nl": "Doe zout in het kokende water, voeg de spaghetti toe en [[kook hem beetgaar|al-dente]]."
       },
       "ingredients": ["salt", "spaghetti"],
       "timer": { "minutes": 9, "label": { "en": "Spaghetti", "nl": "Spaghetti" } },
@@ -95,31 +95,31 @@
     },
     {
       "text": {
-        "en": "Meanwhile, soften the onion and garlic in the guanciale fat over low heat.",
-        "nl": "Fruit ondertussen de ui en knoflook in het vet van de guanciale op laag vuur."
+        "en": "Meanwhile, [[soften the onion and garlic|soften]] in the guanciale fat over low heat.",
+        "nl": "[[Fruit|soften]] ondertussen de ui en knoflook in het vet van de guanciale op laag vuur."
       },
       "ingredients": ["red-onion", "garlic"],
       "timer": { "minutes": 5, "label": { "en": "Soften the onion", "nl": "Ui fruiten" } }
     },
     {
       "text": {
-        "en": "Add the chili flakes and tomatoes and bring to the boil. Crush the tomatoes with a ladle and let it bubble.",
-        "nl": "Voeg de chilivlokken en tomaten toe en breng aan de kook. Druk de tomaten met een pollepel stuk en laat het pruttelen."
+        "en": "Add the chili flakes and tomatoes and bring to the boil. Crush the tomatoes with a ladle and [[let it bubble|simmer]].",
+        "nl": "Voeg de chilivlokken en tomaten toe en breng aan de kook. Druk de tomaten met een pollepel stuk en [[laat het pruttelen|simmer]]."
       },
       "ingredients": ["chili-flakes", "tomatoes"],
       "timer": { "minutes": 5, "label": { "en": "Simmer the sauce", "nl": "Saus laten pruttelen" } }
     },
     {
       "text": {
-        "en": "Stir the guanciale back into the sauce and season with pepper and a little salt if needed. Scoop a mug of pasta water out of the pan, then drain the spaghetti.",
-        "nl": "Schep de guanciale weer door de saus en breng op smaak met peper en eventueel zout. Schep een mok pastawater uit de pan en giet de spaghetti daarna af."
+        "en": "Stir the guanciale back into the sauce and season with pepper and a little salt if needed. Scoop a mug of pasta water out of the pan, then [[drain the spaghetti|drain]].",
+        "nl": "Schep de guanciale weer door de saus en breng op smaak met peper en eventueel zout. Schep een mok pastawater uit de pan en [[giet de spaghetti daarna af|drain]]."
       },
       "ingredients": ["guanciale", "pepper", "salt"]
     },
     {
       "text": {
-        "en": "Toss the spaghetti through the sauce, add about 25 ml of the pasta water and warm through.",
-        "nl": "Schep de spaghetti door de saus, voeg ongeveer 25 ml van het pastawater toe en verwarm nog even."
+        "en": "[[Toss the spaghetti through the sauce|toss]], add about 25 ml of the pasta water and warm through.",
+        "nl": "[[Schep de spaghetti door de saus|toss]], voeg ongeveer 25 ml van het pastawater toe en verwarm nog even."
       },
       "ingredients": ["spaghetti"],
       "timer": { "minutes": 3, "label": { "en": "Toss the pasta", "nl": "Pasta door de saus" } }

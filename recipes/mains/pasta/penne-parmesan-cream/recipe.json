@@ -36,13 +36,13 @@
     },
     {
       "text": {
-        "en": "Peel the shallot and chop it finely. Peel the garlic and chop it finely.",
-        "nl": "Pel de sjalot en snipper hem fijn. Pel de knoflook en snijd hem fijn."
+        "en": "Peel the shallot and [[chop it finely|chop-finely]]. Peel the garlic and [[chop it finely|chop-finely]].",
+        "nl": "Pel de sjalot en [[snipper hem fijn|chop-finely]]. Pel de knoflook en [[snijd hem fijn|chop-finely]]."
       },
       "ingredients": ["shallot", "garlic"]
     },
     {
-      "text": { "en": "Chop the parsley finely.", "nl": "Snijd de peterselie fijn." },
+      "text": { "en": "[[Chop the parsley finely|chop-finely]].", "nl": "[[Snijd de peterselie fijn|chop-finely]]." },
       "ingredients": ["parsley"]
     },
     {
@@ -62,8 +62,8 @@
   "cook": [
     {
       "text": {
-        "en": "Salt the boiling water, add the penne and cook until al dente.",
-        "nl": "Doe zout in het kokende water, voeg de penne toe en kook hem al dente."
+        "en": "Salt the boiling water, add the penne and [[cook until al dente|al-dente]].",
+        "nl": "Doe zout in het kokende water, voeg de penne toe en [[kook hem al dente|al-dente]]."
       },
       "ingredients": ["salt", "penne"],
       "timer": { "minutes": 11, "label": { "en": "Penne", "nl": "Penne" } },
@@ -74,30 +74,30 @@
     },
     {
       "text": {
-        "en": "Meanwhile, melt the butter in a deep frying pan over medium-high heat and soften the shallot and garlic.",
-        "nl": "Verhit ondertussen de roomboter in een hapjespan op middelhoog vuur en fruit de sjalot en knoflook."
+        "en": "Meanwhile, melt the butter in a deep frying pan over medium-high heat and [[soften the shallot and garlic|soften]].",
+        "nl": "Verhit ondertussen de roomboter in een hapjespan op middelhoog vuur en [[fruit de sjalot en knoflook|soften]]."
       },
       "ingredients": ["butter", "shallot", "garlic"],
       "timer": { "minutes": 5, "label": { "en": "Soften the shallot", "nl": "Sjalot fruiten" } }
     },
     {
       "text": {
-        "en": "Pour in the cooking cream and season with pepper and a little salt. Let the sauce simmer over low heat, stirring often.",
-        "nl": "Voeg de kookroom toe en breng op smaak met peper en eventueel zout. Laat de saus op laag vuur zachtjes koken, roer regelmatig."
+        "en": "Pour in the cooking cream and season with pepper and a little salt. Let the sauce [[simmer|simmer]] over low heat, stirring often.",
+        "nl": "Voeg de kookroom toe en breng op smaak met peper en eventueel zout. Laat de saus op laag vuur [[zachtjes koken|simmer]], roer regelmatig."
       },
       "ingredients": ["cooking-cream", "pepper", "salt"],
       "timer": { "minutes": 5, "label": { "en": "Simmer the sauce", "nl": "Saus laten koken" } }
     },
     {
       "text": {
-        "en": "Scoop about 50 ml of pasta water out of the pan, then drain the penne.",
-        "nl": "Schep ongeveer 50 ml kookvocht uit de pan en giet de penne daarna af."
+        "en": "Scoop about 50 ml of pasta water out of the pan, then [[drain the penne|drain]].",
+        "nl": "Schep ongeveer 50 ml kookvocht uit de pan en [[giet de penne daarna af|drain]]."
       }
     },
     {
       "text": {
-        "en": "Stir half of the Parmigiano into the sauce. Toss the penne through the sauce, add the pasta water and leave it off the heat.",
-        "nl": "Meng de helft van de Parmigiano door de saus. Schep de penne door de witte saus, voeg het kookvocht toe en laat van het vuur af staan."
+        "en": "Stir half of the Parmigiano into the sauce. [[Toss the penne through the sauce|toss]], add the pasta water and leave it off the heat.",
+        "nl": "Meng de helft van de Parmigiano door de saus. [[Schep de penne door de witte saus|toss]], voeg het kookvocht toe en laat van het vuur af staan."
       },
       "ingredients": ["parmigiano", "penne"],
       "timer": { "minutes": 2, "label": { "en": "Rest off the heat", "nl": "Van het vuur af" } }

@@ -56,8 +56,8 @@
     },
     {
       "text": {
-        "en": "Cut the red onion, chicken, pepper and courgette into small cubes.",
-        "nl": "Snijd de rode ui, kip, paprika en courgette in kleine blokjes."
+        "en": "Cut the red onion, chicken, pepper and courgette [[into small cubes|dice]].",
+        "nl": "Snijd de rode ui, kip, paprika en courgette [[in kleine blokjes|dice]]."
       },
       "ingredients": ["red-onion", "chicken", "bell-pepper", "courgette"]
     },
@@ -70,8 +70,8 @@
     },
     {
       "text": {
-        "en": "Prick holes in the base with a fork and scatter a thin layer of breadcrumbs over it.",
-        "nl": "Prik gaatjes in de bodem met een vork en strooi er een dun laagje paneermeel over."
+        "en": "[[Prick holes in the base with a fork|prick-pastry]] and scatter a thin layer of breadcrumbs over it.",
+        "nl": "[[Prik gaatjes in de bodem met een vork|prick-pastry]] en strooi er een dun laagje paneermeel over."
       },
       "ingredients": ["breadcrumbs"],
       "tip": {
@@ -81,8 +81,8 @@
     },
     {
       "text": {
-        "en": "Beat the egg in a cup and put the grated cheese ready.",
-        "nl": "Klop het ei los in een kopje en zet de geraspte kaas klaar."
+        "en": "[[Beat the egg|whisk]] in a cup and put the grated cheese ready.",
+        "nl": "[[Klop het ei los|whisk]] in een kopje en zet de geraspte kaas klaar."
       },
       "ingredients": ["egg", "cheese"]
     }
@@ -125,8 +125,8 @@
     },
     {
       "text": {
-        "en": "Brush the lid with the beaten egg for a nice shine and scatter the cheese on top.",
-        "nl": "Bestrijk het deksel met het losgeklopte ei voor een mooie glans en bestrooi de bovenkant met de kaas."
+        "en": "[[Brush the lid with the beaten egg|egg-wash]] for a nice shine and scatter the cheese on top.",
+        "nl": "[[Bestrijk het deksel met het losgeklopte ei|egg-wash]] voor een mooie glans en bestrooi de bovenkant met de kaas."
       },
       "ingredients": ["egg", "cheese"]
     },

@@ -34,17 +34,17 @@
       "ingredients": ["water"]
     },
     {
-      "text": { "en": "Peel the garlic and chop it finely.", "nl": "Pel de knoflook en snijd hem fijn." },
+      "text": { "en": "Peel the garlic and [[chop it finely|chop-finely]].", "nl": "Pel de knoflook en [[snijd hem fijn|chop-finely]]." },
       "ingredients": ["garlic"]
     },
     {
-      "text": { "en": "Grate the Parmigiano finely.", "nl": "Rasp de Parmigiano fijn." },
+      "text": { "en": "[[Grate the Parmigiano finely|grate]].", "nl": "[[Rasp de Parmigiano fijn|grate]]." },
       "ingredients": ["parmigiano"]
     },
     {
       "text": {
-        "en": "Whisk the egg with the cream in a bowl and stir in the cheese.",
-        "nl": "Klop het ei los met de slagroom in een kom en meng de kaas erdoor."
+        "en": "[[Whisk|whisk]] the egg with the cream in a bowl and stir in the cheese.",
+        "nl": "[[Klop het ei los|whisk]] met de slagroom in een kom en meng de kaas erdoor."
       },
       "ingredients": ["egg", "cream", "parmigiano"]
     },
@@ -58,8 +58,8 @@
   "cook": [
     {
       "text": {
-        "en": "Salt the boiling water, add the spaghetti and cook until al dente.",
-        "nl": "Doe zout in het kokende water, voeg de spaghetti toe en kook hem beetgaar."
+        "en": "Salt the boiling water, add the spaghetti and [[cook until al dente|al-dente]].",
+        "nl": "Doe zout in het kokende water, voeg de spaghetti toe en [[kook hem beetgaar|al-dente]]."
       },
       "ingredients": ["salt", "spaghetti"],
       "timer": { "minutes": 9, "label": { "en": "Spaghetti", "nl": "Spaghetti" } },
@@ -78,15 +78,15 @@
     },
     {
       "text": {
-        "en": "Add the garlic for the last 30 seconds. Then lift the bacon out of the pan and let it drain on the kitchen paper.",
-        "nl": "Bak de knoflook de laatste 30 seconden mee. Schep de spekjes daarna uit de pan en laat ze uitlekken op het keukenpapier."
+        "en": "Add the garlic for the last 30 seconds. Then lift the bacon out of the pan and let it [[drain on the kitchen paper|drain]].",
+        "nl": "Bak de knoflook de laatste 30 seconden mee. Schep de spekjes daarna uit de pan en laat ze [[uitlekken op het keukenpapier|drain]]."
       },
       "ingredients": ["garlic", "bacon"]
     },
     {
       "text": {
-        "en": "Scoop a mug of pasta water out of the pan, then drain the spaghetti.",
-        "nl": "Schep een mok kookvocht uit de pan en giet de spaghetti daarna af."
+        "en": "Scoop a mug of pasta water out of the pan, then [[drain the spaghetti|drain]].",
+        "nl": "Schep een mok kookvocht uit de pan en [[giet de spaghetti daarna af|drain]]."
       }
     },
     {

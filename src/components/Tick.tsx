@@ -1,13 +1,27 @@
 import { Icon } from './Icon'
 import '@/features/cooking/cooking.css'
 
-type TickProps = { checked: boolean; onChange: () => void; large?: boolean; id?: string }
+type TickProps = {
+  checked: boolean
+  onChange: () => void
+  large?: boolean
+  id?: string
+  /** Names the tick instead of its <label>, when the label holds buttons of its own. */
+  label?: string
+}
 
 /** A round tick box in the chapter colour. Sits inside a <label> that carries the text. */
-export function Tick({ checked, onChange, large = false, id }: TickProps) {
+export function Tick({ checked, onChange, large = false, id, label }: TickProps) {
   return (
     <span className={large ? 'tick tick--large' : 'tick'}>
-      <input type="checkbox" id={id} className="tick__input" checked={checked} onChange={onChange} />
+      <input
+        type="checkbox"
+        id={id}
+        className="tick__input"
+        checked={checked}
+        onChange={onChange}
+        aria-label={label}
+      />
       <span className="tick__mark" aria-hidden="true">
         <Icon name="check" size={large ? 20 : 16} />
       </span>

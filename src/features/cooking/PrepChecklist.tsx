@@ -1,12 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { Tick } from '@/components/Tick'
-import type { Recipe } from '@/lib/book'
+import type { Recipe, Step } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
 import { PhaseHead } from './PhaseHead'
 import { prepTaskTickId } from './prep-task-focus'
 import { Point } from './Point'
+import { StepWords } from './StepWords'
+import { TechniqueNotes } from './TechniqueNotes'
+import { useTechniqueNotes } from './useTechniqueNotes'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
 type PrepChecklistProps = { recipe: Recipe; controls: RecipeProgressControls }
@@ -14,7 +17,6 @@ type PrepChecklistProps = { recipe: Recipe; controls: RecipeProgressControls }
 /** Mise en place: every task before cooking, ticked off one by one. Cooking unlocks when all are done. */
 export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
   const { t } = useTranslation()
-  const localized = useLocalized()
   const done = controls.progress.donePrepSteps
   return (
     <section className="prep">
@@ -32,17 +34,7 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
 
       <ol className="prep__tasks">
         {recipe.prep.map((step, index) => (
-          <li key={index} className="prep-task" data-done={done.includes(index)}>
-            <label className="prep-task__check">
-              <Tick large id={prepTaskTickId(index)} checked={done.includes(index)} onChange={() => controls.togglePrepStep(index)} />
-              <span className="prep-task__text">{localized(step.text)}</span>
-            </label>
-            <div className="prep-task__extras">
-              <IngredientChips recipe={recipe} step={step} servings={controls.servings} />
-              {step.timer && <StepTimerButton recipe={recipe} phase="prep" stepNumber={index + 1} timer={step.timer} />}
-              {step.tip && <Point tip={step.tip} />}
-            </div>
-          </li>
+          <PrepTask key={index} recipe={recipe} controls={controls} step={step} index={index} />
         ))}
       </ol>
 
@@ -50,5 +42,36 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
         {controls.prepDone ? t('prep.ready') : t('prep.locked')}
       </p>
     </section>
+  )
+}
+
+type PrepTaskProps = PrepChecklistProps & { step: Step; index: number }
+
+/** One prep task. Explanations open below the tick's label, so opening one never ticks the task. */
+function PrepTask({ recipe, controls, step, index }: PrepTaskProps) {
+  const localized = useLocalized()
+  const notes = useTechniqueNotes()
+  const done = controls.progress.donePrepSteps.includes(index)
+  return (
+    <li className="prep-task" data-done={done}>
+      <label className="prep-task__check">
+        <Tick
+          large
+          id={prepTaskTickId(index)}
+          label={localized(step.text)}
+          checked={done}
+          onChange={() => controls.togglePrepStep(index)}
+        />
+        <span className="prep-task__text">
+          <StepWords step={step} notes={notes} />
+        </span>
+      </label>
+      <div className="prep-task__extras">
+        <TechniqueNotes step={step} notes={notes} />
+        <IngredientChips recipe={recipe} step={step} servings={controls.servings} />
+        {step.timer && <StepTimerButton recipe={recipe} phase="prep" stepNumber={index + 1} timer={step.timer} />}
+        {step.tip && <Point tip={step.tip} />}
+      </div>
+    </li>
   )
 }

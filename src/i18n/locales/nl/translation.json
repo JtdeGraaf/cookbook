@@ -55,6 +55,7 @@
     "continuePrep": "Verder met voorbereiden",
     "startCooking": "Begin met koken",
     "point": "Tip",
+    "whatDoesTermMean": "Wat betekent “{{term}}”?",
     "photoCredit": "Foto: {{author}}, {{license}}",
     "ingredientsUsed": "Je hebt nodig",
     "clearTicks": "Vinkjes wissen",

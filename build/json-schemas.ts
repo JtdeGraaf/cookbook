@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { chapterFileSchema, recipeFileSchema } from '../src/lib/recipe-file.ts'
+import { chapterFileSchema, recipeFileSchema, techniqueFileSchema } from '../src/lib/recipe-file.ts'
 
-/** JSON Schema files so editors autocomplete and check recipe.json and chapter.json while typing. */
+/** JSON Schema files so editors autocomplete and check recipe.json, chapter.json and techniques.json while typing. */
 
 export function recipeJsonSchema(): string {
   return toJsonText(recipeFileSchema, 'Cookbook recipe')
@@ -9,6 +9,10 @@ export function recipeJsonSchema(): string {
 
 export function chapterJsonSchema(): string {
   return toJsonText(chapterFileSchema, 'Cookbook chapter')
+}
+
+export function techniqueJsonSchema(): string {
+  return toJsonText(techniqueFileSchema, 'Cookbook techniques')
 }
 
 function toJsonText(schema: z.ZodType, title: string): string {

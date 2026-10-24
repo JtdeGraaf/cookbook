@@ -3,10 +3,10 @@ import { BookLink } from '@/components/BookLink'
 import { Photo } from '@/components/Photo'
 import { recipeViewPath, type Recipe } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
-import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
 import { PhaseHead } from './PhaseHead'
 import { Point } from './Point'
+import { StepText } from './StepText'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
 type CookStepProps = { recipe: Recipe; controls: RecipeProgressControls; stepNumber: number }
@@ -14,7 +14,6 @@ type CookStepProps = { recipe: Recipe; controls: RecipeProgressControls; stepNum
 /** One cooking step in focus, big enough to read from the stove. */
 export function CookStep({ recipe, controls, stepNumber }: CookStepProps) {
   const { t } = useTranslation()
-  const localized = useLocalized()
   const step = recipe.cook[stepNumber - 1]
   const total = recipe.cook.length
 
@@ -41,7 +40,7 @@ export function CookStep({ recipe, controls, stepNumber }: CookStepProps) {
           {stepNumber}
         </span>
         <div className="cook-step__body">
-          <p className="cook-step__text">{localized(step.text)}</p>
+          <StepText step={step} className="cook-step__text" />
           <IngredientChips recipe={recipe} step={step} servings={controls.servings} />
           {step.timer && <StepTimerButton recipe={recipe} phase="cook" stepNumber={stepNumber} timer={step.timer} />}
           {step.tip && <Point tip={step.tip} />}

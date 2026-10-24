@@ -1,4 +1,4 @@
-import type { ChapterColor, LocalizedText, Unit } from './recipe-rules.ts'
+import type { ChapterColor, Language, LocalizedText, Unit } from './recipe-rules.ts'
 
 /** The cookbook after the build has read and checked every file under `recipes/`. */
 
@@ -28,8 +28,17 @@ export type Ingredient = {
 
 export type StepTimer = { minutes: number; label: LocalizedText }
 
+/** A cooking term like "dice", explained behind an (i) button next to the words that use it. */
+export type Technique = { id: string; name: LocalizedText; explanation: LocalizedText }
+
+/** A run of step text: plain words, or words that name a technique. */
+export type StepTextPiece = { kind: 'words'; text: string } | { kind: 'technique'; text: string; technique: Technique }
+
 export type Step<File = ResponsiveImage> = {
+  /** What a reader sees, without technique marks; for anything that needs the text as one string. */
   text: LocalizedText
+  /** The same text split around the techniques it explains. */
+  pieces: Record<Language, StepTextPiece[]>
   ingredientIds: string[]
   timer: StepTimer | null
   tip: LocalizedText | null
@@ -159,6 +168,15 @@ function decodeAddressPart(part: string): string {
 
 export function ingredientsForStep(recipe: Recipe, step: Step): Ingredient[] {
   return step.ingredientIds.flatMap((id) => recipe.ingredients.filter((ingredient) => ingredient.id === id))
+}
+
+/** The techniques a step explains, each once, in the order the text first uses them. */
+export function techniquesInStep(step: Step, language: Language): Technique[] {
+  const techniques = new Map<string, Technique>()
+  for (const piece of step.pieces[language]) {
+    if (piece.kind === 'technique') techniques.set(piece.technique.id, piece.technique)
+  }
+  return [...techniques.values()]
 }
 
 /** Page numbers like a printed book: each folder opens on one page, each recipe takes a two-page spread. */

@@ -1,5 +1,6 @@
 import { z } from 'zod'
-import { CHAPTER_COLORS, MAX_SERVINGS, MIN_SERVINGS, UNITS } from './recipe-rules.ts'
+import { CHAPTER_COLORS, LANGUAGES, MAX_SERVINGS, MIN_SERVINGS, UNITS } from './recipe-rules.ts'
+import { splitTechniqueMarks, techniqueIds } from './technique-marks.ts'
 
 /** The shape of the hand-written JSON files under `recipes/`. Unknown keys are errors, so typos fail the build. */
 
@@ -63,7 +64,9 @@ export const timerSchema = z.strictObject({
 })
 
 export const stepSchema = z.strictObject({
-  text: localizedTextSchema,
+  text: localizedTextSchema.describe(
+    'Mark a cooking term with [[words|technique-id]], like "[[chop it finely|chop-finely]]", to explain it from techniques.json.',
+  ),
   ingredients: z.array(slugSchema).optional().describe('Ids of the ingredients this step uses.'),
   timer: timerSchema.optional(),
   tip: localizedTextSchema.optional().describe('A short extra hint, shown as a "Point".'),
@@ -100,11 +103,31 @@ export const chapterFileSchema = z
   })
   .describe('Optional details for a chapter or section folder.')
 
+export const techniqueSchema = z.strictObject({
+  name: localizedTextSchema.describe('The technique as a short heading, like "Chop finely".'),
+  explanation: localizedTextSchema.describe('How to do it, in one to three short sentences.'),
+})
+
+export const techniqueFileSchema = z
+  .object({ $schema: z.string().optional() })
+  .catchall(techniqueSchema)
+  .superRefine((file, context) => {
+    for (const id of Object.keys(file)) {
+      if (id === '$schema' || slugSchema.safeParse(id).success) continue
+      context.addIssue({ code: 'custom', path: [id], message: 'Technique ids use lowercase letters, digits and single dashes, like "chop-finely".' })
+    }
+  })
+  .describe('Cooking techniques that steps explain behind an (i) button, by id.')
+
 export type RecipeFile = z.infer<typeof recipeFileSchema>
 export type ChapterFile = z.infer<typeof chapterFileSchema>
+export type TechniqueFile = z.infer<typeof techniqueFileSchema>
 
-/** Mistakes the schema cannot see: steps pointing at ingredients that don't exist, duplicate ids. */
-export function findCrossReferenceProblems(recipe: RecipeFile): string[] {
+/**
+ * Mistakes the schema cannot see: steps pointing at ingredients or techniques that don't exist, duplicate ids, broken
+ * technique marks, and English and Dutch text explaining different techniques.
+ */
+export function findCrossReferenceProblems(recipe: RecipeFile, knownTechniqueIds: ReadonlySet<string>): string[] {
   const problems: string[] = []
   const ingredientIds = recipe.ingredients.map((ingredient) => ingredient.id)
   const seen = new Set<string>()
@@ -121,7 +144,29 @@ export function findCrossReferenceProblems(recipe: RecipeFile): string[] {
       for (const id of step.ingredients ?? []) {
         if (!seen.has(id)) problems.push(`${phase} step ${index + 1} uses unknown ingredient "${id}".`)
       }
+      problems.push(...findTechniqueProblems(step.text, knownTechniqueIds).map((problem) => `${phase} step ${index + 1} ${problem}`))
     })
+  }
+  return problems
+}
+
+function findTechniqueProblems(text: RecipeFile['cook'][number]['text'], knownTechniqueIds: ReadonlySet<string>): string[] {
+  const problems: string[] = []
+  const idsByLanguage = LANGUAGES.map((language) => {
+    const pieces = splitTechniqueMarks(text[language])
+    if (!pieces) {
+      problems.push(`(${language}) has a broken technique mark; write it as [[words|technique-id]].`)
+      return null
+    }
+    const ids = techniqueIds(pieces)
+    for (const id of ids.filter((id) => !knownTechniqueIds.has(id))) {
+      problems.push(`(${language}) uses unknown technique "${id}"; add it to recipes/techniques.json.`)
+    }
+    return ids
+  })
+  const [english, dutch] = idsByLanguage
+  if (english && dutch && [...english].sort().join() !== [...dutch].sort().join()) {
+    problems.push(`marks different techniques in English (${english.join(', ') || 'none'}) and Dutch (${dutch.join(', ') || 'none'}).`)
   }
   return problems
 }

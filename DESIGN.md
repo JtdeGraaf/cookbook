@@ -264,6 +264,9 @@ Contents are rows, not a card grid, and the same size on every index page: a 72p
 ### Point (signature)
 A paper-coloured hint box (12px) beside a step, with a yolk "Point" label in the display face at 900.
 
+### Cooking terms
+A marked term in a step stays plain text, followed by a small round (i) in chapter ink (about 1.4em, 44px tap drawn from its middle, chapter wash on hover). Open, it fills with the chapter colour and a paper-coloured box (12px) appears under the step: the technique's name in the display face at 700, then its explanation. Hidden by default; print shows only the words.
+
 ### Timers (signature)
 - **On a step:** a timer is a pill with a 2px chapter ring. When running it fills with the chapter colour and shows the clock at 1.5rem/900; a paused timer drops to 0.75 opacity.
 - **On the shelf:** the bottom shelf holds inverted ink tickets (12px corners) that slide up 16px on arrival.
