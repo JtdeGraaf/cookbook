@@ -4,6 +4,8 @@
   "compatibility_date": "2026-10-23",
   "assets": {
     "directory": "./dist",
+    // Serves the recipe page mains/pasta/carbonara.html at /mains/pasta/carbonara, without a redirect.
+    "html_handling": "auto-trailing-slash",
     "not_found_handling": "single-page-application"
   },
   "routes": [

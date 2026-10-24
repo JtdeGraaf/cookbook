@@ -1,4 +1,4 @@
-import type { ChapterColor, LocalizedText, Unit } from './recipe-rules'
+import type { ChapterColor, LocalizedText, Unit } from './recipe-rules.ts'
 
 /** The cookbook after the build has read and checked every file under `recipes/`. */
 
@@ -88,12 +88,12 @@ function foldersInside(folder: Folder): Folder[] {
   return [folder, ...folder.folders.flatMap(foldersInside)]
 }
 
-export function allRecipes(book: Book): Recipe[] {
+export function allRecipes<File = ResponsiveImage>(book: Book<File>): Recipe<File>[] {
   return book.chapters.flatMap(recipesInside)
 }
 
 /** Every recipe in a folder and all folders below it, in book order. */
-export function recipesInside(folder: Folder): Recipe[] {
+export function recipesInside<File = ResponsiveImage>(folder: Folder<File>): Recipe<File>[] {
   return [...folder.recipes, ...folder.folders.flatMap(recipesInside)]
 }
 

@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto'
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import type { Plugin } from 'vite'
+import { isLinkPreviewFile } from './link-preview-plugin.ts'
 
 const WORKER_FILE = 'sw.js'
 
@@ -18,7 +19,8 @@ export function offlinePlugin(): Plugin {
     writeBundle(options, bundle) {
       const outFolder = options.dir ?? 'dist'
       const fileNames = [...new Set([...Object.keys(bundle), ...readdirSync(publicFolder)])]
-        .filter((file) => file !== WORKER_FILE)
+        // Recipe pages are index.html with link-preview tags; offline, every page falls back to the saved `/`.
+        .filter((file) => file !== WORKER_FILE && !isLinkPreviewFile(file))
         .sort()
       // Contents too, not only names: files from public/ (manifests, icons) keep their name when they change.
       const hash = createHash('sha256')

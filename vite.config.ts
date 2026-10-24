@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import { imagetools } from 'vite-imagetools'
 import { defineConfig } from 'vitest/config'
 import { domainLanguagePlugin } from './build/domain-language-plugin.ts'
+import { linkPreviewPlugin } from './build/link-preview-plugin.ts'
 import { offlinePlugin } from './build/offline-plugin.ts'
 import { recipeBookPlugin } from './build/recipe-book-plugin.ts'
 
@@ -14,6 +15,7 @@ export default defineConfig({
     recipeBookPlugin('recipes'),
     imagetools({ removeMetadata: true }),
     domainLanguagePlugin(),
+    linkPreviewPlugin('recipes'),
     offlinePlugin(),
   ],
   resolve: {
