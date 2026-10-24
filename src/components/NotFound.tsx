@@ -1,18 +1,19 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { nearestFolder } from '@/lib/book'
+import { nearestFolder, searchTermForMissingPage } from '@/lib/book'
 import { book } from '@/features/book/book-data'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { BookLink } from './BookLink'
 import { EmptyState } from './EmptyState'
 import { usePageTitle } from './usePageTitle'
 
-/** A page that isn't in the book: offers the nearest folder that is, a search, and the contents. */
+/** A page that isn't in the book: offers the nearest folder that is, a search for the missing part, and the contents. */
 export function NotFound() {
   const { t } = useTranslation()
   const localized = useLocalized()
   const pathname = useRouterState({ select: (state) => state.location.pathname })
   const folder = nearestFolder(book, pathname)
+  const searchTerm = searchTermForMissingPage(book, pathname)
   usePageTitle(t('notFound.title'))
   return (
     <EmptyState
@@ -29,7 +30,7 @@ export function NotFound() {
               {t('book.backToContents')}
             </Link>
           )}
-          <Link to="/search" search={{ q: '' }} className="button button--quiet">
+          <Link to="/search" search={{ q: searchTerm }} className="button button--quiet">
             {t('notFound.search')}
           </Link>
         </>

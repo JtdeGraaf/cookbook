@@ -10,6 +10,7 @@ import {
   parentPaths,
   recipeViewPath,
   resolveBookPath,
+  searchTermForMissingPage,
 } from './book'
 
 const eggs = makeRecipe({ slug: 'eggs', folderPath: 'breakfast' })
@@ -66,6 +67,36 @@ describe('finding things in the book', () => {
 
   it('splits a path into its parents', () => {
     expect(parentPaths('mains/pasta/carbonara')).toEqual(['mains', 'mains/pasta', 'mains/pasta/carbonara'])
+  })
+})
+
+describe('searchTermForMissingPage', () => {
+  it('searches for the last part of the address that is not a folder', () => {
+    expect(searchTermForMissingPage(book, '/mains/pasta/lasagne')).toBe('lasagne')
+    expect(searchTermForMissingPage(book, 'nothing/here')).toBe('here')
+  })
+
+  it('turns dashes into spaces', () => {
+    expect(searchTermForMissingPage(book, 'mains/pasta/pasta-pesto')).toBe('pasta pesto')
+    expect(searchTermForMissingPage(book, 'mains/--green---curry-')).toBe('green curry')
+  })
+
+  it('skips the words and step numbers of a recipe page', () => {
+    expect(searchTermForMissingPage(book, 'mains/pasta/pasta-pesto/prep')).toBe('pasta pesto')
+    expect(searchTermForMissingPage(book, 'mains/pasta/lasagne/cook/2')).toBe('lasagne')
+    expect(searchTermForMissingPage(book, 'mains/pasta/lasagne/Done')).toBe('lasagne')
+  })
+
+  it('decodes escaped letters and keeps broken escapes as typed', () => {
+    expect(searchTermForMissingPage(book, 'mains/cr%C3%A8me-br%C3%BBl%C3%A9e')).toBe('crème brûlée')
+    expect(searchTermForMissingPage(book, 'mains/50%-off')).toBe('50% off')
+  })
+
+  it('is empty when only folders and recipe page words are left', () => {
+    expect(searchTermForMissingPage(book, 'mains/pasta/prep')).toBe('')
+    expect(searchTermForMissingPage(book, 'cook/3')).toBe('')
+    expect(searchTermForMissingPage(book, 'mains/---')).toBe('')
+    expect(searchTermForMissingPage(book, '/')).toBe('')
   })
 })
 

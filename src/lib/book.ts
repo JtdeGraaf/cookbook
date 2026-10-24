@@ -119,6 +119,34 @@ export function nearestFolder(book: Book, address: string): Folder | null {
   return null
 }
 
+/** Words in an address that name a recipe's own pages rather than anything worth searching for. */
+const RECIPE_PAGE_WORDS = new Set(['prep', 'cook', 'done'])
+
+/**
+ * What to search for when an address isn't in the book: the last part that isn't a folder, with dashes as spaces.
+ * "mains/pasta/pasta-pesto/prep" becomes "pasta pesto". Empty when there is nothing sensible to search for.
+ */
+export function searchTermForMissingPage(book: Book, address: string): string {
+  const paths = parentPaths(address).reverse()
+  for (const path of paths) {
+    if (findFolder(book, path)) return ''
+    const part = decodeAddressPart(path.split('/').at(-1) ?? '')
+    if (RECIPE_PAGE_WORDS.has(part.toLowerCase()) || /^\d+$/.test(part)) continue
+    const words = part.replace(/-/g, ' ').replace(/\s+/g, ' ').trim()
+    if (words) return words
+  }
+  return ''
+}
+
+/** "%C3%A9" becomes "é"; a broken escape is kept as typed. */
+function decodeAddressPart(part: string): string {
+  try {
+    return decodeURIComponent(part)
+  } catch {
+    return part
+  }
+}
+
 export function ingredientsForStep(recipe: Recipe, step: Step): Ingredient[] {
   return step.ingredientIds.flatMap((id) => recipe.ingredients.filter((ingredient) => ingredient.id === id))
 }
