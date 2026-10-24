@@ -69,7 +69,11 @@ export function ShoppingListPage() {
                 <BookLink path={recipe.path} className="shopping-recipe__title">
                   {localized(recipe.title)}
                 </BookLink>
-                <ServingsStepper servings={servings} onChange={(next) => shopping.changeServings(recipe, next)} />
+                <ServingsStepper
+                  servings={servings}
+                  onChange={(next) => shopping.changeServings(recipe, next)}
+                  recipeTitle={localized(recipe.title)}
+                />
                 <button
                   type="button"
                   className="icon-button"
