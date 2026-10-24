@@ -117,9 +117,9 @@ Works the same for chapters and sections. `color` is one of `tomato`, `matcha`, 
 
 The JSON Schemas in `schemas/` are generated from the checks in `src/lib/recipe-file.ts` (`npm run schemas`); a test fails if they drift apart.
 
-## Starter recipes and photo credits
+## Recipes and credits
 
-Shakshuka, Dutch bacon pancakes (spekpannenkoeken), kale stamppot with smoked sausage (boerenkoolstamppot), spaghetti carbonara and spaghetti aglio e olio (in the `mains/pasta` section) and chocolate mousse. All photos come from Wikimedia Commons under Creative Commons licences; author, licence and source link are in each `recipe.json` and shown under every photo.
+In `mains`: kip in de hoed (after Cooked by Nadine) and a sweet potato beef bowl (after De Snelle Keuken). In the `mains/pasta` section: truffle orzo (after Indi Kuiper), and spaghetti all'amatriciana, spaghetti carbonara and penne with Parmigiano cream sauce (after Albert Heijn). All rewritten with the prep first. None has a photo yet.
 
 ## Develop
 

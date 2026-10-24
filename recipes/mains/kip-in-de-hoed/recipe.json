@@ -1,0 +1,140 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Chicken puff pastry pie (kip in de hoed)", "nl": "Kip in de hoed" },
+  "summary": {
+    "en": "A creamy filling of chicken, pepper and courgette baked in a puff pastry case with a golden, cheesy lid.",
+    "nl": "Een romige vulling van kip, paprika en courgette, gebakken in een vorm van bladerdeeg met een goudbruin kaasdeksel."
+  },
+  "servings": 2,
+  "prepMinutes": 20,
+  "cookMinutes": 45,
+  "tags": [
+    { "en": "chicken", "nl": "kip" },
+    { "en": "oven", "nl": "oven" },
+    { "en": "comfort food", "nl": "comfortfood" }
+  ],
+  "ingredients": [
+    {
+      "id": "puff-pastry",
+      "name": { "en": "square puff pastry sheet", "nl": "vierkant bladerdeegvelletje" },
+      "plural": { "en": "square puff pastry sheets", "nl": "vierkante bladerdeegvelletjes" },
+      "amount": 5,
+      "unit": "piece",
+      "note": { "en": "frozen", "nl": "diepvries" }
+    },
+    { "id": "breadcrumbs", "name": { "en": "breadcrumbs", "nl": "paneermeel" }, "amount": 1, "unit": "tbsp" },
+    { "id": "red-onion", "name": { "en": "red onion", "nl": "rode ui" }, "plural": { "en": "red onions", "nl": "rode uien" }, "amount": 1, "unit": "piece" },
+    { "id": "chicken", "name": { "en": "chicken breast", "nl": "kipfilet" }, "amount": 300, "unit": "g", "note": { "en": "1 to 2 fillets", "nl": "1 à 2 filets" } },
+    { "id": "bell-pepper", "name": { "en": "bell pepper", "nl": "paprika" }, "plural": { "en": "bell peppers", "nl": "paprika's" }, "amount": 1, "unit": "piece" },
+    { "id": "courgette", "name": { "en": "courgette", "nl": "courgette" }, "plural": { "en": "courgettes", "nl": "courgettes" }, "amount": 0.5, "unit": "piece" },
+    {
+      "id": "spice-mix",
+      "name": { "en": "packet of chicken seasoning", "nl": "zakje kip-kruidenmix" },
+      "plural": { "en": "packets of chicken seasoning", "nl": "zakjes kip-kruidenmix" },
+      "amount": 1,
+      "unit": "piece",
+      "note": { "en": "or a seasoning mix you like", "nl": "of een kruidenmix naar keuze" }
+    },
+    { "id": "garlic-powder", "name": { "en": "garlic powder", "nl": "knoflookpoeder" }, "amount": 0.5, "unit": "tsp" },
+    { "id": "creme-fraiche", "name": { "en": "crème fraîche", "nl": "crème fraîche" }, "amount": 3, "unit": "tbsp" },
+    { "id": "cheese", "name": { "en": "grated cheese", "nl": "geraspte kaas" }, "amount": 40, "unit": "g", "note": { "en": "a handful", "nl": "een handje" } },
+    { "id": "egg", "name": { "en": "egg", "nl": "ei" }, "plural": { "en": "eggs", "nl": "eieren" }, "amount": 1, "unit": "piece" },
+    { "id": "oil", "pantry": true, "name": { "en": "oil for frying", "nl": "olie om te bakken" }, "amount": 1, "unit": "tbsp" }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Take the puff pastry out of the freezer and lay the sheets out side by side to thaw.",
+        "nl": "Haal het bladerdeeg uit de vriezer en leg de velletjes naast elkaar om te ontdooien."
+      },
+      "ingredients": ["puff-pastry"],
+      "timer": { "minutes": 10, "label": { "en": "Thaw the pastry", "nl": "Bladerdeeg ontdooien" } }
+    },
+    {
+      "text": { "en": "Heat the oven to 200 °C.", "nl": "Verwarm de oven voor op 200 °C." }
+    },
+    {
+      "text": {
+        "en": "Cut the red onion, chicken, pepper and courgette into small cubes.",
+        "nl": "Snijd de rode ui, kip, paprika en courgette in kleine blokjes."
+      },
+      "ingredients": ["red-onion", "chicken", "bell-pepper", "courgette"]
+    },
+    {
+      "text": {
+        "en": "Line a springform tin with baking paper. Cover the base and sides with most of the puff pastry, pressing the seams together, and keep enough back for the lid.",
+        "nl": "Bekleed een springvorm met bakpapier. Bekleed de bodem en zijkanten met het grootste deel van het bladerdeeg, druk de naden goed aan, en houd genoeg apart voor het deksel."
+      },
+      "ingredients": ["puff-pastry"]
+    },
+    {
+      "text": {
+        "en": "Prick holes in the base with a fork and scatter a thin layer of breadcrumbs over it.",
+        "nl": "Prik gaatjes in de bodem met een vork en strooi er een dun laagje paneermeel over."
+      },
+      "ingredients": ["breadcrumbs"],
+      "tip": {
+        "en": "The breadcrumbs soak up moisture from the filling, so the base stays crisp.",
+        "nl": "Het paneermeel neemt vocht uit de vulling op, zo blijft de bodem krokant."
+      }
+    },
+    {
+      "text": {
+        "en": "Beat the egg in a cup and put the grated cheese ready.",
+        "nl": "Klop het ei los in een kopje en zet de geraspte kaas klaar."
+      },
+      "ingredients": ["egg", "cheese"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Heat the oil in a frying pan and fry the red onion.",
+        "nl": "Verhit de olie in een koekenpan en bak de rode ui."
+      },
+      "ingredients": ["oil", "red-onion"],
+      "timer": { "minutes": 3, "label": { "en": "Fry the onion", "nl": "Ui bakken" } }
+    },
+    {
+      "text": { "en": "Add the chicken and fry until cooked through.", "nl": "Doe de kip erbij en bak hem gaar." },
+      "ingredients": ["chicken"],
+      "timer": { "minutes": 6, "label": { "en": "Cook the chicken", "nl": "Kip gaar bakken" } }
+    },
+    {
+      "text": {
+        "en": "Add the pepper, courgette, seasoning and garlic powder and fry briefly.",
+        "nl": "Voeg de paprika, courgette, kruidenmix en knoflookpoeder toe en bak kort mee."
+      },
+      "ingredients": ["bell-pepper", "courgette", "spice-mix", "garlic-powder"],
+      "timer": { "minutes": 3, "label": { "en": "Fry the vegetables", "nl": "Groenten meebakken" } }
+    },
+    {
+      "text": {
+        "en": "Stir in the crème fraîche until you have a creamy sauce, then take the pan off the heat.",
+        "nl": "Roer de crème fraîche erdoor tot een romige saus en haal de pan van het vuur."
+      },
+      "ingredients": ["creme-fraiche"]
+    },
+    {
+      "text": {
+        "en": "Spoon the filling into the pastry case. Cover with the rest of the pastry and press the edges together well.",
+        "nl": "Schep de vulling in de bladerdeegvorm. Dek af met de rest van het bladerdeeg en druk de randen goed aan."
+      },
+      "ingredients": ["puff-pastry"]
+    },
+    {
+      "text": {
+        "en": "Brush the lid with the beaten egg for a nice shine and scatter the cheese on top.",
+        "nl": "Bestrijk het deksel met het losgeklopte ei voor een mooie glans en bestrooi de bovenkant met de kaas."
+      },
+      "ingredients": ["egg", "cheese"]
+    },
+    {
+      "text": {
+        "en": "Bake until golden brown and crisp.",
+        "nl": "Bak tot hij goudbruin en knapperig is."
+      },
+      "timer": { "minutes": 30, "label": { "en": "Bake the pie", "nl": "Kip in de hoed bakken" } }
+    }
+  ]
+}

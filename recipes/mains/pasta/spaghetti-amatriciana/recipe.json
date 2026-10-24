@@ -1,0 +1,134 @@
+{
+  "$schema": "../../../../schemas/recipe.schema.json",
+  "title": { "en": "Spaghetti all'amatriciana", "nl": "Spaghetti all'amatriciana" },
+  "summary": {
+    "en": "Crisp guanciale, red onion and San Marzano tomatoes with a little chili, finished with pecorino.",
+    "nl": "Knapperige guanciale, rode ui en San Marzano-tomaten met een beetje chili, afgemaakt met pecorino."
+  },
+  "servings": 2,
+  "prepMinutes": 10,
+  "cookMinutes": 25,
+  "tags": [
+    { "en": "pasta", "nl": "pasta" },
+    { "en": "Italian", "nl": "Italiaans" },
+    { "en": "spicy", "nl": "pittig" }
+  ],
+  "ingredients": [
+    { "id": "water", "pantry": true, "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
+    { "id": "salt", "pantry": true, "name": { "en": "salt", "nl": "zout" } },
+    { "id": "spaghetti", "name": { "en": "spaghetti", "nl": "spaghetti" }, "amount": 150, "unit": "g" },
+    { "id": "guanciale", "name": { "en": "diced guanciale", "nl": "guanciale blokjes" }, "amount": 50, "unit": "g" },
+    { "id": "red-onion", "name": { "en": "red onion", "nl": "rode ui" }, "plural": { "en": "red onions", "nl": "rode uien" }, "amount": 1, "unit": "piece" },
+    { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 1.5, "unit": "clove" },
+    { "id": "chili-flakes", "name": { "en": "chili flakes", "nl": "chilivlokken" }, "amount": 0.25, "unit": "tsp" },
+    {
+      "id": "tomatoes",
+      "name": { "en": "San Marzano tomatoes", "nl": "San Marzano-tomaten" },
+      "amount": 1,
+      "unit": "can",
+      "note": { "en": "425 ml", "nl": "425 ml" }
+    },
+    { "id": "pecorino", "name": { "en": "pecorino romano", "nl": "pecorino romano" }, "amount": 25, "unit": "g" },
+    { "id": "pepper", "pantry": true, "name": { "en": "black pepper", "nl": "zwarte peper" } }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Put a large pan with the water on a high heat, lid on, so it is boiling by the time you need it.",
+        "nl": "Zet een grote pan met het water op hoog vuur, deksel erop, zodat het kookt tegen de tijd dat je het nodig hebt."
+      },
+      "ingredients": ["water"]
+    },
+    {
+      "text": {
+        "en": "Peel the onion and chop it finely. Peel the garlic and chop it finely.",
+        "nl": "Pel de ui en snipper hem fijn. Pel de knoflook en snijd hem fijn."
+      },
+      "ingredients": ["red-onion", "garlic"]
+    },
+    {
+      "text": {
+        "en": "Open the can of tomatoes and measure out the chili flakes.",
+        "nl": "Open het blik tomaten en meet de chilivlokken af."
+      },
+      "ingredients": ["tomatoes", "chili-flakes"]
+    },
+    {
+      "text": { "en": "Grate the pecorino finely.", "nl": "Rasp de pecorino fijn." },
+      "ingredients": ["pecorino"]
+    },
+    {
+      "text": {
+        "en": "Put a plate with kitchen paper, a slotted spoon, a colander and a mug for the pasta water next to the stove.",
+        "nl": "Zet een bord met keukenpapier, een schuimspaan, een vergiet en een mok voor het pastawater naast het fornuis."
+      }
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Heat a deep frying pan without oil or butter and fry the guanciale over medium-high heat.",
+        "nl": "Verhit een hapjespan zonder olie of boter en bak de guanciale op middelhoog vuur."
+      },
+      "ingredients": ["guanciale"],
+      "timer": { "minutes": 4, "label": { "en": "Fry the guanciale", "nl": "Guanciale bakken" } }
+    },
+    {
+      "text": {
+        "en": "Lift the guanciale out with the slotted spoon and let it drain on the kitchen paper. Leave the fat in the pan.",
+        "nl": "Schep de guanciale met de schuimspaan uit de pan en laat uitlekken op het keukenpapier. Laat het vet in de pan."
+      },
+      "ingredients": ["guanciale"]
+    },
+    {
+      "text": {
+        "en": "Salt the boiling water, add the spaghetti and cook until al dente.",
+        "nl": "Doe zout in het kokende water, voeg de spaghetti toe en kook hem beetgaar."
+      },
+      "ingredients": ["salt", "spaghetti"],
+      "timer": { "minutes": 9, "label": { "en": "Spaghetti", "nl": "Spaghetti" } },
+      "tip": {
+        "en": "Packets differ: go by the time on yours.",
+        "nl": "Verpakkingen verschillen: houd de tijd op die van jou aan."
+      }
+    },
+    {
+      "text": {
+        "en": "Meanwhile, soften the onion and garlic in the guanciale fat over low heat.",
+        "nl": "Fruit ondertussen de ui en knoflook in het vet van de guanciale op laag vuur."
+      },
+      "ingredients": ["red-onion", "garlic"],
+      "timer": { "minutes": 5, "label": { "en": "Soften the onion", "nl": "Ui fruiten" } }
+    },
+    {
+      "text": {
+        "en": "Add the chili flakes and tomatoes and bring to the boil. Crush the tomatoes with a ladle and let it bubble.",
+        "nl": "Voeg de chilivlokken en tomaten toe en breng aan de kook. Druk de tomaten met een pollepel stuk en laat het pruttelen."
+      },
+      "ingredients": ["chili-flakes", "tomatoes"],
+      "timer": { "minutes": 5, "label": { "en": "Simmer the sauce", "nl": "Saus laten pruttelen" } }
+    },
+    {
+      "text": {
+        "en": "Stir the guanciale back into the sauce and season with pepper and a little salt if needed. Scoop a mug of pasta water out of the pan, then drain the spaghetti.",
+        "nl": "Schep de guanciale weer door de saus en breng op smaak met peper en eventueel zout. Schep een mok pastawater uit de pan en giet de spaghetti daarna af."
+      },
+      "ingredients": ["guanciale", "pepper", "salt"]
+    },
+    {
+      "text": {
+        "en": "Toss the spaghetti through the sauce, add about 25 ml of the pasta water and warm through.",
+        "nl": "Schep de spaghetti door de saus, voeg ongeveer 25 ml van het pastawater toe en verwarm nog even."
+      },
+      "ingredients": ["spaghetti"],
+      "timer": { "minutes": 3, "label": { "en": "Toss the pasta", "nl": "Pasta door de saus" } }
+    },
+    {
+      "text": {
+        "en": "Scatter the pecorino over the pasta and serve straight away.",
+        "nl": "Strooi de pecorino over de pasta en serveer direct."
+      },
+      "ingredients": ["pecorino"]
+    }
+  ]
+}

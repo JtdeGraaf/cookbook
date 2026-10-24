@@ -1,0 +1,112 @@
+{
+  "$schema": "../../../../schemas/recipe.schema.json",
+  "title": { "en": "Penne with Parmigiano cream sauce", "nl": "Penne met Parmigiano-roomsaus" },
+  "summary": {
+    "en": "A simple white sauce of shallot, garlic, butter and cream with Parmigiano stirred through, finished with fresh parsley.",
+    "nl": "Een eenvoudige witte saus van sjalot, knoflook, roomboter en kookroom met Parmigiano erdoor, afgemaakt met verse peterselie."
+  },
+  "servings": 2,
+  "prepMinutes": 10,
+  "cookMinutes": 15,
+  "tags": [
+    { "en": "pasta", "nl": "pasta" },
+    { "en": "vegetarian", "nl": "vegetarisch" },
+    { "en": "quick", "nl": "snel" }
+  ],
+  "ingredients": [
+    { "id": "water", "pantry": true, "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
+    { "id": "salt", "pantry": true, "name": { "en": "salt", "nl": "zout" } },
+    { "id": "penne", "name": { "en": "penne", "nl": "penne" }, "amount": 150, "unit": "g" },
+    { "id": "shallot", "name": { "en": "shallot", "nl": "sjalot" }, "plural": { "en": "shallots", "nl": "sjalotten" }, "amount": 1, "unit": "piece" },
+    { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 1, "unit": "clove" },
+    { "id": "butter", "name": { "en": "unsalted butter", "nl": "ongezouten roomboter" }, "amount": 15, "unit": "g" },
+    { "id": "cooking-cream", "name": { "en": "cooking cream", "nl": "kookroom" }, "amount": 125, "unit": "ml" },
+    { "id": "parsley", "name": { "en": "fresh flat-leaf parsley", "nl": "verse platte peterselie" }, "amount": 4, "unit": "g" },
+    { "id": "parmigiano", "name": { "en": "grated Parmigiano Reggiano", "nl": "Parmigiano Reggiano-poeder" }, "amount": 45, "unit": "g" },
+    { "id": "pepper", "pantry": true, "name": { "en": "black pepper", "nl": "zwarte peper" } }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Put a large pan with the water on a high heat, lid on, so it is boiling by the time you start cooking.",
+        "nl": "Zet een grote pan met het water op hoog vuur, deksel erop, zodat het kookt tegen de tijd dat je begint."
+      },
+      "ingredients": ["water"]
+    },
+    {
+      "text": {
+        "en": "Peel the shallot and chop it finely. Peel the garlic and chop it finely.",
+        "nl": "Pel de sjalot en snipper hem fijn. Pel de knoflook en snijd hem fijn."
+      },
+      "ingredients": ["shallot", "garlic"]
+    },
+    {
+      "text": { "en": "Chop the parsley finely.", "nl": "Snijd de peterselie fijn." },
+      "ingredients": ["parsley"]
+    },
+    {
+      "text": {
+        "en": "Split the Parmigiano into two halves: one for the sauce, one for the table.",
+        "nl": "Verdeel de Parmigiano in twee helften: één voor de saus, één voor aan tafel."
+      },
+      "ingredients": ["parmigiano"]
+    },
+    {
+      "text": {
+        "en": "Put a colander and a mug for the pasta water next to the stove.",
+        "nl": "Zet een vergiet en een mok voor het kookvocht naast het fornuis."
+      }
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Salt the boiling water, add the penne and cook until al dente.",
+        "nl": "Doe zout in het kokende water, voeg de penne toe en kook hem al dente."
+      },
+      "ingredients": ["salt", "penne"],
+      "timer": { "minutes": 11, "label": { "en": "Penne", "nl": "Penne" } },
+      "tip": {
+        "en": "Packets differ: go by the time on yours.",
+        "nl": "Verpakkingen verschillen: houd de tijd op die van jou aan."
+      }
+    },
+    {
+      "text": {
+        "en": "Meanwhile, melt the butter in a deep frying pan over medium-high heat and soften the shallot and garlic.",
+        "nl": "Verhit ondertussen de roomboter in een hapjespan op middelhoog vuur en fruit de sjalot en knoflook."
+      },
+      "ingredients": ["butter", "shallot", "garlic"],
+      "timer": { "minutes": 5, "label": { "en": "Soften the shallot", "nl": "Sjalot fruiten" } }
+    },
+    {
+      "text": {
+        "en": "Pour in the cooking cream and season with pepper and a little salt. Let the sauce simmer over low heat, stirring often.",
+        "nl": "Voeg de kookroom toe en breng op smaak met peper en eventueel zout. Laat de saus op laag vuur zachtjes koken, roer regelmatig."
+      },
+      "ingredients": ["cooking-cream", "pepper", "salt"],
+      "timer": { "minutes": 5, "label": { "en": "Simmer the sauce", "nl": "Saus laten koken" } }
+    },
+    {
+      "text": {
+        "en": "Scoop about 50 ml of pasta water out of the pan, then drain the penne.",
+        "nl": "Schep ongeveer 50 ml kookvocht uit de pan en giet de penne daarna af."
+      }
+    },
+    {
+      "text": {
+        "en": "Stir half of the Parmigiano into the sauce. Toss the penne through the sauce, add the pasta water and leave it off the heat.",
+        "nl": "Meng de helft van de Parmigiano door de saus. Schep de penne door de witte saus, voeg het kookvocht toe en laat van het vuur af staan."
+      },
+      "ingredients": ["parmigiano", "penne"],
+      "timer": { "minutes": 2, "label": { "en": "Rest off the heat", "nl": "Van het vuur af" } }
+    },
+    {
+      "text": {
+        "en": "Serve in deep plates, scattered with the rest of the cheese and the parsley.",
+        "nl": "Serveer in diepe borden en bestrooi met de rest van de kaas en de peterselie."
+      },
+      "ingredients": ["parmigiano", "parsley"]
+    }
+  ]
+}

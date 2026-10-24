@@ -1,0 +1,122 @@
+{
+  "$schema": "../../../../schemas/recipe.schema.json",
+  "title": { "en": "Truffle orzo with chicken", "nl": "Truffel orzo met kip" },
+  "summary": {
+    "en": "Wholewheat orzo cooked in stock with chicken, leek and chestnut mushrooms, finished with a protein-rich truffle cream.",
+    "nl": "Volkoren orzo gegaard in bouillon met kip, prei en kastanjechampignons, afgemaakt met een eiwitrijke truffelroom."
+  },
+  "servings": 2,
+  "prepMinutes": 15,
+  "cookMinutes": 25,
+  "tags": [
+    { "en": "pasta", "nl": "pasta" },
+    { "en": "high protein", "nl": "eiwitrijk" },
+    { "en": "chicken", "nl": "kip" },
+    { "en": "one pan", "nl": "één pan" }
+  ],
+  "ingredients": [
+    { "id": "olive-oil", "pantry": true, "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 5, "unit": "ml", "note": { "en": "or spray", "nl": "of spray" } },
+    { "id": "onion", "name": { "en": "white onion", "nl": "witte ui" }, "amount": 35, "unit": "g" },
+    { "id": "chicken", "name": { "en": "chicken breast", "nl": "kipfilet" }, "amount": 200, "unit": "g" },
+    { "id": "onion-garlic-powder", "name": { "en": "onion and garlic powder", "nl": "uien- en knoflookpoeder" }, "amount": 0.5, "unit": "tsp" },
+    { "id": "mushrooms", "name": { "en": "chestnut mushrooms", "nl": "kastanjechampignons" }, "amount": 125, "unit": "g" },
+    { "id": "leek", "name": { "en": "leek", "nl": "prei" }, "amount": 200, "unit": "g" },
+    { "id": "orzo", "name": { "en": "wholewheat orzo", "nl": "volkoren orzo" }, "amount": 140, "unit": "g" },
+    { "id": "stock", "name": { "en": "chicken stock", "nl": "kippenbouillon" }, "amount": 375, "unit": "ml" },
+    {
+      "id": "protein-cream",
+      "name": { "en": "protein cream powder", "nl": "eiwitpoeder voor kookroom" },
+      "amount": 30,
+      "unit": "g",
+      "note": { "en": "More Nutrition Protein Sahne", "nl": "More Nutrition Protein Sahne" }
+    },
+    { "id": "almond-milk", "name": { "en": "unsweetened almond milk", "nl": "ongezoete amandelmelk" }, "amount": 155, "unit": "ml" },
+    { "id": "truffle-tapenade", "name": { "en": "truffle tapenade", "nl": "truffeltapenade" }, "amount": 40, "unit": "g", "note": { "en": "Urbani", "nl": "Urbani" } },
+    { "id": "parmesan", "name": { "en": "Parmesan", "nl": "Parmezaanse kaas" }, "amount": 15, "unit": "g" },
+    { "id": "salt-pepper", "pantry": true, "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } }
+  ],
+  "prep": [
+    {
+      "text": { "en": "Peel the onion and chop it finely.", "nl": "Pel de ui en snipper hem fijn." },
+      "ingredients": ["onion"]
+    },
+    {
+      "text": { "en": "Cut the chicken into small cubes.", "nl": "Snijd de kipfilet in kleine blokjes." },
+      "ingredients": ["chicken"]
+    },
+    {
+      "text": {
+        "en": "Slice the mushrooms and cut the leek into thin rings.",
+        "nl": "Snijd de champignons in plakjes en de prei in dunne ringen."
+      },
+      "ingredients": ["mushrooms", "leek"],
+      "tip": {
+        "en": "Rinse the leek rings in a sieve: sand likes to hide between the layers.",
+        "nl": "Spoel de preiringen af in een vergiet: tussen de laagjes zit vaak zand."
+      }
+    },
+    {
+      "text": { "en": "Make the stock and weigh out the orzo.", "nl": "Maak de bouillon en weeg de orzo af." },
+      "ingredients": ["stock", "orzo"]
+    },
+    {
+      "text": {
+        "en": "Make the truffle cream: whisk the protein powder, almond milk, truffle tapenade and a little salt and pepper until smooth, or blend it.",
+        "nl": "Maak de truffelroom: klop het eiwitpoeder, de amandelmelk, de truffeltapenade en wat zout en peper met een garde tot een gladde saus, of mix het in de blender."
+      },
+      "ingredients": ["protein-cream", "almond-milk", "truffle-tapenade", "salt-pepper"]
+    },
+    {
+      "text": { "en": "Grate the Parmesan.", "nl": "Rasp de Parmezaanse kaas." },
+      "ingredients": ["parmesan"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Heat the olive oil in a wide pan and soften the onion briefly. Add the chicken and season with the onion and garlic powder, salt and pepper.",
+        "nl": "Verhit de olijfolie in een brede pan en fruit de ui kort aan. Voeg de kip toe en breng op smaak met het uien- en knoflookpoeder, zout en peper."
+      },
+      "ingredients": ["olive-oil", "onion", "chicken", "onion-garlic-powder", "salt-pepper"],
+      "timer": { "minutes": 4, "label": { "en": "Brown the chicken", "nl": "Kip aanbakken" } }
+    },
+    {
+      "text": {
+        "en": "Add the mushrooms and leek and fry for a few minutes with the chicken.",
+        "nl": "Voeg de champignons en prei toe en bak een paar minuten mee met de kip."
+      },
+      "ingredients": ["mushrooms", "leek"],
+      "timer": { "minutes": 3, "label": { "en": "Fry the vegetables", "nl": "Groenten meebakken" } }
+    },
+    {
+      "text": {
+        "en": "Stir in the orzo, then pour in the stock. Let the orzo cook gently over low to medium heat until it has soaked up the stock. Stir often.",
+        "nl": "Roer de orzo erdoor en giet de bouillon erbij. Laat de orzo op laag tot middelhoog vuur rustig garen tot hij de bouillon heeft opgenomen. Roer regelmatig."
+      },
+      "ingredients": ["orzo", "stock"],
+      "timer": { "minutes": 12, "label": { "en": "Cook the orzo", "nl": "Orzo garen" } },
+      "tip": {
+        "en": "Stirring keeps the orzo from sticking to the bottom and makes it creamy, like a risotto.",
+        "nl": "Door te roeren plakt de orzo niet aan en wordt hij romig, net als risotto."
+      }
+    },
+    {
+      "text": {
+        "en": "Once the orzo is done, turn the heat right down. Stir in the truffle cream and warm through briefly. Do not let it boil again.",
+        "nl": "Zet het vuur heel laag zodra de orzo gaar is. Roer de truffelroom erdoor en verwarm nog kort. Laat de saus niet meer koken."
+      },
+      "ingredients": ["protein-cream", "almond-milk", "truffle-tapenade"],
+      "tip": {
+        "en": "The protein cream must not boil, or it splits.",
+        "nl": "De protein cream mag niet koken, anders schift hij."
+      }
+    },
+    {
+      "text": {
+        "en": "Share between the plates and finish with the Parmesan.",
+        "nl": "Verdeel over de borden en maak af met de Parmezaanse kaas."
+      },
+      "ingredients": ["parmesan"]
+    }
+  ]
+}

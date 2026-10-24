@@ -1,0 +1,95 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Sweet potato beef bowl", "nl": "Zoete aardappel beef bowl" },
+  "summary": {
+    "en": "Spiced roast-style sweet potato, lean minced beef, avocado and cottage cheese in one bowl. About 550 kcal and 42 g protein.",
+    "nl": "Gekruide zoete aardappel, mager rundergehakt, avocado en cottage cheese in één kom. Ongeveer 550 kcal en 42 g eiwit."
+  },
+  "servings": 1,
+  "prepMinutes": 10,
+  "cookMinutes": 15,
+  "tags": [
+    { "en": "bowl", "nl": "bowl" },
+    { "en": "high protein", "nl": "eiwitrijk" },
+    { "en": "quick", "nl": "snel" }
+  ],
+  "ingredients": [
+    { "id": "sweet-potato", "name": { "en": "sweet potato", "nl": "zoete aardappel" }, "amount": 200, "unit": "g" },
+    { "id": "olive-oil", "pantry": true, "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 1, "unit": "tsp" },
+    { "id": "paprika", "name": { "en": "paprika", "nl": "paprikapoeder" }, "amount": 0.5, "unit": "tsp" },
+    { "id": "garlic-powder", "name": { "en": "garlic powder", "nl": "knoflookpoeder" }, "amount": 0.5, "unit": "tsp" },
+    { "id": "salt-pepper", "pantry": true, "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } },
+    { "id": "beef", "name": { "en": "lean minced beef", "nl": "mager rundergehakt" }, "amount": 125, "unit": "g" },
+    { "id": "avocado", "name": { "en": "avocado", "nl": "avocado" }, "plural": { "en": "avocados", "nl": "avocado's" }, "amount": 0.5, "unit": "piece" },
+    { "id": "cottage-cheese", "name": { "en": "cottage cheese", "nl": "cottage cheese" }, "amount": 75, "unit": "g" },
+    { "id": "chili-sauce", "name": { "en": "zero-sugar chili sauce", "nl": "zero chilisaus" }, "note": { "en": "optional", "nl": "optioneel" } },
+    { "id": "sesame", "name": { "en": "sesame seeds", "nl": "sesamzaad" }, "note": { "en": "optional", "nl": "optioneel" } }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Peel the sweet potato and cut it into cubes of about 1.5 cm.",
+        "nl": "Schil de zoete aardappel en snijd hem in blokjes van ongeveer 1,5 cm."
+      },
+      "ingredients": ["sweet-potato"],
+      "tip": {
+        "en": "Keep the cubes the same size so they are all done at the same time.",
+        "nl": "Houd de blokjes even groot, dan zijn ze allemaal tegelijk gaar."
+      }
+    },
+    {
+      "text": {
+        "en": "Mix the paprika and garlic powder with a pinch of salt and pepper in a small bowl.",
+        "nl": "Meng het paprikapoeder en knoflookpoeder met een snuf zout en peper in een schaaltje."
+      },
+      "ingredients": ["paprika", "garlic-powder", "salt-pepper"]
+    },
+    {
+      "text": { "en": "Cut the avocado into cubes.", "nl": "Snijd de avocado in blokjes." },
+      "ingredients": ["avocado"]
+    },
+    {
+      "text": {
+        "en": "Put a bowl ready with the cottage cheese, chili sauce and sesame seeds next to it.",
+        "nl": "Zet een kom klaar met de cottage cheese, chilisaus en het sesamzaad ernaast."
+      },
+      "ingredients": ["cottage-cheese", "chili-sauce", "sesame"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Heat the olive oil in a frying pan and fry the sweet potato with the spice mix until golden brown and soft. Turn now and then.",
+        "nl": "Verhit de olijfolie in een koekenpan en bak de zoete aardappel met het kruidenmengsel goudbruin en gaar. Schep af en toe om."
+      },
+      "ingredients": ["olive-oil", "sweet-potato", "paprika", "garlic-powder"],
+      "timer": { "minutes": 15, "label": { "en": "Fry the sweet potato", "nl": "Zoete aardappel bakken" } },
+      "tip": {
+        "en": "A lid on the pan for the first 5 minutes helps the cubes soften inside.",
+        "nl": "De eerste 5 minuten een deksel op de pan helpt de blokjes vanbinnen zacht te worden."
+      }
+    },
+    {
+      "text": {
+        "en": "Meanwhile, fry the minced beef in a second pan until crumbly and browned, seasoned with salt and pepper.",
+        "nl": "Bak ondertussen het gehakt in een tweede pan rul en bruin, op smaak gebracht met zout en peper."
+      },
+      "ingredients": ["beef", "salt-pepper"],
+      "timer": { "minutes": 5, "label": { "en": "Brown the mince", "nl": "Gehakt rul bakken" } }
+    },
+    {
+      "text": {
+        "en": "Put the sweet potato in the bowl and add the mince, avocado and cottage cheese.",
+        "nl": "Doe de zoete aardappel in de kom en voeg het gehakt, de avocado en de cottage cheese toe."
+      },
+      "ingredients": ["sweet-potato", "beef", "avocado", "cottage-cheese"]
+    },
+    {
+      "text": {
+        "en": "Finish with a little chili sauce and sesame seeds, if you like.",
+        "nl": "Maak eventueel af met wat chilisaus en sesamzaad."
+      },
+      "ingredients": ["chili-sauce", "sesame"]
+    }
+  ]
+}
