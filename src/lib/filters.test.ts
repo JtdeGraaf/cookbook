@@ -5,11 +5,14 @@ import {
   NO_FILTERS,
   allTags,
   filterBook,
+  filterFolder,
+  folderAsFiltered,
   filtersFromSearch,
   matchesFilters,
   parseFilterSearch,
   pickRandomRecipe,
   searchFromFilters,
+  tagsUsedIn,
 } from './filters'
 
 const quickPasta = makeRecipe({
@@ -68,6 +71,56 @@ describe('filterBook', () => {
 
   it('drops every chapter when nothing matches', () => {
     expect(filterBook(book, () => false).chapters).toEqual([])
+  })
+})
+
+describe('filterFolder', () => {
+  const mains = book.chapters[0]
+
+  it('keeps only the matching recipes inside the folder and its sections', () => {
+    const under30 = { ...NO_FILTERS, maxMinutes: 30 as const }
+    const filtered = filterFolder(mains, (recipe) => matchesFilters(recipe, under30, []))
+
+    expect(filtered.path).toBe('mains')
+    expect(filtered.recipes).toEqual([])
+    expect(recipesInside(filtered).map((recipe) => recipe.slug)).toEqual(['quick-pasta'])
+  })
+
+  it('drops sections that end up empty', () => {
+    const filtered = filterFolder(mains, (recipe) => recipe.slug === 'stew')
+
+    expect(filtered.recipes.map((recipe) => recipe.slug)).toEqual(['stew'])
+    expect(filtered.folders).toEqual([])
+  })
+
+  it('keeps the folder itself when nothing matches', () => {
+    const filtered = filterFolder(mains, () => false)
+
+    expect(filtered.path).toBe('mains')
+    expect(recipesInside(filtered)).toEqual([])
+    expect(filtered.folders).toEqual([])
+  })
+})
+
+describe('folderAsFiltered', () => {
+  const emptySection = makeFolder({ path: 'mains/new' })
+  const mains = makeFolder({ path: 'mains', recipes: [stew], folders: [emptySection] })
+
+  it('leaves the folder as it is without filters, empty sections included', () => {
+    expect(folderAsFiltered(mains, NO_FILTERS, [])).toBe(mains)
+  })
+
+  it('narrows the folder to the matching recipes when filtering', () => {
+    const filtered = folderAsFiltered(mains, { ...NO_FILTERS, favouritesOnly: true }, ['mains/stew'])
+
+    expect(filtered.recipes.map((recipe) => recipe.slug)).toEqual(['stew'])
+    expect(filtered.folders).toEqual([])
+  })
+})
+
+describe('tagsUsedIn', () => {
+  it('lists only the tags of the given recipes, once each', () => {
+    expect(tagsUsedIn([quickPasta, quickPasta]).map((tag) => tag.en)).toEqual(['Vegetarian', 'quick'])
   })
 })
 

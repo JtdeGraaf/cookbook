@@ -3,11 +3,12 @@ import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { usePageTitle } from '@/components/usePageTitle'
 import { allRecipes, type Folder } from '@/lib/book'
-import { NO_FILTERS, filterBook, hasFilters, matchesFilters, type RecipeFilters } from '@/lib/filters'
+import { allTags, filterBook, matchesFilters, type RecipeFilters } from '@/lib/filters'
 import { BookShell } from '@/features/browse/BookShell'
 import { useFavourites } from '@/features/favourites/useFavourites'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { book, pageOf } from './book-data'
+import { NoMatches } from './NoMatches'
 import { RecipeFilterBar } from './RecipeFilterBar'
 import { RecipeRow } from './RecipeRow'
 import './book.css'
@@ -33,18 +34,16 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
         </p>
       </header>
 
-      <RecipeFilterBar filters={filters} onFiltersChange={onFiltersChange} matchingRecipes={allRecipes(shownBook)} />
+      <RecipeFilterBar
+        filters={filters}
+        onFiltersChange={onFiltersChange}
+        matchingRecipes={allRecipes(shownBook)}
+        tags={allTags(book)}
+      />
 
       <section aria-label={t('book.contents')}>
         {shownBook.chapters.length === 0 ? (
-          <div className="contents__empty">
-            <p>{t('filters.noMatches')}</p>
-            {hasFilters(filters) && (
-              <button type="button" className="button button--quiet" onClick={() => onFiltersChange(NO_FILTERS)}>
-                {t('filters.clear')}
-              </button>
-            )}
-          </div>
+          <NoMatches filters={filters} onFiltersChange={onFiltersChange} />
         ) : (
           <ol className="contents__chapters">
             {shownBook.chapters.map((chapter) => (

@@ -32,20 +32,40 @@ export function matchesFilters(recipe: Recipe, filters: RecipeFilters, favourite
 
 /** The book with only the recipes that match; folders left empty disappear. */
 export function filterBook(book: Book, keep: (recipe: Recipe) => boolean): Book {
-  return { chapters: book.chapters.flatMap((chapter) => filterFolder(chapter, keep)) }
+  return { chapters: book.chapters.flatMap((chapter) => matchingFolders(chapter, keep)) }
 }
 
-function filterFolder(folder: Folder, keep: (recipe: Recipe) => boolean): Folder[] {
+/**
+ * A folder with only the recipes that match, as deep as it goes; sections left empty disappear. The folder itself
+ * always stays, so its page can still say that nothing matches.
+ */
+export function filterFolder(folder: Folder, keep: (recipe: Recipe) => boolean): Folder {
   const recipes = folder.recipes.filter(keep)
-  const folders = folder.folders.flatMap((child) => filterFolder(child, keep))
-  if (recipes.length === 0 && folders.length === 0) return []
-  return [{ ...folder, recipes, folders }]
+  const folders = folder.folders.flatMap((child) => matchingFolders(child, keep))
+  return { ...folder, recipes, folders }
+}
+
+/** What a folder page lists: everything without filters, empty sections too; otherwise only what matches. */
+export function folderAsFiltered(folder: Folder, filters: RecipeFilters, favourites: string[]): Folder {
+  if (!hasFilters(filters)) return folder
+  return filterFolder(folder, (recipe) => matchesFilters(recipe, filters, favourites))
+}
+
+function matchingFolders(folder: Folder, keep: (recipe: Recipe) => boolean): Folder[] {
+  const filtered = filterFolder(folder, keep)
+  if (filtered.recipes.length === 0 && filtered.folders.length === 0) return []
+  return [filtered]
 }
 
 /** Every tag used in the book, once each, in the order they first appear. */
 export function allTags(book: Book): LocalizedText[] {
+  return tagsUsedIn(allRecipes(book))
+}
+
+/** Every tag used by these recipes, once each, in the order they first appear. */
+export function tagsUsedIn(recipes: Recipe[]): LocalizedText[] {
   const seen = new Map<string, LocalizedText>()
-  for (const tag of allRecipes(book).flatMap((recipe) => recipe.tags)) {
+  for (const tag of recipes.flatMap((recipe) => recipe.tags)) {
     if (!seen.has(tagKey(tag))) seen.set(tagKey(tag), tag)
   }
   return [...seen.values()]
@@ -57,7 +77,7 @@ export function pickRandomRecipe(recipes: Recipe[], random: () => number): Recip
   return recipes[Math.min(recipes.length - 1, Math.floor(random() * recipes.length))]
 }
 
-/** Filters as they appear in the address bar, so a filtered contents page can be bookmarked. */
+/** Filters as they appear in the address bar, so a filtered contents or folder page can be bookmarked. */
 export type FilterSearch = { time?: TimeLimit; tag?: string; favourites?: true }
 
 /** Anything in the address bar that isn't a known filter value is dropped. */

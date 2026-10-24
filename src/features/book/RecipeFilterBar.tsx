@@ -2,10 +2,9 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/components/Icon'
 import type { Recipe } from '@/lib/book'
-import { NO_FILTERS, TIME_LIMITS, allTags, hasFilters, tagKey, type RecipeFilters } from '@/lib/filters'
+import { NO_FILTERS, TIME_LIMITS, hasFilters, tagKey, type RecipeFilters } from '@/lib/filters'
 import type { LocalizedText } from '@/lib/recipe-rules'
 import { useLocalized } from '@/features/settings/useLanguage'
-import { book } from './book-data'
 import { useSurpriseRecipe } from './useSurpriseRecipe'
 
 type RecipeFilterBarProps = {
@@ -13,18 +12,19 @@ type RecipeFilterBarProps = {
   onFiltersChange: (filters: RecipeFilters) => void
   /** What "Surprise me" picks from: the recipes the filters let through. */
   matchingRecipes: Recipe[]
+  /** The tags offered: only those used by the recipes on this page. */
+  tags: LocalizedText[]
 }
 
 /**
  * Quick filters as chips, the tags folded behind one "Tags" chip so the row stays short, and a button that opens a
  * random matching recipe. While any filter is on, a line says how many recipes match and offers to clear them.
  */
-export function RecipeFilterBar({ filters, onFiltersChange, matchingRecipes }: RecipeFilterBarProps) {
+export function RecipeFilterBar({ filters, onFiltersChange, matchingRecipes, tags }: RecipeFilterBarProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const surprise = useSurpriseRecipe(matchingRecipes)
   const [tagsOpen, setTagsOpen] = useState(false)
-  const tags = allTags(book)
   const activeTag = tags.find((tag) => tagKey(tag) === filters.tag) ?? null
   const timeLabels = { 30: t('filters.under30'), 60: t('filters.under60') }
   const toggleTag = (tag: LocalizedText) =>
