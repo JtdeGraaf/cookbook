@@ -1,14 +1,13 @@
 import { z } from 'zod/mini'
 import type { Language } from './recipe-rules'
 
-/** What the cook remembers about one recipe: when they made it and notes for next time. */
+/** What the book remembers about one recipe: the days the cook made it. */
 export type RecipeJournal = {
   /** Local calendar dates as "YYYY-MM-DD", newest first, each date once. */
   cookedOn: string[]
-  note: string
 }
 
-export const EMPTY_JOURNAL: RecipeJournal = { cookedOn: [], note: '' }
+export const EMPTY_JOURNAL: RecipeJournal = { cookedOn: [] }
 
 /** Today's date in the cook's own time zone, as "YYYY-MM-DD". */
 export function localDate(now: Date): string {
@@ -20,10 +19,6 @@ export function localDate(now: Date): string {
 export function recordCooked(journal: RecipeJournal, date: string): RecipeJournal {
   if (journal.cookedOn.includes(date)) return journal
   return { ...journal, cookedOn: [date, ...journal.cookedOn].sort().reverse() }
-}
-
-export function changeNote(journal: RecipeJournal, note: string): RecipeJournal {
-  return { ...journal, note }
 }
 
 /** British English, so English dates read day first like Dutch ones. */
@@ -40,9 +35,9 @@ export function journalKey(recipePath: string): string {
   return `journal:${recipePath}`
 }
 
-const savedJournalSchema = z.strictObject({
+// Not strict: journals saved before notes were taken out still have a `note`, which is dropped.
+const savedJournalSchema = z.object({
   cookedOn: z.array(z.string().check(z.regex(/^\d{4}-\d{2}-\d{2}$/))),
-  note: z.string(),
 })
 
 export function parseSavedJournal(value: unknown): RecipeJournal | null {

@@ -14,7 +14,7 @@ import { ClearTicksButton } from './ClearTicksButton'
 import { IngredientBox } from './IngredientBox'
 import { Point } from './Point'
 import { RecipeActions } from './RecipeActions'
-import { RecipeNotes } from './RecipeNotes'
+import { TimesCooked } from './TimesCooked'
 import type { RecipeProgressControls } from './useRecipeProgress'
 import './cooking.css'
 
@@ -66,6 +66,7 @@ export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadP
                 <dd className="numbers">{t('book.minutes', { count: recipe.cookMinutes })}</dd>
               </div>
             </dl>
+            <TimesCooked recipe={recipe} />
             {recipe.tags.length > 0 && (
               <ul className="spread__tags">
                 {recipe.tags.map((tag) => (
@@ -135,8 +136,6 @@ export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadP
             )}
             <ClearTicksButton controls={controls} />
           </div>
-
-          <RecipeNotes recipe={recipe} />
         </div>
 
         <Folio page={pageOf(recipe.path)} label={folder ? localized(folder.title) : ''} />

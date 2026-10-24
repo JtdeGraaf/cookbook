@@ -4,8 +4,8 @@ import { createSavedStore, type SavedStore } from '@/lib/saved-store'
 const stores = new Map<string, SavedStore<RecipeJournal>>()
 
 /**
- * One journal per recipe, shared by the notes, the finished page and Finish itself, and with the book open in other
- * tabs, so a note typed in one never writes back an older list of cooking days.
+ * One journal per recipe, shared by the recipe page, the finished page and Finish itself, and with the book open in
+ * other tabs, so Finish in one never writes back an older list of cooking days.
  */
 export function journalStore(recipePath: string): SavedStore<RecipeJournal> {
   const known = stores.get(recipePath)

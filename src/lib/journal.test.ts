@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { EMPTY_JOURNAL, changeNote, formatCookedDate, localDate, parseSavedJournal, recordCooked } from './journal'
+import { EMPTY_JOURNAL, formatCookedDate, localDate, parseSavedJournal, recordCooked } from './journal'
 
 describe('recipe journal', () => {
   it('writes dates in the cook’s own calendar', () => {
@@ -23,11 +23,11 @@ describe('recipe journal', () => {
     expect(formatCookedDate('2026-10-23', 'nl')).toBe('23 oktober 2026')
   })
 
-  it('keeps notes', () => {
-    expect(changeNote(EMPTY_JOURNAL, 'Less salt').note).toBe('Less salt')
+  it('keeps the cooking days of journals saved with a note, and drops the note', () => {
+    expect(parseSavedJournal({ cookedOn: ['2026-10-23'], note: 'Less salt' })).toEqual({ cookedOn: ['2026-10-23'] })
   })
 
   it('drops saved journals with dates in another format', () => {
-    expect(parseSavedJournal({ cookedOn: ['23-10-2026'], note: '' })).toBeNull()
+    expect(parseSavedJournal({ cookedOn: ['23-10-2026'] })).toBeNull()
   })
 })

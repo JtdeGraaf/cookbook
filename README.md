@@ -22,8 +22,8 @@ A personal cookbook, in English and Dutch, that reads like a real book and cooks
 - **Light and dark** follow your system until you pick one.
 - **Browse the folders.** The contents and every folder page share one layout, like a file manager: the `recipes/` folder as a tree you can open and close beside the page (on wider screens), a clickable path bar (All recipes › Mains › Pasta), and each folder's sub-folders and recipes. Folders can be nested as deep as you like.
 - **Filters and "Surprise me".** On the contents page: under 30 minutes, under an hour, favourites, or any tag. "Surprise me" opens a random recipe from what is left. Filters are in the address, so a filtered page can be bookmarked.
-- **Finishing.** Finish on the last step closes the cooking session: the cook is written into the recipe's history, its ticks and timers are cleared, and it comes off the shopping list (you can put it back). Then jot a note for next time.
-- **Favourites and notes.** Mark a recipe as a favourite; lists show a heart next to it. Each recipe keeps your own notes and remembers when you cooked it.
+- **Finishing.** Finish on the last step closes the cooking session: the cook is written into the recipe's history, its ticks and timers are cleared, and it comes off the shopping list (you can put it back).
+- **Favourites and history.** Mark a recipe as a favourite; lists show a heart next to it. Each recipe remembers when you cooked it and shows it under the cooking times.
 - **Shopping list.** Put recipes on the list; it uses each recipe's own servings (change them on either page) and adds up the same ingredient across recipes (200 g + 0.5 kg spaghetti becomes 0.7 kg). Ticking a line means you have it, on every recipe that needs it, and it moves to "Already have". Kitchen staples like salt and water are left off (and named). Copy list copies only what's left to buy.
 - **Share for a number of people.** "Share" sends a link like `/mains/pasta/carbonara?servings=6` that opens the recipe already scaled.
 - **Screen stays on** while you prep and cook, and on any page while a timer runs (where the browser allows it).
@@ -59,9 +59,8 @@ Every file is checked when the site is built. A typo in a field name, a missing 
 
 ### Add a recipe
 
-Three ways, all ending in a `recipe.json` that already passes the checks, so the site keeps building while you fill it in:
+Recipes are added and changed by AI agents working in this repository; the site itself has no way to edit them. The agent does one of two things, both ending in a `recipe.json` that already passes the checks, so the site keeps building while it is filled in:
 
-- **From the site:** every folder page has "Add a recipe to this folder". It opens GitHub's new-file page in that folder with a filled-in `new-recipe/recipe.json`; rename the folder, fill it in, commit. Every recipe also has "Edit on GitHub" under your notes.
 - **From the terminal:** `npm run new-recipe -- mains/pasta/lasagne` creates the folder and the file.
 - **By hand:** make a folder `recipes/<folders>/<recipe-name>/` (lowercase letters, digits and dashes) and copy a `recipe.json` from another recipe. Your editor autocompletes and checks it thanks to the `$schema` line.
 

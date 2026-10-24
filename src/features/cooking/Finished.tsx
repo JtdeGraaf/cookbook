@@ -8,12 +8,11 @@ import { useLocalized } from '@/features/settings/useLanguage'
 import { useShoppingList } from '@/features/shopping/useShoppingList'
 import { useTimers } from '@/features/timers/useTimers'
 import { PhaseHead } from './PhaseHead'
-import { RecipeNotes } from './RecipeNotes'
 
 /**
  * The last page after Finish. The cooking session is closed by then (ticks, rung timers and shopping-list entry
- * cleared), though a timer still going, like a mousse setting, keeps going and leads here. This is the place to jot
- * a note for next time, or put the recipe back on the list to cook it again soon.
+ * cleared), though a timer still going, like a mousse setting, keeps going and leads here. From here the cook can
+ * read the recipe again, or put it back on the list to cook it again soon.
  */
 export function Finished({ recipe }: { recipe: Recipe }) {
   const { t } = useTranslation()
@@ -45,7 +44,6 @@ export function Finished({ recipe }: { recipe: Recipe }) {
             </button>
           )}
         </div>
-        <RecipeNotes recipe={recipe} />
       </div>
     </section>
   )

@@ -8,7 +8,6 @@ import { RecipeFilterBar } from '@/features/book/RecipeFilterBar'
 import { RecipeRow } from '@/features/book/RecipeRow'
 import { useFavourites } from '@/features/favourites/useFavourites'
 import { useLocalized } from '@/features/settings/useLanguage'
-import { AddRecipeLink } from './AddRecipeLink'
 import { BookShell } from './BookShell'
 import { FolderHead } from './FolderHead'
 import { FolderRow } from './FolderRow'
@@ -55,7 +54,6 @@ export function FolderPage({ folder, filters, onFiltersChange }: FolderPageProps
             ))}
           </ol>
         )}
-        <AddRecipeLink folderPath={folder.path} />
         <Folio page={pageOf(folder.path)} label={localized(folder.title)} />
       </BookShell>
     </div>

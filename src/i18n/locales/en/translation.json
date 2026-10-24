@@ -69,10 +69,6 @@
     "share": "Share",
     "linkCopied": "Link copied",
     "print": "Print",
-    "editOnGithub": "Edit on GitHub",
-    "notesTitle": "Your notes",
-    "notesLabel": "Notes for next time",
-    "notesPlaceholder": "Less salt next time, try it with…",
     "cookedCount_one": "Cooked once, last on {{date}}",
     "cookedCount_other": "Cooked {{count}} times, last on {{date}}",
     "neverCooked": "Not cooked yet",
@@ -160,9 +156,7 @@
     "open": "Open {{name}}",
     "close": "Close {{name}}",
     "folderCount_one": "{{count}} folder",
-    "folderCount_other": "{{count}} folders",
-    "addRecipe": "Add a recipe to this folder",
-    "addRecipeHint": "Opens GitHub with a recipe.json ready to fill in."
+    "folderCount_other": "{{count}} folders"
   },
   "filters": {
     "label": "Filter recipes",

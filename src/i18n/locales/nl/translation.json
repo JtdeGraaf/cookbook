@@ -69,10 +69,6 @@
     "share": "Delen",
     "linkCopied": "Link gekopieerd",
     "print": "Afdrukken",
-    "editOnGithub": "Bewerken op GitHub",
-    "notesTitle": "Jouw aantekeningen",
-    "notesLabel": "Aantekeningen voor de volgende keer",
-    "notesPlaceholder": "Volgende keer minder zout, probeer het met…",
     "cookedCount_one": "Eén keer gemaakt, laatst op {{date}}",
     "cookedCount_other": "{{count}} keer gemaakt, laatst op {{date}}",
     "neverCooked": "Nog niet gemaakt",
@@ -160,9 +156,7 @@
     "open": "Open {{name}}",
     "close": "Sluit {{name}}",
     "folderCount_one": "{{count}} map",
-    "folderCount_other": "{{count}} mappen",
-    "addRecipe": "Recept toevoegen aan deze map",
-    "addRecipeHint": "Opent GitHub met een recipe.json die klaarstaat om in te vullen."
+    "folderCount_other": "{{count}} mappen"
   },
   "filters": {
     "label": "Recepten filteren",
