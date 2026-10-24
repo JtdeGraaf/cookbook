@@ -4,7 +4,7 @@ import {
   allRecipes,
   findRecipe,
   folderTrail,
-  nearestFolder,
+  nearestFolderOrRecipe,
   ingredientsForStep,
   numberPages,
   parentPaths,
@@ -61,8 +61,14 @@ describe('finding things in the book', () => {
   })
 
   it('finds the deepest folder that exists on the way to a missing page', () => {
-    expect(nearestFolder(book, 'mains/pasta/lasagne/prep')?.path).toBe('mains/pasta')
-    expect(nearestFolder(book, 'nothing/here')).toBeNull()
+    expect(nearestFolderOrRecipe(book, 'mains/pasta/lasagne/prep')?.path).toBe('mains/pasta')
+    expect(nearestFolderOrRecipe(book, 'nothing/here')).toBeNull()
+  })
+
+  it('leads back to the recipe when the missing page is below one', () => {
+    expect(nearestFolderOrRecipe(book, 'mains/pasta/carbonara/cook/9')?.path).toBe('mains/pasta/carbonara')
+    expect(nearestFolderOrRecipe(book, '/mains/pasta/carbonara/cook')?.path).toBe('mains/pasta/carbonara')
+    expect(nearestFolderOrRecipe(book, 'mains/pasta/carbonara/extra/deep')?.path).toBe('mains/pasta/carbonara')
   })
 
   it('splits a path into its parents', () => {

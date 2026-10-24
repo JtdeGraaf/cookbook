@@ -111,12 +111,15 @@ export function parentPaths(path: string): string[] {
   return parts.map((_part, index) => parts.slice(0, index + 1).join('/'))
 }
 
-/** The deepest folder that does exist on the way to an address that doesn't, for a helpful not-found page. */
-export function nearestFolder(book: Book, address: string): Folder | null {
+/**
+ * The deepest folder or recipe that does exist on the way to an address that doesn't, for a helpful not-found page.
+ * A recipe beats its folder, so a step that no longer exists leads back to the recipe.
+ */
+export function nearestFolderOrRecipe(book: Book, address: string): Folder | Recipe | null {
   const candidates = parentPaths(address).reverse()
   for (const path of candidates) {
-    const folder = findFolder(book, path)
-    if (folder) return folder
+    const found = findRecipe(book, path) ?? findFolder(book, path)
+    if (found) return found
   }
   return null
 }
