@@ -107,11 +107,15 @@
   },
   "done": {
     "title": "Eet smakelijk",
-    "body": "{{title}} is klaar. De vinkjes en kookwekkers zijn gewist en het staat niet meer op de boodschappenlijst, klaar voor de volgende keer.",
-    "bodyTimersLeft_one": "{{title}} is klaar. De vinkjes zijn gewist en het staat niet meer op de boodschappenlijst. De kookwekker loopt nog door, dus je hoort het als het zover is.",
-    "bodyTimersLeft_other": "{{title}} is klaar. De vinkjes zijn gewist en het staat niet meer op de boodschappenlijst. De {{count}} kookwekkers lopen nog door, dus je hoort het als het zover is.",
+    "body": "{{title}} is klaar. De vinkjes en kookwekkers zijn gewist, klaar voor de volgende keer.",
+    "bodyOffList": "{{title}} is klaar. De vinkjes en kookwekkers zijn gewist en het staat niet meer op de boodschappenlijst, klaar voor de volgende keer.",
+    "bodyTimersLeft_one": "{{title}} is klaar. De vinkjes zijn gewist. De kookwekker loopt nog door, dus je hoort het als het zover is.",
+    "bodyTimersLeft_other": "{{title}} is klaar. De vinkjes zijn gewist. De {{count}} kookwekkers lopen nog door, dus je hoort het als het zover is.",
+    "bodyOffListTimersLeft_one": "{{title}} is klaar. De vinkjes zijn gewist en het staat niet meer op de boodschappenlijst. De kookwekker loopt nog door, dus je hoort het als het zover is.",
+    "bodyOffListTimersLeft_other": "{{title}} is klaar. De vinkjes zijn gewist en het staat niet meer op de boodschappenlijst. De {{count}} kookwekkers lopen nog door, dus je hoort het als het zover is.",
     "again": "Terug naar het recept",
-    "backOnList": "Weer op de boodschappenlijst zetten"
+    "backOnList": "Weer op de boodschappenlijst zetten",
+    "addToList": "Op de boodschappenlijst zetten"
   },
   "timer": {
     "start": "Start kookwekker · {{time}}",

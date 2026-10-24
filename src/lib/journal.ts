@@ -5,6 +5,8 @@ import type { Language } from './recipe-rules'
 export type RecipeJournal = {
   /** Local calendar dates as "YYYY-MM-DD", newest first, each date once. */
   cookedOn: string[]
+  /** Whether the last Finish took the recipe off the shopping list. Absent in journals saved before this was kept. */
+  takenOffShoppingList?: boolean
 }
 
 export const EMPTY_JOURNAL: RecipeJournal = { cookedOn: [] }
@@ -19,6 +21,11 @@ export function localDate(now: Date): string {
 export function recordCooked(journal: RecipeJournal, date: string): RecipeJournal {
   if (journal.cookedOn.includes(date)) return journal
   return { ...journal, cookedOn: [date, ...journal.cookedOn].sort().reverse() }
+}
+
+/** Finish remembers whether it took the recipe off the shopping list, so the done page only says so when it did. */
+export function recordFinished(journal: RecipeJournal, date: string, takenOffShoppingList: boolean): RecipeJournal {
+  return { ...recordCooked(journal, date), takenOffShoppingList }
 }
 
 /** British English, so English dates read day first like Dutch ones. */
@@ -38,6 +45,7 @@ export function journalKey(recipePath: string): string {
 // Not strict: journals saved before notes were taken out still have a `note`, which is dropped.
 const savedJournalSchema = z.object({
   cookedOn: z.array(z.string().check(z.regex(/^\d{4}-\d{2}-\d{2}$/))),
+  takenOffShoppingList: z.optional(z.boolean()),
 })
 
 export function parseSavedJournal(value: unknown): RecipeJournal | null {

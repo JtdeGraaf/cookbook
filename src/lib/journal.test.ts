@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { EMPTY_JOURNAL, formatCookedDate, localDate, parseSavedJournal, recordCooked } from './journal'
+import { EMPTY_JOURNAL, formatCookedDate, localDate, parseSavedJournal, recordCooked, recordFinished } from './journal'
 
 describe('recipe journal', () => {
   it('writes dates in the cook’s own calendar', () => {
@@ -16,6 +16,14 @@ describe('recipe journal', () => {
     const journal = recordCooked(recordCooked(EMPTY_JOURNAL, '2026-10-23'), '2026-10-23')
 
     expect(journal.cookedOn).toEqual(['2026-10-23'])
+  })
+
+  it('remembers whether the last Finish took the recipe off the shopping list', () => {
+    const offList = recordFinished(EMPTY_JOURNAL, '2026-10-23', true)
+    const again = recordFinished(offList, '2026-10-23', false)
+
+    expect(offList).toEqual({ cookedOn: ['2026-10-23'], takenOffShoppingList: true })
+    expect(again).toEqual({ cookedOn: ['2026-10-23'], takenOffShoppingList: false })
   })
 
   it('writes the date out in the reader’s language', () => {
