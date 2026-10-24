@@ -187,6 +187,8 @@ function toRecipe(
     ingredients: file.ingredients.map((ingredient) => ({
       id: ingredient.id,
       name: ingredient.name,
+      // Leaving it out means the name is the same for any amount, like "garlic".
+      plural: ingredient.plural ?? null,
       quantity:
         ingredient.amount !== undefined && ingredient.unit !== undefined
           ? { amount: ingredient.amount, unit: ingredient.unit }

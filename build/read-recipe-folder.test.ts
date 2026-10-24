@@ -120,6 +120,14 @@ describe('readRecipeFolder', () => {
     expect(recipe.tags).toEqual([])
     expect(recipe.cover?.credit).toBeNull()
     expect(recipe.cook[0]).toMatchObject({ ingredientIds: [], tip: null, image: null })
+    expect(recipe.ingredients[0]).toMatchObject({ plural: null, note: null, pantry: false })
+  })
+
+  it('reads the plural name of an ingredient', () => {
+    const bread = { id: 'bread', name: both('slice of bread'), plural: both('slices of bread'), amount: 1, unit: 'piece' }
+    addRecipe('mains', 'toast', { ...validRecipe(), ingredients: [bread] })
+
+    expect(readRecipeFolder(root).chapters[0].recipes[0].ingredients[0].plural).toEqual(both('slices of bread'))
   })
 
   it('rejects a misspelt field', () => {

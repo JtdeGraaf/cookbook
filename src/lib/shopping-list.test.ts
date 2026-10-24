@@ -17,7 +17,7 @@ const carbonara = makeRecipe({
   ingredients: [
     makeIngredient({ id: 'spaghetti', name: both('spaghetti'), quantity: { amount: 200, unit: 'g' } }),
     makeIngredient({ id: 'pepper', name: both('black pepper', 'zwarte peper'), quantity: { amount: 1, unit: 'tsp' } }),
-    makeIngredient({ id: 'eggs', name: both('eggs', 'eieren'), quantity: { amount: 1, unit: 'piece' } }),
+    makeIngredient({ id: 'eggs', name: both('egg', 'ei'), quantity: { amount: 1, unit: 'piece' } }),
     makeIngredient({ id: 'water', name: both('water'), quantity: { amount: 2, unit: 'l' }, pantry: true }),
   ],
 })
@@ -36,7 +36,12 @@ const pancakes = makeRecipe({
   title: both('Pancakes'),
   servings: 4,
   ingredients: [
-    makeIngredient({ id: 'eggs', name: both('eggs', 'eieren'), quantity: { amount: 2, unit: 'piece' } }),
+    makeIngredient({
+      id: 'eggs',
+      name: both('egg', 'ei'),
+      plural: both('eggs', 'eieren'),
+      quantity: { amount: 2, unit: 'piece' },
+    }),
     makeIngredient({ id: 'parsley', name: both('parsley'), quantity: { amount: 1, unit: 'sprig' } }),
   ],
 })
@@ -71,7 +76,13 @@ describe('buildShoppingItems', () => {
   it('scales each recipe by its own servings before adding up', () => {
     const items = buildShoppingItems([listed(carbonara, 4), listed(pancakes, 2)])
 
-    expect(items.find((item) => item.name.en === 'eggs')?.quantity).toEqual({ amount: 3, unit: 'piece' })
+    expect(items.find((item) => item.name.en === 'egg')?.quantity).toEqual({ amount: 3, unit: 'piece' })
+  })
+
+  it('takes the plural name from the recipe that gives one', () => {
+    const items = buildShoppingItems([listed(carbonara, 2), listed(pancakes, 4)])
+
+    expect(items.find((item) => item.name.en === 'egg')?.plural).toEqual(both('eggs', 'eieren'))
   })
 
   it('keeps "to taste" apart from a measured amount of the same thing', () => {
@@ -94,8 +105,8 @@ describe('buildShoppingItems', () => {
     const halfHad = buildShoppingItems([listed(carbonara, 2, ['eggs']), listed(pancakes, 4)])
     const allHad = buildShoppingItems([listed(carbonara, 2, ['eggs']), listed(pancakes, 4, ['eggs'])])
 
-    expect(halfHad.find((item) => item.name.en === 'eggs')?.have).toBe(false)
-    expect(allHad.find((item) => item.name.en === 'eggs')?.have).toBe(true)
+    expect(halfHad.find((item) => item.name.en === 'egg')?.have).toBe(false)
+    expect(allHad.find((item) => item.name.en === 'egg')?.have).toBe(true)
   })
 })
 

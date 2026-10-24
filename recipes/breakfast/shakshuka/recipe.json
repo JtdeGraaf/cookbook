@@ -27,8 +27,14 @@
   },
   "ingredients": [
     { "id": "olive-oil", "pantry": true, "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 2, "unit": "tbsp" },
-    { "id": "onion", "name": { "en": "onion", "nl": "ui" }, "amount": 1, "unit": "piece" },
-    { "id": "red-pepper", "name": { "en": "red bell pepper", "nl": "rode paprika" }, "amount": 1, "unit": "piece" },
+    { "id": "onion", "name": { "en": "onion", "nl": "ui" }, "plural": { "en": "onions", "nl": "uien" }, "amount": 1, "unit": "piece" },
+    {
+      "id": "red-pepper",
+      "name": { "en": "red bell pepper", "nl": "rode paprika" },
+      "plural": { "en": "red bell peppers", "nl": "rode paprika's" },
+      "amount": 1,
+      "unit": "piece"
+    },
     { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 3, "unit": "clove" },
     { "id": "cumin", "name": { "en": "ground cumin", "nl": "gemalen komijn" }, "amount": 1, "unit": "tsp" },
     { "id": "paprika", "name": { "en": "smoked paprika", "nl": "gerookt paprikapoeder" }, "amount": 1, "unit": "tsp" },
@@ -41,7 +47,7 @@
       "note": { "en": "400 g", "nl": "400 g" }
     },
     { "id": "sugar", "pantry": true, "name": { "en": "sugar", "nl": "suiker" }, "amount": 0.5, "unit": "tsp" },
-    { "id": "eggs", "name": { "en": "eggs", "nl": "eieren" }, "amount": 4, "unit": "piece" },
+    { "id": "eggs", "name": { "en": "egg", "nl": "ei" }, "plural": { "en": "eggs", "nl": "eieren" }, "amount": 4, "unit": "piece" },
     { "id": "feta", "name": { "en": "feta", "nl": "feta" }, "amount": 50, "unit": "g" },
     { "id": "parsley", "name": { "en": "flat-leaf parsley", "nl": "platte peterselie" }, "amount": 4, "unit": "sprig" },
     { "id": "salt-pepper", "pantry": true, "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } },

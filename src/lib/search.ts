@@ -1,4 +1,4 @@
-import { allRecipes, folderTrail, type Book, type Recipe } from './book'
+import { allRecipes, folderTrail, type Book, type Ingredient, type Recipe } from './book'
 import type { LocalizedText } from './recipe-rules'
 
 /** Where a word was found decides how high the recipe ranks. */
@@ -19,10 +19,7 @@ export function buildSearchIndex(book: Book): SearchEntry[] {
     fields: [
       ...fieldsFor('title', [recipe.title]),
       ...fieldsFor('tag', recipe.tags),
-      ...fieldsFor(
-        'ingredient',
-        recipe.ingredients.map((ingredient) => ingredient.name),
-      ),
+      ...recipe.ingredients.flatMap(ingredientFields),
       ...fieldsFor(
         'folder',
         folderTrail(book, recipe.folderPath).map((folder) => folder.title),
@@ -30,6 +27,12 @@ export function buildSearchIndex(book: Book): SearchEntry[] {
       ...fieldsFor('summary', [recipe.summary]),
     ],
   }))
+}
+
+/** The plural is searchable too, so "eieren" finds a recipe that lists "ei"; a hit still shows the plain name. */
+function ingredientFields(ingredient: Ingredient): SearchField[] {
+  const names = ingredient.plural ? [ingredient.name, ingredient.plural] : [ingredient.name]
+  return fieldsFor('ingredient', names).map((field) => ({ ...field, source: ingredient.name }))
 }
 
 function fieldsFor(kind: FieldKind, texts: LocalizedText[]): SearchField[] {

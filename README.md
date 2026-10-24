@@ -79,11 +79,11 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 | `prepMinutes`, `cookMinutes` | yes | Rough times, shown on the recipe |
 | `tags` | no | List of texts, e.g. `{ "en": "vegetarian", "nl": "vegetarisch" }`; searchable |
 | `cover` | no | `{ "file", "alt", "credit"? }`, see images below; leave out until you have a photo |
-| `ingredients` | yes | List of `{ "id", "name", "amount"?, "unit"?, "note"?, "pantry"? }` |
+| `ingredients` | yes | List of `{ "id", "name", "plural"?, "amount"?, "unit"?, "note"?, "pantry"? }` |
 | `prep` | yes, at least one | The *mise en place*: everything done before anything goes on the heat |
 | `cook` | yes, at least one | The cooking steps, shown one at a time |
 
-**Ingredients.** `id` is a short name steps use to point at the ingredient (`"eggs"`). Give `amount` and `unit` together, or leave both out for "to taste". Units: `g`, `kg`, `ml`, `l`, `tsp`, `tbsp`, `piece`, `clove`, `pinch`, `slice`, `sprig`, `can`. Amounts are for `servings` people and scale automatically. Add `"pantry": true` to a staple the kitchen always has (salt, water, oil) to leave it off the shopping list.
+**Ingredients.** `id` is a short name steps use to point at the ingredient (`"eggs"`). Give `amount` and `unit` together, or leave both out for "to taste". Units: `g`, `kg`, `ml`, `l`, `tsp`, `tbsp`, `piece`, `clove`, `pinch`, `slice`, `sprig`, `can`. Amounts are for `servings` people and scale automatically. For things you count, `name` is the name of one (`{ "en": "egg", "nl": "ei" }`) and `plural` the name for more than one (`{ "en": "eggs", "nl": "eieren" }`), used whenever the scaled amount is more than 1; leave `plural` out when the name never changes, like garlic counted in cloves. Add `"pantry": true` to a staple the kitchen always has (salt, water, oil) to leave it off the shopping list.
 
 **Steps** (both `prep` and `cook`):
 

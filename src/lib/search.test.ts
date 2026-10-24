@@ -7,7 +7,7 @@ const shakshuka = makeRecipe({
   folderPath: 'breakfast',
   title: both('Shakshuka'),
   tags: [both('vegetarian', 'vegetarisch')],
-  ingredients: [makeIngredient({ id: 'eggs', name: both('eggs', 'eieren') })],
+  ingredients: [makeIngredient({ id: 'eggs', name: both('egg', 'ei'), plural: both('eggs', 'eieren') })],
 })
 const stamppot = makeRecipe({
   slug: 'kale-stamppot',
@@ -69,6 +69,12 @@ describe('searchRecipes', () => {
   it('reports which ingredients matched', () => {
     const [hit] = searchRecipes(index, 'eggs')
     expect(hit.recipe.slug).toBe('shakshuka')
-    expect(hit.matchedIngredients).toEqual([both('eggs', 'eieren')])
+    expect(hit.matchedIngredients).toEqual([both('egg', 'ei')])
+  })
+
+  it('finds an ingredient by its plural name and reports it once, by its plain name', () => {
+    const [hit] = searchRecipes(index, 'eieren')
+    expect(hit.recipe.slug).toBe('shakshuka')
+    expect(hit.matchedIngredients).toEqual([both('egg', 'ei')])
   })
 })

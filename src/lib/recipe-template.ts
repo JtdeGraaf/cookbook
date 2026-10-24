@@ -14,7 +14,7 @@ export function recipeTemplate(folderPath: string): string {
     cookMinutes: 20,
     tags: [{ en: 'quick', nl: 'snel' }],
     ingredients: [
-      { id: 'onion', name: { en: 'onion', nl: 'ui' }, amount: 1, unit: 'piece' },
+      { id: 'onion', name: { en: 'onion', nl: 'ui' }, plural: { en: 'onions', nl: 'uien' }, amount: 1, unit: 'piece' },
       { id: 'salt', name: { en: 'salt', nl: 'zout' } },
     ],
     prep: [{ text: { en: 'Chop the onion.', nl: 'Snipper de ui.' }, ingredients: ['onion'] }],

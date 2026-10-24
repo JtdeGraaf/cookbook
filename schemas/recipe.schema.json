@@ -169,7 +169,26 @@
               "nl"
             ],
             "additionalProperties": false,
-            "description": "The same text in English and Dutch."
+            "description": "For things you count, the name of one, like \"egg\"."
+          },
+          "plural": {
+            "description": "The name for more than one, like \"eggs\". Leave out when the name never changes, like \"garlic\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
           },
           "amount": {
             "description": "Leave out together with unit for \"to taste\".",

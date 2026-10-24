@@ -37,6 +37,7 @@
     {
       "id": "smoked-sausage",
       "name": { "en": "smoked sausage", "nl": "rookworst" },
+      "plural": { "en": "smoked sausages", "nl": "rookworsten" },
       "amount": 1,
       "unit": "piece",
       "note": { "en": "about 275 g", "nl": "ongeveer 275 g" }

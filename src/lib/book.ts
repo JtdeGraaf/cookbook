@@ -14,6 +14,8 @@ export type Quantity = { amount: number; unit: Unit }
 export type Ingredient = {
   id: string
   name: LocalizedText
+  /** The name for more than one, like "eggs"; null when the name never changes. */
+  plural: LocalizedText | null
   /** Null means "to taste". */
   quantity: Quantity | null
   note: LocalizedText | null

@@ -27,7 +27,7 @@
   "ingredients": [
     { "id": "flour", "name": { "en": "plain flour", "nl": "bloem" }, "amount": 250, "unit": "g" },
     { "id": "salt", "pantry": true, "name": { "en": "salt", "nl": "zout" }, "amount": 1, "unit": "pinch" },
-    { "id": "eggs", "name": { "en": "eggs", "nl": "eieren" }, "amount": 2, "unit": "piece" },
+    { "id": "eggs", "name": { "en": "egg", "nl": "ei" }, "plural": { "en": "eggs", "nl": "eieren" }, "amount": 2, "unit": "piece" },
     { "id": "milk", "name": { "en": "whole milk", "nl": "volle melk" }, "amount": 500, "unit": "ml" },
     { "id": "butter", "name": { "en": "butter, for frying", "nl": "boter, om te bakken" }, "amount": 40, "unit": "g" },
     { "id": "bacon", "name": { "en": "thin bacon", "nl": "ontbijtspek" }, "amount": 16, "unit": "slice" },

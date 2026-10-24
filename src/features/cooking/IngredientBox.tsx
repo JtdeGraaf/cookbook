@@ -5,7 +5,7 @@ import { servingsFactor } from '@/lib/quantity'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { ServingsStepper } from './ServingsStepper'
 import type { RecipeProgressControls } from './useRecipeProgress'
-import { useQuantityText } from './useQuantityText'
+import { useIngredientName, useQuantityText } from './useQuantityText'
 
 type IngredientBoxProps = { recipe: Recipe; controls: RecipeProgressControls }
 
@@ -14,6 +14,7 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const quantityText = useQuantityText()
+  const ingredientName = useIngredientName()
   const factor = servingsFactor(recipe.servings, controls.servings)
   const have = controls.progress.haveIngredientIds
   return (
@@ -30,7 +31,7 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
             <label className="ingredient-line">
               <Tick checked={have.includes(ingredient.id)} onChange={() => controls.toggleIngredient(ingredient.id)} />
               <span className="ingredient-line__name">
-                {localized(ingredient.name)}
+                {ingredientName(ingredient, factor)}
                 {ingredient.note && <span className="ingredient-line__note">{localized(ingredient.note)}</span>}
               </span>
               <span className="ingredient-line__leader" aria-hidden="true" />

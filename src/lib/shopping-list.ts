@@ -22,6 +22,8 @@ export type IngredientSource = { recipePath: string; ingredientId: string }
 export type ShoppingItem = {
   key: string
   name: LocalizedText
+  /** The name for more than one, from the first recipe that gives one. */
+  plural: LocalizedText | null
   /** Null when every recipe says "to taste". */
   quantity: Quantity | null
   recipeTitles: LocalizedText[]
@@ -67,7 +69,7 @@ export function removeFromList(list: ShoppingList, recipePath: string): Shopping
 export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
   const items = new Map<
     string,
-    { name: LocalizedText; total: number | null; unit: Unit | null; recipeTitles: LocalizedText[]; sources: IngredientSource[]; have: boolean }
+    { name: LocalizedText; plural: LocalizedText | null; total: number | null; unit: Unit | null; recipeTitles: LocalizedText[]; sources: IngredientSource[]; have: boolean }
   >()
   for (const { recipe, servings, haveIngredientIds } of recipes) {
     const factor = servings / recipe.servings
@@ -82,6 +84,7 @@ export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
       if (!existing) {
         items.set(key, {
           name: ingredient.name,
+          plural: ingredient.plural,
           total: amount,
           unit: family?.baseUnit ?? null,
           recipeTitles: [recipe.title],
@@ -91,6 +94,7 @@ export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
         continue
       }
       if (existing.total !== null && amount !== null) existing.total += amount
+      existing.plural ??= ingredient.plural
       if (!existing.recipeTitles.includes(recipe.title)) existing.recipeTitles.push(recipe.title)
       existing.sources.push(source)
       existing.have = existing.have && have
@@ -99,6 +103,7 @@ export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
   return [...items.entries()].map(([key, item]) => ({
     key,
     name: item.name,
+    plural: item.plural,
     // Round only once, after adding up, so small amounts don't round away before they are summed.
     quantity: item.total !== null && item.unit !== null ? scaleQuantity({ amount: item.total, unit: item.unit }, 1) : null,
     recipeTitles: item.recipeTitles,

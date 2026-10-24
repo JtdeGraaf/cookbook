@@ -36,7 +36,8 @@
     { "id": "butter", "name": { "en": "butter", "nl": "boter" }, "amount": 20, "unit": "g" },
     {
       "id": "eggs",
-      "name": { "en": "eggs", "nl": "eieren" },
+      "name": { "en": "egg", "nl": "ei" },
+      "plural": { "en": "eggs", "nl": "eieren" },
       "amount": 4,
       "unit": "piece",
       "note": { "en": "very fresh", "nl": "heel vers" }

@@ -9,7 +9,7 @@ import { Tick } from '@/components/Tick'
 import { usePageTitle } from '@/components/usePageTitle'
 import type { ShoppingItem } from '@/lib/shopping-list'
 import { ServingsStepper } from '@/features/cooking/ServingsStepper'
-import { useQuantityLabel } from '@/features/cooking/useQuantityText'
+import { useNameForAmount, useQuantityLabel } from '@/features/cooking/useQuantityText'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { useCopyShoppingList } from './useCopyShoppingList'
 import { useShoppingList } from './useShoppingList'
@@ -126,6 +126,7 @@ function ShoppingLines({ items, onToggle }: { items: ShoppingItem[]; onToggle: (
   const { t } = useTranslation()
   const localized = useLocalized()
   const quantityLabel = useQuantityLabel()
+  const nameFor = useNameForAmount()
   return (
     <ul className="shopping__item-list">
       {items.map((item) => (
@@ -133,7 +134,7 @@ function ShoppingLines({ items, onToggle }: { items: ShoppingItem[]; onToggle: (
           <label className="ingredient-line shopping-item">
             <Tick checked={item.have} onChange={() => onToggle(item)} />
             <span className="ingredient-line__name">
-              {localized(item.name)}
+              {nameFor(item, item.quantity)}
               {item.recipeTitles.length > 1 && (
                 <span className="ingredient-line__note">
                   {t('shopping.forRecipes', { titles: item.recipeTitles.map(localized).join(', ') })}

@@ -1,5 +1,10 @@
-import type { Quantity } from './book'
+import type { Ingredient, Quantity } from './book'
 import type { Language, Unit } from './recipe-rules'
+
+/** An ingredient's amount for the chosen servings; null for "to taste". */
+export function scaleIngredient(ingredient: Ingredient, factor: number): Quantity | null {
+  return ingredient.quantity ? scaleQuantity(ingredient.quantity, factor) : null
+}
 
 /** Units counted in whole things, shown with kitchen fractions like ½ instead of decimals. */
 const COUNTED_UNITS: readonly Unit[] = ['piece', 'clove', 'slice', 'sprig', 'can']

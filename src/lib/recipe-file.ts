@@ -34,7 +34,10 @@ export const imageSchema = z.strictObject({
 export const ingredientSchema = z
   .strictObject({
     id: slugSchema.describe('Short name that steps use to point at this ingredient, like "eggs".'),
-    name: localizedTextSchema,
+    name: localizedTextSchema.describe('For things you count, the name of one, like "egg".'),
+    plural: localizedTextSchema
+      .optional()
+      .describe('The name for more than one, like "eggs". Leave out when the name never changes, like "garlic".'),
     amount: z.number().positive().optional().describe('Leave out together with unit for "to taste".'),
     unit: z.enum(UNITS).optional(),
     note: localizedTextSchema.optional().describe('Extra detail shown after the name, like "at room temperature".'),

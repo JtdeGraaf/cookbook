@@ -36,8 +36,21 @@
       "unit": "g",
       "note": { "en": "or pancetta", "nl": "of pancetta" }
     },
-    { "id": "egg-yolks", "name": { "en": "egg yolks", "nl": "eidooiers" }, "amount": 3, "unit": "piece" },
-    { "id": "egg", "name": { "en": "egg", "nl": "ei" }, "amount": 1, "unit": "piece", "note": { "en": "whole", "nl": "heel" } },
+    {
+      "id": "egg-yolks",
+      "name": { "en": "egg yolk", "nl": "eidooier" },
+      "plural": { "en": "egg yolks", "nl": "eidooiers" },
+      "amount": 3,
+      "unit": "piece"
+    },
+    {
+      "id": "egg",
+      "name": { "en": "egg", "nl": "ei" },
+      "plural": { "en": "eggs", "nl": "eieren" },
+      "amount": 1,
+      "unit": "piece",
+      "note": { "en": "whole", "nl": "heel" }
+    },
     { "id": "pecorino", "name": { "en": "pecorino romano", "nl": "pecorino romano" }, "amount": 50, "unit": "g" },
     {
       "id": "pepper", "pantry": true,
