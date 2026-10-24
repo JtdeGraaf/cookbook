@@ -1,4 +1,4 @@
-import type { Recipe } from './book'
+import type { Recipe, RecipeSource } from './book'
 import { MAX_SERVINGS, MIN_SERVINGS, type Language } from './recipe-rules'
 
 /** A link to the recipe that opens it scaled for `servings` people, in the sender's language. */
@@ -12,4 +12,10 @@ export function parseServingsParam(value: unknown): number | null {
   if (value === undefined || value === null || value === '') return null
   if (!Number.isInteger(servings) || servings < MIN_SERVINGS || servings > MAX_SERVINGS) return null
   return servings
+}
+
+/** What a link to the original recipe says: its name, or else the website, like "ah.nl". */
+export function sourceLinkText(source: RecipeSource): string {
+  if (source.name) return source.name
+  return new URL(source.url).hostname.replace(/^www\./, '')
 }

@@ -75,6 +75,8 @@
     "cookedCount_one": "Cooked once, last on {{date}}",
     "cookedCount_other": "Cooked {{count}} times, last on {{date}}",
     "neverCooked": "Not cooked yet",
+    "originalRecipe": "Original recipe: <original>{{name}}</original>",
+    "opensInNewTab": "opens in a new tab",
     "screenOn": "Your screen stays on while you cook",
     "shoppingList": "Shopping list",
     "sharedServings_one": "Set to {{count}} person by a shared link. Your shopping list follows.",

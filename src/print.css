@@ -71,6 +71,22 @@
     font-size: 22pt;
   }
 
+  /* Paper can't be clicked, so write the address out. */
+  .spread__source-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .spread__source-link svg {
+    display: none;
+  }
+
+  .spread__source-link::after {
+    content: ' (' attr(href) ')';
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+
   .ingredient-box,
   .before-heat,
   .method__step {

@@ -86,6 +86,27 @@
   max-width: 46ch;
 }
 
+.spread__source {
+  margin-top: var(--space-2);
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.spread__source-link {
+  color: var(--chapter-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.spread__source-link svg {
+  display: inline;
+  margin-left: 3px;
+  vertical-align: -2px;
+}
+
 .spread__times {
   display: flex;
   flex-wrap: wrap;

@@ -184,6 +184,7 @@ function toRecipe(
     cookMinutes: file.cookMinutes,
     tags: file.tags ?? [],
     cover: file.cover ? toPicture(file.cover) : null,
+    source: file.source ? { url: file.source.url, name: file.source.name ?? null } : null,
     ingredients: file.ingredients.map((ingredient) => ({
       id: ingredient.id,
       name: ingredient.name,

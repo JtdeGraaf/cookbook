@@ -33,6 +33,7 @@ export function makeRecipe(overrides: Partial<Recipe> & Pick<Recipe, 'slug'>): R
     cookMinutes: 20,
     tags: [],
     cover: picture,
+    source: null,
     ingredients: [makeIngredient({ id: 'salt' })],
     prep: [makeStep()],
     cook: [makeStep()],

@@ -74,6 +74,7 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 |---|---|---|
 | `$schema` | no | `"../../../schemas/recipe.schema.json"` for editor help |
 | `title`, `summary` | yes | Name and a one or two sentence description |
+| `source` | no | `{ "url", "name"? }`: the recipe this one is based on, shown as "Original recipe: …"; without a name the link shows the website |
 | `servings` | yes | How many people the amounts are for (1–24) |
 | `prepMinutes`, `cookMinutes` | yes | Rough times, shown on the recipe |
 | `tags` | no | List of texts, e.g. `{ "en": "vegetarian", "nl": "vegetarisch" }`; searchable |
@@ -118,7 +119,7 @@ The JSON Schemas in `schemas/` are generated from the checks in `src/lib/recipe-
 
 ## Recipes and credits
 
-In `mains`: kip in de hoed (after Cooked by Nadine) and a sweet potato beef bowl (after De Snelle Keuken). In the `mains/pasta` section: truffle orzo (after Indi Kuiper), and spaghetti all'amatriciana, spaghetti carbonara and penne with Parmigiano cream sauce (after Albert Heijn). All rewritten with the prep first. None has a photo yet.
+In `mains`: kip in de hoed (after Cooked by Nadine) and a sweet potato beef bowl (after De Snelle Keuken). In the `mains/pasta` section: truffle orzo (after Indi Kuiper), and spaghetti all'amatriciana, spaghetti carbonara and penne with Parmigiano cream sauce (after Albert Heijn). All rewritten with the prep first, and each links to its original from the recipe page, except the beef bowl, whose original post we could not find again. None has a photo yet.
 
 ## Develop
 

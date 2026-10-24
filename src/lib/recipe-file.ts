@@ -31,6 +31,13 @@ export const imageSchema = z.strictObject({
   credit: creditSchema.optional().describe('Leave out for your own photos.'),
 })
 
+export const recipeSourceSchema = z
+  .strictObject({
+    url: z.url({ protocol: /^https?$/ }).describe('Web address of the original recipe.'),
+    name: text.optional().describe('Who or where it is from, like "Albert Heijn". Leave out to show the website name.'),
+  })
+  .describe("Where this recipe comes from, if it is based on someone else's.")
+
 export const ingredientSchema = z
   .strictObject({
     id: slugSchema.describe('Short name that steps use to point at this ingredient, like "eggs".'),
@@ -73,6 +80,7 @@ export const recipeFileSchema = z
     cookMinutes: z.number().int().min(0),
     tags: z.array(localizedTextSchema).optional(),
     cover: imageSchema.optional().describe('The main photo. Leave out until you have one.'),
+    source: recipeSourceSchema.optional(),
     ingredients: z.array(ingredientSchema).min(1),
     prep: z
       .array(stepSchema)

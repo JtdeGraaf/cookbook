@@ -75,6 +75,8 @@
     "cookedCount_one": "Eén keer gemaakt, laatst op {{date}}",
     "cookedCount_other": "{{count}} keer gemaakt, laatst op {{date}}",
     "neverCooked": "Nog niet gemaakt",
+    "originalRecipe": "Origineel recept: <original>{{name}}</original>",
+    "opensInNewTab": "opent in een nieuw tabblad",
     "screenOn": "Je scherm blijft aan terwijl je kookt",
     "shoppingList": "Boodschappenlijst",
     "sharedServings_one": "Op {{count}} persoon gezet via een gedeelde link. Je boodschappenlijst gaat mee.",

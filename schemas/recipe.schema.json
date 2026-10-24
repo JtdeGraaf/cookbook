@@ -141,6 +141,26 @@
       ],
       "additionalProperties": false
     },
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Web address of the original recipe."
+        },
+        "name": {
+          "description": "Who or where it is from, like \"Albert Heijn\". Leave out to show the website name.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "Where this recipe comes from, if it is based on someone else's."
+    },
     "ingredients": {
       "minItems": 1,
       "type": "array",

@@ -12,6 +12,7 @@ import { PathBar } from '@/features/browse/PathBar'
 import { useLanguage, useLocalized } from '@/features/settings/useLanguage'
 import { ClearTicksButton } from './ClearTicksButton'
 import { IngredientBox } from './IngredientBox'
+import { OriginalRecipe } from './OriginalRecipe'
 import { Point } from './Point'
 import { RecipeActions } from './RecipeActions'
 import { TimesCooked } from './TimesCooked'
@@ -56,6 +57,7 @@ export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadP
               </p>
             )}
             <p className="spread__summary">{localized(recipe.summary)}</p>
+            <OriginalRecipe recipe={recipe} />
             <dl className="spread__times">
               <div>
                 <dt>{t('recipe.prepTime')}</dt>

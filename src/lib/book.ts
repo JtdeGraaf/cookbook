@@ -9,6 +9,9 @@ export type Credit = { author: string; license: string; source: string }
 
 export type Picture<File = ResponsiveImage> = { file: File; alt: LocalizedText; credit: Credit | null }
 
+/** The recipe this one is based on. A null name means the link shows the website name. */
+export type RecipeSource = { url: string; name: string | null }
+
 export type Quantity = { amount: number; unit: Unit }
 
 export type Ingredient = {
@@ -49,6 +52,8 @@ export type Recipe<File = ResponsiveImage> = {
   tags: LocalizedText[]
   /** Null until someone adds a photo. */
   cover: Picture<File> | null
+  /** Null for our own recipes. */
+  source: RecipeSource | null
   ingredients: Ingredient[]
   prep: Step<File>[]
   cook: Step<File>[]

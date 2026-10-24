@@ -256,6 +256,7 @@ Line styles carry meaning:
 - **Running head:** sticky, with 92% paper and a 10px blur. It holds the tomato wordmark block (on the cover, only the round mark), search, the language switch (a segmented pill) and the theme switch.
 - **Thumb index:** from 760px, chapter-coloured tabs with vertical text are fixed to the right edge, pushed 8px out. Hover pulls a tab in to 2px; the current tab sits flush and is taller and wider. On phones they hang from under the head as a scrollable row.
 - **Folio:** a hairline-topped foot with the page number in a chapter pill.
+- **Link out of the book:** underlined chapter-ink text in the display face at 700, followed by a 16px arrow-out-of-box icon, opening in a new tab. Used for "Original recipe" under the spread summary; print hides the icon and writes the address out.
 
 ### Contents Row (signature)
 Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Every folder, chapter or section, heads its rows with the same light line: a folder icon, the name in chapter ink (1.5rem for a chapter, 1.1875rem for a section) and its page. No coloured banners: the tree and thumb index already carry the colour.

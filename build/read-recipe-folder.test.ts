@@ -118,6 +118,7 @@ describe('readRecipeFolder', () => {
     const recipe = readRecipeFolder(root).chapters[0].recipes[0]
 
     expect(recipe.tags).toEqual([])
+    expect(recipe.source).toBeNull()
     expect(recipe.cover?.credit).toBeNull()
     expect(recipe.cook[0]).toMatchObject({ ingredientIds: [], tip: null, image: null })
     expect(recipe.ingredients[0]).toMatchObject({ plural: null, note: null, pantry: false })
@@ -128,6 +129,24 @@ describe('readRecipeFolder', () => {
     addRecipe('mains', 'toast', { ...validRecipe(), ingredients: [bread] })
 
     expect(readRecipeFolder(root).chapters[0].recipes[0].ingredients[0].plural).toEqual(both('slices of bread'))
+  })
+
+  it('reads where the recipe comes from, with or without a name', () => {
+    addRecipe('mains', 'toast', { ...validRecipe(), source: { url: 'https://example.com/toast', name: 'Grandma' } })
+    addRecipe('mains', 'tea', { ...validRecipe(), source: { url: 'https://example.com/tea' } })
+
+    const [tea, toast] = readRecipeFolder(root).chapters[0].recipes
+
+    expect(toast.source).toEqual({ url: 'https://example.com/toast', name: 'Grandma' })
+    expect(tea.source).toEqual({ url: 'https://example.com/tea', name: null })
+  })
+
+  it('rejects a source that is not a web address', () => {
+    addRecipe('mains', 'toast', { ...validRecipe(), source: { url: 'grandma’s notebook' } })
+    addRecipe('mains', 'tea', { ...validRecipe(), source: { url: 'javascript:alert(1)' } })
+
+    expect(problems()).toHaveLength(2)
+    expect(problems().every((problem) => problem.includes('source.url'))).toBe(true)
   })
 
   it('rejects a misspelt field', () => {
