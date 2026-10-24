@@ -108,7 +108,7 @@
   },
   "timer": {
     "start": "Start kookwekker · {{time}}",
-    "restart": "Kookwekker opnieuw starten",
+    "restart": "Start {{label}} opnieuw",
     "pause": "Pauzeer {{label}}",
     "resume": "Hervat {{label}}",
     "remove": "Verwijder {{label}}",

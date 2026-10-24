@@ -108,7 +108,7 @@
   },
   "timer": {
     "start": "Start timer · {{time}}",
-    "restart": "Restart timer",
+    "restart": "Restart {{label}}",
     "pause": "Pause {{label}}",
     "resume": "Resume {{label}}",
     "remove": "Remove {{label}}",

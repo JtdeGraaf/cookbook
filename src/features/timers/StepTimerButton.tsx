@@ -3,6 +3,7 @@ import { Icon } from '@/components/Icon'
 import type { Recipe, StepTimer } from '@/lib/book'
 import { formatClock } from '@/lib/timers'
 import { useLocalized } from '@/features/settings/useLanguage'
+import { useKeepFocusOnTimer } from './useKeepFocusOnTimer'
 import { useStepTimer } from './useStepTimer'
 import './timers.css'
 
@@ -13,12 +14,19 @@ export function StepTimerButton(props: StepTimerButtonProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const stepTimer = useStepTimer(props)
+  const { mainControl, focusEvents } = useKeepFocusOnTimer(stepTimer.state)
   const label = localized(props.timer.label)
   const clock = formatClock(stepTimer.remaining)
 
   if (stepTimer.state === 'idle') {
     return (
-      <button type="button" className="step-timer step-timer--idle" onClick={stepTimer.start}>
+      <button
+        ref={mainControl}
+        type="button"
+        className="step-timer step-timer--idle"
+        {...focusEvents}
+        onClick={stepTimer.start}
+      >
         <Icon name="timer" />
         <span className="step-timer__label">{label}</span>
         <span className="step-timer__clock numbers">{t('timer.start', { time: clock })}</span>
@@ -27,18 +35,25 @@ export function StepTimerButton(props: StepTimerButtonProps) {
   }
 
   return (
-    <div className={`step-timer step-timer--${stepTimer.state}`} role="timer">
+    <div className={`step-timer step-timer--${stepTimer.state}`} role="timer" {...focusEvents}>
       <Icon name={stepTimer.state === 'finished' ? 'bell' : 'timer'} />
       <span className="step-timer__label">{label}</span>
       <span className="step-timer__clock numbers">{stepTimer.state === 'finished' ? t('timer.done') : clock}</span>
       <span className="step-timer__controls">
         {stepTimer.state === 'running' && (
-          <button type="button" className="icon-button" onClick={stepTimer.pause} aria-label={t('timer.pause', { label })}>
+          <button
+            ref={mainControl}
+            type="button"
+            className="icon-button"
+            onClick={stepTimer.pause}
+            aria-label={t('timer.pause', { label })}
+          >
             <Icon name="pause" />
           </button>
         )}
         {stepTimer.state === 'paused' && (
           <button
+            ref={mainControl}
             type="button"
             className="icon-button"
             onClick={stepTimer.resume}
@@ -48,11 +63,21 @@ export function StepTimerButton(props: StepTimerButtonProps) {
           </button>
         )}
         {stepTimer.state === 'finished' ? (
-          <button type="button" className="step-timer__stop" onClick={stepTimer.remove}>
+          <button
+            ref={mainControl}
+            type="button"
+            className="step-timer__stop"
+            onClick={stepTimer.remove}
+          >
             {t('timer.stop')}
           </button>
         ) : (
-          <button type="button" className="icon-button" onClick={stepTimer.start} aria-label={t('timer.restart')}>
+          <button
+            type="button"
+            className="icon-button"
+            onClick={stepTimer.start}
+            aria-label={t('timer.restart', { label })}
+          >
             <Icon name="undo" />
           </button>
         )}
