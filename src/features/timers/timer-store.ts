@@ -8,28 +8,33 @@ import {
   removeTimer,
   resumeTimer,
   startTimer,
+  timersNoLongerRinging,
+  timersToNotify,
   type KitchenTimer,
   type NewTimer,
 } from '@/lib/timers'
 import { startAlarm, stopAlarm, unlockSound } from './alarm'
+import { askToNotifyOnce, closeNotifications, notifyFinished } from './notifications'
 
 const TICK_MS = 250
 
 /** Shared with the book open in other tabs, so a timer started or stopped in one shows in all of them. */
 const savedTimers = createSavedStore<KitchenTimer[]>('timers', parseSavedTimers, [])
 let tick: ReturnType<typeof setInterval> | null = null
-// Timers that had already rung when this tab last looked; only newly finished ones start the alarm.
-let rungTimerIds = finishedTimerIds(savedTimers.get())
+// The timers as this tab last saw them; only timers that finished since then ring and notify.
+let lastSeenTimers = savedTimers.get()
 
 // Runs after every change, also one made in another tab: that tab may have finished a timer or stopped the alarm.
 savedTimers.subscribe(() => {
   const timers = savedTimers.get()
-  const finishedIds = finishedTimerIds(timers)
-  const anyNewlyFinished = finishedIds.some((id) => !rungTimerIds.includes(id))
-  rungTimerIds = finishedIds
+  const justFinished = timersToNotify(lastSeenTimers, timers)
+  closeNotifications(timersNoLongerRinging(lastSeenTimers, timers))
+  lastSeenTimers = timers
   keepTickingWhileRunning(timers)
-  if (finishedIds.length === 0) stopAlarm()
-  else if (anyNewlyFinished) startAlarm()
+  if (finishedTimerIds(timers).length === 0) stopAlarm()
+  if (justFinished.length === 0) return
+  startAlarm()
+  notifyFinished(justFinished)
 })
 
 /** One shared clock for all timers; it only runs while a timer is counting down. */
@@ -53,8 +58,9 @@ export const timerStore = {
   subscribe: savedTimers.subscribe,
   getTimers: savedTimers.get,
   start(timer: NewTimer): void {
-    // Starting is a click, which is when browsers allow sound to be switched on.
+    // Starting is a click, which is when browsers allow switching sound on and asking to show notifications.
     unlockSound()
+    askToNotifyOnce()
     savedTimers.set((timers) => startTimer(timers, timer, Date.now()))
   },
   pause(id: string): void {
@@ -69,9 +75,13 @@ export const timerStore = {
   finishRecipe(recipePath: string, donePagePath: string): void {
     savedTimers.set((timers) => keepGoingTimersAfterFinish(timers, recipePath, donePagePath))
   },
-  /** Picks up timers that finished while the page was closed. */
+  /** Picks up timers that finished while the page was closed, and from then on each time the page comes back into sight. */
   resumeAfterLoad(): void {
     checkForFinishedTimers()
     keepTickingWhileRunning(savedTimers.get())
+    // A hidden page's clock is slowed down or frozen, so the banner should not wait for its next tick.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') checkForFinishedTimers()
+    })
   },
 }

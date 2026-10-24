@@ -13,7 +13,9 @@ import {
   resumeTimer,
   sortForShelf,
   startTimer,
+  timersNoLongerRinging,
   timersOfRecipe,
+  timersToNotify,
   type NewTimer,
 } from './timers'
 
@@ -205,5 +207,50 @@ describe('sortForShelf', () => {
     timers = finishDueTimers(timers, 0).timers
 
     expect(sortForShelf(timers, 0).map((timer) => timer.id)).toEqual(['rang', 'short', 'long', 'paused'])
+  })
+})
+
+describe('timersToNotify', () => {
+  it('gives the timers that just finished', () => {
+    let before = startTimer([], newTimer('short', 1), 0)
+    before = startTimer(before, newTimer('long', 10), 0)
+
+    const after = finishDueTimers(before, 2 * MINUTE).timers
+
+    expect(timersToNotify(before, after).map((timer) => timer.id)).toEqual(['short'])
+  })
+
+  it('leaves out timers that were already ringing', () => {
+    const ringing = finishDueTimers(startTimer([], newTimer('short', 1), 0), 2 * MINUTE).timers
+    const after = finishDueTimers(startTimer(ringing, newTimer('next', 1), 0), 2 * MINUTE).timers
+
+    expect(timersToNotify(ringing, after).map((timer) => timer.id)).toEqual(['next'])
+  })
+
+  it('gives a restarted timer again when it finishes a second time', () => {
+    const rang = finishDueTimers(startTimer([], newTimer('sauce', 1), 0), 2 * MINUTE).timers
+    const restarted = startTimer(rang, newTimer('sauce', 1), 2 * MINUTE)
+
+    const rangAgain = finishDueTimers(restarted, 4 * MINUTE).timers
+
+    expect(timersToNotify(restarted, rangAgain).map((timer) => timer.id)).toEqual(['sauce'])
+  })
+})
+
+describe('timersNoLongerRinging', () => {
+  const ringing = finishDueTimers(startTimer([], newTimer('sauce', 1), 0), 2 * MINUTE).timers
+
+  it('gives a ringing timer that was stopped', () => {
+    expect(timersNoLongerRinging(ringing, removeTimer(ringing, 'sauce'))).toEqual(['sauce'])
+  })
+
+  it('gives a ringing timer that was restarted', () => {
+    expect(timersNoLongerRinging(ringing, startTimer(ringing, newTimer('sauce', 1), 2 * MINUTE))).toEqual(['sauce'])
+  })
+
+  it('leaves out timers that are still ringing or never rang', () => {
+    const withAnother = startTimer(ringing, newTimer('long', 10), 0)
+
+    expect(timersNoLongerRinging(withAnother, removeTimer(withAnother, 'long'))).toEqual([])
   })
 })

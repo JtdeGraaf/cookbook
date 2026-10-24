@@ -124,7 +124,9 @@
     "trayLabel": "Kookwekkers",
     "finishedTitle": "Klaar: {{label}}",
     "soundOff": "Tik ergens om het geluid van de kookwekker aan te zetten",
-    "finishedBanner": "{{label}}: klaar"
+    "finishedBanner": "{{label}}: klaar",
+    "notificationTitle": "Klaar: {{label}}",
+    "notificationBody": "{{recipe}} · tik om terug te gaan"
   },
   "notFound": {
     "title": "Deze bladzijde staat niet in het boek",

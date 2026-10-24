@@ -124,7 +124,9 @@
     "trayLabel": "Kitchen timers",
     "finishedTitle": "Done: {{label}}",
     "soundOff": "Tap anywhere to turn on the alarm sound",
-    "finishedBanner": "{{label}} is done"
+    "finishedBanner": "{{label}} is done",
+    "notificationTitle": "Time’s up: {{label}}",
+    "notificationBody": "{{recipe}} · tap to go back"
   },
   "notFound": {
     "title": "This page isn’t in the book",

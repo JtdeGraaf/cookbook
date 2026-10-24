@@ -110,6 +110,18 @@ export function finishDueTimers(timers: KitchenTimer[], now: number): { timers: 
   return { timers: justFinished.length > 0 ? updated : timers, justFinished }
 }
 
+/** Timers that are finished now but were not before: these start the alarm and the phone notification. */
+export function timersToNotify(previous: KitchenTimer[], current: KitchenTimer[]): KitchenTimer[] {
+  const alreadyRang = finishedTimerIds(previous)
+  return current.filter((timer) => timer.state.kind === 'finished' && !alreadyRang.includes(timer.id))
+}
+
+/** Ids of timers that were ringing before and now are stopped, restarted or gone, so their notification can go. */
+export function timersNoLongerRinging(previous: KitchenTimer[], current: KitchenTimer[]): string[] {
+  const stillRinging = finishedTimerIds(current)
+  return finishedTimerIds(previous).filter((id) => !stillRinging.includes(id))
+}
+
 /** The timers that rang and wait for someone to stop them. */
 export function finishedTimerIds(timers: KitchenTimer[]): string[] {
   return timers.filter((timer) => timer.state.kind === 'finished').map((timer) => timer.id)

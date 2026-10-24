@@ -38,3 +38,15 @@ self.addEventListener('fetch', (event) => {
   // Everything else is saved by this build, and a changed file means a new cache name, so a saved copy is never out of date.
   event.respondWith(caches.match(request).then((saved) => saved ?? fetch(request)))
 })
+
+// Tapping a finished timer's notification brings the book back, or opens the timer's page when no tab is left.
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const path = event.notification.data?.path ?? '/'
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((tabs) => {
+      const openTab = tabs.find((tab) => new URL(tab.url).origin === self.location.origin)
+      return openTab ? openTab.focus() : self.clients.openWindow(path)
+    }),
+  )
+})
