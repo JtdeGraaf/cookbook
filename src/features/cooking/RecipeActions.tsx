@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next'
+import { CopyByHand } from '@/components/CopyByHand'
 import { Icon } from '@/components/Icon'
 import type { Recipe } from '@/lib/book'
 import { FavouriteButton } from '@/features/favourites/FavouriteButton'
 import { useShoppingList } from '@/features/shopping/useShoppingList'
 import { useShareRecipe } from './useShareRecipe'
+
+const SHARE_LABELS = { idle: 'recipe.share', copied: 'recipe.linkCopied', failed: 'recipe.copyFailed' } as const
 
 type RecipeActionsProps = { recipe: Recipe; servings: number }
 
@@ -14,7 +17,7 @@ type RecipeActionsProps = { recipe: Recipe; servings: number }
 export function RecipeActions({ recipe, servings }: RecipeActionsProps) {
   const { t } = useTranslation()
   const shopping = useShoppingList()
-  const { share, copied } = useShareRecipe(recipe, servings)
+  const { share, outcome } = useShareRecipe(recipe, servings)
   const onList = shopping.isOnList(recipe)
   return (
     <div className="recipe-actions">
@@ -29,13 +32,14 @@ export function RecipeActions({ recipe, servings }: RecipeActionsProps) {
         {t('recipe.shoppingList')}
       </button>
       <button type="button" className="recipe-actions__button" onClick={() => void share()}>
-        <Icon name={copied ? 'check' : 'share'} size={20} />
-        <span aria-live="polite">{copied ? t('recipe.linkCopied') : t('recipe.share')}</span>
+        <Icon name={outcome.status === 'copied' ? 'check' : 'share'} size={20} />
+        <span aria-live="polite">{t(SHARE_LABELS[outcome.status])}</span>
       </button>
       <button type="button" className="recipe-actions__button" onClick={() => window.print()}>
         <Icon name="print" size={20} />
         {t('recipe.print')}
       </button>
+      {outcome.status === 'failed' && <CopyByHand label={t('recipe.copyLinkByHand')} text={outcome.text} />}
     </div>
   )
 }

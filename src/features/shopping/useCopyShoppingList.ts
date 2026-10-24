@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCopyText } from '@/components/useCopyText'
 import type { ShoppingItem } from '@/lib/shopping-list'
 import { useNameForAmount, useQuantityLabel } from '@/features/cooking/useQuantityText'
 
@@ -6,14 +6,12 @@ import { useNameForAmount, useQuantityLabel } from '@/features/cooking/useQuanti
 export function useCopyShoppingList(items: ShoppingItem[]) {
   const quantityLabel = useQuantityLabel()
   const nameFor = useNameForAmount()
-  const [copied, setCopied] = useState(false)
+  const { copy: copyText, outcome } = useCopyText()
 
   async function copy() {
     const lines = items.map((item) => `- ${quantityLabel(item.quantity)} ${nameFor(item, item.quantity)}`)
-    await navigator.clipboard.writeText(lines.join('\n'))
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 2500)
+    await copyText(lines.join('\n'))
   }
 
-  return { copy, copied }
+  return { copy, outcome }
 }

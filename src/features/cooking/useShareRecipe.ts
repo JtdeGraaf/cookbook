@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCopyText } from '@/components/useCopyText'
 import type { Recipe } from '@/lib/book'
 import { shareRecipeUrl } from '@/lib/links'
 import { useLanguage, useLocalized } from '@/features/settings/useLanguage'
@@ -9,7 +9,7 @@ export function useShareRecipe(recipe: Recipe, servings: number) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const { language } = useLanguage()
-  const [copied, setCopied] = useState(false)
+  const { copy, outcome } = useCopyText()
 
   async function share() {
     const url = shareRecipeUrl(window.location.origin, recipe, servings, language)
@@ -19,10 +19,8 @@ export function useShareRecipe(recipe: Recipe, servings: number) {
       await navigator.share({ title, text: t('recipe.shareText', { title, count: servings }), url }).catch(() => {})
       return
     }
-    await navigator.clipboard.writeText(url)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 2500)
+    await copy(url)
   }
 
-  return { share, copied }
+  return { share, outcome }
 }

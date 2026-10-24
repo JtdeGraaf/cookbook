@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { CopyByHand } from '@/components/CopyByHand'
 import { EmptyState } from '@/components/EmptyState'
 import { Icon } from '@/components/Icon'
 import { Tick } from '@/components/Tick'
@@ -16,6 +17,8 @@ import { useShoppingList } from './useShoppingList'
 import '@/features/cooking/cooking.css'
 import './shopping.css'
 
+const COPY_LABELS = { idle: 'shopping.copy', copied: 'shopping.copied', failed: 'shopping.copyFailed' } as const
+
 /**
  * Everything to buy for the recipes on the list, added together. Ticking a line means you have it, the same tick
  * as on the recipe's own ingredient list.
@@ -24,7 +27,7 @@ export function ShoppingListPage() {
   const { t } = useTranslation()
   const localized = useLocalized()
   const shopping = useShoppingList()
-  const { copy, copied } = useCopyShoppingList(shopping.toBuy)
+  const { copy, outcome } = useCopyShoppingList(shopping.toBuy)
   const [askingToClear, setAskingToClear] = useState(false)
   usePageTitle(t('shopping.title'))
 
@@ -48,14 +51,15 @@ export function ShoppingListPage() {
         <h1 className="shopping__title">{t('shopping.title')}</h1>
         <div className="shopping__actions">
           <button type="button" className="button" onClick={() => void copy()} disabled={shopping.toBuy.length === 0}>
-            <Icon name={copied ? 'check' : 'list'} />
-            <span aria-live="polite">{copied ? t('shopping.copied') : t('shopping.copy')}</span>
+            <Icon name={outcome.status === 'copied' ? 'check' : 'list'} />
+            <span aria-live="polite">{t(COPY_LABELS[outcome.status])}</span>
           </button>
           <button type="button" className="text-button" onClick={() => setAskingToClear(true)}>
             <Icon name="undo" size={18} />
             {t('shopping.clear')}
           </button>
         </div>
+        {outcome.status === 'failed' && <CopyByHand label={t('shopping.copyByHand')} text={outcome.text} multiline />}
       </header>
 
       <div className="shopping__layout">
