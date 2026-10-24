@@ -2,6 +2,7 @@
   "name": "Cookbook · Kookboek",
   "short_name": "Cookbook",
   "description": "A personal bilingual cookbook: prep before heat, step timers, works offline.",
+  "lang": "en",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

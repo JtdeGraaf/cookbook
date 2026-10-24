@@ -17,12 +17,15 @@ export function offlinePlugin(): Plugin {
     // After writing, so index.html (added late by Vite) is in the list too.
     writeBundle(options, bundle) {
       const outFolder = options.dir ?? 'dist'
-      const files = [...new Set([...Object.keys(bundle), ...readdirSync(publicFolder)])]
+      const fileNames = [...new Set([...Object.keys(bundle), ...readdirSync(publicFolder)])]
         .filter((file) => file !== WORKER_FILE)
         .sort()
-        // Cloudflare redirects /index.html to /, and a redirected response can't stand in for a page.
-        .map((file) => (file === 'index.html' ? '/' : `/${file}`))
-      const cacheName = `cookbook-${createHash('sha256').update(files.join('\n')).digest('hex').slice(0, 12)}`
+      // Contents too, not only names: files from public/ (manifests, icons) keep their name when they change.
+      const hash = createHash('sha256')
+      for (const file of fileNames) hash.update(file).update(readFileSync(join(outFolder, file)))
+      const cacheName = `cookbook-${hash.digest('hex').slice(0, 12)}`
+      // Cloudflare redirects /index.html to /, and a redirected response can't stand in for a page.
+      const files = fileNames.map((file) => (file === 'index.html' ? '/' : `/${file}`))
       const template = readFileSync(resolve(import.meta.dirname, 'offline-worker.js'), 'utf8')
       const source = template
         .replace("'__CACHE_NAME__'", JSON.stringify(cacheName))

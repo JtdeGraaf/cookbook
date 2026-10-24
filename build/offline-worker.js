@@ -35,6 +35,6 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Everything else has a hash in its name, so a saved copy is never out of date.
+  // Everything else is saved by this build, and a changed file means a new cache name, so a saved copy is never out of date.
   event.respondWith(caches.match(request).then((saved) => saved ?? fetch(request)))
 })

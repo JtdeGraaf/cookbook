@@ -1,7 +1,10 @@
-import { LANGUAGES, type Language, type LocalizedText } from './recipe-rules'
+import { LANGUAGES, type Language, type LocalizedText } from './recipe-rules.ts'
 
-/** The Dutch domain opens the book in Dutch. */
-const DUTCH_HOSTNAMES = ['kookboek.graaf.dev']
+/** The Dutch domain opens the book in Dutch. index.html reads this list too, through the domain-language build plugin. */
+export const DUTCH_HOSTNAMES = ['kookboek.graaf.dev']
+
+/** One home-screen manifest per language, so an installed icon is named in the language of its domain. */
+export const MANIFEST_PATHS: Record<Language, string> = { en: '/manifest.webmanifest', nl: '/manifest.nl.webmanifest' }
 
 export function parseLanguage(value: unknown): Language | null {
   return LANGUAGES.find((language) => language === value) ?? null
