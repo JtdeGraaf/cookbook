@@ -33,8 +33,18 @@ export function scaleQuantity(quantity: Quantity, factor: number): Quantity {
     case 'slice':
     case 'sprig':
     case 'can':
-      return { amount: Math.max(0.5, roundToStep(amount, 0.5)), unit: quantity.unit }
+      return roundCounted(amount, quantity.unit)
   }
+}
+
+/**
+ * Halves only while they still matter: half an egg at one or two servings, but nobody halves the eleventh yolk.
+ * Cans keep a half only up to one, since a half-used second can goes to waste. Never less than half.
+ */
+function roundCounted(amount: number, unit: Unit): Quantity {
+  const halvesBelow = unit === 'can' ? 1 : 3
+  const rounded = amount < halvesBelow ? roundToStep(amount, 0.5) : Math.round(amount)
+  return { amount: Math.max(0.5, rounded), unit }
 }
 
 /** Grams or millilitres; switches to kilos or litres from 1000 up. */

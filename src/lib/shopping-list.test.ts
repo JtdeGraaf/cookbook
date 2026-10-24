@@ -79,6 +79,12 @@ describe('buildShoppingItems', () => {
     expect(items.find((item) => item.name.en === 'egg')?.quantity).toEqual({ amount: 3, unit: 'piece' })
   })
 
+  it('rounds a large count of things to whole ones after adding up', () => {
+    const items = buildShoppingItems([listed(carbonara, 7)])
+
+    expect(items.find((item) => item.name.en === 'egg')?.quantity).toEqual({ amount: 4, unit: 'piece' })
+  })
+
   it('takes the plural name from the recipe that gives one', () => {
     const items = buildShoppingItems([listed(carbonara, 2), listed(pancakes, 4)])
 

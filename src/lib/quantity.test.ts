@@ -39,13 +39,26 @@ describe('scaleQuantity', () => {
     expect(scaleQuantity({ amount: 0.5, unit: 'tsp' }, 0.25)).toEqual({ amount: 0.25, unit: 'tsp' })
   })
 
-  it('rounds counted things to halves', () => {
-    expect(scaleQuantity({ amount: 4, unit: 'piece' }, 1.5)).toEqual({ amount: 6, unit: 'piece' })
+  it('rounds small counts of things to halves', () => {
     expect(scaleQuantity({ amount: 3, unit: 'clove' }, 0.5)).toEqual({ amount: 1.5, unit: 'clove' })
+    expect(scaleQuantity({ amount: 2, unit: 'piece' }, 1.2)).toEqual({ amount: 2.5, unit: 'piece' })
+  })
+
+  it('rounds counts of three and up to whole things', () => {
+    expect(scaleQuantity({ amount: 6, unit: 'piece' }, 7 / 4)).toEqual({ amount: 11, unit: 'piece' })
+    expect(scaleQuantity({ amount: 2, unit: 'piece' }, 7 / 4)).toEqual({ amount: 4, unit: 'piece' })
+    expect(scaleQuantity({ amount: 2, unit: 'clove' }, 1.6)).toEqual({ amount: 3, unit: 'clove' })
+  })
+
+  it('keeps a half can only up to one can', () => {
+    expect(scaleQuantity({ amount: 1, unit: 'can' }, 0.5)).toEqual({ amount: 0.5, unit: 'can' })
+    expect(scaleQuantity({ amount: 1, unit: 'can' }, 1.5)).toEqual({ amount: 2, unit: 'can' })
+    expect(scaleQuantity({ amount: 1, unit: 'can' }, 1.25)).toEqual({ amount: 1, unit: 'can' })
   })
 
   it('keeps at least half of a counted thing', () => {
     expect(scaleQuantity({ amount: 1, unit: 'piece' }, 0.25)).toEqual({ amount: 0.5, unit: 'piece' })
+    expect(scaleQuantity({ amount: 1, unit: 'can' }, 0.1)).toEqual({ amount: 0.5, unit: 'can' })
   })
 
   it('keeps pinches whole and at least one', () => {

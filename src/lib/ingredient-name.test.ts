@@ -6,7 +6,7 @@ const egg = { name: both('egg', 'ei'), plural: both('eggs', 'eieren') }
 
 describe('nameForAmount', () => {
   it('uses the plural name for more than one', () => {
-    expect(nameForAmount(egg, { amount: 3.5, unit: 'piece' })).toEqual(both('eggs', 'eieren'))
+    expect(nameForAmount(egg, { amount: 1.5, unit: 'piece' })).toEqual(both('eggs', 'eieren'))
     expect(nameForAmount(egg, { amount: 2, unit: 'piece' })).toEqual(both('eggs', 'eieren'))
   })
 
