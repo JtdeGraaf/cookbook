@@ -4,12 +4,13 @@ import type { Recipe } from '@/lib/book'
 import { servingsFactor } from '@/lib/quantity'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { ServingsStepper } from './ServingsStepper'
+import { ShoppingListToggle } from './ShoppingListToggle'
 import type { RecipeProgressControls } from './useRecipeProgress'
 import { useIngredientName, useQuantityText } from './useQuantityText'
 
 type IngredientBoxProps = { recipe: Recipe; controls: RecipeProgressControls }
 
-/** The boxed ingredient list with a servings counter in its header, each line tickable. */
+/** The boxed ingredient list with a servings counter in its header, each line tickable, and the shopping list below. */
 export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
@@ -40,9 +41,12 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
           </li>
         ))}
       </ul>
-      <p className="ingredient-box__count numbers">
-        {t('recipe.checkedCount', { checked: have.length, total: recipe.ingredients.length })}
-      </p>
+      <footer className="ingredient-box__foot">
+        <p className="ingredient-box__count numbers">
+          {t('recipe.checkedCount', { checked: have.length, total: recipe.ingredients.length })}
+        </p>
+        <ShoppingListToggle recipe={recipe} />
+      </footer>
     </section>
   )
 }
