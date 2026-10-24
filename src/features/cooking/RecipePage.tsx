@@ -9,6 +9,7 @@ import { CookStep } from './CookStep'
 import { wasCookedToday } from './finish-cooking'
 import { Finished } from './Finished'
 import { PrepChecklist } from './PrepChecklist'
+import { focusFirstOpenPrepTask } from './prep-task-focus'
 import { RecipeGate } from './RecipeGate'
 import { RecipeSpread } from './RecipeSpread'
 import { RecipeWorkspace } from './RecipeWorkspace'
@@ -75,10 +76,16 @@ function PrepView({ recipe, controls }: ViewProps) {
       <Icon name="right" />
     </BookLink>
   ) : (
-    <span className="button" aria-disabled="true" aria-describedby="prep-locked">
+    <button
+      type="button"
+      className="button"
+      aria-disabled="true"
+      aria-describedby="prep-locked"
+      onClick={() => focusFirstOpenPrepTask(recipe, controls.progress)}
+    >
       <span className="workspace__action-label">{t('recipe.startCooking')}</span>
       <Icon name="right" />
-    </span>
+    </button>
   )
   return (
     <RecipeWorkspace recipe={recipe} controls={controls} actions={startCooking}>

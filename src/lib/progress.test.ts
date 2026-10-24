@@ -5,6 +5,7 @@ import {
   SESSION_LENGTH_MS,
   changeServings,
   clearTicks,
+  firstOpenPrepStep,
   forgetOldPrep,
   isPrepDone,
   parseSavedProgress,
@@ -18,6 +19,14 @@ const recipe = makeRecipe({ slug: 'soup', servings: 4, prep: [makeStep(), makeSt
 const NOW = 1_000_000_000
 
 describe('recipe progress', () => {
+  it('points at the first prep step still to do, skipping ticked ones', () => {
+    const three = makeRecipe({ slug: 'stew', prep: [makeStep(), makeStep(), makeStep()] })
+
+    expect(firstOpenPrepStep(three, EMPTY_PROGRESS)).toBe(0)
+    expect(firstOpenPrepStep(three, { ...EMPTY_PROGRESS, donePrepSteps: [0, 2] })).toBe(1)
+    expect(firstOpenPrepStep(three, { ...EMPTY_PROGRESS, donePrepSteps: [2, 0, 1] })).toBeNull()
+  })
+
   it('uses the recipe servings until the cook picks a number', () => {
     expect(servingsFor(recipe, EMPTY_PROGRESS)).toBe(4)
     expect(servingsFor(recipe, changeServings(EMPTY_PROGRESS, 6))).toBe(6)

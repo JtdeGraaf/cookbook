@@ -5,6 +5,7 @@ import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
 import { PhaseHead } from './PhaseHead'
+import { prepTaskTickId } from './prep-task-focus'
 import { Point } from './Point'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
@@ -33,7 +34,7 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
         {recipe.prep.map((step, index) => (
           <li key={index} className="prep-task" data-done={done.includes(index)}>
             <label className="prep-task__check">
-              <Tick large checked={done.includes(index)} onChange={() => controls.togglePrepStep(index)} />
+              <Tick large id={prepTaskTickId(index)} checked={done.includes(index)} onChange={() => controls.togglePrepStep(index)} />
               <span className="prep-task__text">{localized(step.text)}</span>
             </label>
             <div className="prep-task__extras">

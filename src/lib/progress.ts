@@ -52,6 +52,12 @@ export function isPrepDone(recipe: Recipe, progress: RecipeProgress): boolean {
   return recipe.prep.every((_step, index) => progress.donePrepSteps.includes(index))
 }
 
+/** The first prep step still to do, by index in `recipe.prep`, or null once every step is ticked off. */
+export function firstOpenPrepStep(recipe: Recipe, progress: RecipeProgress): number | null {
+  const index = recipe.prep.findIndex((_step, stepIndex) => !progress.donePrepSteps.includes(stepIndex))
+  return index === -1 ? null : index
+}
+
 /** Keeps servings but clears every tick: after cooking (the ingredients are used up), or to start over. */
 export function clearTicks(progress: RecipeProgress): RecipeProgress {
   return { ...progress, haveIngredientIds: [], donePrepSteps: [], preppedAt: null }
