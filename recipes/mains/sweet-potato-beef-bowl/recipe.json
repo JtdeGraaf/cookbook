@@ -5,6 +5,14 @@
     "en": "Spiced roast-style sweet potato, lean minced beef, avocado and cottage cheese in one bowl. About 550 kcal and 42 g protein.",
     "nl": "Gekruide zoete aardappel, mager rundergehakt, avocado en cottage cheese in één kom. Ongeveer 550 kcal en 42 g eiwit."
   },
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A bowl of minced beef with chunks of sweet potato and beans, with a spoon.",
+      "nl": "Een kom rundergehakt met stukjes zoete aardappel en bonen, met een lepel."
+    },
+    "credit": { "author": "Holly Spangler", "license": "Unsplash License", "source": "https://unsplash.com/photos/a-bowl-of-food-lrtfNWl3dsE" }
+  },
   "servings": 1,
   "prepMinutes": 10,
   "cookMinutes": 15,

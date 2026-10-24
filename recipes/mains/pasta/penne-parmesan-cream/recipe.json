@@ -5,6 +5,14 @@
     "en": "A simple white sauce of shallot, garlic, butter and cream with Parmigiano stirred through, finished with fresh parsley.",
     "nl": "Een eenvoudige witte saus van sjalot, knoflook, roomboter en kookroom met Parmigiano erdoor, afgemaakt met verse peterselie."
   },
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "Penne in a creamy cheese sauce, sprinkled with parsley and grated cheese, on a dark plate.",
+      "nl": "Penne in een romige kaassaus, bestrooid met peterselie en geraspte kaas, op een donker bord."
+    },
+    "credit": { "author": "Shameel mukkath", "license": "Pexels License", "source": "https://www.pexels.com/photo/a-plate-of-pasta-with-cheese-and-parmesan-14930724/" }
+  },
   "source": { "url": "https://www.ah.nl/allerhande/recept/R-R1199017/pasta-witte-saus", "name": "Albert Heijn" },
   "servings": 2,
   "prepMinutes": 10,

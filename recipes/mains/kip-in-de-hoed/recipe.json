@@ -5,6 +5,14 @@
     "en": "A creamy filling of chicken, pepper and courgette baked in a puff pastry case with a golden, cheesy lid.",
     "nl": "Een romige vulling van kip, paprika en courgette, gebakken in een vorm van bladerdeeg met een goudbruin kaasdeksel."
   },
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "A slice of chicken pie in a golden pastry crust, filled with shredded chicken and red pepper.",
+      "nl": "Een punt kippentaart in een goudbruine deegkorst, gevuld met draadjes kip en rode paprika."
+    },
+    "credit": { "author": "Nano Erdozain", "license": "Pexels License", "source": "https://www.pexels.com/photo/delicious-chicken-pot-pie-with-flaky-crust-29535632/" }
+  },
   "source": { "url": "https://www.tiktok.com/@cookedbynadine/video/7678300323869379873", "name": "Cooked by Nadine" },
   "servings": 2,
   "prepMinutes": 20,

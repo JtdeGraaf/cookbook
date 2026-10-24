@@ -5,6 +5,14 @@
     "en": "The quick weeknight version: crisp smoked bacon, garlic, and a silky sauce of egg, cream and Parmigiano.",
     "nl": "De snelle doordeweekse versie: knapperige gerookte spekjes, knoflook en een zijdezachte saus van ei, slagroom en Parmigiano."
   },
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "Spaghetti carbonara with crisp bacon, grated cheese and parsley on a white plate.",
+      "nl": "Spaghetti carbonara met knapperig spek, geraspte kaas en peterselie op een wit bord."
+    },
+    "credit": { "author": "jeffreyw", "license": "CC BY 2.0", "source": "https://commons.wikimedia.org/wiki/File:Spaghetti_Carbonara_2015.jpg" }
+  },
   "source": { "url": "https://www.ah.nl/allerhande/recept/R-R424708/superromige-pasta-carbonara", "name": "Albert Heijn" },
   "servings": 2,
   "prepMinutes": 10,

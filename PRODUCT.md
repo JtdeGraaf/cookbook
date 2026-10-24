@@ -45,7 +45,7 @@ A cookbook that is also the cook's assistant: the recipe data separates mise en 
 
 ## Evidence on Hand
 
-Five starter recipes authored for launch, with free-licensed photos (credited per image in the recipe data). No testimonials, users or claims exist and none may be invented.
+Six starter recipes authored for launch, each with a freely licensed photo (credited per image in the recipe data). No testimonials, users or claims exist and none may be invented.
 
 ## Product Principles
 

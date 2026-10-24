@@ -5,6 +5,14 @@
     "en": "Crisp guanciale, red onion and San Marzano tomatoes with a little chili, finished with pecorino.",
     "nl": "Knapperige guanciale, rode ui en San Marzano-tomaten met een beetje chili, afgemaakt met pecorino."
   },
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "Bucatini all'amatriciana in tomato sauce with grated pecorino in a white bowl.",
+      "nl": "Bucatini all'amatriciana in tomatensaus met geraspte pecorino in een witte schaal."
+    },
+    "credit": { "author": "Blackcat", "license": "CC BY-SA 4.0", "source": "https://commons.wikimedia.org/wiki/File:Bucatini_amatriciana_Roma_2019.jpg" }
+  },
   "source": { "url": "https://www.ah.nl/allerhande/recept/R-R1192701/pasta-all-amatriciana", "name": "Albert Heijn" },
   "servings": 2,
   "prepMinutes": 10,

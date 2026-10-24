@@ -5,6 +5,14 @@
     "en": "Wholewheat orzo cooked in stock with chicken, leek and chestnut mushrooms, finished with a protein-rich truffle cream.",
     "nl": "Volkoren orzo gegaard in bouillon met kip, prei en kastanjechampignons, afgemaakt met een eiwitrijke truffelroom."
   },
+  "cover": {
+    "file": "cover.jpg",
+    "alt": {
+      "en": "Creamy pasta with fried mushrooms and grated cheese in a stoneware bowl.",
+      "nl": "Romige pasta met gebakken champignons en geraspte kaas in een aardewerken kom."
+    },
+    "credit": { "author": "Nadin Sh", "license": "Pexels License", "source": "https://www.pexels.com/photo/delicious-pasta-in-bowl-14623907/" }
+  },
   "source": { "url": "https://www.tiktok.com/@indi.foodhabits/video/7691738626316700960", "name": "Indi Kuiper" },
   "servings": 2,
   "prepMinutes": 15,

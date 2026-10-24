@@ -136,7 +136,7 @@ The JSON Schemas in `schemas/` are generated from the checks in `src/lib/recipe-
 
 ## Recipes and credits
 
-In `mains`: kip in de hoed (after Cooked by Nadine) and a sweet potato beef bowl (after De Snelle Keuken). In the `mains/pasta` section: truffle orzo (after Indi Kuiper), and spaghetti all'amatriciana, spaghetti carbonara and penne with Parmigiano cream sauce (after Albert Heijn). All rewritten with the prep first, and each links to its original from the recipe page, except the beef bowl, whose original post we could not find again. None has a photo yet.
+In `mains`: kip in de hoed (after Cooked by Nadine) and a sweet potato beef bowl (after De Snelle Keuken). In the `mains/pasta` section: truffle orzo (after Indi Kuiper), and spaghetti all'amatriciana, spaghetti carbonara and penne with Parmigiano cream sauce (after Albert Heijn). All rewritten with the prep first, and each links to its original from the recipe page, except the beef bowl, whose original post we could not find again. Each photo is freely licensed (Pexels, Unsplash or Wikimedia Commons) and credited under the photo, linking to where it comes from.
 
 ## Develop
 
