@@ -1,4 +1,4 @@
-import { allRecipes, type Book, type Folder, type Recipe } from './book'
+import { allRecipes, parentPaths, type Book, type Folder, type Recipe } from './book'
 import type { LocalizedText } from './recipe-rules'
 
 /** The time limits offered as filters, in minutes of prep plus cooking. */
@@ -30,9 +30,19 @@ export function matchesFilters(recipe: Recipe, filters: RecipeFilters, favourite
   return true
 }
 
-/** The book with only the recipes that match; folders left empty disappear. */
-export function filterBook(book: Book, keep: (recipe: Recipe) => boolean): Book {
-  return { chapters: book.chapters.flatMap((chapter) => matchingFolders(chapter, keep)) }
+/**
+ * The book with only the recipes that match; folders left empty disappear, except the folder at `keptPath` and the
+ * folders above it, so the folder tree never loses the page you are on.
+ */
+export function filterBook(book: Book, keep: (recipe: Recipe) => boolean, keptPath = ''): Book {
+  const keptFolders = parentPaths(keptPath)
+  return { chapters: book.chapters.flatMap((chapter) => matchingFolders(chapter, keep, keptFolders)) }
+}
+
+/** What the folder tree shows: the whole book without filters; otherwise only what matches, plus the folder you are in. */
+export function bookAsFiltered(book: Book, filters: RecipeFilters, favourites: string[], currentPath: string): Book {
+  if (!hasFilters(filters)) return book
+  return filterBook(book, (recipe) => matchesFilters(recipe, filters, favourites), currentPath)
 }
 
 /**
@@ -40,9 +50,7 @@ export function filterBook(book: Book, keep: (recipe: Recipe) => boolean): Book 
  * always stays, so its page can still say that nothing matches.
  */
 export function filterFolder(folder: Folder, keep: (recipe: Recipe) => boolean): Folder {
-  const recipes = folder.recipes.filter(keep)
-  const folders = folder.folders.flatMap((child) => matchingFolders(child, keep))
-  return { ...folder, recipes, folders }
+  return narrowFolder(folder, keep, [])
 }
 
 /** What a folder page lists: everything without filters, empty sections too; otherwise only what matches. */
@@ -51,8 +59,16 @@ export function folderAsFiltered(folder: Folder, filters: RecipeFilters, favouri
   return filterFolder(folder, (recipe) => matchesFilters(recipe, filters, favourites))
 }
 
-function matchingFolders(folder: Folder, keep: (recipe: Recipe) => boolean): Folder[] {
-  const filtered = filterFolder(folder, keep)
+/** `keptFolders` are the paths of folders that stay even when nothing in them matches. */
+function narrowFolder(folder: Folder, keep: (recipe: Recipe) => boolean, keptFolders: string[]): Folder {
+  const recipes = folder.recipes.filter(keep)
+  const folders = folder.folders.flatMap((child) => matchingFolders(child, keep, keptFolders))
+  return { ...folder, recipes, folders }
+}
+
+function matchingFolders(folder: Folder, keep: (recipe: Recipe) => boolean, keptFolders: string[]): Folder[] {
+  const filtered = narrowFolder(folder, keep, keptFolders)
+  if (keptFolders.includes(folder.path)) return [filtered]
   if (filtered.recipes.length === 0 && filtered.folders.length === 0) return []
   return [filtered]
 }

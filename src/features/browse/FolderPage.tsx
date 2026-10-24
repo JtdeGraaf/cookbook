@@ -1,7 +1,7 @@
 import { Folio } from '@/components/Folio'
 import { usePageTitle } from '@/components/usePageTitle'
 import { recipesInside, type Folder } from '@/lib/book'
-import { filterBook, folderAsFiltered, hasFilters, matchesFilters, tagsUsedIn, type RecipeFilters } from '@/lib/filters'
+import { bookAsFiltered, folderAsFiltered, hasFilters, searchFromFilters, tagsUsedIn, type RecipeFilters } from '@/lib/filters'
 import { book, pageOf } from '@/features/book/book-data'
 import { NoMatches } from '@/features/book/NoMatches'
 import { RecipeFilterBar } from '@/features/book/RecipeFilterBar'
@@ -26,14 +26,16 @@ export function FolderPage({ folder, filters, onFiltersChange }: FolderPageProps
   const { favourites } = useFavourites()
   const shownFolder = folderAsFiltered(folder, filters, favourites)
   const matchingRecipes = recipesInside(shownFolder)
+  const filterSearch = searchFromFilters(filters)
   usePageTitle(localized(folder.title))
   return (
     <div data-color={folder.color}>
       <BookShell
         currentPath={folder.path}
-        shownBook={filterBook(book, (recipe) => matchesFilters(recipe, filters, favourites))}
+        shownBook={bookAsFiltered(book, filters, favourites, folder.path)}
+        filterSearch={filterSearch}
       >
-        <PathBar folderPath={folder.path} />
+        <PathBar folderPath={folder.path} filterSearch={filterSearch} />
         <FolderHead folder={folder} />
         <RecipeFilterBar
           filters={filters}
@@ -42,14 +44,14 @@ export function FolderPage({ folder, filters, onFiltersChange }: FolderPageProps
           tags={tagsUsedIn(recipesInside(folder))}
         />
         {hasFilters(filters) && matchingRecipes.length === 0 ? (
-          <NoMatches filters={filters} onFiltersChange={onFiltersChange} />
+          <NoMatches />
         ) : (
           <ol className="recipe-rows folder-listing">
             {shownFolder.recipes.map((recipe, index) => (
               <RecipeRow key={recipe.path} recipe={recipe} showSummary eager={index < 6} />
             ))}
             {shownFolder.folders.map((child) => (
-              <FolderRow key={child.path} folder={child} />
+              <FolderRow key={child.path} folder={child} filterSearch={filterSearch} />
             ))}
           </ol>
         )}

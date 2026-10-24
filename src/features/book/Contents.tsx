@@ -3,7 +3,15 @@ import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { usePageTitle } from '@/components/usePageTitle'
 import { allRecipes, type Folder } from '@/lib/book'
-import { allTags, filterBook, matchesFilters, type RecipeFilters } from '@/lib/filters'
+import {
+  allTags,
+  bookAsFiltered,
+  filterBook,
+  matchesFilters,
+  searchFromFilters,
+  type FilterSearch,
+  type RecipeFilters,
+} from '@/lib/filters'
 import { BookShell } from '@/features/browse/BookShell'
 import { useFavourites } from '@/features/favourites/useFavourites'
 import { useLocalized } from '@/features/settings/useLanguage'
@@ -21,9 +29,10 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
   const localized = useLocalized()
   const { favourites } = useFavourites()
   const shownBook = filterBook(book, (recipe) => matchesFilters(recipe, filters, favourites))
+  const filterSearch = searchFromFilters(filters)
   usePageTitle(null)
   return (
-    <BookShell currentPath="" shownBook={shownBook}>
+    <BookShell currentPath="" shownBook={bookAsFiltered(book, filters, favourites, '')} filterSearch={filterSearch}>
       <header className="book-head">
         <div className="book-head__words">
           <h1 className="book-head__title">{t('book.title')}</h1>
@@ -43,18 +52,22 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
 
       <section aria-label={t('book.contents')}>
         {shownBook.chapters.length === 0 ? (
-          <NoMatches filters={filters} onFiltersChange={onFiltersChange} />
+          <NoMatches />
         ) : (
           <ol className="contents__chapters">
             {shownBook.chapters.map((chapter) => (
               <li key={chapter.path} data-color={chapter.color}>
-                <BookLink path={chapter.path} className="contents__section-head contents__section-head--chapter">
+                <BookLink
+                  path={chapter.path}
+                  filterSearch={filterSearch}
+                  className="contents__section-head contents__section-head--chapter"
+                >
                   <Icon name="folder" size={20} />
                   <span className="contents__section-title">{localized(chapter.title)}</span>
                   <span className="contents__section-page numbers">{t('book.page', { page: pageOf(chapter.path) })}</span>
                 </BookLink>
                 {chapter.intro && <p className="contents__intro">{localized(chapter.intro)}</p>}
-                <FolderContents folder={chapter} />
+                <FolderContents folder={chapter} filterSearch={filterSearch} />
               </li>
             ))}
           </ol>
@@ -65,7 +78,7 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
 }
 
 /** The recipes of a folder, then each section inside it with its own heading, as deep as the folders go. */
-function FolderContents({ folder }: { folder: Folder }) {
+function FolderContents({ folder, filterSearch }: { folder: Folder; filterSearch: FilterSearch }) {
   const { t } = useTranslation()
   const localized = useLocalized()
   return (
@@ -79,12 +92,12 @@ function FolderContents({ folder }: { folder: Folder }) {
       )}
       {folder.folders.map((section) => (
         <div key={section.path} className="contents__section">
-          <BookLink path={section.path} className="contents__section-head">
+          <BookLink path={section.path} filterSearch={filterSearch} className="contents__section-head">
             <Icon name="folder" size={18} />
             <span className="contents__section-title">{localized(section.title)}</span>
             <span className="contents__section-page numbers">{t('book.page', { page: pageOf(section.path) })}</span>
           </BookLink>
-          <FolderContents folder={section} />
+          <FolderContents folder={section} filterSearch={filterSearch} />
         </div>
       ))}
     </>

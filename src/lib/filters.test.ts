@@ -4,6 +4,7 @@ import { recipesInside } from './book'
 import {
   NO_FILTERS,
   allTags,
+  bookAsFiltered,
   filterBook,
   filterFolder,
   folderAsFiltered,
@@ -71,6 +72,43 @@ describe('filterBook', () => {
 
   it('drops every chapter when nothing matches', () => {
     expect(filterBook(book, () => false).chapters).toEqual([])
+  })
+
+  it('keeps the folder you are in and the folders above it, even when nothing in them matches', () => {
+    const filtered = filterBook(book, () => false, 'mains/pasta')
+
+    expect(filtered.chapters.map((chapter) => chapter.path)).toEqual(['mains'])
+    expect(filtered.chapters[0].folders.map((folder) => folder.path)).toEqual(['mains/pasta'])
+    expect(recipesInside(filtered.chapters[0])).toEqual([])
+  })
+
+  it('keeps the folder you are in next to the chapters that do match', () => {
+    const porridge = makeRecipe({ slug: 'porridge', folderPath: 'breakfast', prepMinutes: 5, cookMinutes: 60 })
+    const breakfast = makeFolder({ path: 'breakfast', recipes: [porridge] })
+    const twoChapters = makeBook([breakfast, ...book.chapters])
+    const under30 = { ...NO_FILTERS, maxMinutes: 30 as const }
+    const filtered = filterBook(twoChapters, (recipe) => matchesFilters(recipe, under30, []), 'breakfast')
+
+    expect(filtered.chapters.map((chapter) => [chapter.path, recipesInside(chapter).length])).toEqual([
+      ['breakfast', 0],
+      ['mains', 1],
+    ])
+  })
+})
+
+describe('bookAsFiltered', () => {
+  const emptySection = makeFolder({ path: 'mains/new' })
+  const withEmptySection = makeBook([makeFolder({ path: 'mains', recipes: [stew], folders: [emptySection] })])
+
+  it('leaves the book as it is without filters, empty folders included', () => {
+    expect(bookAsFiltered(withEmptySection, NO_FILTERS, [], '')).toBe(withEmptySection)
+  })
+
+  it('narrows the book to the matching recipes but keeps the folder you are in', () => {
+    const filtered = bookAsFiltered(withEmptySection, { ...NO_FILTERS, tag: 'winter' }, [], 'mains/new')
+
+    expect(filtered.chapters[0].recipes.map((recipe) => recipe.slug)).toEqual(['stew'])
+    expect(filtered.chapters[0].folders.map((folder) => folder.path)).toEqual(['mains/new'])
   })
 })
 

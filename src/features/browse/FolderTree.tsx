@@ -2,24 +2,32 @@ import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { recipesInside, type Book, type Folder } from '@/lib/book'
+import type { FilterSearch } from '@/lib/filters'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { useExpandedFolders } from './useExpandedFolders'
 
 type FolderTreeProps = {
-  /** The whole book, or only its matching recipes when the contents are filtered. */
+  /** The whole book, or only its matching recipes when the page is filtered. */
   shownBook: Book
   currentPath: string
+  filterSearch: FilterSearch
 }
 
 /** The recipes folder as a tree, like the folder panel of a file browser. */
-export function FolderTree({ shownBook, currentPath }: FolderTreeProps) {
+export function FolderTree({ shownBook, currentPath, filterSearch }: FolderTreeProps) {
   const { t } = useTranslation()
   const expanded = useExpandedFolders(currentPath)
   return (
     <nav className="folder-tree" aria-label={t('browse.treeLabel')}>
       <ul className="folder-tree__list">
         {shownBook.chapters.map((chapter) => (
-          <TreeFolder key={chapter.path} folder={chapter} currentPath={currentPath} expanded={expanded} />
+          <TreeFolder
+            key={chapter.path}
+            folder={chapter}
+            currentPath={currentPath}
+            filterSearch={filterSearch}
+            expanded={expanded}
+          />
         ))}
       </ul>
     </nav>
@@ -29,10 +37,11 @@ export function FolderTree({ shownBook, currentPath }: FolderTreeProps) {
 type TreeFolderProps = {
   folder: Folder
   currentPath: string
+  filterSearch: FilterSearch
   expanded: ReturnType<typeof useExpandedFolders>
 }
 
-function TreeFolder({ folder, currentPath, expanded }: TreeFolderProps) {
+function TreeFolder({ folder, currentPath, filterSearch, expanded }: TreeFolderProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const open = expanded.isOpen(folder.path)
@@ -51,6 +60,7 @@ function TreeFolder({ folder, currentPath, expanded }: TreeFolderProps) {
         </button>
         <BookLink
           path={folder.path}
+          filterSearch={filterSearch}
           className="folder-tree__link"
           aria-current={folder.path === currentPath ? 'page' : undefined}
         >
@@ -74,7 +84,13 @@ function TreeFolder({ folder, currentPath, expanded }: TreeFolderProps) {
             </li>
           ))}
           {folder.folders.map((child) => (
-            <TreeFolder key={child.path} folder={child} currentPath={currentPath} expanded={expanded} />
+            <TreeFolder
+              key={child.path}
+              folder={child}
+              currentPath={currentPath}
+              filterSearch={filterSearch}
+              expanded={expanded}
+            />
           ))}
         </ul>
       )}

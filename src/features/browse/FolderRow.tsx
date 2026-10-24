@@ -2,12 +2,19 @@ import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { recipesInside, type Folder } from '@/lib/book'
+import type { FilterSearch } from '@/lib/filters'
 import { pageOf } from '@/features/book/book-data'
 import { useLocalized } from '@/features/settings/useLanguage'
 import '@/features/book/book.css'
 
+type FolderRowProps = {
+  folder: Folder
+  /** The filters of the listing, carried over to the folder's own page. */
+  filterSearch: FilterSearch
+}
+
 /** A folder in a folder listing: a coloured folder tile, its name, what is inside, its page. */
-export function FolderRow({ folder }: { folder: Folder }) {
+export function FolderRow({ folder, filterSearch }: FolderRowProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const page = pageOf(folder.path)
@@ -17,7 +24,7 @@ export function FolderRow({ folder }: { folder: Folder }) {
   ].join(' · ')
   return (
     <li className="recipe-row folder-row" data-color={folder.color}>
-      <BookLink path={folder.path} className="recipe-row__link">
+      <BookLink path={folder.path} filterSearch={filterSearch} className="recipe-row__link">
         <span className="folder-row__tile" aria-hidden="true">
           <Icon name="folder" size={28} />
         </span>
