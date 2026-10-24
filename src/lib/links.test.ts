@@ -34,9 +34,9 @@ describe('recipeTemplate', () => {
 })
 
 describe('shared servings', () => {
-  it('builds a link that opens the recipe for a number of people', () => {
-    expect(shareRecipeUrl('https://cookbook.graaf.dev', carbonara, 6)).toBe(
-      'https://cookbook.graaf.dev/mains/pasta/carbonara?servings=6',
+  it('builds a link that opens the recipe for a number of people, in the sender’s language', () => {
+    expect(shareRecipeUrl('https://cookbook.graaf.dev', carbonara, 6, 'nl')).toBe(
+      'https://cookbook.graaf.dev/mains/pasta/carbonara?servings=6&lang=nl',
     )
   })
 

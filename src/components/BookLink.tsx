@@ -6,7 +6,10 @@ type BookLinkProps = Omit<ComponentPropsWithoutRef<'a'>, 'href'> & {
   path: string
 }
 
-/** A link to any folder or recipe page; they all share the one catch-all route. */
+/**
+ * A link to any folder or recipe page; they all share the one catch-all route. Only an exact match counts as the
+ * current page, so the folders above it are not marked as current too.
+ */
 export function BookLink({ path, ...anchor }: BookLinkProps) {
-  return <Link to="/$" params={{ _splat: path }} {...anchor} />
+  return <Link to="/$" params={{ _splat: path }} activeOptions={{ exact: true, includeSearch: false }} {...anchor} />
 }

@@ -41,7 +41,7 @@
       "unit": "piece",
       "note": { "en": "very fresh", "nl": "heel vers" }
     },
-    { "id": "salt", "name": { "en": "salt", "nl": "zout" }, "amount": 1, "unit": "pinch" },
+    { "id": "salt", "pantry": true, "name": { "en": "salt", "nl": "zout" }, "amount": 1, "unit": "pinch" },
     { "id": "sugar", "name": { "en": "caster sugar", "nl": "fijne kristalsuiker" }, "amount": 30, "unit": "g" }
   ],
   "prep": [

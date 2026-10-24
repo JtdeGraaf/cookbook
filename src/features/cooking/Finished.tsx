@@ -1,30 +1,46 @@
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { CoverImage } from '@/components/CoverImage'
+import { Icon } from '@/components/Icon'
 import type { Recipe } from '@/lib/book'
 import { useLocalized } from '@/features/settings/useLanguage'
-import { ClearTicksButton } from './ClearTicksButton'
-import type { RecipeProgressControls } from './useRecipeProgress'
-import { useRecordCookedToday } from './useRecipeJournal'
+import { useShoppingList } from '@/features/shopping/useShoppingList'
+import { PhaseHead } from './PhaseHead'
+import { RecipeNotes } from './RecipeNotes'
 
-/** The last page after the final step. Reaching it writes today into the recipe's journal. */
-export function Finished({ recipe, controls }: { recipe: Recipe; controls: RecipeProgressControls }) {
+/**
+ * The last page after Finish. The cooking session is closed by then (ticks, timers and shopping-list entry cleared);
+ * this is the place to jot a note for next time, or put the recipe back on the list to cook it again soon.
+ */
+export function Finished({ recipe }: { recipe: Recipe }) {
   const { t } = useTranslation()
   const localized = useLocalized()
-  useRecordCookedToday(recipe)
-
+  const shopping = useShoppingList()
   return (
     <section className="finished">
-      <CoverImage recipe={recipe} sizes="(min-width: 760px) 420px, 100vw" className="finished__photo" showCredit={false} />
+      <CoverImage
+        recipe={recipe}
+        sizes="(min-width: 760px) 420px, 100vw"
+        className="finished__photo"
+        showCredit={false}
+        eager
+      />
       <div className="finished__words">
-        <h1 className="finished__title">{t('done.title')}</h1>
-        <p className="finished__text">{t('done.body', { title: localized(recipe.title) })}</p>
+        <PhaseHead recipe={recipe} title={t('done.title')}>
+          <p className="finished__text">{t('done.body', { title: localized(recipe.title) })}</p>
+        </PhaseHead>
         <div className="finished__actions">
           <BookLink path={recipe.path} className="button">
             {t('done.again')}
           </BookLink>
-          <ClearTicksButton controls={controls} />
+          {!shopping.isOnList(recipe) && (
+            <button type="button" className="button button--quiet" onClick={() => shopping.add(recipe)}>
+              <Icon name="basket" size={20} />
+              {t('done.backOnList')}
+            </button>
+          )}
         </div>
+        <RecipeNotes recipe={recipe} />
       </div>
     </section>
   )

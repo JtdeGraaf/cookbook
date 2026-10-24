@@ -27,8 +27,8 @@
     }
   },
   "ingredients": [
-    { "id": "water", "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
-    { "id": "salt", "name": { "en": "coarse salt", "nl": "grof zout" }, "amount": 1, "unit": "tbsp" },
+    { "id": "water", "pantry": true, "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
+    { "id": "salt", "pantry": true, "name": { "en": "coarse salt", "nl": "grof zout" }, "amount": 1, "unit": "tbsp" },
     { "id": "spaghetti", "name": { "en": "spaghetti", "nl": "spaghetti" }, "amount": 200, "unit": "g" },
     { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 4, "unit": "clove" },
     { "id": "olive-oil", "name": { "en": "good olive oil", "nl": "goede olijfolie" }, "amount": 5, "unit": "tbsp" },

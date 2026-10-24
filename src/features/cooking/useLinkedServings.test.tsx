@@ -3,6 +3,7 @@ import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { makeRecipe } from '@/test/fixtures'
 import { useLinkedServings } from './useLinkedServings'
+import { progressStore } from './progress-store'
 import { useRecipeProgress } from './useRecipeProgress'
 
 const soup = makeRecipe({ slug: 'soup', servings: 2 })
@@ -15,6 +16,7 @@ function useRecipeWithLink(linkedServings: number | null, onUsed: () => void) {
 
 beforeEach(() => {
   window.localStorage.clear()
+  progressStore.reload()
 })
 
 describe('useLinkedServings', () => {

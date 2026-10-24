@@ -52,84 +52,79 @@
   }
 }
 
+/* The book mark and name: the way home, the same on every page. Phones show the mark alone. */
 .running-head__title {
   grid-area: title;
   justify-self: start;
-  padding: 6px 14px 7px;
-  border-radius: var(--radius-small);
-  background: var(--tomato);
-  color: var(--on-tomato);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  color: var(--ink);
   font-family: var(--font-display);
   font-weight: 900;
   font-size: 1.25rem;
   line-height: 1.1;
-  text-decoration: none;
   letter-spacing: -0.01em;
-}
-
-.running-head__title {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
+  text-decoration: none;
 }
 
 .running-head__mark {
-  display: none;
-}
-
-/* On the contents page the book title sits right below; the header keeps only the round book mark. */
-.running-head__title[data-mark-only='true'] {
-  padding: 0;
-  background: transparent;
-}
-
-.running-head__title[data-mark-only='true'] .running-head__name {
-  display: none;
-}
-
-.running-head__title[data-mark-only='true'] .running-head__mark {
-  display: block;
-}
-
-.running-head__mark {
+  flex: none;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--yolk) 0 7px, var(--sheet) 7.5px 14px, var(--tomato) 14.5px);
 }
 
+@media (max-width: 759px) {
+  .running-head__name {
+    display: none;
+  }
+}
+
 .search-shortcut {
   display: none;
 }
 
-/* While cooking on a phone, the step gets the room: search shrinks to an icon and the tabs step aside. */
+/* On a phone's recipe pages the recipe gets the room: search shrinks to an icon and the tabs step aside. */
 @media (max-width: 759px) {
-  .book[data-page='recipe'] .running-head__inner {
+  .book:is([data-page='recipe'], [data-page='cooking']) .running-head__inner {
     grid-template-areas: 'title settings';
     padding-bottom: var(--space-2);
   }
 
-  .book[data-page='recipe'] .search-field,
-  .book[data-page='recipe'] .chapter-tabs {
+  .book:is([data-page='recipe'], [data-page='cooking']) .search-field,
+  .book:is([data-page='recipe'], [data-page='cooking']) .chapter-tabs {
     display: none;
   }
 
-  .book[data-page='recipe'] .search-shortcut {
+  .book:is([data-page='recipe'], [data-page='cooking']) .search-shortcut {
     display: inline-grid;
   }
+}
 
-  .book[data-page='recipe'] .running-head__title {
-    padding: 0;
-    background: transparent;
-  }
+/* Keyboard users can jump past the header, tabs and tree straight to the page. */
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 50;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
 
-  .book[data-page='recipe'] .running-head__name {
-    display: none;
-  }
+.skip-link:focus {
+  transform: none;
+}
 
-  .book[data-page='recipe'] .running-head__mark {
-    display: block;
-  }
+.page:focus {
+  outline: none;
 }
 
 .running-head__settings {
@@ -148,7 +143,7 @@
 
 .language-switch__option {
   min-width: 44px;
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 var(--space-2);
   border: 0;
   border-radius: 999px;

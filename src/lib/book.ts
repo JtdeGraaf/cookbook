@@ -17,6 +17,8 @@ export type Ingredient = {
   /** Null means "to taste". */
   quantity: Quantity | null
   note: LocalizedText | null
+  /** A staple the kitchen always has, like salt or water; the shopping list leaves it off. */
+  pantry: boolean
 }
 
 export type StepTimer = { minutes: number; label: LocalizedText }
@@ -105,6 +107,16 @@ export function folderTrail(book: Book, path: string): Folder[] {
 export function parentPaths(path: string): string[] {
   const parts = path.split('/').filter(Boolean)
   return parts.map((_part, index) => parts.slice(0, index + 1).join('/'))
+}
+
+/** The deepest folder that does exist on the way to an address that doesn't, for a helpful not-found page. */
+export function nearestFolder(book: Book, address: string): Folder | null {
+  const candidates = parentPaths(address).reverse()
+  for (const path of candidates) {
+    const folder = findFolder(book, path)
+    if (folder) return folder
+  }
+  return null
 }
 
 export function ingredientsForStep(recipe: Recipe, step: Step): Ingredient[] {

@@ -117,12 +117,11 @@
   margin-top: var(--space-3);
 }
 
+/* Tags link to the contents filtered by that tag. */
 .spread__tags li {
-  padding: 2px var(--space-3);
   border-radius: 999px;
   box-shadow: inset 0 0 0 1.5px var(--rule-strong);
   font-size: 0.875rem;
-  color: var(--ink-soft);
 }
 
 .spread__actions {
@@ -222,8 +221,8 @@
 .servings__button {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
   background: var(--chapter-wash);
@@ -310,7 +309,7 @@
   outline-offset: 2px;
 }
 
-/* Prep and cook pages: the page beside a pinned ingredient box. */
+/* Prep and cook pages: the page beside a pinned ingredient box, and one dock with the buttons that move on. */
 
 .workspace {
   display: grid;
@@ -319,6 +318,19 @@
 
 .workspace__side {
   display: none;
+}
+
+.workspace__dock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.workspace__actions {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  gap: var(--space-2);
 }
 
 @media (min-width: 1024px) {
@@ -336,23 +348,80 @@
     border-radius: var(--radius);
   }
 
+  /* Stays in view at the bottom of the column while the step scrolls, on a laptop or a landscape tablet too. */
+  .workspace__dock {
+    position: sticky;
+    bottom: var(--space-4);
+    z-index: 5;
+    margin-top: var(--space-6);
+    padding: var(--space-2);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  body:has(.timer-tray) .workspace__dock {
+    bottom: calc(92px + var(--space-3));
+  }
+
+  .workspace__actions .button {
+    min-width: 200px;
+  }
+
   .ingredients-button {
     display: none !important;
   }
 }
 
+/* On phones and tablets the dock is pinned to the bottom of the screen, always within reach of a thumb. */
 @media (max-width: 1023px) {
-  .workspace {
-    padding-bottom: 96px;
+  .workspace__dock {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 28;
+    height: var(--dock-height);
+    padding: var(--space-3) var(--space-4);
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--rule);
+  }
+
+  .workspace__actions .button {
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--space-3);
   }
 }
 
+/* Narrow phones show these labels to screen readers only, so the buttons keep their names. */
+@media (max-width: 559px) {
+  .ingredients-button__label,
+  .workspace__actions .button--quiet .workspace__action-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .workspace__actions .button--quiet {
+    flex: none;
+    width: 52px;
+  }
+}
+
+.workspace__action-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .ingredients-button {
-  position: fixed;
-  right: var(--space-4);
-  bottom: var(--space-4);
-  z-index: 25;
   display: inline-flex;
+  flex: none;
   align-items: center;
   gap: var(--space-2);
   min-height: 52px;
@@ -363,7 +432,6 @@
   color: var(--paper);
   font-family: var(--font-display);
   font-weight: 700;
-  box-shadow: 0 10px 24px -8px var(--shade);
 }
 
 .ingredients-button__count {
@@ -524,18 +592,10 @@
   margin-top: var(--space-3);
 }
 
-.phase-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
-}
-
 .phase-foot__note {
+  margin-top: var(--space-5);
   color: var(--ink-soft);
-  max-width: 40ch;
+  max-width: 48ch;
 }
 
 /* Ingredients one step uses. */
@@ -689,22 +749,28 @@
   gap: var(--space-2);
 }
 
+/* The dots look thin but take a 44px-tall tap: the bar is drawn in the middle of the padding. */
 .cook__dot {
   display: block;
   width: 28px;
-  height: 10px;
+  height: 44px;
   border-radius: 5px;
-  background: var(--rule);
+  background: linear-gradient(var(--dot-color, var(--rule)), var(--dot-color, var(--rule))) center / 100% 10px no-repeat;
   transition: background-color 200ms;
 }
 
 .cook__dot[data-past='true'] {
-  background: color-mix(in srgb, var(--chapter) 45%, var(--rule));
+  --dot-color: color-mix(in srgb, var(--chapter) 45%, var(--rule));
 }
 
 .cook__dot[aria-current='step'] {
+  --dot-color: var(--chapter);
   width: 56px;
-  background: var(--chapter);
+}
+
+/* The page-turn swing must not widen the page on a phone. */
+.cook {
+  overflow-x: clip;
 }
 
 .cook-step {
@@ -720,7 +786,12 @@
 }
 
 @media (min-width: 760px) {
-  .cook-step {
+  /* The page-turn swing must not widen the page on a phone. */
+.cook {
+  overflow-x: clip;
+}
+
+.cook-step {
     padding: var(--space-7);
   }
 }
@@ -753,7 +824,12 @@
 }
 
 @media (max-width: 559px) {
-  .cook-step {
+  /* The page-turn swing must not widen the page on a phone. */
+.cook {
+  overflow-x: clip;
+}
+
+.cook-step {
     grid-template-columns: 1fr;
   }
 }
@@ -773,60 +849,18 @@
   aspect-ratio: 3 / 2;
 }
 
-.step-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-top: var(--space-6);
-}
-
-.step-nav .button {
-  flex: 1 1 200px;
-  max-width: 320px;
-}
-
-.step-nav .button:last-child {
-  margin-left: auto;
-}
-
 /* Gate and last page. */
 
 .gate {
   display: grid;
   justify-items: start;
-  gap: var(--space-4);
+  gap: var(--space-2);
   max-width: 40rem;
-  padding: var(--space-7) var(--space-5);
-  border: 2px dashed var(--rule-strong);
-  border-radius: var(--radius-large);
-}
-
-.gate__title {
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
 }
 
 .gate__text {
+  margin-bottom: var(--space-4);
   color: var(--ink-soft);
-}
-
-.clear-ticks {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: 0 var(--space-2);
-  border: 0;
-  background: transparent;
-  color: var(--ink-soft);
-  font-family: var(--font-display);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.clear-ticks:hover {
-  color: var(--ink);
 }
 
 .finished {
@@ -850,13 +884,16 @@
     0 0 0 11px var(--chapter);
 }
 
-.finished__title {
-  font-size: clamp(2.75rem, 9vw, 5rem);
-  letter-spacing: -0.03em;
+.finished__words {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.finished__words .phase-head {
+  margin-bottom: 0;
 }
 
 .finished__text {
-  margin-top: var(--space-4);
   font-size: 1.1875rem;
   color: var(--ink-soft);
   max-width: 42ch;
@@ -866,8 +903,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
+  gap: var(--space-3);
 }
 
 /* Things to do with a recipe besides cooking it. */
@@ -884,7 +920,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 var(--space-3);
   border: 0;
   border-radius: 999px;
@@ -905,11 +941,7 @@
   box-shadow: inset 0 0 0 1.5px var(--chapter);
 }
 
-.favourite-button {
-  color: var(--chapter-ink);
-}
-
-.favourite-button[aria-pressed='true'] {
+.favourite-button[aria-pressed='true'] svg {
   color: var(--tomato);
 }
 
@@ -979,4 +1011,25 @@
   margin-top: var(--space-5);
   font-size: 0.8125rem;
   color: var(--ink-soft);
+}
+
+.spread__tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.spread__tag:hover {
+  color: var(--ink);
+  background: var(--chapter-wash);
+}
+
+.spread__shared-note {
+  margin-top: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--chapter-ink);
 }

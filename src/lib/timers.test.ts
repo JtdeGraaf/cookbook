@@ -7,7 +7,9 @@ import {
   pauseTimer,
   remainingMs,
   removeTimer,
+  removeTimersOfRecipe,
   resumeTimer,
+  sortForShelf,
   startTimer,
   type NewTimer,
 } from './timers'
@@ -97,5 +99,30 @@ describe('parseSavedTimers', () => {
   it('drops saved data that does not look like timers', () => {
     expect(parseSavedTimers([{ id: 'sauce' }])).toBeNull()
     expect(parseSavedTimers('nonsense')).toBeNull()
+  })
+})
+
+describe('removeTimersOfRecipe', () => {
+  it('stops every timer of one recipe and leaves the others running', () => {
+    let timers = startTimer([], newTimer('mains/pasta/carbonara/cook/1', 9), 0)
+    timers = startTimer(timers, newTimer('mains/pasta/carbonara/prep/1', 10), 0)
+    timers = startTimer(timers, newTimer('mains/pasta/carbonara-light/cook/1', 5), 0)
+
+    expect(removeTimersOfRecipe(timers, 'mains/pasta/carbonara').map((timer) => timer.id)).toEqual([
+      'mains/pasta/carbonara-light/cook/1',
+    ])
+  })
+})
+
+describe('sortForShelf', () => {
+  it('puts ringing timers first, then the one that rings soonest, paused ones last', () => {
+    let timers = startTimer([], newTimer('long', 20), 0)
+    timers = startTimer(timers, newTimer('paused', 1), 0)
+    timers = pauseTimer(timers, 'paused', 0)
+    timers = startTimer(timers, newTimer('short', 5), 0)
+    timers = startTimer(timers, newTimer('rang', 1), -2 * MINUTE)
+    timers = finishDueTimers(timers, 0).timers
+
+    expect(sortForShelf(timers, 0).map((timer) => timer.id)).toEqual(['rang', 'short', 'long', 'paused'])
   })
 })

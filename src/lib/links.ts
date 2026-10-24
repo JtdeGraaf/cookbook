@@ -1,6 +1,6 @@
 import type { Recipe } from './book'
 import { recipeTemplate } from './recipe-template'
-import { MAX_SERVINGS, MIN_SERVINGS } from './recipe-rules'
+import { MAX_SERVINGS, MIN_SERVINGS, type Language } from './recipe-rules'
 
 const REPOSITORY_URL = 'https://github.com/JtdeGraaf/cookbook'
 const BRANCH = 'main'
@@ -17,9 +17,9 @@ export function newRecipeUrl(folderPath: string): string {
   return `${REPOSITORY_URL}/new/${BRANCH}/recipes${folder}?${query}`
 }
 
-/** A link to the recipe that opens it scaled for `servings` people. */
-export function shareRecipeUrl(origin: string, recipe: Recipe, servings: number): string {
-  return `${origin}/${recipe.path}?servings=${servings}`
+/** A link to the recipe that opens it scaled for `servings` people, in the sender's language. */
+export function shareRecipeUrl(origin: string, recipe: Recipe, servings: number, language: Language): string {
+  return `${origin}/${recipe.path}?servings=${servings}&lang=${language}`
 }
 
 /** `?servings=` from a shared link; anything that isn't a whole number of people we allow counts as absent. */

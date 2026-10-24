@@ -26,8 +26,8 @@
     }
   },
   "ingredients": [
-    { "id": "water", "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
-    { "id": "salt", "name": { "en": "coarse salt", "nl": "grof zout" }, "amount": 1, "unit": "tbsp" },
+    { "id": "water", "pantry": true, "name": { "en": "water", "nl": "water" }, "amount": 2, "unit": "l" },
+    { "id": "salt", "pantry": true, "name": { "en": "coarse salt", "nl": "grof zout" }, "amount": 1, "unit": "tbsp" },
     { "id": "spaghetti", "name": { "en": "spaghetti", "nl": "spaghetti" }, "amount": 200, "unit": "g" },
     {
       "id": "guanciale",
@@ -37,10 +37,10 @@
       "note": { "en": "or pancetta", "nl": "of pancetta" }
     },
     { "id": "egg-yolks", "name": { "en": "egg yolks", "nl": "eidooiers" }, "amount": 3, "unit": "piece" },
-    { "id": "egg", "name": { "en": "whole egg", "nl": "heel ei" }, "amount": 1, "unit": "piece" },
+    { "id": "egg", "name": { "en": "egg", "nl": "ei" }, "amount": 1, "unit": "piece", "note": { "en": "whole", "nl": "heel" } },
     { "id": "pecorino", "name": { "en": "pecorino romano", "nl": "pecorino romano" }, "amount": 50, "unit": "g" },
     {
-      "id": "pepper",
+      "id": "pepper", "pantry": true,
       "name": { "en": "black pepper", "nl": "zwarte peper" },
       "amount": 1,
       "unit": "tsp",

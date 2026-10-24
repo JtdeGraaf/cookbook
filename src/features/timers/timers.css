@@ -83,44 +83,124 @@
   color: var(--chapter);
 }
 
-/* The tray of kitchen timers, on every page. */
+/* The timer shelf, docked to the bottom of every page. On a phone's cooking pages it sits just above the step dock. */
 
-/* A shelf docked to the bottom of the screen; the page makes room for it so nothing hides underneath. */
 .timer-tray {
-  --shelf-height: 76px;
   position: fixed;
   z-index: 30;
   right: 0;
   bottom: 0;
   left: 0;
-  height: var(--shelf-height);
+  display: grid;
+  gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
   background: color-mix(in srgb, var(--paper) 94%, transparent);
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--rule);
+  overflow-x: clip;
 }
 
+.timer-tray > * {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+  body:has(.workspace__dock) .timer-tray {
+    bottom: var(--dock-height);
+  }
+}
+
+/* The page makes room for whatever is docked at the bottom, so nothing hides underneath. */
 body:has(.timer-tray) .book {
-  padding-bottom: 76px;
+  padding-bottom: 92px;
 }
 
-body:has(.timer-tray) .ingredients-button {
-  bottom: calc(76px + var(--space-3));
+@media (max-width: 1023px) {
+  body:has(.workspace__dock) .book {
+    padding-bottom: calc(var(--dock-height) + var(--space-4));
+  }
+
+  body:has(.workspace__dock):has(.timer-tray) .book {
+    padding-bottom: calc(var(--dock-height) + 92px);
+  }
 }
 
 body:has(.timer-tray) .workspace__side {
-  max-height: calc(100dvh - 104px - 76px);
+  max-height: calc(100dvh - 104px - 92px);
+}
+
+/* A ringing timer: wide, tomato red and shaking, with a big stop button. It never scrolls out of view. */
+.alarm-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--tomato);
+  color: var(--on-tomato);
+  animation: alarm-glow 1.2s ease-in-out infinite;
+}
+
+/* A wide banner can't shake without poking past the screen edge, so it pulses a glow instead. */
+@keyframes alarm-glow {
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--tomato) 30%, transparent);
+  }
+}
+
+.alarm-banner__text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  align-content: center;
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.alarm-banner__text strong {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+}
+
+.alarm-banner__text span {
+  font-size: 0.875rem;
+  opacity: 0.85;
+}
+
+.alarm-banner__stop {
+  flex: none;
+  min-height: 48px;
+  padding: 0 var(--space-5);
+  border: 0;
+  border-radius: 999px;
+  background: var(--on-tomato);
+  color: var(--tomato-ink);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.0625rem;
+}
+
+:root[data-theme='dark'] .alarm-banner__stop {
+  color: var(--tomato);
 }
 
 .timer-tray__list {
   display: flex;
   gap: var(--space-2);
-  max-width: var(--page-width);
-  height: 100%;
-  margin: 0 auto;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
+}
+
+.timer-tray__sound-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
 }
 
 .timer-ticket {
@@ -154,6 +234,7 @@ body:has(.timer-tray) .workspace__side {
   column-gap: var(--space-3);
   flex: 1;
   min-width: 0;
+  min-height: 48px;
   text-decoration: none;
 }
 
@@ -188,12 +269,6 @@ body:has(.timer-tray) .workspace__side {
 
 .timer-ticket--paused .timer-ticket__clock {
   opacity: 0.6;
-}
-
-.timer-ticket--finished {
-  background: var(--tomato);
-  color: var(--on-tomato);
-  animation: ring 900ms ease-in-out infinite;
 }
 
 @keyframes ticket-in {

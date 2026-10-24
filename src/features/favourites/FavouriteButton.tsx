@@ -2,21 +2,20 @@ import { useTranslation } from 'react-i18next'
 import { Icon } from '@/components/Icon'
 import { useFavourites } from './useFavourites'
 
+/** A labelled toggle; its state is in aria-pressed and the filled heart, so the label never has to change. */
 export function FavouriteButton({ recipePath }: { recipePath: string }) {
   const { t } = useTranslation()
   const { isFavourite, toggleFavourite } = useFavourites()
   const favourite = isFavourite(recipePath)
-  const label = favourite ? t('recipe.unfavourite') : t('recipe.favourite')
   return (
     <button
       type="button"
-      className="icon-button favourite-button"
+      className="recipe-actions__button favourite-button"
       aria-pressed={favourite}
-      aria-label={label}
-      title={label}
       onClick={() => toggleFavourite(recipePath)}
     >
-      <Icon name={favourite ? 'heartFilled' : 'heart'} />
+      <Icon name={favourite ? 'heartFilled' : 'heart'} size={20} />
+      {t('recipe.favourite')}
     </button>
   )
 }

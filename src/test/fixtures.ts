@@ -12,7 +12,7 @@ const picture: Picture = {
 }
 
 export function makeIngredient(overrides: Partial<Ingredient> & Pick<Ingredient, 'id'>): Ingredient {
-  return { name: both(overrides.id), quantity: { amount: 1, unit: 'piece' }, note: null, ...overrides }
+  return { name: both(overrides.id), quantity: { amount: 1, unit: 'piece' }, note: null, pantry: false, ...overrides }
 }
 
 export function makeStep(overrides: Partial<Step> = {}): Step {

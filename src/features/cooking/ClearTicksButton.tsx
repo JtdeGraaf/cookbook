@@ -12,7 +12,7 @@ export function ClearTicksButton({ controls }: { controls: RecipeProgressControl
   if (!hasTicks(controls.progress)) return null
   return (
     <>
-      <button type="button" className="clear-ticks" onClick={() => setAsking(true)}>
+      <button type="button" className="text-button" onClick={() => setAsking(true)}>
         <Icon name="undo" size={18} />
         {t('recipe.clearTicks')}
       </button>

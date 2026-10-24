@@ -1,29 +1,23 @@
 import { useTranslation } from 'react-i18next'
-import { BookLink } from '@/components/BookLink'
-import { Icon } from '@/components/Icon'
 import { Tick } from '@/components/Tick'
-import { recipeViewPath, type Recipe } from '@/lib/book'
+import type { Recipe } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
+import { PhaseHead } from './PhaseHead'
 import { Point } from './Point'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
 type PrepChecklistProps = { recipe: Recipe; controls: RecipeProgressControls }
 
-/** Mise en place: every task before the heat, ticked off one by one. Cooking unlocks when all are done. */
+/** Mise en place: every task before cooking, ticked off one by one. Cooking unlocks when all are done. */
 export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const done = controls.progress.donePrepSteps
   return (
     <section className="prep">
-      <header className="phase-head">
-        <BookLink path={recipe.path} className="phase-head__back">
-          <Icon name="left" size={18} />
-          {localized(recipe.title)}
-        </BookLink>
-        <h1 className="phase-head__title">{t('recipe.prepTitle')}</h1>
+      <PhaseHead recipe={recipe} title={t('recipe.prepTitle')}>
         <p className="phase-head__intro">{t('recipe.prepIntro')}</p>
         <p className="prep__progress numbers" aria-live="polite">
           {t('prep.progress', { done: done.length, total: recipe.prep.length })}
@@ -33,7 +27,7 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
             <li key={index} className={done.includes(index) ? 'is-done' : undefined} />
           ))}
         </ol>
-      </header>
+      </PhaseHead>
 
       <ol className="prep__tasks">
         {recipe.prep.map((step, index) => (
@@ -51,25 +45,9 @@ export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {
         ))}
       </ol>
 
-      <footer className="phase-foot">
-        {controls.prepDone ? (
-          <>
-            <p className="phase-foot__note">{t('prep.ready')}</p>
-            <BookLink path={recipeViewPath(recipe, { name: 'cook', stepNumber: 1 })} className="button">
-              {t('recipe.startCooking')}
-              <Icon name="right" />
-            </BookLink>
-          </>
-        ) : (
-          <>
-            <p className="phase-foot__note">{t('prep.locked')}</p>
-            <span className="button" aria-disabled="true">
-              {t('recipe.startCooking')}
-              <Icon name="right" />
-            </span>
-          </>
-        )}
-      </footer>
+      <p id="prep-locked" className="phase-foot__note" aria-live="polite">
+        {controls.prepDone ? t('prep.ready') : t('prep.locked')}
+      </p>
     </section>
   )
 }

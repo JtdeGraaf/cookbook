@@ -7,11 +7,38 @@ const RING_FOR_MS = 60_000
 let audio: AudioContext | null = null
 let ringing: ReturnType<typeof setInterval> | null = null
 let stopAfter: ReturnType<typeof setTimeout> | null = null
+const soundListeners = new Set<() => void>()
+
+/** Browsers only allow sound after the reader has tapped the page. False also where there is no Web Audio. */
+export function isSoundOn(): boolean {
+  return audio?.state === 'running'
+}
+
+export function onSoundChange(listener: () => void): () => void {
+  soundListeners.add(listener)
+  return () => soundListeners.delete(listener)
+}
 
 export function unlockSound(): void {
   if (typeof AudioContext === 'undefined') return
   audio ??= new AudioContext()
+  audio.onstatechange = () => soundListeners.forEach((listener) => listener())
   if (audio.state === 'suspended') void audio.resume()
+}
+
+/**
+ * Turns sound on at the first tap or key press anywhere, so timers that were running before a reload can still
+ * ring. Starting a timer also turns it on.
+ */
+export function unlockSoundOnFirstTap(): void {
+  const unlock = () => {
+    unlockSound()
+    if (!isSoundOn()) return
+    window.removeEventListener('pointerdown', unlock)
+    window.removeEventListener('keydown', unlock)
+  }
+  window.addEventListener('pointerdown', unlock)
+  window.addEventListener('keydown', unlock)
 }
 
 export function startAlarm(): void {

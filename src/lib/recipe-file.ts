@@ -38,6 +38,10 @@ export const ingredientSchema = z
     amount: z.number().positive().optional().describe('Leave out together with unit for "to taste".'),
     unit: z.enum(UNITS).optional(),
     note: localizedTextSchema.optional().describe('Extra detail shown after the name, like "at room temperature".'),
+    pantry: z
+      .boolean()
+      .optional()
+      .describe('A kitchen staple you always have, like salt or water. Left off the shopping list.'),
   })
   .refine((ingredient) => (ingredient.amount === undefined) === (ingredient.unit === undefined), {
     message: 'Give amount and unit together, or leave both out for "to taste".',

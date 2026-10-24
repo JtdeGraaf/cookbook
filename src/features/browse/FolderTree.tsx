@@ -58,9 +58,6 @@ function TreeFolder({ folder, currentPath, expanded }: TreeFolderProps) {
       </div>
       {open && (
         <ul className="folder-tree__children">
-          {folder.folders.map((child) => (
-            <TreeFolder key={child.path} folder={child} currentPath={currentPath} expanded={expanded} />
-          ))}
           {folder.recipes.map((recipe) => (
             <li key={recipe.path}>
               <BookLink path={recipe.path} className="folder-tree__link folder-tree__link--recipe">
@@ -70,6 +67,9 @@ function TreeFolder({ folder, currentPath, expanded }: TreeFolderProps) {
                 <span className="folder-tree__name">{localized(recipe.title)}</span>
               </BookLink>
             </li>
+          ))}
+          {folder.folders.map((child) => (
+            <TreeFolder key={child.path} folder={child} currentPath={currentPath} expanded={expanded} />
           ))}
         </ul>
       )}

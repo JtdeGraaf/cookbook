@@ -14,18 +14,19 @@ A personal cookbook, in English and Dutch, that reads like a real book and cooks
 ## What it does
 
 - **Reads like a book.** Contents with page numbers, chapters with coloured thumb-index tabs, every recipe an open two-page spread. The look borrows from Japanese home-cooking books: rounded type, boxed ingredient lists, numbered steps, small "Point" tips.
-- **Prep before heat.** Every recipe starts with a *mise en place* checklist. Cooking only unlocks once every prep task is ticked off. Then the cooking steps come one at a time, big enough to read from the stove (arrow keys turn the page).
-- **Ingredients always one tap away.** Pinned beside the steps on wide screens, a button-and-sheet on phones. A servings counter scales every amount with kitchen-sensible rounding (grams to kilos, teaspoons to tablespoons, halves for eggs), and you can tick off what is on the counter.
-- **Timers from the recipe.** Steps can carry a timer. Start several at once; they keep running across steps, pages and even a reload, sit on a shelf at the bottom of every page, and ring (sound, vibration, tab title) when done.
+- **Prep before cooking.** Every recipe starts with a *mise en place* checklist (chop, measure, preheat). Cooking only unlocks once every prep task is ticked off. Then the cooking steps come one at a time, big enough to read from the stove, with Previous / Next always in reach at the bottom of the screen (arrow keys turn the page too). Prep ticks from an earlier day are cleared, so every cook starts with the prep.
+- **Ingredients always one tap away.** Pinned beside the steps on wide screens, a button-and-sheet on phones. A servings counter scales every amount with kitchen-sensible rounding (grams to kilos, teaspoons to tablespoons, halves for eggs). Ticking an ingredient means "I have it"; the shopping list uses the same ticks.
+- **Timers from the recipe.** Steps can carry a timer. Start several at once; they keep running across steps, pages and even a reload, and sit on a shelf at the bottom of every page, soonest first. A finished timer turns into a wide alarm banner with a Stop button and rings (sound, vibration, tab title). After a reload, the first tap anywhere turns the sound back on.
 - **Search** across titles, ingredients, tags and chapters in both languages at once: "eieren" and "eggs" both find the shakshuka. Press `/` anywhere to jump to the search box.
 - **English and Dutch** for the interface and every recipe. Your choice is remembered.
 - **Light and dark** follow your system until you pick one.
 - **Browse the folders.** The contents and every folder page share one layout, like a file manager: the `recipes/` folder as a tree you can open and close beside the page (on wider screens), a clickable path bar (All recipes › Mains › Pasta), and each folder's sub-folders and recipes. Folders can be nested as deep as you like.
 - **Filters and "Surprise me".** On the contents page: under 30 minutes, under an hour, favourites, or any tag. "Surprise me" opens a random recipe from what is left. Filters are in the address, so a filtered page can be bookmarked.
-- **Favourites and notes.** Heart a recipe. Each recipe keeps your own notes for next time and remembers when you cooked it (finishing the last step counts).
-- **Shopping list.** Put recipes on the list with their servings; the list adds up the same ingredient across recipes (200 g + 0.5 kg spaghetti becomes 0.7 kg) for ticking off in the shop, or copying into a chat.
+- **Finishing.** Finish on the last step closes the cooking session: the cook is written into the recipe's history, its ticks and timers are cleared, and it comes off the shopping list (you can put it back). Then jot a note for next time.
+- **Favourites and notes.** Mark a recipe as a favourite; lists show a heart next to it. Each recipe keeps your own notes and remembers when you cooked it.
+- **Shopping list.** Put recipes on the list; it uses each recipe's own servings (change them on either page) and adds up the same ingredient across recipes (200 g + 0.5 kg spaghetti becomes 0.7 kg). Ticking a line means you have it, on every recipe that needs it, and it moves to "Already have". Kitchen staples like salt and water are left off (and named). Copy list copies only what's left to buy.
 - **Share for a number of people.** "Share" sends a link like `/mains/pasta/carbonara?servings=6` that opens the recipe already scaled.
-- **Screen stays on** while you prep and cook (where the browser allows it).
+- **Screen stays on** while you prep and cook, and on any page while a timer runs (where the browser allows it).
 - **Print** a recipe as one clean page with the amounts for your servings.
 - **Works offline** and can be added to your phone's home screen; the whole book, photos included, is saved on the first visit.
 
@@ -78,11 +79,11 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 | `prepMinutes`, `cookMinutes` | yes | Rough times, shown on the recipe |
 | `tags` | no | List of texts, e.g. `{ "en": "vegetarian", "nl": "vegetarisch" }`; searchable |
 | `cover` | no | `{ "file", "alt", "credit"? }`, see images below; leave out until you have a photo |
-| `ingredients` | yes | List of `{ "id", "name", "amount"?, "unit"?, "note"? }` |
+| `ingredients` | yes | List of `{ "id", "name", "amount"?, "unit"?, "note"?, "pantry"? }` |
 | `prep` | yes, at least one | The *mise en place*: everything done before anything goes on the heat |
 | `cook` | yes, at least one | The cooking steps, shown one at a time |
 
-**Ingredients.** `id` is a short name steps use to point at the ingredient (`"eggs"`). Give `amount` and `unit` together, or leave both out for "to taste". Units: `g`, `kg`, `ml`, `l`, `tsp`, `tbsp`, `piece`, `clove`, `pinch`, `slice`, `sprig`, `can`. Amounts are for `servings` people and scale automatically.
+**Ingredients.** `id` is a short name steps use to point at the ingredient (`"eggs"`). Give `amount` and `unit` together, or leave both out for "to taste". Units: `g`, `kg`, `ml`, `l`, `tsp`, `tbsp`, `piece`, `clove`, `pinch`, `slice`, `sprig`, `can`. Amounts are for `servings` people and scale automatically. Add `"pantry": true` to a staple the kitchen always has (salt, water, oil) to leave it off the shopping list.
 
 **Steps** (both `prep` and `cook`):
 

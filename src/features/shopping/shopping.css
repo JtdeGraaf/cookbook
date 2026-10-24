@@ -54,17 +54,31 @@
   gap: var(--space-2);
 }
 
+/* Name and remove on one line, the servings below: long recipe names never squeeze the stepper. */
 .shopping-recipe {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'title remove'
+    'servings servings';
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1) var(--space-2);
   padding: var(--space-3) var(--space-2) var(--space-3) var(--space-4);
   border-radius: var(--radius);
   background: var(--chapter-wash);
 }
 
+.shopping-recipe .servings {
+  grid-area: servings;
+  justify-self: start;
+}
+
+.shopping-recipe .icon-button {
+  grid-area: remove;
+}
+
 .shopping-recipe__title {
+  grid-area: title;
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--ink);
@@ -85,6 +99,18 @@
 
 .shopping__progress {
   margin-bottom: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.shopping__have-title {
+  margin-top: var(--space-5);
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+}
+
+.shopping__staples {
+  margin-top: var(--space-4);
   font-size: 0.875rem;
   color: var(--ink-soft);
 }

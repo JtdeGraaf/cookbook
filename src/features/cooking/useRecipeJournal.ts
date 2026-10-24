@@ -4,9 +4,7 @@ import {
   EMPTY_JOURNAL,
   changeNote,
   journalKey,
-  localDate,
   parseSavedJournal,
-  recordCooked,
   type RecipeJournal,
 } from '@/lib/journal'
 import { readSaved, save } from '@/lib/storage'
@@ -32,11 +30,3 @@ export function useRecipeJournal(recipe: Recipe) {
   }
 }
 
-/** Writes today into a recipe's journal when the cook reaches its last page. Twice on one day counts once. */
-export function useRecordCookedToday(recipe: Recipe) {
-  useEffect(() => {
-    const key = journalKey(recipe.path)
-    const journal = readSaved(key, parseSavedJournal) ?? EMPTY_JOURNAL
-    save(key, recordCooked(journal, localDate(new Date())))
-  }, [recipe.path])
-}

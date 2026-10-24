@@ -46,6 +46,8 @@
   --space-8: 72px;
   --page-width: 1180px;
   --tab-width: 44px;
+  /* Height of the step dock pinned to the bottom of a phone's cooking pages. */
+  --dock-height: 76px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* The colour of the chapter being read; pages set data-color to switch it. */
@@ -277,6 +279,51 @@ html {
 }
 .icon-button:hover {
   background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+/* A quiet action that reads as text: clear ticks, clear filters, clear the list. */
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text-button:hover {
+  color: var(--ink);
+}
+
+/* One look for every empty page: what is empty, why, and the way on. */
+.empty-state {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  max-width: 40rem;
+  padding: var(--space-6) 0;
+}
+
+.empty-state__title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+.empty-state__hint {
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+
+.empty-state__action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
 }
 
 .text-link {

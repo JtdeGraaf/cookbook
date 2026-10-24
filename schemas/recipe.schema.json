@@ -211,6 +211,10 @@
               "nl"
             ],
             "additionalProperties": false
+          },
+          "pantry": {
+            "description": "A kitchen staple you always have, like salt or water. Left off the shopping list.",
+            "type": "boolean"
           }
         },
         "required": [

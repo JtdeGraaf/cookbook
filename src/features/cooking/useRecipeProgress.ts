@@ -1,43 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 import type { Recipe } from '@/lib/book'
 import {
-  EMPTY_PROGRESS,
   changeServings,
   clearTicks,
   isPrepDone,
-  parseSavedProgress,
-  progressKey,
   servingsFor,
   toggleIngredient,
   togglePrepStep,
-  type RecipeProgress,
 } from '@/lib/progress'
-import { readSaved, save } from '@/lib/storage'
+import { progressStore } from './progress-store'
 
-/** Ticks and servings for one recipe, kept in localStorage so they survive a reload mid-cooking. */
+/** Ticks and servings for one recipe, shared with every other page that shows it and kept across reloads. */
 export function useRecipeProgress(recipe: Recipe) {
-  const key = progressKey(recipe.path)
-  const [progress, setProgress] = useState<RecipeProgress>(() => readSaved(key, parseSavedProgress) ?? EMPTY_PROGRESS)
-  const [loadedKey, setLoadedKey] = useState(key)
-
-  // Another recipe page reuses this component: load that recipe's progress instead.
-  if (loadedKey !== key) {
-    setLoadedKey(key)
-    setProgress(readSaved(key, parseSavedProgress) ?? EMPTY_PROGRESS)
-  }
-
-  useEffect(() => {
-    save(key, progress)
-  }, [key, progress])
-
+  const progress = useSyncExternalStore(progressStore.subscribe, () => progressStore.get(recipe.path))
+  const update = (change: Parameters<typeof progressStore.update>[1]) => progressStore.update(recipe.path, change)
   return {
     progress,
     servings: servingsFor(recipe, progress),
     prepDone: isPrepDone(recipe, progress),
-    setServings: (servings: number) => setProgress((current) => changeServings(current, servings)),
-    toggleIngredient: (id: string) => setProgress((current) => toggleIngredient(current, id)),
-    togglePrepStep: (index: number) => setProgress((current) => togglePrepStep(current, index)),
-    clearTicks: () => setProgress((current) => clearTicks(current)),
+    setServings: (servings: number) => update((current) => changeServings(current, servings)),
+    toggleIngredient: (id: string) => update((current) => toggleIngredient(current, id)),
+    togglePrepStep: (index: number) => update((current) => togglePrepStep(current, index, Date.now())),
+    clearTicks: () => update(clearTicks),
   }
 }
 

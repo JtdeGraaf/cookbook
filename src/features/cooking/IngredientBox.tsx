@@ -15,7 +15,7 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
   const localized = useLocalized()
   const quantityText = useQuantityText()
   const factor = servingsFactor(recipe.servings, controls.servings)
-  const checked = controls.progress.checkedIngredientIds
+  const have = controls.progress.haveIngredientIds
   return (
     <section className="ingredient-box" aria-labelledby={`ingredients-${recipe.slug}`}>
       <header className="ingredient-box__head">
@@ -28,7 +28,7 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
         {recipe.ingredients.map((ingredient) => (
           <li key={ingredient.id}>
             <label className="ingredient-line">
-              <Tick checked={checked.includes(ingredient.id)} onChange={() => controls.toggleIngredient(ingredient.id)} />
+              <Tick checked={have.includes(ingredient.id)} onChange={() => controls.toggleIngredient(ingredient.id)} />
               <span className="ingredient-line__name">
                 {localized(ingredient.name)}
                 {ingredient.note && <span className="ingredient-line__note">{localized(ingredient.note)}</span>}
@@ -40,7 +40,7 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
         ))}
       </ul>
       <p className="ingredient-box__count numbers">
-        {t('recipe.checkedCount', { checked: checked.length, total: recipe.ingredients.length })}
+        {t('recipe.checkedCount', { checked: have.length, total: recipe.ingredients.length })}
       </p>
     </section>
   )

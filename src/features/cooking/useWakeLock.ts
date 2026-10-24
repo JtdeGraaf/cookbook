@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
 
+export function canKeepScreenOn(): boolean {
+  return typeof navigator !== 'undefined' && 'wakeLock' in navigator
+}
+
 /**
  * Keeps the screen from dimming while `active`, where the browser supports it. The browser drops the lock when the
  * tab is hidden, so it is asked for again when the cook comes back.
  */
-export function useWakeLock(active: boolean): boolean {
-  const supported = typeof navigator !== 'undefined' && 'wakeLock' in navigator
+export function useWakeLock(active: boolean): void {
+  const supported = canKeepScreenOn()
 
   useEffect(() => {
     if (!active || !supported) return
@@ -34,6 +38,4 @@ export function useWakeLock(active: boolean): boolean {
       void lock?.release()
     }
   }, [active, supported])
-
-  return supported
 }

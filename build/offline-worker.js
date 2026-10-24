@@ -2,6 +2,7 @@
 // The build fills in CACHE_NAME and FILES; a new build means a new cache name, and the old copy is removed.
 const CACHE_NAME = '__CACHE_NAME__'
 const FILES = __FILES__
+const NETWORK_WAIT_MS = 3000
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -25,9 +26,12 @@ self.addEventListener('fetch', (event) => {
   const request = event.request
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return
 
-  // Pages: try the network for the newest book, fall back to the saved copy when offline.
+  // Pages: try the network for the newest book, but use the saved copy when offline or when the network takes
+  // longer than a few seconds, as it can on kitchen wifi.
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('/')))
+    const savedPage = () => caches.match('/')
+    const slowNetwork = new Promise((resolve) => setTimeout(resolve, NETWORK_WAIT_MS)).then(savedPage)
+    event.respondWith(Promise.race([fetch(request), slowNetwork]).catch(savedPage))
     return
   }
 

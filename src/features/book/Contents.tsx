@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
+import { usePageTitle } from '@/components/usePageTitle'
 import { allRecipes, type Folder } from '@/lib/book'
 import { NO_FILTERS, filterBook, hasFilters, matchesFilters, type RecipeFilters } from '@/lib/filters'
 import { BookShell } from '@/features/browse/BookShell'
@@ -19,6 +20,7 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
   const localized = useLocalized()
   const { favourites } = useFavourites()
   const shownBook = filterBook(book, (recipe) => matchesFilters(recipe, filters, favourites))
+  usePageTitle(null)
   return (
     <BookShell currentPath="">
       <header className="book-head">

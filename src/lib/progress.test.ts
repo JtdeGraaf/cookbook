@@ -2,16 +2,20 @@ import { describe, expect, it } from 'vitest'
 import { makeRecipe, makeStep } from '@/test/fixtures'
 import {
   EMPTY_PROGRESS,
+  SESSION_LENGTH_MS,
   changeServings,
   clearTicks,
+  forgetOldPrep,
   isPrepDone,
   parseSavedProgress,
   servingsFor,
+  setHaveIngredients,
   toggleIngredient,
   togglePrepStep,
 } from './progress'
 
 const recipe = makeRecipe({ slug: 'soup', servings: 4, prep: [makeStep(), makeStep()] })
+const NOW = 1_000_000_000
 
 describe('recipe progress', () => {
   it('uses the recipe servings until the cook picks a number', () => {
@@ -27,29 +31,55 @@ describe('recipe progress', () => {
   it('ticks and unticks an ingredient', () => {
     const ticked = toggleIngredient(EMPTY_PROGRESS, 'salt')
 
-    expect(ticked.checkedIngredientIds).toEqual(['salt'])
-    expect(toggleIngredient(ticked, 'salt').checkedIngredientIds).toEqual([])
+    expect(ticked.haveIngredientIds).toEqual(['salt'])
+    expect(toggleIngredient(ticked, 'salt').haveIngredientIds).toEqual([])
+  })
+
+  it('marks several ingredients at once without doubling any', () => {
+    const progress = setHaveIngredients(toggleIngredient(EMPTY_PROGRESS, 'egg'), ['egg', 'yolk'], true)
+
+    expect(progress.haveIngredientIds).toEqual(['egg', 'yolk'])
+    expect(setHaveIngredients(progress, ['egg'], false).haveIngredientIds).toEqual(['yolk'])
   })
 
   it('allows cooking only when every prep step is done', () => {
-    const halfway = togglePrepStep(EMPTY_PROGRESS, 0)
+    const halfway = togglePrepStep(EMPTY_PROGRESS, 0, NOW)
 
     expect(isPrepDone(recipe, halfway)).toBe(false)
-    expect(isPrepDone(recipe, togglePrepStep(halfway, 1))).toBe(true)
+    expect(isPrepDone(recipe, togglePrepStep(halfway, 1, NOW))).toBe(true)
   })
 
   it('clears ticks but keeps the servings', () => {
-    const progress = togglePrepStep(toggleIngredient(changeServings(EMPTY_PROGRESS, 3), 'salt'), 0)
+    const progress = togglePrepStep(toggleIngredient(changeServings(EMPTY_PROGRESS, 3), 'salt'), 0, NOW)
 
-    expect(clearTicks(progress)).toEqual({ servings: 3, checkedIngredientIds: [], donePrepSteps: [] })
+    expect(clearTicks(progress)).toEqual({ servings: 3, haveIngredientIds: [], donePrepSteps: [], preppedAt: null })
+  })
+
+  it('forgets prep from an earlier session, but keeps what you have in the house', () => {
+    const progress = togglePrepStep(toggleIngredient(changeServings(EMPTY_PROGRESS, 3), 'salt'), 0, NOW)
+
+    expect(forgetOldPrep(progress, NOW + SESSION_LENGTH_MS)).toBe(progress)
+    expect(forgetOldPrep(progress, NOW + SESSION_LENGTH_MS + 1)).toEqual({
+      servings: 3,
+      haveIngredientIds: ['salt'],
+      donePrepSteps: [],
+      preppedAt: null,
+    })
+  })
+
+  it('reads progress saved by the first version, keeping servings and ticked ingredients', () => {
+    expect(parseSavedProgress({ servings: 4, checkedIngredientIds: ['salt'], donePrepSteps: [0] })).toEqual({
+      servings: 4,
+      haveIngredientIds: ['salt'],
+      donePrepSteps: [],
+      preppedAt: null,
+    })
   })
 
   it('rejects saved progress with an impossible number of servings', () => {
-    expect(parseSavedProgress({ servings: 0, checkedIngredientIds: [], donePrepSteps: [] })).toBeNull()
-    expect(parseSavedProgress({ servings: null, checkedIngredientIds: ['salt'], donePrepSteps: [1] })).toEqual({
-      servings: null,
-      checkedIngredientIds: ['salt'],
-      donePrepSteps: [1],
-    })
+    const saved = { servings: 0, haveIngredientIds: [], donePrepSteps: [], preppedAt: null }
+
+    expect(parseSavedProgress(saved)).toBeNull()
+    expect(parseSavedProgress({ ...saved, servings: null })).toEqual({ ...saved, servings: null })
   })
 })

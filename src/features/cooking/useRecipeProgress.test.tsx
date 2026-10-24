@@ -2,6 +2,7 @@
 import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { makeRecipe, makeStep } from '@/test/fixtures'
+import { progressStore } from './progress-store'
 import { useRecipeProgress } from './useRecipeProgress'
 
 const soup = makeRecipe({ slug: 'soup', servings: 2, prep: [makeStep(), makeStep()] })
@@ -9,6 +10,7 @@ const stew = makeRecipe({ slug: 'stew', servings: 4 })
 
 beforeEach(() => {
   window.localStorage.clear()
+  progressStore.reload()
 })
 
 describe('useRecipeProgress', () => {
@@ -29,11 +31,12 @@ describe('useRecipeProgress', () => {
       first.result.current.setServings(5)
     })
     first.unmount()
+    progressStore.reload()
 
     const { result } = renderHook(() => useRecipeProgress(soup))
 
     expect(result.current.servings).toBe(5)
-    expect(result.current.progress.checkedIngredientIds).toEqual(['salt'])
+    expect(result.current.progress.haveIngredientIds).toEqual(['salt'])
   })
 
   it('loads the other recipe when the page switches recipes', () => {
@@ -49,6 +52,7 @@ describe('useRecipeProgress', () => {
 
   it('starts fresh when the saved progress is broken', () => {
     window.localStorage.setItem('cookbook:progress:mains/soup', '{"servings": "lots"}')
+    progressStore.reload()
 
     const { result } = renderHook(() => useRecipeProgress(soup))
 

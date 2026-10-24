@@ -22,7 +22,8 @@
     "chapters": "Hoofdstukken",
     "shoppingList": "Boodschappenlijst",
     "shoppingListCount_one": "Boodschappenlijst, {{count}} recept",
-    "shoppingListCount_other": "Boodschappenlijst, {{count}} recepten"
+    "shoppingListCount_other": "Boodschappenlijst, {{count}} recepten",
+    "skipToPage": "Naar de pagina"
   },
   "search": {
     "title": "Zoeken",
@@ -31,7 +32,8 @@
     "noResults": "Niets in het boek past bij “{{query}}”.",
     "noResultsHint": "Probeer één ingrediënt, zoals “eieren” of “kale”. Beide talen werken.",
     "empty": "Typ een gerecht, een ingrediënt of een label. Nederlands en Engels werken allebei.",
-    "uses": "Met {{ingredients}}"
+    "uses": "Met {{ingredients}}",
+    "noResultsAction": "Terug naar de inhoud"
   },
   "recipe": {
     "prepTime": "Voorbereiden",
@@ -43,8 +45,8 @@
     "fewerServings": "Eén persoon minder",
     "moreServings": "Eén persoon meer",
     "toTaste": "naar smaak",
-    "prepTitle": "Voordat het vuur aangaat",
-    "prepIntro": "Zet alles gesneden, afgewogen en binnen handbereik klaar. Het koken begint als dit lijstje af is.",
+    "prepTitle": "Voordat je gaat koken",
+    "prepIntro": "Snijd, weeg af en verwarm voor, en zet alles binnen handbereik. Het koken begint als dit lijstje af is.",
     "methodTitle": "Bereiding",
     "startPrep": "Begin met voorbereiden",
     "continuePrep": "Verder met voorbereiden",
@@ -54,67 +56,74 @@
     "ingredientsUsed": "Je hebt nodig",
     "clearTicks": "Vinkjes wissen",
     "clearTicksQuestion": "Alle vinkjes voor dit recept wissen?",
-    "clearTicksExplain": "Alle afgevinkte ingrediënten en voorbereidingen gaan weer uit, zodat je opnieuw kunt beginnen. Het aantal personen blijft staan.",
+    "clearTicksExplain": "Alle afgevinkte ingrediënten en voorbereidingen gaan weer uit, hier en op de boodschappenlijst, zodat je opnieuw kunt beginnen. Het aantal personen blijft staan.",
     "cancel": "Laat staan",
     "confirmClear": "Vinkjes wissen",
     "showIngredients": "Ingrediënten",
     "closeIngredients": "Ingrediënten sluiten",
-    "checkedCount": "{{checked}} van {{total}} klaar",
-    "favourite": "Toevoegen aan favorieten",
-    "unfavourite": "Verwijderen uit favorieten",
+    "checkedCount": "{{checked}} van {{total}} in huis",
+    "favourite": "Favoriet",
     "share": "Delen",
     "linkCopied": "Link gekopieerd",
-    "shareText": "{{title}} voor {{count}} personen",
     "print": "Afdrukken",
     "editOnGithub": "Bewerken op GitHub",
-    "addToList": "Op de boodschappenlijst",
-    "removeFromList": "Op je lijst · weghalen",
     "notesTitle": "Jouw aantekeningen",
     "notesLabel": "Aantekeningen voor de volgende keer",
     "notesPlaceholder": "Volgende keer minder zout, probeer het met…",
     "cookedCount_one": "Eén keer gemaakt, laatst op {{date}}",
     "cookedCount_other": "{{count}} keer gemaakt, laatst op {{date}}",
     "neverCooked": "Nog niet gemaakt",
-    "screenOn": "Je scherm blijft aan terwijl je kookt"
+    "screenOn": "Je scherm blijft aan terwijl je kookt",
+    "shoppingList": "Boodschappenlijst",
+    "sharedServings_one": "Op {{count}} persoon gezet via een gedeelde link. Je boodschappenlijst gaat mee.",
+    "sharedServings_other": "Op {{count}} personen gezet via een gedeelde link. Je boodschappenlijst gaat mee.",
+    "shareText_one": "{{title}} voor {{count}} persoon",
+    "shareText_other": "{{title}} voor {{count}} personen"
   },
   "prep": {
-    "title": "Mise en place",
-    "progress": "{{done}} van {{total}} klaar",
+    "progress": "{{done}} van {{total}} gedaan",
     "locked": "Vink alle voorbereidingen af om te beginnen met koken.",
-    "ready": "Alles staat klaar. Tijd voor het vuur.",
-    "markDone": "Afvinken",
-    "markNotDone": "Vinkje weghalen"
+    "ready": "Alles staat klaar. Tijd om te koken."
   },
   "cook": {
     "stepOf": "Stap {{step}} van {{total}}",
     "previous": "Vorige stap",
     "next": "Volgende stap",
     "backToPrep": "Terug naar de voorbereiding",
-    "finish": "Klaar",
+    "finish": "Afronden",
     "prepNotDone": "De voorbereiding is nog niet af",
-    "prepNotDoneExplain": "Dit recept gaat het best als alles klaarstaat voordat het vuur aangaat.",
-    "goToPrep": "Naar de voorbereiding"
+    "prepNotDoneExplain": "Dit recept gaat het best als alles klaarstaat voordat je begint met koken.",
+    "goToPrep": "Naar de voorbereiding",
+    "notFinished": "Dit recept is nog niet af",
+    "notFinishedExplain": "Rond de laatste kookstap af om hier te komen.",
+    "continueCooking": "Verder met koken",
+    "finishedToday": "Je hebt dit recept vandaag al gemaakt",
+    "finishedTodayExplain": "Begin bij de voorbereiding om het nog een keer te maken."
   },
   "done": {
     "title": "Eet smakelijk",
-    "body": "{{title}} is klaar. Wis de vinkjes als je de volgende keer opnieuw wilt beginnen.",
-    "again": "Terug naar het recept"
+    "body": "{{title}} is klaar. De vinkjes en kookwekkers zijn gewist en het staat niet meer op de boodschappenlijst, klaar voor de volgende keer.",
+    "again": "Terug naar het recept",
+    "backOnList": "Weer op de boodschappenlijst zetten"
   },
   "timer": {
-    "start": "Start wekker · {{time}}",
-    "restart": "Wekker opnieuw starten",
-    "running": "Loopt · nog {{time}}",
+    "start": "Start kookwekker · {{time}}",
+    "restart": "Kookwekker opnieuw starten",
     "pause": "Pauzeer {{label}}",
     "resume": "Hervat {{label}}",
     "remove": "Verwijder {{label}}",
-    "stop": "Wekker uit",
+    "stop": "Kookwekker uit",
     "done": "Klaar",
     "trayLabel": "Kookwekkers",
-    "finishedTitle": "Klaar: {{label}}"
+    "finishedTitle": "Klaar: {{label}}",
+    "soundOff": "Tik ergens om het geluid van de kookwekker aan te zetten",
+    "finishedBanner": "{{label}}: klaar"
   },
   "notFound": {
     "title": "Deze bladzijde staat niet in het boek",
-    "body": "Misschien is het recept naar een ander hoofdstuk verhuisd, of zit er een typfout in de link."
+    "body": "Misschien is het recept naar een ander hoofdstuk verhuisd, of zit er een typfout in de link.",
+    "nearest": "Naar {{name}}",
+    "search": "Zoek in het boek"
   },
   "units": {
     "g": "g",
@@ -157,7 +166,10 @@
     "favourites": "Favorieten",
     "surprise": "Verras me",
     "noMatches": "Geen recept past bij deze filters.",
-    "clear": "Filters wissen"
+    "clear": "Filters wissen",
+    "tags": "Labels",
+    "summary_one": "{{count}} recept past",
+    "summary_other": "{{count}} recepten passen"
   },
   "shopping": {
     "title": "Boodschappenlijst",
@@ -169,10 +181,15 @@
     "copied": "Gekopieerd",
     "clear": "Lijst leegmaken",
     "clearQuestion": "De boodschappenlijst leegmaken?",
-    "clearExplain": "Alle recepten en vinkjes gaan van de lijst af.",
+    "clearExplain": "Alle recepten gaan van de lijst. Wat je hebt afgevinkt blijft afgevinkt bij de recepten.",
     "cancel": "Laat staan",
     "remove": "Verwijder {{title}}",
     "forRecipes": "Voor {{titles}}",
-    "progress": "{{checked}} van {{total}} in het mandje"
+    "emptyAction": "Zoek een recept",
+    "allBought": "Alles is in huis.",
+    "left_one": "Nog {{count}} ding te halen",
+    "left_other": "Nog {{count}} dingen te halen",
+    "haveAlready": "Al in huis",
+    "staples": "Keukenvoorraad staat er niet op: {{names}}."
   }
 }

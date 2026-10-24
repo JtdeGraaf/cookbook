@@ -7,12 +7,15 @@ export function parseLanguage(value: unknown): Language | null {
   return LANGUAGES.find((language) => language === value) ?? null
 }
 
-/** A language the reader picked wins; then the domain; then the browser; English when nothing matches. */
+/** A shared link's language wins, then the reader's own choice, the domain, the browser; English as the last resort. */
 export function pickStartingLanguage(options: {
+  /** From a shared link's `?lang=`. */
+  linked: Language | null
   saved: Language | null
   hostname: string
   browserLanguages: readonly string[]
 }): Language {
+  if (options.linked) return options.linked
   if (options.saved) return options.saved
   if (DUTCH_HOSTNAMES.includes(options.hostname)) return 'nl'
   const fromBrowser = options.browserLanguages

@@ -192,6 +192,8 @@ function toRecipe(
           ? { amount: ingredient.amount, unit: ingredient.unit }
           : null,
       note: ingredient.note ?? null,
+      // Leaving the flag out means it is a normal ingredient to buy.
+      pantry: ingredient.pantry ?? false,
     })),
     prep: file.prep.map(toStep),
     cook: file.cook.map(toStep),

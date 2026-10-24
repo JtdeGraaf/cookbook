@@ -219,6 +219,18 @@ header.folder-band .folder-band__title {
   line-height: 1.3;
 }
 
+.recipe-row__mark {
+  display: inline-grid;
+  place-items: center;
+  margin-left: var(--space-2);
+  vertical-align: 1px;
+  color: var(--chapter-ink);
+}
+
+.recipe-row__mark--favourite {
+  color: var(--tomato);
+}
+
 .recipe-row__summary {
   overflow: hidden;
   color: var(--ink-soft);
@@ -263,6 +275,18 @@ header.folder-band .folder-band__title {
   }
 }
 
+.recipe-row__mark {
+  display: inline-grid;
+  place-items: center;
+  margin-left: var(--space-2);
+  vertical-align: 1px;
+  color: var(--chapter-ink);
+}
+
+.recipe-row__mark--favourite {
+  color: var(--tomato);
+}
+
 .contents__section {
   margin: var(--space-4) 0 0 var(--space-4);
   padding-left: var(--space-4);
@@ -304,31 +328,41 @@ header.folder-band .folder-band__title {
   color: var(--ink-soft);
 }
 
-/* Filter chips and "Surprise me": one line under the title, swiped sideways when there are many tags. */
+/* Filter chips and "Surprise me": one short row, the tags folded behind a "Tags" chip, a summary while filtering. */
 
 .filter-bar {
-  display: flex;
-  align-items: center;
+  display: grid;
   gap: var(--space-3);
   margin-bottom: var(--space-6);
 }
 
-.filter-bar__chips {
+.filter-bar__row {
   display: flex;
-  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.filter-bar__chips,
+.filter-bar__tags {
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
-  min-width: 0;
-  padding: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+}
+
+.filter-bar__tags {
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1.5px var(--rule);
 }
 
 .chip-toggle {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 var(--space-3);
   border: 0;
   border-radius: 999px;
@@ -351,18 +385,21 @@ header.folder-band .folder-band__title {
   box-shadow: none;
 }
 
+.chip-toggle--more[aria-expanded='true'] {
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
 .filter-bar__surprise {
   flex: none;
 }
 
-@media (max-width: 559px) {
-  .filter-bar {
-    flex-wrap: wrap;
-  }
-
-  .filter-bar__chips {
-    flex-basis: 100%;
-  }
+.filter-bar__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
 /* Search */

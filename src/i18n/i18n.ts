@@ -11,7 +11,11 @@ export const resources = { en: { translation: en }, nl: { translation: nl } } as
 const LANGUAGE_KEY = 'language'
 
 export function startingLanguage(): Language {
+  const linked = parseLanguage(new URLSearchParams(window.location.search).get('lang'))
+  // Opening a shared link in another language switches the book, the same as tapping EN or NL would.
+  if (linked) saveLanguage(linked)
   return pickStartingLanguage({
+    linked,
     saved: readSaved(LANGUAGE_KEY, parseLanguage),
     hostname: window.location.hostname,
     browserLanguages: navigator.languages,

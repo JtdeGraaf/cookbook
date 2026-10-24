@@ -1,17 +1,22 @@
 import { z } from 'zod/mini'
 import type { Quantity, Recipe } from './book'
 import { scaleQuantity } from './quantity'
-import { MAX_SERVINGS, MIN_SERVINGS, type LocalizedText, type Unit } from './recipe-rules'
+import type { LocalizedText, Unit } from './recipe-rules'
 import { normalize } from './search'
 
-/** The recipes on the shopping list and what has already gone in the basket. */
-export type ShoppingList = {
-  entries: { recipePath: string; servings: number }[]
-  /** Keys of the shopping items already bought. */
-  checkedItems: string[]
-}
+/**
+ * The recipes on the shopping list. Servings and what you already have are not kept here: they come from each
+ * recipe's own progress, so the list and the recipe page always agree.
+ */
+export type ShoppingList = { recipePaths: string[] }
 
-export const EMPTY_SHOPPING_LIST: ShoppingList = { entries: [], checkedItems: [] }
+export const EMPTY_SHOPPING_LIST: ShoppingList = { recipePaths: [] }
+
+/** A recipe on the list with what its progress says: how many people, and which ingredients are at hand. */
+export type ListedRecipe = { recipe: Recipe; servings: number; haveIngredientIds: string[] }
+
+/** Which recipe ingredients one shopping line stands for. Ticking the line ticks all of them. */
+export type IngredientSource = { recipePath: string; ingredientId: string }
 
 /** One line to buy: the same ingredient from several recipes added together. */
 export type ShoppingItem = {
@@ -20,6 +25,9 @@ export type ShoppingItem = {
   /** Null when every recipe says "to taste". */
   quantity: Quantity | null
   recipeTitles: LocalizedText[]
+  sources: IngredientSource[]
+  /** True when every recipe that needs it already has it: bought, or in the house. */
+  have: boolean
 }
 
 /** Units that can be added together, and the small unit they are added up in. */
@@ -39,52 +47,53 @@ const UNIT_FAMILIES: Record<Unit, { family: string; baseUnit: Unit; perUnit: num
 }
 
 export function isOnList(list: ShoppingList, recipePath: string): boolean {
-  return list.entries.some((entry) => entry.recipePath === recipePath)
+  return list.recipePaths.includes(recipePath)
 }
 
-export function addToList(list: ShoppingList, recipePath: string, servings: number): ShoppingList {
-  const others = list.entries.filter((entry) => entry.recipePath !== recipePath)
-  return { ...list, entries: [...others, { recipePath, servings }] }
+export function addToList(list: ShoppingList, recipePath: string): ShoppingList {
+  if (isOnList(list, recipePath)) return list
+  return { recipePaths: [...list.recipePaths, recipePath] }
 }
 
 export function removeFromList(list: ShoppingList, recipePath: string): ShoppingList {
-  return { ...list, entries: list.entries.filter((entry) => entry.recipePath !== recipePath) }
-}
-
-export function changeListServings(list: ShoppingList, recipePath: string, servings: number): ShoppingList {
-  const clamped = Math.min(MAX_SERVINGS, Math.max(MIN_SERVINGS, Math.round(servings)))
-  return {
-    ...list,
-    entries: list.entries.map((entry) => (entry.recipePath === recipePath ? { ...entry, servings: clamped } : entry)),
-  }
-}
-
-export function toggleItem(list: ShoppingList, key: string): ShoppingList {
-  const checkedItems = list.checkedItems.includes(key)
-    ? list.checkedItems.filter((checked) => checked !== key)
-    : [...list.checkedItems, key]
-  return { ...list, checkedItems }
+  return { recipePaths: list.recipePaths.filter((path) => path !== recipePath) }
 }
 
 /**
- * Adds up the ingredients of every recipe on the list for its chosen servings. The same ingredient (by English
- * name) in units that can be added, like grams and kilos, becomes one line; different kinds of unit stay apart.
+ * Adds up the ingredients of every recipe on the list for its servings. The same ingredient (by English name) in
+ * units that can be added, like grams and kilos, becomes one line; different kinds of unit stay apart. Kitchen
+ * staples are left off.
  */
-export function buildShoppingItems(recipes: { recipe: Recipe; servings: number }[]): ShoppingItem[] {
-  const items = new Map<string, { name: LocalizedText; total: number | null; unit: Unit | null; recipeTitles: LocalizedText[] }>()
-  for (const { recipe, servings } of recipes) {
+export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
+  const items = new Map<
+    string,
+    { name: LocalizedText; total: number | null; unit: Unit | null; recipeTitles: LocalizedText[]; sources: IngredientSource[]; have: boolean }
+  >()
+  for (const { recipe, servings, haveIngredientIds } of recipes) {
     const factor = servings / recipe.servings
     for (const ingredient of recipe.ingredients) {
+      if (ingredient.pantry) continue
       const family = ingredient.quantity ? UNIT_FAMILIES[ingredient.quantity.unit] : null
       const key = `${normalize(ingredient.name.en)}|${family?.family ?? 'to-taste'}`
       const amount = ingredient.quantity && family ? ingredient.quantity.amount * family.perUnit * factor : null
+      const source = { recipePath: recipe.path, ingredientId: ingredient.id }
+      const have = haveIngredientIds.includes(ingredient.id)
       const existing = items.get(key)
       if (!existing) {
-        items.set(key, { name: ingredient.name, total: amount, unit: family?.baseUnit ?? null, recipeTitles: [recipe.title] })
+        items.set(key, {
+          name: ingredient.name,
+          total: amount,
+          unit: family?.baseUnit ?? null,
+          recipeTitles: [recipe.title],
+          sources: [source],
+          have,
+        })
         continue
       }
       if (existing.total !== null && amount !== null) existing.total += amount
       if (!existing.recipeTitles.includes(recipe.title)) existing.recipeTitles.push(recipe.title)
+      existing.sources.push(source)
+      existing.have = existing.have && have
     }
   }
   return [...items.entries()].map(([key, item]) => ({
@@ -93,20 +102,28 @@ export function buildShoppingItems(recipes: { recipe: Recipe; servings: number }
     // Round only once, after adding up, so small amounts don't round away before they are summed.
     quantity: item.total !== null && item.unit !== null ? scaleQuantity({ amount: item.total, unit: item.unit }, 1) : null,
     recipeTitles: item.recipeTitles,
+    sources: item.sources,
+    have: item.have,
   }))
 }
 
-const savedListSchema = z.strictObject({
-  entries: z.array(
-    z.strictObject({
-      recipePath: z.string(),
-      servings: z.int().check(z.minimum(MIN_SERVINGS), z.maximum(MAX_SERVINGS)),
-    }),
-  ),
-  checkedItems: z.array(z.string()),
-})
+/** The staples left off the list, once each, so the cook can see what was skipped. */
+export function staplesLeftOff(recipes: ListedRecipe[]): LocalizedText[] {
+  const names = new Map<string, LocalizedText>()
+  for (const ingredient of recipes.flatMap(({ recipe }) => recipe.ingredients)) {
+    if (ingredient.pantry) names.set(normalize(ingredient.name.en), ingredient.name)
+  }
+  return [...names.values()]
+}
+
+const savedListSchema = z.strictObject({ recipePaths: z.array(z.string()) })
+
+/** How the list was saved when it kept its own servings; the recipes on it are kept. */
+const firstVersionSchema = z.object({ entries: z.array(z.object({ recipePath: z.string() })) })
 
 export function parseSavedShoppingList(value: unknown): ShoppingList | null {
-  const result = savedListSchema.safeParse(value)
-  return result.success ? result.data : null
+  const current = savedListSchema.safeParse(value)
+  if (current.success) return current.data
+  const old = firstVersionSchema.safeParse(value)
+  return old.success ? { recipePaths: old.data.entries.map((entry) => entry.recipePath) } : null
 }

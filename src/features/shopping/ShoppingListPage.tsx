@@ -1,9 +1,13 @@
+import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { EmptyState } from '@/components/EmptyState'
 import { Icon } from '@/components/Icon'
 import { Tick } from '@/components/Tick'
+import { usePageTitle } from '@/components/usePageTitle'
+import type { ShoppingItem } from '@/lib/shopping-list'
 import { ServingsStepper } from '@/features/cooking/ServingsStepper'
 import { useQuantityLabel } from '@/features/cooking/useQuantityText'
 import { useLocalized } from '@/features/settings/useLanguage'
@@ -12,23 +16,29 @@ import { useShoppingList } from './useShoppingList'
 import '@/features/cooking/cooking.css'
 import './shopping.css'
 
-/** Every ingredient for the recipes on the list, added together, to tick off in the shop. */
+/**
+ * Everything to buy for the recipes on the list, added together. Ticking a line means you have it, the same tick
+ * as on the recipe's own ingredient list.
+ */
 export function ShoppingListPage() {
   const { t } = useTranslation()
   const localized = useLocalized()
-  const quantityLabel = useQuantityLabel()
   const shopping = useShoppingList()
-  const { copy, copied } = useCopyShoppingList(shopping.items)
+  const { copy, copied } = useCopyShoppingList(shopping.toBuy)
   const [askingToClear, setAskingToClear] = useState(false)
-  const checked = shopping.list.checkedItems
+  usePageTitle(t('shopping.title'))
 
   if (shopping.recipes.length === 0) {
     return (
-      <section className="shopping shopping--empty">
-        <h1 className="shopping__title">{t('shopping.title')}</h1>
-        <p className="shopping__empty">{t('shopping.empty')}</p>
-        <p className="shopping__hint">{t('shopping.emptyHint')}</p>
-      </section>
+      <EmptyState
+        title={t('shopping.empty')}
+        hint={t('shopping.emptyHint')}
+        action={
+          <Link to="/" className="button">
+            {t('shopping.emptyAction')}
+          </Link>
+        }
+      />
     )
   }
 
@@ -37,11 +47,11 @@ export function ShoppingListPage() {
       <header className="shopping__head">
         <h1 className="shopping__title">{t('shopping.title')}</h1>
         <div className="shopping__actions">
-          <button type="button" className="button" onClick={() => void copy()}>
+          <button type="button" className="button" onClick={() => void copy()} disabled={shopping.toBuy.length === 0}>
             <Icon name={copied ? 'check' : 'list'} />
             <span aria-live="polite">{copied ? t('shopping.copied') : t('shopping.copy')}</span>
           </button>
-          <button type="button" className="clear-ticks" onClick={() => setAskingToClear(true)}>
+          <button type="button" className="text-button" onClick={() => setAskingToClear(true)}>
             <Icon name="undo" size={18} />
             {t('shopping.clear')}
           </button>
@@ -73,32 +83,26 @@ export function ShoppingListPage() {
           </ul>
         </section>
 
-        <section className="shopping__items" aria-labelledby="shopping-items">
-          <h2 id="shopping-items" className="shopping__subtitle">
+        <section className="shopping__items" aria-labelledby="shopping-to-buy">
+          <h2 id="shopping-to-buy" className="shopping__subtitle">
             {t('shopping.toBuy')}
           </h2>
-          <p className="shopping__progress numbers">
-            {t('shopping.progress', { checked: checked.length, total: shopping.items.length })}
+          <p className="shopping__progress numbers" aria-live="polite">
+            {shopping.toBuy.length === 0 ? t('shopping.allBought') : t('shopping.left', { count: shopping.toBuy.length })}
           </p>
-          <ul className="shopping__item-list">
-            {shopping.items.map((item) => (
-              <li key={item.key}>
-                <label className="ingredient-line shopping-item">
-                  <Tick checked={checked.includes(item.key)} onChange={() => shopping.toggleItem(item.key)} />
-                  <span className="ingredient-line__name">
-                    {localized(item.name)}
-                    {item.recipeTitles.length > 1 && (
-                      <span className="ingredient-line__note">
-                        {t('shopping.forRecipes', { titles: item.recipeTitles.map(localized).join(', ') })}
-                      </span>
-                    )}
-                  </span>
-                  <span className="ingredient-line__leader" aria-hidden="true" />
-                  <span className="ingredient-line__amount numbers">{quantityLabel(item.quantity)}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
+          <ShoppingLines items={shopping.toBuy} onToggle={shopping.toggleItem} />
+
+          {shopping.haveAlready.length > 0 && (
+            <>
+              <h3 className="shopping__have-title">{t('shopping.haveAlready')}</h3>
+              <ShoppingLines items={shopping.haveAlready} onToggle={shopping.toggleItem} />
+            </>
+          )}
+          {shopping.staples.length > 0 && (
+            <p className="shopping__staples">
+              {t('shopping.staples', { names: shopping.staples.map(localized).join(', ') })}
+            </p>
+          )}
         </section>
       </div>
 
@@ -115,5 +119,32 @@ export function ShoppingListPage() {
         onCancel={() => setAskingToClear(false)}
       />
     </section>
+  )
+}
+
+function ShoppingLines({ items, onToggle }: { items: ShoppingItem[]; onToggle: (item: ShoppingItem) => void }) {
+  const { t } = useTranslation()
+  const localized = useLocalized()
+  const quantityLabel = useQuantityLabel()
+  return (
+    <ul className="shopping__item-list">
+      {items.map((item) => (
+        <li key={item.key}>
+          <label className="ingredient-line shopping-item">
+            <Tick checked={item.have} onChange={() => onToggle(item)} />
+            <span className="ingredient-line__name">
+              {localized(item.name)}
+              {item.recipeTitles.length > 1 && (
+                <span className="ingredient-line__note">
+                  {t('shopping.forRecipes', { titles: item.recipeTitles.map(localized).join(', ') })}
+                </span>
+              )}
+            </span>
+            <span className="ingredient-line__leader" aria-hidden="true" />
+            <span className="ingredient-line__amount numbers">{quantityLabel(item.quantity)}</span>
+          </label>
+        </li>
+      ))}
+    </ul>
   )
 }

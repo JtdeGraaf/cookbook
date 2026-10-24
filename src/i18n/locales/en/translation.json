@@ -22,7 +22,8 @@
     "chapters": "Chapters",
     "shoppingList": "Shopping list",
     "shoppingListCount_one": "Shopping list, {{count}} recipe",
-    "shoppingListCount_other": "Shopping list, {{count}} recipes"
+    "shoppingListCount_other": "Shopping list, {{count}} recipes",
+    "skipToPage": "Skip to the page"
   },
   "search": {
     "title": "Search",
@@ -31,7 +32,8 @@
     "noResults": "Nothing in the book matches “{{query}}”.",
     "noResultsHint": "Try one ingredient, like “eggs” or “boerenkool”. Both languages work.",
     "empty": "Type a dish, an ingredient or a tag. English and Dutch both work.",
-    "uses": "Uses {{ingredients}}"
+    "uses": "Uses {{ingredients}}",
+    "noResultsAction": "Back to the contents"
   },
   "recipe": {
     "prepTime": "Prep",
@@ -43,8 +45,8 @@
     "fewerServings": "One person fewer",
     "moreServings": "One person more",
     "toTaste": "to taste",
-    "prepTitle": "Before the heat goes on",
-    "prepIntro": "Get everything chopped, measured and within reach. Cooking starts when this list is done.",
+    "prepTitle": "Before you cook",
+    "prepIntro": "Chop, measure and preheat, and set everything within reach. Cooking starts when this list is done.",
     "methodTitle": "Method",
     "startPrep": "Start with the prep",
     "continuePrep": "Continue the prep",
@@ -54,36 +56,34 @@
     "ingredientsUsed": "You need",
     "clearTicks": "Clear ticks",
     "clearTicksQuestion": "Clear all ticks for this recipe?",
-    "clearTicksExplain": "Every ticked ingredient and prep task is unticked, so you can cook it again from the start. Your servings stay.",
+    "clearTicksExplain": "Every ticked ingredient and prep task is unticked, here and on the shopping list, so you can start over. Your servings stay.",
     "cancel": "Keep them",
     "confirmClear": "Clear ticks",
     "showIngredients": "Ingredients",
     "closeIngredients": "Close ingredients",
-    "checkedCount": "{{checked}} of {{total}} ready",
-    "favourite": "Add to favourites",
-    "unfavourite": "Remove from favourites",
+    "checkedCount": "{{checked}} of {{total}} at hand",
+    "favourite": "Favourite",
     "share": "Share",
     "linkCopied": "Link copied",
-    "shareText": "{{title}} for {{count}} people",
     "print": "Print",
     "editOnGithub": "Edit on GitHub",
-    "addToList": "Add to shopping list",
-    "removeFromList": "On your list · remove",
     "notesTitle": "Your notes",
     "notesLabel": "Notes for next time",
     "notesPlaceholder": "Less salt next time, try it with…",
     "cookedCount_one": "Cooked once, last on {{date}}",
     "cookedCount_other": "Cooked {{count}} times, last on {{date}}",
     "neverCooked": "Not cooked yet",
-    "screenOn": "Your screen stays on while you cook"
+    "screenOn": "Your screen stays on while you cook",
+    "shoppingList": "Shopping list",
+    "sharedServings_one": "Set to {{count}} person by a shared link. Your shopping list follows.",
+    "sharedServings_other": "Set to {{count}} people by a shared link. Your shopping list follows.",
+    "shareText_one": "{{title}} for {{count}} person",
+    "shareText_other": "{{title}} for {{count}} people"
   },
   "prep": {
-    "title": "Mise en place",
-    "progress": "{{done}} of {{total}} ready",
+    "progress": "{{done}} of {{total}} done",
     "locked": "Tick off every prep task to start cooking.",
-    "ready": "Everything is ready. Time for the heat.",
-    "markDone": "Mark as done",
-    "markNotDone": "Mark as not done"
+    "ready": "Everything is ready. Time to cook."
   },
   "cook": {
     "stepOf": "Step {{step}} of {{total}}",
@@ -92,29 +92,38 @@
     "backToPrep": "Back to the prep",
     "finish": "Finish",
     "prepNotDone": "The prep isn’t finished yet",
-    "prepNotDoneExplain": "This recipe works best when everything is ready before the heat goes on.",
-    "goToPrep": "Go to the prep"
+    "prepNotDoneExplain": "This recipe works best when everything is ready before you start cooking.",
+    "goToPrep": "Go to the prep",
+    "notFinished": "This recipe isn’t finished yet",
+    "notFinishedExplain": "Finish the last cooking step to get here.",
+    "continueCooking": "Continue cooking",
+    "finishedToday": "You finished this recipe today",
+    "finishedTodayExplain": "To cook it again, start with the prep."
   },
   "done": {
     "title": "Enjoy your meal",
-    "body": "That’s {{title}} done. Clear the ticks if you want to start fresh next time.",
-    "again": "Back to the recipe"
+    "body": "That’s {{title}} done. The ticks and timers are cleared and it’s off the shopping list, ready for next time.",
+    "again": "Back to the recipe",
+    "backOnList": "Put it on the shopping list again"
   },
   "timer": {
     "start": "Start timer · {{time}}",
     "restart": "Restart timer",
-    "running": "Running · {{time}} left",
     "pause": "Pause {{label}}",
     "resume": "Resume {{label}}",
     "remove": "Remove {{label}}",
     "stop": "Stop alarm",
     "done": "Done",
     "trayLabel": "Kitchen timers",
-    "finishedTitle": "Done: {{label}}"
+    "finishedTitle": "Done: {{label}}",
+    "soundOff": "Tap anywhere to turn on the alarm sound",
+    "finishedBanner": "{{label}} is done"
   },
   "notFound": {
     "title": "This page isn’t in the book",
-    "body": "The recipe may have moved to another chapter, or the link has a typo."
+    "body": "The recipe may have moved to another chapter, or the link has a typo.",
+    "nearest": "Go to {{name}}",
+    "search": "Search the book"
   },
   "units": {
     "g": "g",
@@ -157,7 +166,10 @@
     "favourites": "Favourites",
     "surprise": "Surprise me",
     "noMatches": "No recipe matches these filters.",
-    "clear": "Clear filters"
+    "clear": "Clear filters",
+    "tags": "Tags",
+    "summary_one": "{{count}} recipe matches",
+    "summary_other": "{{count}} recipes match"
   },
   "shopping": {
     "title": "Shopping list",
@@ -169,10 +181,15 @@
     "copied": "Copied",
     "clear": "Clear list",
     "clearQuestion": "Clear the shopping list?",
-    "clearExplain": "All recipes and ticks are taken off the list.",
+    "clearExplain": "All recipes are taken off the list. What you ticked stays ticked on the recipes.",
     "cancel": "Keep it",
     "remove": "Remove {{title}}",
     "forRecipes": "For {{titles}}",
-    "progress": "{{checked}} of {{total}} in the basket"
+    "emptyAction": "Find a recipe",
+    "allBought": "Everything is in the house.",
+    "left_one": "{{count}} thing left to buy",
+    "left_other": "{{count}} things left to buy",
+    "haveAlready": "Already have",
+    "staples": "Kitchen staples are left off: {{names}}."
   }
 }

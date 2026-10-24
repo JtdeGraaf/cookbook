@@ -1,4 +1,5 @@
 import { Folio } from '@/components/Folio'
+import { usePageTitle } from '@/components/usePageTitle'
 import type { Folder } from '@/lib/book'
 import { pageOf } from '@/features/book/book-data'
 import { ChapterBand } from '@/features/book/ChapterBand'
@@ -12,17 +13,18 @@ import { PathBar } from './PathBar'
 /** A folder of the book, laid out like the contents page: the way here, the folder's band, then what is inside. */
 export function FolderPage({ folder }: { folder: Folder }) {
   const localized = useLocalized()
+  usePageTitle(localized(folder.title))
   return (
     <div data-color={folder.color}>
       <BookShell currentPath={folder.path}>
         <PathBar folderPath={folder.path} />
         <ChapterBand folder={folder} />
         <ol className="recipe-rows folder-listing">
-          {folder.folders.map((child) => (
-            <FolderRow key={child.path} folder={child} />
-          ))}
           {folder.recipes.map((recipe, index) => (
             <RecipeRow key={recipe.path} recipe={recipe} showSummary eager={index < 6} />
+          ))}
+          {folder.folders.map((child) => (
+            <FolderRow key={child.path} folder={child} />
           ))}
         </ol>
         <AddRecipeLink folderPath={folder.path} />

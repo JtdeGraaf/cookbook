@@ -26,7 +26,7 @@
     }
   },
   "ingredients": [
-    { "id": "olive-oil", "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 2, "unit": "tbsp" },
+    { "id": "olive-oil", "pantry": true, "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 2, "unit": "tbsp" },
     { "id": "onion", "name": { "en": "onion", "nl": "ui" }, "amount": 1, "unit": "piece" },
     { "id": "red-pepper", "name": { "en": "red bell pepper", "nl": "rode paprika" }, "amount": 1, "unit": "piece" },
     { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 3, "unit": "clove" },
@@ -40,11 +40,11 @@
       "unit": "can",
       "note": { "en": "400 g", "nl": "400 g" }
     },
-    { "id": "sugar", "name": { "en": "sugar", "nl": "suiker" }, "amount": 0.5, "unit": "tsp" },
+    { "id": "sugar", "pantry": true, "name": { "en": "sugar", "nl": "suiker" }, "amount": 0.5, "unit": "tsp" },
     { "id": "eggs", "name": { "en": "eggs", "nl": "eieren" }, "amount": 4, "unit": "piece" },
     { "id": "feta", "name": { "en": "feta", "nl": "feta" }, "amount": 50, "unit": "g" },
     { "id": "parsley", "name": { "en": "flat-leaf parsley", "nl": "platte peterselie" }, "amount": 4, "unit": "sprig" },
-    { "id": "salt-pepper", "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } },
+    { "id": "salt-pepper", "pantry": true, "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } },
     { "id": "bread", "name": { "en": "crusty bread", "nl": "knapperig brood" }, "amount": 4, "unit": "slice" }
   ],
   "prep": [

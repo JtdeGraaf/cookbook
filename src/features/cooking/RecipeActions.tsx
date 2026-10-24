@@ -7,7 +7,10 @@ import { useShareRecipe } from './useShareRecipe'
 
 type RecipeActionsProps = { recipe: Recipe; servings: number }
 
-/** The small row of things to do with a recipe besides cooking it. */
+/**
+ * The small row of things to do with a recipe besides cooking it. Favourite and Shopping list are toggles that
+ * show their state the same way; the list uses the recipe's own servings, so there is nothing to keep in step.
+ */
 export function RecipeActions({ recipe, servings }: RecipeActionsProps) {
   const { t } = useTranslation()
   const shopping = useShoppingList()
@@ -20,10 +23,10 @@ export function RecipeActions({ recipe, servings }: RecipeActionsProps) {
         type="button"
         className="recipe-actions__button"
         aria-pressed={onList}
-        onClick={() => (onList ? shopping.remove(recipe) : shopping.add(recipe, servings))}
+        onClick={() => (onList ? shopping.remove(recipe) : shopping.add(recipe))}
       >
         <Icon name={onList ? 'check' : 'basket'} size={20} />
-        {onList ? t('recipe.removeFromList') : t('recipe.addToList')}
+        {t('recipe.shoppingList')}
       </button>
       <button type="button" className="recipe-actions__button" onClick={() => void share()}>
         <Icon name={copied ? 'check' : 'share'} size={20} />

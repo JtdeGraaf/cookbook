@@ -21,6 +21,7 @@ function BookPage() {
   if (page.kind === 'folder') return <FolderPage folder={page.folder} />
   return (
     <RecipePage
+      key={page.recipe.path}
       recipe={page.recipe}
       view={page.view}
       linkedServings={servings ?? null}

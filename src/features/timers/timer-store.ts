@@ -4,6 +4,7 @@ import {
   parseSavedTimers,
   pauseTimer,
   removeTimer,
+  removeTimersOfRecipe,
   resumeTimer,
   startTimer,
   type KitchenTimer,
@@ -66,6 +67,9 @@ export const timerStore = {
   },
   remove(id: string): void {
     update(removeTimer(timers, id))
+  },
+  removeForRecipe(recipePath: string): void {
+    update(removeTimersOfRecipe(timers, recipePath))
   },
   /** Picks up timers that finished while the page was closed. */
   resumeAfterLoad(): void {

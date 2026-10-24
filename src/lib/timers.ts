@@ -49,6 +49,19 @@ export function removeTimer(timers: KitchenTimer[], id: string): KitchenTimer[] 
   return timers.filter((timer) => timer.id !== id)
 }
 
+/** Every timer that belongs to one recipe, for when the cooking is finished. */
+export function removeTimersOfRecipe(timers: KitchenTimer[], recipePath: string): KitchenTimer[] {
+  return timers.filter((timer) => !timer.id.startsWith(`${recipePath}/`))
+}
+
+/** The order of the timer shelf: ringing timers first, then the one that rings soonest, paused ones last. */
+export function sortForShelf(timers: KitchenTimer[], now: number): KitchenTimer[] {
+  const rank = { finished: 0, running: 1, paused: 2 } as const
+  return [...timers].sort(
+    (a, b) => rank[a.state.kind] - rank[b.state.kind] || remainingMs(a, now) - remainingMs(b, now),
+  )
+}
+
 export function remainingMs(timer: KitchenTimer, now: number): number {
   switch (timer.state.kind) {
     case 'running':

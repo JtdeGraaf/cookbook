@@ -1,9 +1,11 @@
+import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { CoverImage } from '@/components/CoverImage'
 import { Folio } from '@/components/Folio'
 import { Icon } from '@/components/Icon'
 import { folderTrail, recipeViewPath, type Recipe } from '@/lib/book'
+import { tagKey } from '@/lib/filters'
 import { otherLanguage } from '@/lib/language'
 import { book, pageOf } from '@/features/book/book-data'
 import { PathBar } from '@/features/browse/PathBar'
@@ -19,10 +21,15 @@ import './cooking.css'
 /** Prep tasks are lettered a, b, c… so they never get mixed up with the numbered cooking steps. */
 const PREP_LETTERS = 'abcdefghijklmnopqrstuvwxyz'
 
-type RecipeSpreadProps = { recipe: Recipe; controls: RecipeProgressControls }
+type RecipeSpreadProps = {
+  recipe: Recipe
+  controls: RecipeProgressControls
+  /** Servings this visit opened with from a shared link, to say why the numbers changed. */
+  sharedServings: number | null
+}
 
 /** A recipe as an open book: photo and ingredients on the left page, prep and method on the right. */
-export function RecipeSpread({ recipe, controls }: RecipeSpreadProps) {
+export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadProps) {
   const { t } = useTranslation()
   const { language } = useLanguage()
   const localized = useLocalized()
@@ -62,11 +69,18 @@ export function RecipeSpread({ recipe, controls }: RecipeSpreadProps) {
             {recipe.tags.length > 0 && (
               <ul className="spread__tags">
                 {recipe.tags.map((tag) => (
-                  <li key={tag.en}>{localized(tag)}</li>
+                  <li key={tag.en}>
+                    <Link to="/" search={{ tag: tagKey(tag) }} className="spread__tag">
+                      {localized(tag)}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             )}
             <RecipeActions recipe={recipe} servings={controls.servings} />
+            {sharedServings !== null && (
+              <p className="spread__shared-note">{t('recipe.sharedServings', { count: sharedServings })}</p>
+            )}
           </header>
 
           <section className="before-heat" aria-labelledby="before-heat-title">
