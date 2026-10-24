@@ -196,7 +196,7 @@ Each colour comes in three tokens: the fill (`--tomato`), a darker or lighter **
 
 The page is a centred column up to 1180px (`--page-width`) with 16px gutters on phones. From 760px it gets 32px gutters, with an extra 44px (`--tab-width`) on the right where the thumb index sits. Spacing follows a 4-8-12-16-24-32-48-72 scale. Sections are separated by 48-72px, and a folio closes each page 72px below the content.
 
-- **Index pages** (contents, every folder, search) share one shell: from 900px a sticky 260px folder tree on the left beside one main column; below 900px the main column alone. The contents page is the top folder: a one-line title with tagline and a 92px tilted seal, the filter row, then chapters stacked in one column. Folder pages: path bar, the folder band opened up, then the same rows.
+- **Index pages** (contents, every folder, search) share one shell: from 900px a sticky 260px folder tree on the left beside one main column; below 900px the main column alone. The contents page is the top folder: a one-line title with tagline and a 92px tilted seal, the filter row, then chapters stacked in one column. Folder pages: path bar, a plain title line a size down (intro beneath, then recipe count and page in small display type), then the same rows. No coloured banner inside a folder.
 - **Recipe spread:** one sheet, split into two pages with a centre fold from 1024px.
 - **Prep and cook:** a main column plus a sticky 340px ingredient box from 1024px. Below that, a floating ingredients pill opens a bottom sheet (max 560px, 86dvh).
 - **Chrome:** a sticky, blurred running head on top and a fixed 76px timer shelf at the bottom (the page pads itself to make room). On recipe pages under 760px, search collapses to an icon and the tabs hide so the step gets the room.
@@ -261,7 +261,7 @@ Line styles carry meaning:
 Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Each chapter heads its rows with the folder band.
 
 ### Folder Band (signature)
-One element in two sizes, so the contents and the folder pages read as the same book. On the contents it is a chapter-colour bar (12px corners, title 1.625rem/900, page number right) linking to the folder and sliding 4px right on hover. On the folder page it opens up: a larger title, the intro, and a recipe-count pill. Sections inside a chapter use the chapter wash instead of the full colour.
+Only on the contents: a chapter-colour bar (12px corners, title 1.625rem/900, page number right) heading each chapter's rows, linking to the folder and sliding 4px right on hover. Folder pages don't repeat it; they open with the plain title line, so the page stays quiet and the rows come first.
 
 ### Point (signature)
 A paper-coloured hint box (12px) beside a step, with a yolk "Point" label in the display face at 900.

@@ -1,4 +1,4 @@
-/* Index pages (the contents, folders, search) share one anatomy: a head, a coloured band per folder, then rows. */
+/* Index pages (the contents, folders, search) share one anatomy: a plain head, then rows. */
 
 /* The top of the book: one short title line. This is a personal book, so the contents come first. */
 
@@ -55,33 +55,20 @@
   }
 }
 
-/* The folder band: a bar of chapter colour. On the contents it is a link line; on a folder page it opens up. */
+/* The folder band: a link line of chapter colour heading each chapter on the contents. */
 
 .folder-band {
   display: grid;
-  gap: var(--space-2);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius);
   background: var(--chapter);
   color: var(--on-chapter);
   text-decoration: none;
-}
-
-.folder-band--link {
   transition: transform 200ms var(--ease-out);
 }
 
-.folder-band--link:hover {
+.folder-band:hover {
   transform: translateX(4px);
-}
-
-header.folder-band {
-  padding: var(--space-5) var(--space-5) var(--space-4);
-}
-
-.folder-band--section {
-  background: var(--chapter-wash);
-  color: var(--ink);
 }
 
 .folder-band__top {
@@ -98,11 +85,6 @@ header.folder-band {
   line-height: 1.2;
 }
 
-header.folder-band .folder-band__title {
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  letter-spacing: -0.02em;
-}
-
 .folder-band__page {
   flex: none;
   font-family: var(--font-display);
@@ -110,33 +92,25 @@ header.folder-band .folder-band__title {
   font-size: 0.9375rem;
 }
 
-.folder-band--section .folder-band__page {
-  color: var(--chapter-ink);
+/* A folder page heads with the same plain title line as the contents, a size down. */
+
+.folder-head .book-head__title {
+  font-size: clamp(2rem, 5vw, 2.75rem);
 }
 
-.folder-band__intro {
-  max-width: 52ch;
-}
-
-.folder-band__count {
-  justify-self: start;
-  padding: 0 var(--space-3);
-  border-radius: 999px;
-  background: var(--on-chapter);
-  color: var(--chapter-ink);
+.folder-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-2);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.875rem;
+  color: var(--ink-soft);
 }
 
-:root[data-theme='dark'] .folder-band__count {
-  color: var(--chapter);
-}
-
-.folder-band--section .folder-band__count,
-:root[data-theme='dark'] .folder-band--section .folder-band__count {
-  background: var(--chapter);
-  color: var(--on-chapter);
+.folder-head__page {
+  color: var(--chapter-ink);
 }
 
 /* The contents: chapters stacked in one column, like the folder pages. */
