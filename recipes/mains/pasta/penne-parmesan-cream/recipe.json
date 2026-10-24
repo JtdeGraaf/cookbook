@@ -31,7 +31,7 @@
     { "id": "butter", "name": { "en": "unsalted butter", "nl": "ongezouten roomboter" }, "amount": 15, "unit": "g" },
     { "id": "cooking-cream", "name": { "en": "cooking cream", "nl": "kookroom" }, "amount": 125, "unit": "ml" },
     { "id": "parsley", "name": { "en": "fresh flat-leaf parsley", "nl": "verse platte peterselie" }, "amount": 4, "unit": "g" },
-    { "id": "parmigiano", "name": { "en": "grated Parmigiano Reggiano", "nl": "Parmigiano Reggiano-poeder" }, "amount": 45, "unit": "g" },
+    { "id": "parmigiano", "name": { "en": "Parmigiano Reggiano", "nl": "Parmigiano Reggiano" }, "amount": 45, "unit": "g", "note": { "en": "grated", "nl": "geraspt" } },
     { "id": "pepper", "pantry": true, "name": { "en": "black pepper", "nl": "zwarte peper" } }
   ],
   "prep": [

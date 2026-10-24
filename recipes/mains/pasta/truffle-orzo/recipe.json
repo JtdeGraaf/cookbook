@@ -41,7 +41,7 @@
     },
     { "id": "almond-milk", "name": { "en": "unsweetened almond milk", "nl": "ongezoete amandelmelk" }, "amount": 155, "unit": "ml" },
     { "id": "truffle-tapenade", "name": { "en": "truffle tapenade", "nl": "truffeltapenade" }, "amount": 40, "unit": "g", "note": { "en": "Urbani", "nl": "Urbani" } },
-    { "id": "parmesan", "name": { "en": "Parmesan", "nl": "Parmezaanse kaas" }, "amount": 15, "unit": "g" },
+    { "id": "parmesan", "name": { "en": "Parmigiano Reggiano", "nl": "Parmigiano Reggiano" }, "amount": 15, "unit": "g" },
     { "id": "salt-pepper", "pantry": true, "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } }
   ],
   "prep": [
@@ -76,7 +76,7 @@
       "ingredients": ["protein-cream", "almond-milk", "truffle-tapenade", "salt-pepper"]
     },
     {
-      "text": { "en": "[[Grate the Parmesan|grate]].", "nl": "[[Rasp de Parmezaanse kaas|grate]]." },
+      "text": { "en": "[[Grate the Parmigiano|grate]].", "nl": "[[Rasp de Parmigiano|grate]]." },
       "ingredients": ["parmesan"]
     }
   ],
@@ -122,8 +122,8 @@
     },
     {
       "text": {
-        "en": "Share between the plates and finish with the Parmesan.",
-        "nl": "Verdeel over de borden en maak af met de Parmezaanse kaas."
+        "en": "Share between the plates and finish with the Parmigiano.",
+        "nl": "Verdeel over de borden en maak af met de Parmigiano."
       },
       "ingredients": ["parmesan"]
     }

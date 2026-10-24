@@ -28,7 +28,7 @@
     { "id": "spaghetti", "name": { "en": "spaghetti", "nl": "spaghetti" }, "amount": 150, "unit": "g" },
     { "id": "bacon", "name": { "en": "smoked bacon strips", "nl": "gerookte spekreepjes" }, "amount": 100, "unit": "g" },
     { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 1, "unit": "clove" },
-    { "id": "egg", "name": { "en": "free-range egg", "nl": "scharrelei" }, "plural": { "en": "free-range eggs", "nl": "scharreleieren" }, "amount": 1, "unit": "piece" },
+    { "id": "egg", "name": { "en": "egg", "nl": "ei" }, "plural": { "en": "eggs", "nl": "eieren" }, "amount": 1, "unit": "piece", "note": { "en": "free-range", "nl": "scharrel" } },
     { "id": "cream", "name": { "en": "whipping cream", "nl": "verse slagroom" }, "amount": 62.5, "unit": "ml" },
     { "id": "parmigiano", "name": { "en": "Parmigiano Reggiano", "nl": "Parmigiano Reggiano" }, "amount": 40, "unit": "g" },
     { "id": "pepper", "pantry": true, "name": { "en": "black pepper", "nl": "zwarte peper" } }

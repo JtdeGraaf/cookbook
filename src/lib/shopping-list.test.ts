@@ -1,5 +1,7 @@
+import { book } from 'virtual:recipe-book'
 import { describe, expect, it } from 'vitest'
 import { both, makeIngredient, makeRecipe } from '@/test/fixtures'
+import { allRecipes } from './book'
 import {
   EMPTY_SHOPPING_LIST,
   addToList,
@@ -113,6 +115,14 @@ describe('buildShoppingItems', () => {
 
     expect(halfHad.find((item) => item.name.en === 'egg')?.have).toBe(false)
     expect(allHad.find((item) => item.name.en === 'egg')?.have).toBe(true)
+  })
+
+  it('adds up eggs and Parmigiano from every recipe in the book into one line each', () => {
+    const items = buildShoppingItems(allRecipes(book).map((recipe) => listed(recipe, recipe.servings)))
+    const linesNaming = (pattern: RegExp) => items.filter((item) => pattern.test(item.name.en))
+
+    expect(linesNaming(/\begg/i)).toHaveLength(1)
+    expect(linesNaming(/parmigiano|parmesan/i)).toHaveLength(1)
   })
 })
 
