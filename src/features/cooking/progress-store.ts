@@ -5,7 +5,7 @@ import {
   progressKey,
   type RecipeProgress,
 } from '@/lib/progress'
-import { readSaved, save } from '@/lib/storage'
+import { onChangeInOtherTab, readSaved, save } from '@/lib/storage'
 
 /**
  * One progress record per recipe, shared by every page that shows it. A change on the shopping list shows up on the
@@ -25,6 +25,9 @@ export const progressStore = {
     return current
   },
   update(recipePath: string, change: (current: RecipeProgress) => RecipeProgress): void {
+    // Read again first, so a tick made in another tab a moment ago is kept.
+    const saved = readSaved(progressKey(recipePath), parseSavedProgress)
+    if (saved) loaded.set(recipePath, saved)
     const next = change(progressStore.get(recipePath))
     loaded.set(recipePath, next)
     save(progressKey(recipePath), next)
@@ -47,8 +50,8 @@ export const progressStore = {
 }
 
 // The book open in a second tab or window stays in step with this one.
-window.addEventListener('storage', (event) => {
-  if (event.key?.startsWith('cookbook:progress:')) progressStore.reload()
+onChangeInOtherTab((key) => {
+  if (key === null || key.startsWith(progressKey(''))) progressStore.reload()
 })
 
 // Coming back to a page left open for hours: read again, so old prep is cleared at once.

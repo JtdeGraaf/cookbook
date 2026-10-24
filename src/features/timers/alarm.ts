@@ -41,6 +41,10 @@ export function unlockSoundOnFirstTap(): void {
   window.addEventListener('keydown', unlock)
 }
 
+export function isAlarmRinging(): boolean {
+  return ringing !== null
+}
+
 export function startAlarm(): void {
   if (ringing !== null) return
   ring()

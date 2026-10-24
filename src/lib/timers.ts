@@ -110,6 +110,11 @@ export function finishDueTimers(timers: KitchenTimer[], now: number): { timers: 
   return { timers: justFinished.length > 0 ? updated : timers, justFinished }
 }
 
+/** The timers that rang and wait for someone to stop them. */
+export function finishedTimerIds(timers: KitchenTimer[]): string[] {
+  return timers.filter((timer) => timer.state.kind === 'finished').map((timer) => timer.id)
+}
+
 /** "4:05" under an hour, "1:02:05" from an hour. Rounds up, so a timer shows 0:00 only when it is done. */
 export function formatClock(ms: number): string {
   const totalSeconds = Math.ceil(ms / 1000)

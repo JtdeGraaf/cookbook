@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { both } from '@/test/fixtures'
 import {
   finishDueTimers,
+  finishedTimerIds,
   formatClock,
   isShownOnItsStep,
   keepGoingTimersAfterFinish,
@@ -77,6 +78,14 @@ describe('kitchen timers', () => {
     const timers = startTimer([], newTimer('sauce', 10), 0)
 
     expect(removeTimer(timers, 'sauce')).toEqual([])
+  })
+
+  it('lists the timers that rang', () => {
+    let timers = startTimer([], newTimer('short', 1), 0)
+    timers = startTimer(timers, newTimer('long', 10), 0)
+    timers = finishDueTimers(timers, 2 * MINUTE).timers
+
+    expect(finishedTimerIds(timers)).toEqual(['short'])
   })
 })
 

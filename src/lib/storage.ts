@@ -30,3 +30,16 @@ export function forget(key: string): void {
     // Same as above.
   }
 }
+
+/**
+ * Calls `listener` when the book open in another tab or window changes something it keeps, with the key that
+ * changed, or null when that tab cleared everything. The browser never tells the tab that made the change itself.
+ */
+export function onChangeInOtherTab(listener: (key: string | null) => void): () => void {
+  const handle = (event: StorageEvent) => {
+    if (event.key === null) listener(null)
+    else if (event.key.startsWith(KEY_PREFIX)) listener(event.key.slice(KEY_PREFIX.length))
+  }
+  window.addEventListener('storage', handle)
+  return () => window.removeEventListener('storage', handle)
+}

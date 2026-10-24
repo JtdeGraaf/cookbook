@@ -2,6 +2,7 @@
 import { act, renderHook } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { makeRecipe, makeStep } from '@/test/fixtures'
+import { saveInOtherTab, saveInOtherTabQuietly } from '@/test/other-tab'
 import { progressStore } from './progress-store'
 import { useRecipeProgress } from './useRecipeProgress'
 
@@ -58,5 +59,26 @@ describe('useRecipeProgress', () => {
 
     expect(result.current.servings).toBe(2)
     expect(result.current.progress.donePrepSteps).toEqual([])
+  })
+
+  it('shows a tick made in another tab', () => {
+    const { result } = renderHook(() => useRecipeProgress(soup))
+    act(() => result.current.toggleIngredient('salt'))
+    const saved = JSON.parse(window.localStorage.getItem(`cookbook:progress:${soup.path}`) ?? 'null')
+
+    act(() => saveInOtherTab(`progress:${soup.path}`, { ...saved, haveIngredientIds: ['salt', 'pepper'] }))
+
+    expect(result.current.progress.haveIngredientIds).toEqual(['salt', 'pepper'])
+  })
+
+  it('keeps a tick made in another tab whose news has not arrived yet', () => {
+    const { result } = renderHook(() => useRecipeProgress(soup))
+    act(() => result.current.toggleIngredient('salt'))
+    const saved = JSON.parse(window.localStorage.getItem(`cookbook:progress:${soup.path}`) ?? 'null')
+    saveInOtherTabQuietly(`progress:${soup.path}`, { ...saved, haveIngredientIds: ['salt', 'pepper'] })
+
+    act(() => result.current.toggleIngredient('garlic'))
+
+    expect(result.current.progress.haveIngredientIds).toEqual(['salt', 'pepper', 'garlic'])
   })
 })
