@@ -154,6 +154,9 @@ h4 {
   line-height: 1.12;
   letter-spacing: -0.01em;
   text-wrap: balance;
+  /* Long Dutch compounds break at syllables (by the page's lang) instead of overflowing. */
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 p {
