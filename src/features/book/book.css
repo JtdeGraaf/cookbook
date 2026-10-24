@@ -55,43 +55,6 @@
   }
 }
 
-/* The folder band: a link line of chapter colour heading each chapter on the contents. */
-
-.folder-band {
-  display: grid;
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius);
-  background: var(--chapter);
-  color: var(--on-chapter);
-  text-decoration: none;
-  transition: transform 200ms var(--ease-out);
-}
-
-.folder-band:hover {
-  transform: translateX(4px);
-}
-
-.folder-band__top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-.folder-band__title {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.625rem;
-  line-height: 1.2;
-}
-
-.folder-band__page {
-  flex: none;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.9375rem;
-}
-
 /* A folder page heads with the same plain title line as the contents, a size down. */
 
 .folder-head .book-head__title {
@@ -121,7 +84,7 @@
 }
 
 .contents__intro {
-  margin: var(--space-3) var(--space-1) var(--space-1);
+  margin: 0 0 var(--space-2);
   color: var(--ink-soft);
   max-width: 52ch;
 }
@@ -286,6 +249,10 @@
   font-family: var(--font-display);
   font-weight: 900;
   font-size: 1.1875rem;
+}
+
+.contents__section-head--chapter .contents__section-title {
+  font-size: 1.5rem;
 }
 
 .contents__section-page {

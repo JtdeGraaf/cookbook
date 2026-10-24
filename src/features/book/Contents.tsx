@@ -49,11 +49,10 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
           <ol className="contents__chapters">
             {shownBook.chapters.map((chapter) => (
               <li key={chapter.path} data-color={chapter.color}>
-                <BookLink path={chapter.path} className="folder-band">
-                  <span className="folder-band__top">
-                    <span className="folder-band__title">{localized(chapter.title)}</span>
-                    <span className="folder-band__page numbers">{t('book.page', { page: pageOf(chapter.path) })}</span>
-                  </span>
+                <BookLink path={chapter.path} className="contents__section-head contents__section-head--chapter">
+                  <Icon name="folder" size={20} />
+                  <span className="contents__section-title">{localized(chapter.title)}</span>
+                  <span className="contents__section-page numbers">{t('book.page', { page: pageOf(chapter.path) })}</span>
                 </BookLink>
                 {chapter.intro && <p className="contents__intro">{localized(chapter.intro)}</p>}
                 <FolderContents folder={chapter} />

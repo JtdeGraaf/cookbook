@@ -138,7 +138,7 @@ components:
 
 A Japanese home-cooking magazine-book, printed on coated white paper in sumi ink and set in rounded gothic. Each chapter owns one strong colour, and that colour shows up only on things the reader touches or counts: thumb-index tabs, ingredient box headers, filled step circles, ticks, timers. Everything else is paper, ink and hairline rules. Pages read like print, with folios, dotted leaders, a contents page and a soft centre fold on the recipe spread. In the kitchen they behave like a tool: big step text, 44-52px targets, and a timer shelf docked to the bottom of the screen.
 
-The book refuses the cream-paper serif cookbook and the recipe-card grid. Recipes are listed as contents rows, chapters open as full colour bands, and prep sits in a dashed box that you finish before the numbered method starts. Dark mode is the same book under a night-kitchen pendant: ink-black paper, chapter colours lifted so they still read, and separate ink tokens so the colours stay legible as text.
+The book refuses the cream-paper serif cookbook and the recipe-card grid. Recipes are listed as contents rows, chapters carry their colour in the tree and thumb index rather than in banners, and prep sits in a dashed box that you finish before the numbered method starts. Dark mode is the same book under a night-kitchen pendant: ink-black paper, chapter colours lifted so they still read, and separate ink tokens so the colours stay legible as text.
 
 **Key Characteristics:**
 - Neutral coated paper and warm sumi ink; one chapter colour per page, switched by `data-color`.
@@ -182,9 +182,9 @@ Each colour comes in three tokens: the fill (`--tomato`), a darker or lighter **
 **Character:** A soft, round, heavy display face against a plain, clear Japanese gothic for reading. It is friendly at 900 and legible at arm's length.
 
 ### Hierarchy
-- **Display** (900, clamp(2.25rem, 6vw, 3.25rem), 1, -0.03em): the book title line on the contents page. Folder bands use clamp(2rem, 5vw, 2.75rem). The finished page goes up to 5rem.
+- **Display** (900, clamp(2.25rem, 6vw, 3.25rem), 1, -0.03em): the book title line on the contents page. Folder page titles use clamp(2rem, 5vw, 2.75rem). The finished page goes up to 5rem.
 - **Headline** (900, clamp(2rem, 6vw, 3.25rem), -0.02em): prep and cook page heads, the contents title, the recipe spread title (up to 3.5rem).
-- **Title** (900, 1.375-1.625rem): ingredient box, method, dialog and chapter-band titles.
+- **Title** (900, 1.375-1.625rem): ingredient box, method, dialog and chapter-heading titles.
 - **Step** (body face, 400, clamp(1.375rem, 3.4vw, 1.875rem), 1.45, max 34ch): the single cook-step instruction, sized to read from the counter.
 - **Body** (400, 1.0625rem, 1.65): running text, with 46-56ch measures for intros and summaries. Prep tasks and lead paragraphs step up to 1.1875rem.
 - **Label** (display face, 700, 0.8125-0.9375rem): amounts, times, folios, tabs, page numbers, buttons (1.0625rem).
@@ -219,7 +219,7 @@ Depth is mostly tonal: white sheets lie on off-white paper. Shadows are soft, wa
 
 ## Shapes
 
-The book is round: rounded type, pill buttons and controls (999px), circles for step numbers, ticks, seals, the folio number and hero dishes. Containers use 12px corners (photos, ingredient box, thumbnails, tickets, chapter bands) or 20px (spread, cook step, chapter opener, dialogs, dashed prep boxes). Small 6px corners go on the wordmark, key hints, the Point label and focus outlines. Thumb-index tabs are rounded only on the side that sticks out.
+The book is round: rounded type, pill buttons and controls (999px), circles for step numbers, ticks, seals, the folio number and hero dishes. Containers use 12px corners (photos, ingredient box, thumbnails, tickets) or 20px (spread, cook step, chapter opener, dialogs, dashed prep boxes). Small 6px corners go on the wordmark, key hints, the Point label and focus outlines. Thumb-index tabs are rounded only on the side that sticks out.
 
 Line styles carry meaning:
 - **Solid hairline:** structure (running head, folio, rows).
@@ -258,10 +258,7 @@ Line styles carry meaning:
 - **Folio:** a hairline-topped foot with the page number in a chapter pill.
 
 ### Contents Row (signature)
-Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Each chapter heads its rows with the folder band.
-
-### Folder Band (signature)
-Only on the contents: a chapter-colour bar (12px corners, title 1.625rem/900, page number right) heading each chapter's rows, linking to the folder and sliding 4px right on hover. Folder pages don't repeat it; they open with the plain title line, so the page stays quiet and the rows come first.
+Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Every folder, chapter or section, heads its rows with the same light line: a folder icon, the name in chapter ink (1.5rem for a chapter, 1.1875rem for a section) and its page. No coloured banners: the tree and thumb index already carry the colour.
 
 ### Point (signature)
 A paper-coloured hint box (12px) beside a step, with a yolk "Point" label in the display face at 900.
