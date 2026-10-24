@@ -103,6 +103,8 @@
   "done": {
     "title": "Enjoy your meal",
     "body": "That’s {{title}} done. The ticks and timers are cleared and it’s off the shopping list, ready for next time.",
+    "bodyTimersLeft_one": "That’s {{title}} done. The ticks are cleared and it’s off the shopping list. Its timer keeps going, so you’ll still hear when it’s time.",
+    "bodyTimersLeft_other": "That’s {{title}} done. The ticks are cleared and it’s off the shopping list. Its {{count}} timers keep going, so you’ll still hear when it’s time.",
     "again": "Back to the recipe",
     "backOnList": "Put it on the shopping list again"
   },

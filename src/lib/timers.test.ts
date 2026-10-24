@@ -3,14 +3,16 @@ import { both } from '@/test/fixtures'
 import {
   finishDueTimers,
   formatClock,
+  isShownOnItsStep,
+  keepGoingTimersAfterFinish,
   parseSavedTimers,
   pauseTimer,
   remainingMs,
   removeTimer,
-  removeTimersOfRecipe,
   resumeTimer,
   sortForShelf,
   startTimer,
+  timersOfRecipe,
   type NewTimer,
 } from './timers'
 
@@ -102,15 +104,85 @@ describe('parseSavedTimers', () => {
   })
 })
 
-describe('removeTimersOfRecipe', () => {
-  it('stops every timer of one recipe and leaves the others running', () => {
+describe('keepGoingTimersAfterFinish', () => {
+  const DONE_PAGE = '/desserts/chocolate-mousse/done'
+
+  function mousseTimer(stepNumber: number, minutes: number): NewTimer {
+    return { ...newTimer(`desserts/chocolate-mousse/cook/${stepNumber}`, minutes), path: `/desserts/chocolate-mousse/cook/${stepNumber}` }
+  }
+
+  it('keeps a running timer going and points it at the done page', () => {
+    const timers = startTimer([], mousseTimer(5, 120), 0)
+
+    const [kept] = keepGoingTimersAfterFinish(timers, 'desserts/chocolate-mousse', DONE_PAGE)
+
+    expect(kept.id).toBe('desserts/chocolate-mousse/cook/5')
+    expect(kept.path).toBe(DONE_PAGE)
+    expect(kept.state).toEqual({ kind: 'running', endsAt: 120 * MINUTE })
+  })
+
+  it('keeps a paused timer paused', () => {
+    let timers = startTimer([], mousseTimer(5, 120), 0)
+    timers = pauseTimer(timers, 'desserts/chocolate-mousse/cook/5', 30 * MINUTE)
+
+    const [kept] = keepGoingTimersAfterFinish(timers, 'desserts/chocolate-mousse', DONE_PAGE)
+
+    expect(kept.state).toEqual({ kind: 'paused', remainingMs: 90 * MINUTE })
+  })
+
+  it('puts away the timers of the recipe that already rang', () => {
+    let timers = startTimer([], mousseTimer(2, 1), -2 * MINUTE)
+    timers = finishDueTimers(timers, 0).timers
+    timers = startTimer(timers, mousseTimer(5, 120), 0)
+
+    const kept = keepGoingTimersAfterFinish(timers, 'desserts/chocolate-mousse', DONE_PAGE)
+
+    expect(kept.map((timer) => timer.id)).toEqual(['desserts/chocolate-mousse/cook/5'])
+  })
+
+  it('leaves the timers of other recipes alone, even a ringing one', () => {
+    let timers = startTimer([], newTimer('mains/pasta/carbonara/cook/1', 1), -2 * MINUTE)
+    timers = finishDueTimers(timers, 0).timers
+    timers = startTimer(timers, newTimer('mains/pasta/carbonara-light/cook/1', 5), 0)
+
+    expect(keepGoingTimersAfterFinish(timers, 'mains/pasta/carbonara-light', DONE_PAGE)[0]).toEqual(timers[0])
+  })
+})
+
+describe('timersOfRecipe', () => {
+  it('finds the timers of one recipe and not those of a recipe whose name starts the same', () => {
     let timers = startTimer([], newTimer('mains/pasta/carbonara/cook/1', 9), 0)
     timers = startTimer(timers, newTimer('mains/pasta/carbonara/prep/1', 10), 0)
     timers = startTimer(timers, newTimer('mains/pasta/carbonara-light/cook/1', 5), 0)
 
-    expect(removeTimersOfRecipe(timers, 'mains/pasta/carbonara').map((timer) => timer.id)).toEqual([
-      'mains/pasta/carbonara-light/cook/1',
+    expect(timersOfRecipe(timers, 'mains/pasta/carbonara').map((timer) => timer.id)).toEqual([
+      'mains/pasta/carbonara/cook/1',
+      'mains/pasta/carbonara/prep/1',
     ])
+  })
+})
+
+describe('isShownOnItsStep', () => {
+  const [cookTimer] = startTimer([], { ...newTimer('mains/soup/cook/2', 5), path: '/mains/soup/cook/2' }, 0)
+
+  it('is true on the cooking step the timer belongs to', () => {
+    expect(isShownOnItsStep(cookTimer, '/mains/soup/cook/2')).toBe(true)
+  })
+
+  it('is false on another page', () => {
+    expect(isShownOnItsStep(cookTimer, '/mains/soup/cook/3')).toBe(false)
+  })
+
+  it('is false for a prep timer on the prep page', () => {
+    const [prepTimer] = startTimer([], { ...newTimer('mains/soup/prep/1', 5), path: '/mains/soup/prep' }, 0)
+
+    expect(isShownOnItsStep(prepTimer, '/mains/soup/prep')).toBe(false)
+  })
+
+  it('is false for a timer kept after Finish, on the done page', () => {
+    const [kept] = keepGoingTimersAfterFinish([cookTimer], 'mains/soup', '/mains/soup/done')
+
+    expect(isShownOnItsStep(kept, '/mains/soup/done')).toBe(false)
   })
 })
 

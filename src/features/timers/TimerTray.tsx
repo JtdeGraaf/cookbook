@@ -3,7 +3,7 @@ import { useEffect, useSyncExternalStore } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/components/Icon'
 import { setTitleAlarm } from '@/components/page-title'
-import { formatClock, remainingMs, sortForShelf, type KitchenTimer } from '@/lib/timers'
+import { formatClock, isShownOnItsStep, remainingMs, sortForShelf, type KitchenTimer } from '@/lib/timers'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { isSoundOn, onSoundChange } from './alarm'
 import { timerStore } from './timer-store'
@@ -24,10 +24,7 @@ export function TimerTray() {
 
   const sorted = sortForShelf(timers, now)
   const ringing = sorted.filter((timer) => timer.state.kind === 'finished')
-  // A cooking step shows its own timer, so the shelf leaves it off there. Prep timers all share one page and some
-  // are scrolled out of view, so they always stay on the shelf.
-  const shownOnPage = (timer: KitchenTimer) => timer.path === pathname && !pathname.endsWith('/prep')
-  const waiting = sorted.filter((timer) => timer.state.kind !== 'finished' && !shownOnPage(timer))
+  const waiting = sorted.filter((timer) => timer.state.kind !== 'finished' && !isShownOnItsStep(timer, pathname))
   const needsSound = !soundOn && timers.some((timer) => timer.state.kind === 'running') && ringing.length === 0
   const firstRinging = ringing[0] ? localized(ringing[0].label) : null
 

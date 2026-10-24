@@ -49,9 +49,34 @@ export function removeTimer(timers: KitchenTimer[], id: string): KitchenTimer[] 
   return timers.filter((timer) => timer.id !== id)
 }
 
-/** Every timer that belongs to one recipe, for when the cooking is finished. */
-export function removeTimersOfRecipe(timers: KitchenTimer[], recipePath: string): KitchenTimer[] {
-  return timers.filter((timer) => !timer.id.startsWith(`${recipePath}/`))
+export function timersOfRecipe(timers: KitchenTimer[], recipePath: string): KitchenTimer[] {
+  return timers.filter((timer) => belongsToRecipe(timer, recipePath))
+}
+
+/**
+ * What Finish does to one recipe's timers. Timers that rang are put away. Timers still counting down or paused keep
+ * going, since some last steps go on after the cooking (a mousse that has to set), and now lead to the done page,
+ * because the cooking steps are closed once the ticks are cleared.
+ */
+export function keepGoingTimersAfterFinish(timers: KitchenTimer[], recipePath: string, donePagePath: string): KitchenTimer[] {
+  return timers.flatMap((timer) => {
+    if (!belongsToRecipe(timer, recipePath)) return [timer]
+    if (timer.state.kind === 'finished') return []
+    return [{ ...timer, path: donePagePath }]
+  })
+}
+
+/**
+ * A cooking step shows its own timer, so the shelf leaves it off on that page. Only a cooking step's address is its
+ * timer id: prep timers share the prep page, where some are scrolled out of view, and a timer kept after Finish
+ * leads to the done page, so the shelf keeps showing both.
+ */
+export function isShownOnItsStep(timer: KitchenTimer, pathname: string): boolean {
+  return timer.path === pathname && pathname === `/${timer.id}`
+}
+
+function belongsToRecipe(timer: KitchenTimer, recipePath: string): boolean {
+  return timer.id.startsWith(`${recipePath}/`)
 }
 
 /** The order of the timer shelf: ringing timers first, then the one that rings soonest, paused ones last. */
