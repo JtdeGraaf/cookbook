@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { both, makeBook, makeFolder, makeRecipe } from '@/test/fixtures'
+import { recipesInside } from './book'
 import {
   NO_FILTERS,
   allTags,
@@ -54,6 +55,19 @@ describe('filterBook', () => {
 
     expect(filtered.chapters[0].recipes.map((recipe) => recipe.slug)).toEqual(['stew'])
     expect(filtered.chapters[0].folders).toEqual([])
+  })
+
+  it('counts only the matching recipes in each folder, as the folder tree shows them', () => {
+    const under30 = { ...NO_FILTERS, maxMinutes: 30 as const }
+    const filtered = filterBook(book, (recipe) => matchesFilters(recipe, under30, []))
+
+    expect(filtered.chapters.map((chapter) => [chapter.path, recipesInside(chapter).length])).toEqual([['mains', 1]])
+    expect(filtered.chapters[0].recipes).toEqual([])
+    expect(filtered.chapters[0].folders.map((folder) => folder.path)).toEqual(['mains/pasta'])
+  })
+
+  it('drops every chapter when nothing matches', () => {
+    expect(filterBook(book, () => false).chapters).toEqual([])
   })
 })
 

@@ -22,7 +22,7 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
   const shownBook = filterBook(book, (recipe) => matchesFilters(recipe, filters, favourites))
   usePageTitle(null)
   return (
-    <BookShell currentPath="">
+    <BookShell currentPath="" shownBook={shownBook}>
       <header className="book-head">
         <div className="book-head__words">
           <h1 className="book-head__title">{t('book.title')}</h1>

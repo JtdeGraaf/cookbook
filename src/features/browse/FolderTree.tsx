@@ -1,19 +1,24 @@
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
-import { recipesInside, type Folder } from '@/lib/book'
-import { book } from '@/features/book/book-data'
+import { recipesInside, type Book, type Folder } from '@/lib/book'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { useExpandedFolders } from './useExpandedFolders'
 
-/** The whole recipes folder as a tree, like the folder panel of a file browser. */
-export function FolderTree({ currentPath }: { currentPath: string }) {
+type FolderTreeProps = {
+  /** The whole book, or only its matching recipes when the contents are filtered. */
+  shownBook: Book
+  currentPath: string
+}
+
+/** The recipes folder as a tree, like the folder panel of a file browser. */
+export function FolderTree({ shownBook, currentPath }: FolderTreeProps) {
   const { t } = useTranslation()
   const expanded = useExpandedFolders(currentPath)
   return (
     <nav className="folder-tree" aria-label={t('browse.treeLabel')}>
       <ul className="folder-tree__list">
-        {book.chapters.map((chapter) => (
+        {shownBook.chapters.map((chapter) => (
           <TreeFolder key={chapter.path} folder={chapter} currentPath={currentPath} expanded={expanded} />
         ))}
       </ul>
