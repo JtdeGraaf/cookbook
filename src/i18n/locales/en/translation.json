@@ -48,6 +48,8 @@
     "fewerServingsFor": "One person fewer for {{title}}",
     "moreServingsFor": "One person more for {{title}}",
     "toTaste": "to taste",
+    "nameToTaste": "{{name}}, to taste",
+    "chipToTaste": "{{name}}, <amount>to taste</amount>",
     "prepTitle": "Before you cook",
     "prepIntro": "Chop, measure and preheat, and set everything within reach. Cooking starts when this list is done.",
     "methodTitle": "Method",

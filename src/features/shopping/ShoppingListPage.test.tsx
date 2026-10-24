@@ -48,6 +48,36 @@ describe('ShoppingListPage Copy list', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
+  it('copies to-taste things name first, and things with an amount amount first', async () => {
+    const writeText = vi.fn((_text: string) => Promise.resolve())
+    giveClipboard(writeText)
+    shoppingListStore.set(() => ({ recipePaths: ['mains/sweet-potato-beef-bowl'] }))
+    renderShoppingList()
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Copy list' }))
+
+    await screen.findByRole('button', { name: 'Copied' })
+    const lines = writeText.mock.calls[0][0].split('\n')
+    expect(lines).toContain('- sesame seeds, to taste')
+    expect(lines).toContain('- zero-sugar chili sauce, to taste')
+    expect(lines.filter((line) => line.includes('to taste')).every((line) => line.endsWith(', to taste'))).toBe(true)
+  })
+
+  it('copies to-taste things name first in Dutch too', async () => {
+    await i18next.changeLanguage('nl')
+    const writeText = vi.fn((_text: string) => Promise.resolve())
+    giveClipboard(writeText)
+    shoppingListStore.set(() => ({ recipePaths: ['mains/sweet-potato-beef-bowl'] }))
+    renderShoppingList()
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Lijst kopiëren' }))
+
+    await screen.findByRole('button', { name: 'Gekopieerd' })
+    const lines = writeText.mock.calls[0][0].split('\n')
+    expect(lines).toContain('- sesamzaad naar smaak')
+    expect(lines).toContain('- zero chilisaus naar smaak')
+  })
+
   it('says it couldn’t copy and offers the list to copy by hand when the clipboard is refused', async () => {
     const writeText = vi.fn((_text: string) => Promise.reject(new DOMException('Denied', 'NotAllowedError')))
     giveClipboard(writeText)

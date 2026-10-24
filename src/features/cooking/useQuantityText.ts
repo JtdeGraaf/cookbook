@@ -32,3 +32,15 @@ export function useIngredientName(): (ingredient: Ingredient, factor: number) =>
   const nameFor = useNameForAmount()
   return (ingredient, factor) => nameFor(ingredient, scaleIngredient(ingredient, factor))
 }
+
+/** "150 g spaghetti", or "salt, to taste" with the name first when there is no amount. */
+export function useIngredientLine(): (names: IngredientNames, quantity: Quantity | null) => string {
+  const { t } = useTranslation()
+  const quantityLabel = useQuantityLabel()
+  const nameFor = useNameForAmount()
+  return (names, quantity) => {
+    const name = nameFor(names, quantity)
+    if (!quantity) return t('recipe.nameToTaste', { name })
+    return `${quantityLabel(quantity)} ${name}`
+  }
+}

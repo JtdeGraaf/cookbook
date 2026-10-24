@@ -48,6 +48,8 @@
     "fewerServingsFor": "Eén persoon minder voor {{title}}",
     "moreServingsFor": "Eén persoon meer voor {{title}}",
     "toTaste": "naar smaak",
+    "nameToTaste": "{{name}} naar smaak",
+    "chipToTaste": "{{name}} <amount>naar smaak</amount>",
     "prepTitle": "Voordat je gaat koken",
     "prepIntro": "Snijd, weeg af en verwarm voor, en zet alles binnen handbereik. Het koken begint als dit lijstje af is.",
     "methodTitle": "Bereiding",
