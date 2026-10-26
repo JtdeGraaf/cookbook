@@ -1,9 +1,9 @@
-import { onChangeInOtherTab, readSaved, save } from './storage'
+import { onChangeElsewhere, readSaved, save } from './storage'
 
 /**
  * A value kept in localStorage that several parts of the page read at once. Changing it tells every reader, so a
- * heart on one card and the favourites filter never disagree. The book open in another tab or window stays in step
- * too, and a change here never throws away one made there.
+ * heart on one card and the favourites filter never disagree. The book open in another tab, window or phone stays in
+ * step too, and a change here never throws away one made there.
  */
 export type SavedStore<T> = {
   get: () => T
@@ -21,7 +21,7 @@ export function createSavedStore<T>(key: string, parse: (value: unknown) => T | 
   }
   const tellReaders = () => listeners.forEach((listener) => listener())
 
-  onChangeInOtherTab((changedKey) => {
+  onChangeElsewhere((changedKey) => {
     if (changedKey !== null && changedKey !== key) return
     value = null
     tellReaders()

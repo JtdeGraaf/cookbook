@@ -23,7 +23,8 @@
     "shoppingList": "Shopping list",
     "shoppingListCount_one": "Shopping list, {{count}} recipe",
     "shoppingListCount_other": "Shopping list, {{count}} recipes",
-    "skipToPage": "Skip to the page"
+    "skipToPage": "Skip to the page",
+    "sync": "Sync between phones"
   },
   "search": {
     "title": "Search",
@@ -264,5 +265,44 @@
     "staples": "Kitchen staples are left off: {{names}}.",
     "bottle": "a bottle",
     "bottleLine": "{{name}}, a bottle"
+  },
+  "sync": {
+    "title": "Sync between phones",
+    "intro": "Keep favourites, the shopping list and what you cooked the same on every phone. No account needed: phones that know the same four words share one book.",
+    "unsafe": "Anyone with the four words can see and change what is shared. Fine for a shopping list, not for secrets.",
+    "start": "Start syncing",
+    "haveWords": "Already syncing on another phone?",
+    "haveWordsHint": "Scan the code on that phone with this phone’s camera, or type its four words here.",
+    "wordsLabel": "The four words",
+    "wordsPlaceholder": "tomaat oven paars lepel",
+    "connect": "Connect",
+    "connecting": "Connecting…",
+    "linkQuestion": "Connect this phone to the shared cookbook?",
+    "linkExplain": "Favourites, the shopping list and what you cooked on this phone are added to it. Nothing here is lost.",
+    "notNow": "Not now",
+    "scanTitle": "Add another phone",
+    "scanHint": "Open the camera on the other phone and point it at this code.",
+    "codeLabel": "Code to scan with another phone",
+    "wordsTitle": "Your cookbook words",
+    "wordsHint": "Write them down, on the fridge for instance. On a new phone they bring everything back.",
+    "syncNow": "Sync now",
+    "leave": "Stop syncing on this phone",
+    "leaveQuestion": "Stop syncing on this phone?",
+    "leaveExplain": "Everything stays on this phone, and the other phones keep syncing. To join again you need the four words.",
+    "keepSyncing": "Keep syncing",
+    "status": {
+      "busy": "Saving…",
+      "upToDate": "The same on every phone",
+      "offline": "No connection: your changes wait until there is one.",
+      "serverError": "Can’t reach the cookbook server right now. Your changes wait.",
+      "spaceNotFound": "These words no longer work. Stop syncing and start again."
+    },
+    "failure": {
+      "unknownWords": "These words aren’t on the list: {{words}}. Check the spelling.",
+      "wrongWordCount": "Type all four words.",
+      "spaceNotFound": "No cookbook uses these words. Check them against the other phone.",
+      "offline": "No connection. Try again when this phone is online.",
+      "serverError": "Something went wrong on the server. Try again in a moment."
+    }
   }
 }

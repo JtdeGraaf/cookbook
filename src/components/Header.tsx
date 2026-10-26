@@ -4,9 +4,10 @@ import { SearchField } from '@/features/search/SearchField'
 import { LanguageSwitch } from '@/features/settings/LanguageSwitch'
 import { ThemeSwitch } from '@/features/settings/ThemeSwitch'
 import { ShoppingListLink } from '@/features/shopping/ShoppingListLink'
+import { SyncLink } from '@/features/sync/SyncLink'
 import { Icon } from './Icon'
 
-/** The running head: the same book mark home on every page, search, the shopping basket and the settings. */
+/** The running head: the same book mark home on every page, search, the shopping basket, sync and the settings. */
 export function Header() {
   const { t } = useTranslation()
   return (
@@ -22,6 +23,7 @@ export function Header() {
             <Icon name="search" />
           </Link>
           <ShoppingListLink />
+          <SyncLink />
           <LanguageSwitch />
           <ThemeSwitch />
         </div>

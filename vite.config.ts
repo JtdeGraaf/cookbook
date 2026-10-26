@@ -22,7 +22,7 @@ export default defineConfig({
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   test: {
-    include: ['src/**/*.test.{ts,tsx}', 'build/**/*.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}', 'build/**/*.test.ts', 'packages/**/*.test.ts'],
     setupFiles: ['src/test/setup.ts'],
   },
 })

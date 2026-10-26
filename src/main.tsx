@@ -10,6 +10,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { setUpTranslations, startingLanguage } from './i18n/i18n'
 import { applyTheme } from './features/settings/useTheme'
+import { keepSyncing } from './features/sync/sync-client'
 import { unlockSoundOnFirstTap } from './features/timers/alarm'
 import { timerStore } from './features/timers/timer-store'
 import { routeTree } from './routeTree.gen'
@@ -25,6 +26,7 @@ declare module '@tanstack/react-router' {
 applyTheme()
 timerStore.resumeAfterLoad()
 unlockSoundOnFirstTap()
+keepSyncing()
 
 // Saves the book for offline use. Only in the built site; in development it would serve stale files.
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {

@@ -1,0 +1,17 @@
+{
+  "name": "@graaf/unsafe-device-sync",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Unsafe shared storage that keeps a small personal app the same on several devices, joined by a few shared words. No accounts, no secrecy, no backups.",
+  "exports": {
+    "./client": "./src/client/index.ts",
+    "./server": "./src/server/index.ts",
+    "./cloudflare": "./src/cloudflare/index.ts",
+    "./phrase": "./src/phrase.ts",
+    "./words/nl": "./src/words/nl.ts"
+  },
+  "peerDependencies": {
+    "zod": "^4"
+  }
+}

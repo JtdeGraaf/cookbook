@@ -23,7 +23,8 @@
     "shoppingList": "Boodschappenlijst",
     "shoppingListCount_one": "Boodschappenlijst, {{count}} recept",
     "shoppingListCount_other": "Boodschappenlijst, {{count}} recepten",
-    "skipToPage": "Naar de pagina"
+    "skipToPage": "Naar de pagina",
+    "sync": "Delen tussen telefoons"
   },
   "search": {
     "title": "Zoeken",
@@ -264,5 +265,44 @@
     "staples": "Keukenvoorraad staat er niet op: {{names}}.",
     "bottle": "een fles",
     "bottleLine": "{{name}}, een fles"
+  },
+  "sync": {
+    "title": "Delen tussen telefoons",
+    "intro": "Houd favorieten, het boodschappenlijstje en wat je hebt gekookt gelijk op elke telefoon. Geen account nodig: telefoons met dezelfde vier woorden delen één kookboek.",
+    "unsafe": "Iedereen met de vier woorden kan zien en aanpassen wat je deelt. Prima voor een boodschappenlijstje, niet voor geheimen.",
+    "start": "Begin met delen",
+    "haveWords": "Deel je al op een andere telefoon?",
+    "haveWordsHint": "Scan de code op die telefoon met de camera van deze telefoon, of typ de vier woorden hier.",
+    "wordsLabel": "De vier woorden",
+    "wordsPlaceholder": "tomaat oven paars lepel",
+    "connect": "Verbinden",
+    "connecting": "Verbinden…",
+    "linkQuestion": "Deze telefoon verbinden met het gedeelde kookboek?",
+    "linkExplain": "Favorieten, het boodschappenlijstje en wat je op deze telefoon hebt gekookt komen erbij. Er gaat hier niets verloren.",
+    "notNow": "Niet nu",
+    "scanTitle": "Nog een telefoon toevoegen",
+    "scanHint": "Open de camera op de andere telefoon en richt die op deze code.",
+    "codeLabel": "Code om te scannen met een andere telefoon",
+    "wordsTitle": "Jullie kookboekwoorden",
+    "wordsHint": "Schrijf ze op, bijvoorbeeld op de koelkast. Op een nieuwe telefoon halen ze alles terug.",
+    "syncNow": "Nu bijwerken",
+    "leave": "Stoppen met delen op deze telefoon",
+    "leaveQuestion": "Stoppen met delen op deze telefoon?",
+    "leaveExplain": "Alles blijft op deze telefoon staan en de andere telefoons blijven delen. Om weer mee te doen heb je de vier woorden nodig.",
+    "keepSyncing": "Blijven delen",
+    "status": {
+      "busy": "Bezig met opslaan…",
+      "upToDate": "Gelijk op elke telefoon",
+      "offline": "Geen verbinding: je wijzigingen wachten tot die er weer is.",
+      "serverError": "De kookboekserver is nu niet bereikbaar. Je wijzigingen wachten even.",
+      "spaceNotFound": "Deze woorden werken niet meer. Stop met delen en begin opnieuw."
+    },
+    "failure": {
+      "unknownWords": "Deze woorden staan niet op de lijst: {{words}}. Kijk de spelling na.",
+      "wrongWordCount": "Typ alle vier de woorden.",
+      "spaceNotFound": "Geen kookboek gebruikt deze woorden. Vergelijk ze met de andere telefoon.",
+      "offline": "Geen verbinding. Probeer het opnieuw als deze telefoon online is.",
+      "serverError": "Er ging iets mis op de server. Probeer het zo nog eens."
+    }
   }
 }

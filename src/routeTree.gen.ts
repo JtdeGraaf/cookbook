@@ -14,6 +14,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShoppingListRouteImport } from './routes/shopping-list'
+import { Route as SyncRouteImport } from './routes/sync'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const ShoppingListRoute = ShoppingListRouteImport.update({
   path: '/shopping-list',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SyncRoute = SyncRouteImport.update({
+  id: '/sync',
+  path: '/sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/browse': typeof BrowseRoute
   '/search': typeof SearchRoute
   '/shopping-list': typeof ShoppingListRoute
+  '/sync': typeof SyncRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/browse': typeof BrowseRoute
   '/search': typeof SearchRoute
   '/shopping-list': typeof ShoppingListRoute
+  '/sync': typeof SyncRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,15 @@ export interface FileRoutesById {
   '/browse': typeof BrowseRoute
   '/search': typeof SearchRoute
   '/shopping-list': typeof ShoppingListRoute
+  '/sync': typeof SyncRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/browse' | '/search' | '/shopping-list'
+  fullPaths: '/' | '/$' | '/browse' | '/search' | '/shopping-list' | '/sync'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/browse' | '/search' | '/shopping-list'
-  id: '__root__' | '/' | '/$' | '/browse' | '/search' | '/shopping-list'
+  to: '/' | '/$' | '/browse' | '/search' | '/shopping-list' | '/sync'
+  id:
+    '__root__' | '/' | '/$' | '/browse' | '/search' | '/shopping-list' | '/sync'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +87,7 @@ export interface RootRouteChildren {
   BrowseRoute: typeof BrowseRoute
   SearchRoute: typeof SearchRoute
   ShoppingListRoute: typeof ShoppingListRoute
+  SyncRoute: typeof SyncRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +127,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShoppingListRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sync': {
+      id: '/sync'
+      path: '/sync'
+      fullPath: '/sync'
+      preLoaderRoute: typeof SyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +143,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrowseRoute: BrowseRoute,
   SearchRoute: SearchRoute,
   ShoppingListRoute: ShoppingListRoute,
+  SyncRoute: SyncRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -30,7 +30,9 @@ A personal cookbook, in English and Dutch, that reads like a real book and cooks
 - **Print** a recipe as one clean page with the amounts for your servings.
 - **Works offline** and can be added to your phone's home screen; the whole book, photos included, is saved on the first visit.
 
-Everything you tick or choose is stored in your browser only. There is no backend.
+- **Sync between phones** (optional). Phones that know the same four Dutch words share favourites, the shopping list, ticks, servings and the journal. Start on one phone, scan its QR code with the other. Timers, theme and language stay on each phone.
+
+Everything you tick or choose is stored in your browser. Syncing goes through one small Worker with a Durable Object per shared book, using [`@graaf/unsafe-device-sync`](packages/unsafe-device-sync): no accounts, and anyone with the words can read and change what is shared. Fine for a shopping list, not for secrets.
 
 ## Recipes are files
 
@@ -162,9 +164,10 @@ npm test           # Vitest: scaling, search, timers, progress, recipe checks, t
 npm run typecheck
 npm run build      # checks every recipe, optimises images, builds to dist/
 npm run deploy     # build + wrangler deploy (needs CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID)
+npx wrangler dev   # the built site plus the sync Worker, http://localhost:8787 (run npm run build first)
 npm run new-recipe -- mains/pasta/lasagne   # start a new recipe (add --drink for a drink)
 ```
 
-Every push to `main` runs typecheck, tests and build in GitHub Actions and deploys to Cloudflare Workers (static assets) on both domains.
+Every push to `main` runs typecheck, tests and build in GitHub Actions and deploys to Cloudflare Workers (static assets, plus the sync Worker for /api/*) on both domains.
 
 Stack: Vite, React, TypeScript, TanStack Router, i18next, Zod, vite-imagetools. Design notes in [DESIGN.md](DESIGN.md), product notes in [PRODUCT.md](PRODUCT.md).

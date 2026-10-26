@@ -1,13 +1,21 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cookbook",
+  // Only answers /api/*: syncing between phones. Everything else is the built site.
+  "main": "worker/index.ts",
   "compatibility_date": "2026-10-23",
   "assets": {
     "directory": "./dist",
     // Serves the recipe page mains/pasta/carbonara.html at /mains/pasta/carbonara, without a redirect.
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
   },
+  // One Durable Object per shared space, keeping its entries in SQLite. See packages/unsafe-device-sync.
+  "durable_objects": {
+    "bindings": [{ "name": "SYNC_SPACES", "class_name": "SyncSpace" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["SyncSpace"] }],
   "routes": [
     { "pattern": "cookbook.graaf.dev", "custom_domain": true },
     { "pattern": "kookboek.graaf.dev", "custom_domain": true }

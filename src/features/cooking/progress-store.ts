@@ -5,7 +5,7 @@ import {
   progressKey,
   type RecipeProgress,
 } from '@/lib/progress'
-import { onChangeInOtherTab, readSaved, save } from '@/lib/storage'
+import { onChangeElsewhere, readSaved, save } from '@/lib/storage'
 
 /**
  * One progress record per recipe, shared by every page that shows it. A change on the shopping list shows up on the
@@ -49,8 +49,8 @@ export const progressStore = {
   },
 }
 
-// The book open in a second tab or window stays in step with this one.
-onChangeInOtherTab((key) => {
+// The book open in a second tab or window, or on another phone, stays in step with this one.
+onChangeElsewhere((key) => {
   if (key === null || key.startsWith(progressKey(''))) progressStore.reload()
 })
 

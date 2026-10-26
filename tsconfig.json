@@ -9,6 +9,15 @@
     },
     {
       "path": "./tsconfig.test.json"
+    },
+    {
+      "path": "./tsconfig.worker.json"
+    },
+    {
+      "path": "./packages/unsafe-device-sync"
+    },
+    {
+      "path": "./packages/unsafe-device-sync/tsconfig.cloudflare.json"
     }
   ]
 }
