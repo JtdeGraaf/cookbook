@@ -24,8 +24,10 @@ export type ShoppingItem = {
   name: LocalizedText
   /** The name for more than one, from the first recipe that gives one. */
   plural: LocalizedText | null
-  /** Null when every recipe says "to taste". */
+  /** Null when every recipe says "to taste", and for a bottle. */
   quantity: Quantity | null
+  /** Bought by the bottle, like gin: one bottle covers every drink, so no amount is added up. */
+  bottle: boolean
   recipeTitles: LocalizedText[]
   sources: IngredientSource[]
   /** True when every recipe that needs it already has it: bought, or in the house. */
@@ -37,9 +39,12 @@ const UNIT_FAMILIES: Record<Unit, { family: string; baseUnit: Unit; perUnit: num
   g: { family: 'weight', baseUnit: 'g', perUnit: 1 },
   kg: { family: 'weight', baseUnit: 'g', perUnit: 1000 },
   ml: { family: 'volume', baseUnit: 'ml', perUnit: 1 },
+  cl: { family: 'volume', baseUnit: 'ml', perUnit: 10 },
   l: { family: 'volume', baseUnit: 'ml', perUnit: 1000 },
   tsp: { family: 'spoon', baseUnit: 'tsp', perUnit: 1 },
   tbsp: { family: 'spoon', baseUnit: 'tsp', perUnit: 3 },
+  barspoon: { family: 'barspoon', baseUnit: 'barspoon', perUnit: 1 },
+  dash: { family: 'dash', baseUnit: 'dash', perUnit: 1 },
   piece: { family: 'piece', baseUnit: 'piece', perUnit: 1 },
   clove: { family: 'clove', baseUnit: 'clove', perUnit: 1 },
   pinch: { family: 'pinch', baseUnit: 'pinch', perUnit: 1 },
@@ -64,19 +69,20 @@ export function removeFromList(list: ShoppingList, recipePath: string): Shopping
 /**
  * Adds up the ingredients of every recipe on the list for its servings. The same ingredient (by English name) in
  * units that can be added, like grams and kilos, becomes one line; different kinds of unit stay apart. Kitchen
- * staples are left off.
+ * staples are left off. A bottle is one line without an amount.
  */
 export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
   const items = new Map<
     string,
-    { name: LocalizedText; plural: LocalizedText | null; total: number | null; unit: Unit | null; recipeTitles: LocalizedText[]; sources: IngredientSource[]; have: boolean }
+    { name: LocalizedText; plural: LocalizedText | null; total: number | null; unit: Unit | null; bottle: boolean; recipeTitles: LocalizedText[]; sources: IngredientSource[]; have: boolean }
   >()
   for (const { recipe, servings, haveIngredientIds } of recipes) {
     const factor = servings / recipe.servings
     for (const ingredient of recipe.ingredients) {
       if (ingredient.pantry) continue
-      const family = ingredient.quantity ? UNIT_FAMILIES[ingredient.quantity.unit] : null
-      const key = `${normalize(ingredient.name.en)}|${family?.family ?? 'to-taste'}`
+      const family = ingredient.quantity && !ingredient.bottle ? UNIT_FAMILIES[ingredient.quantity.unit] : null
+      const kindOfAmount = ingredient.bottle ? 'bottle' : (family?.family ?? 'to-taste')
+      const key = `${normalize(ingredient.name.en)}|${kindOfAmount}`
       const amount = ingredient.quantity && family ? ingredient.quantity.amount * family.perUnit * factor : null
       const source = { recipePath: recipe.path, ingredientId: ingredient.id }
       const have = haveIngredientIds.includes(ingredient.id)
@@ -87,6 +93,7 @@ export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
           plural: ingredient.plural,
           total: amount,
           unit: family?.baseUnit ?? null,
+          bottle: ingredient.bottle,
           recipeTitles: [recipe.title],
           sources: [source],
           have,
@@ -106,6 +113,7 @@ export function buildShoppingItems(recipes: ListedRecipe[]): ShoppingItem[] {
     plural: item.plural,
     // Round only once, after adding up, so small amounts don't round away before they are summed.
     quantity: item.total !== null && item.unit !== null ? scaleQuantity({ amount: item.total, unit: item.unit }, 1) : null,
+    bottle: item.bottle,
     recipeTitles: item.recipeTitles,
     sources: item.sources,
     have: item.have,

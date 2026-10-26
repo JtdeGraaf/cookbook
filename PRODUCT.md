@@ -32,6 +32,7 @@ A cookbook that is also the cook's assistant: the recipe data separates mise en 
 ## Capabilities and Constraints
 
 - Table of contents → chapter → recipe overview → mise en place checklist → focused cooking steps.
+- Drinks (the cocktails chapter) are read from one page: glass, ice and how it is mixed up top, the spec, the steps, and a Made it button.
 - Search across recipe titles, ingredients and tags in both languages, client-side.
 - Servings counter that scales every amount with sensible, unit-aware rounding; ingredients and prep tasks can be ticked off.
 - Optional timer per step, defined in the data; several can run at once; they keep running across steps and pages; audible and visible alert when done.

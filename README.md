@@ -62,7 +62,7 @@ Every file is checked when the site is built. A typo in a field name, a missing 
 
 Recipes are added and changed by AI agents working in this repository; the site itself has no way to edit them. The agent does one of two things, both ending in a `recipe.json` that already passes the checks, so the site keeps building while it is filled in:
 
-- **From the terminal:** `npm run new-recipe -- mains/pasta/lasagne` creates the folder and the file.
+- **From the terminal:** `npm run new-recipe -- mains/pasta/lasagne` creates the folder and the file. Add `--drink` for a drink: `npm run new-recipe -- cocktails/gimlet --drink`.
 - **By hand:** make a folder `recipes/<folders>/<recipe-name>/` (lowercase letters, digits and dashes) and copy a `recipe.json` from another recipe. Your editor autocompletes and checks it thanks to the `$schema` line.
 
 Then add a photo next to it (any `.jpg`, `.png` or `.webp`; the build resizes it and converts it to webp) and point `cover` at it. Until then the recipe shows a block of chapter colour with its first letter. Run `npm run dev` to see it, or just push to `main`: GitHub Actions checks, builds and deploys it.
@@ -80,11 +80,11 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 | `prepMinutes`, `cookMinutes` | yes | Rough times, shown on the recipe |
 | `tags` | no | List of texts, e.g. `{ "en": "vegetarian", "nl": "vegetarisch" }`; searchable |
 | `cover` | no | `{ "file", "alt", "credit"? }`, see images below; leave out until you have a photo |
-| `ingredients` | yes | List of `{ "id", "name", "plural"?, "amount"?, "unit"?, "note"?, "pantry"? }` |
+| `ingredients` | yes | List of `{ "id", "name", "plural"?, "amount"?, "unit"?, "note"?, "pantry"?, "bottle"? }` |
 | `prep` | yes, at least one | The *mise en place*: everything done before anything goes on the heat |
 | `cook` | yes, at least one | The cooking steps, shown one at a time |
 
-**Ingredients.** `id` is a short name steps use to point at the ingredient (`"eggs"`). Give `amount` and `unit` together, or leave both out for "to taste". Units: `g`, `kg`, `ml`, `l`, `tsp`, `tbsp`, `piece`, `clove`, `pinch`, `slice`, `sprig`, `can`. Amounts are for `servings` people and scale automatically. For things you count, `name` is the name of one (`{ "en": "egg", "nl": "ei" }`) and `plural` the name for more than one (`{ "en": "eggs", "nl": "eieren" }`), used whenever the scaled amount is more than 1; leave `plural` out when the name never changes, like garlic counted in cloves. Add `"pantry": true` to a staple the kitchen always has (salt, water, oil) to leave it off the shopping list.
+**Ingredients.** `id` is a short name steps use to point at the ingredient (`"eggs"`). Give `amount` and `unit` together, or leave both out for "to taste". Units: `g`, `kg`, `ml`, `cl`, `l`, `tsp`, `tbsp`, `barspoon`, `dash`, `piece`, `clove`, `pinch`, `slice`, `sprig`, `can`. Amounts are for `servings` people and scale automatically. For things you count, `name` is the name of one (`{ "en": "egg", "nl": "ei" }`) and `plural` the name for more than one (`{ "en": "eggs", "nl": "eieren" }`), used whenever the scaled amount is more than 1; leave `plural` out when the name never changes, like garlic counted in cloves. Add `"pantry": true` to a staple the kitchen always has (salt, water, oil) to leave it off the shopping list, and `"bottle": true` to something bought by the bottle (gin, white wine): the shopping list then asks for a bottle instead of adding up centilitres.
 
 **Steps** (both `prep` and `cook`):
 
@@ -101,6 +101,21 @@ Every text is given in both languages: `{ "en": "…", "nl": "…" }`.
 Only `text` is required. `ingredients` shows those ingredients with their scaled amounts on the step; `timer` adds a startable kitchen timer; `tip` shows a "Point" note; `image` adds a step photo.
 
 **Cooking terms.** Mark a term in a step's text as `[[words|technique-id]]` to put a small (i) button after it that opens a short explanation from `recipes/techniques.json`, hidden until pressed: `"Peel the onion and [[chop it finely|chop-finely]]."` / `"Pel de ui en [[snijd hem fijn|chop-finely]]."`. Readers only see the words before the `|`. Mark the same techniques in English and Dutch; an unknown id, a broken mark or a mismatch between the languages stops the build.
+
+### Drinks
+
+A `recipe.json` with `"kind": "drink"` is a drink. A drink is made in one go, so it has no prep list, cooking mode or times: everything is on its one page, with a **Made it** button that notes the day, clears the ticks and takes it off the shopping list. Point `$schema` at `drink.schema.json`. It has the same `title`, `summary`, `source`, `tags`, `cover` and `ingredients` as a dish, plus:
+
+| Field | Required | What it is |
+|---|---|---|
+| `kind` | yes | Always `"drink"` |
+| `servings` | yes | How many drinks the amounts are for (1–24) |
+| `method` | yes | `shaken`, `stirred`, `built` or `blended` |
+| `glass` | yes | `coupe`, `nick-and-nora`, `martini`, `rocks`, `highball`, `wine`, `flute` or `mug` |
+| `ice` | yes | What goes in the glass: `none` (served up), `cubes`, `large-cube` or `crushed` |
+| `steps` | yes, at least one | Everything from chilling the glass to the garnish, without timers |
+
+Give an ingredient `"garnish": true` to list it under **Garnish**, after what goes in the glass. Drinks are left out of the time filters, which hide on a page of drinks.
 
 **Images.** `file` is a file next to `recipe.json`; `alt` describes the photo for people who can't see it. `credit` (`{ "author", "license", "source" }`) is shown under the photo; leave it out for your own photos.
 
@@ -147,7 +162,7 @@ npm test           # Vitest: scaling, search, timers, progress, recipe checks, t
 npm run typecheck
 npm run build      # checks every recipe, optimises images, builds to dist/
 npm run deploy     # build + wrangler deploy (needs CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID)
-npm run new-recipe -- mains/pasta/lasagne   # start a new recipe
+npm run new-recipe -- mains/pasta/lasagne   # start a new recipe (add --drink for a drink)
 ```
 
 Every push to `main` runs typecheck, tests and build in GitHub Actions and deploys to Cloudflare Workers (static assets) on both domains.

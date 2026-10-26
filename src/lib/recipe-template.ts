@@ -1,12 +1,10 @@
 /**
- * The starting recipe.json for a new recipe in `folderPath` (like "mains/pasta"). It passes every build check, so
+ * The starting recipe.json for a new dish in `folderPath` (like "mains/pasta"). It passes every build check, so
  * the site keeps building while you fill it in. Used by `npm run new-recipe` and the "Add a recipe" link.
  */
 export function recipeTemplate(folderPath: string): string {
-  // From recipes/<folders>/<recipe>/recipe.json back up to the repository root.
-  const depth = folderPath.split('/').filter(Boolean).length + 2
   const recipe = {
-    $schema: `${'../'.repeat(depth)}schemas/recipe.schema.json`,
+    $schema: schemaPath(folderPath, 'recipe.schema.json'),
     title: { en: 'New recipe', nl: 'Nieuw recept' },
     summary: { en: 'One or two sentences about the dish.', nl: 'Een of twee zinnen over het gerecht.' },
     servings: 2,
@@ -27,4 +25,36 @@ export function recipeTemplate(folderPath: string): string {
     ],
   }
   return JSON.stringify(recipe, null, 2) + '\n'
+}
+
+/** The same for a drink: `npm run new-recipe -- cocktails/gimlet --drink`. */
+export function drinkTemplate(folderPath: string): string {
+  const drink = {
+    $schema: schemaPath(folderPath, 'drink.schema.json'),
+    kind: 'drink',
+    title: { en: 'New drink', nl: 'Nieuw drankje' },
+    summary: { en: 'One or two sentences about the drink.', nl: 'Een of twee zinnen over het drankje.' },
+    servings: 1,
+    method: 'shaken',
+    glass: 'coupe',
+    ice: 'none',
+    ingredients: [
+      { id: 'gin', bottle: true, name: { en: 'gin', nl: 'gin' }, amount: 5, unit: 'cl' },
+      { id: 'lime', garnish: true, name: { en: 'lime wedge', nl: 'limoenpartje' }, amount: 1, unit: 'piece' },
+    ],
+    steps: [
+      {
+        text: { en: 'Shake the gin with ice and strain it into the glass.', nl: 'Shake de gin met ijs en zeef hem in het glas.' },
+        ingredients: ['gin'],
+      },
+      { text: { en: 'Put the lime wedge on the rim.', nl: 'Zet het limoenpartje op de rand.' }, ingredients: ['lime'] },
+    ],
+  }
+  return JSON.stringify(drink, null, 2) + '\n'
+}
+
+/** From recipes/<folders>/<recipe>/recipe.json back up to the repository root. */
+function schemaPath(folderPath: string, schemaFile: string): string {
+  const depth = folderPath.split('/').filter(Boolean).length + 2
+  return `${'../'.repeat(depth)}schemas/${schemaFile}`
 }

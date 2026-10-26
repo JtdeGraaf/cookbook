@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schemas/drink.schema.json",
+  "kind": "drink",
+  "title": { "en": "Mojito", "nl": "Mojito" },
+  "summary": {
+    "en": "White rum, lime and mint built straight in a tall glass of crushed ice, topped with soda. The one for a warm evening.",
+    "nl": "Witte rum, limoen en munt, direct in een hoog glas met crushed ijs gebouwd en aangevuld met soda. Die voor een warme avond."
+  },
+  "servings": 1,
+  "method": "built",
+  "glass": "highball",
+  "ice": "crushed",
+  "tags": [
+    { "en": "fresh", "nl": "fris" },
+    { "en": "rum", "nl": "rum" },
+    { "en": "summer", "nl": "zomer" }
+  ],
+  "ingredients": [
+    { "id": "lime", "name": { "en": "lime", "nl": "limoen" }, "plural": { "en": "limes", "nl": "limoenen" }, "amount": 1, "unit": "piece", "note": { "en": "cut into wedges", "nl": "in partjes" } },
+    { "id": "sugar", "name": { "en": "cane sugar", "nl": "rietsuiker" }, "amount": 2, "unit": "tsp" },
+    { "id": "mint", "name": { "en": "fresh mint", "nl": "verse munt" }, "amount": 1, "unit": "sprig", "note": { "en": "about ten leaves", "nl": "ongeveer tien blaadjes" } },
+    { "id": "rum", "bottle": true, "name": { "en": "white rum", "nl": "witte rum" }, "amount": 5, "unit": "cl" },
+    { "id": "soda", "name": { "en": "soda water", "nl": "spuitwater" }, "amount": 6, "unit": "cl", "note": { "en": "cold", "nl": "koud" } },
+    { "id": "mint-sprig", "garnish": true, "name": { "en": "fresh mint", "nl": "verse munt" }, "amount": 1, "unit": "sprig", "note": { "en": "the top of a sprig", "nl": "het topje van een takje" } }
+  ],
+  "steps": [
+    {
+      "text": {
+        "en": "Put the lime wedges and sugar in the glass and [[muddle|muddle]] until the sugar has mostly dissolved in the juice.",
+        "nl": "Doe de limoenpartjes en de suiker in het glas en [[kneus|muddle]] tot de suiker grotendeels in het sap is opgelost."
+      },
+      "ingredients": ["lime", "sugar"]
+    },
+    {
+      "text": {
+        "en": "Clap the mint leaves between your hands, drop them in and press them gently once.",
+        "nl": "Klap de muntblaadjes tussen je handen, doe ze erbij en druk ze één keer zacht aan."
+      },
+      "ingredients": ["mint"]
+    },
+    {
+      "text": {
+        "en": "Fill the glass with crushed ice, pour in the rum and stir from the bottom up so the mint rises through the ice.",
+        "nl": "Vul het glas met crushed ijs, schenk de rum erin en roer van onder naar boven, zodat de munt door het ijs omhoog komt."
+      },
+      "ingredients": ["rum"]
+    },
+    {
+      "text": {
+        "en": "Top up with soda, add a little more crushed ice and stand the mint sprig in it.",
+        "nl": "Vul aan met spuitwater, doe er nog wat crushed ijs bij en zet het takje munt erin."
+      },
+      "ingredients": ["soda", "mint-sprig"],
+      "tip": {
+        "en": "Slap the sprig against your hand first; the smell is half the drink.",
+        "nl": "Sla het takje eerst tegen je hand; de geur is de helft van het drankje."
+      }
+    }
+  ]
+}

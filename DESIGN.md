@@ -155,7 +155,8 @@ Neutral paper and ink carry the page, and one saturated chapter colour per page 
 - **Tomato**: Mains, and the book's own colour. The cover seal, the header wordmark and the finished-timer alarm always use tomato, whatever chapter is open.
 - **Yolk**: Breakfast. Also the fixed colour of the "Point" hint label on every page.
 - **Plum**: Desserts.
-- **Matcha** and **Sea**: defined and allowed by the chapter schema; no chapter uses them yet.
+- **Sea**: Cocktails.
+- **Matcha**: defined and allowed by the chapter schema; no chapter uses it yet.
 
 Each colour comes in three tokens: the fill (`--tomato`), a darker or lighter **ink** for text on paper (`--tomato-ink`), and an **on** colour for text set on the fill (`--on-tomato`). Dark-mode values (fill / ink / on): tomato #f26849 / #ff8b70 / #1a0b06; yolk #f5c04a / #f5c04a / #1a1406; plum #d27bad / #e296c2 / #1a0a13; matcha #9cc860 / #add677 / #10160a; sea #6db0e0 / #8cc2ea / #07131c.
 
@@ -246,6 +247,7 @@ Line styles carry meaning:
 ### Cards / Containers
 - **Ingredient box:** a sheet with a 2px chapter ring and 12px corners. The header bar is chapter-filled with on-chapter text and holds the servings stepper (a sheet pill with 38px wash circles). Each line is name, dotted leader, amount, with a minimum height of 48px. A ticked line is struck through in the chapter colour.
 - **Prep box:** a sheet with a 2px dashed strong rule and 20px corners. Tasks are separated by 2px dotted rules, each with a large 34px round tick, and a segmented meter shows progress in the chapter colour.
+- **Drink spread:** the same open book as a dish, with no prep box and no step-by-step mode. The time pills become Mix, Glass and Ice pills; the ingredient box lists garnishes under a light line of their own (display face 700 in chapter ink, a hairline above); the right page ends with the method and a primary **Made it** button, with a soft-ink note under it once the drink was made today.
 - **Cook step:** a 20px sheet with the Leaf shadow. A chapter circle (56-84px) holds the number, beside step-size text.
 
 ### Inputs / Fields

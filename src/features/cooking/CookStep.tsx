@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Photo } from '@/components/Photo'
-import { recipeViewPath, type Recipe } from '@/lib/book'
+import { recipeViewPath, type Dish } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { IngredientChips } from './IngredientChips'
 import { PhaseHead } from './PhaseHead'
@@ -9,7 +9,7 @@ import { Point } from './Point'
 import { StepText } from './StepText'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
-type CookStepProps = { recipe: Recipe; controls: RecipeProgressControls; stepNumber: number }
+type CookStepProps = { recipe: Dish; controls: RecipeProgressControls; stepNumber: number }
 
 /** One cooking step in focus, big enough to read from the stove. */
 export function CookStep({ recipe, controls, stepNumber }: CookStepProps) {

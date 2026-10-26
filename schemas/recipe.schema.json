@@ -221,9 +221,12 @@
               "g",
               "kg",
               "ml",
+              "cl",
               "l",
               "tsp",
               "tbsp",
+              "barspoon",
+              "dash",
               "piece",
               "clove",
               "pinch",
@@ -253,6 +256,10 @@
           },
           "pantry": {
             "description": "A kitchen staple you always have, like salt or water. Left off the shopping list.",
+            "type": "boolean"
+          },
+          "bottle": {
+            "description": "Bought by the bottle, like gin or white wine. The shopping list asks for a bottle, not an amount.",
             "type": "boolean"
           }
         },
@@ -581,6 +588,6 @@
     "cook"
   ],
   "additionalProperties": false,
-  "description": "One recipe. The folders it sits in are its chapter and sections.",
+  "description": "One dish. The folders it sits in are its chapter and sections.",
   "title": "Cookbook recipe"
 }

@@ -16,7 +16,8 @@ export function useShareRecipe(recipe: Recipe, servings: number) {
     const title = localized(recipe.title)
     if (navigator.share) {
       // Closing the share sheet counts as a rejection; nothing went wrong.
-      await navigator.share({ title, text: t('recipe.shareText', { title, count: servings }), url }).catch(() => {})
+      const textKey = recipe.kind === 'drink' ? 'recipe.shareDrinkText' : 'recipe.shareText'
+      await navigator.share({ title, text: t(textKey, { title, count: servings }), url }).catch(() => {})
       return
     }
     await copy(url)

@@ -63,6 +63,7 @@
     "clearTicks": "Vinkjes wissen",
     "clearTicksQuestion": "Alle vinkjes voor dit recept wissen?",
     "clearTicksExplain": "Alle afgevinkte ingrediënten en voorbereidingen gaan weer uit, hier en op de boodschappenlijst, zodat je opnieuw kunt beginnen. Het aantal personen blijft staan.",
+    "clearDrinkTicksExplain": "Alle afgevinkte ingrediënten gaan weer uit, hier en op de boodschappenlijst. Het aantal glazen blijft staan.",
     "cancel": "Laat staan",
     "confirmClear": "Vinkjes wissen",
     "showIngredients": "Ingrediënten",
@@ -87,7 +88,55 @@
     "sharedServings_one": "Op {{count}} persoon gezet via een gedeelde link. Je boodschappenlijst gaat mee.",
     "sharedServings_other": "Op {{count}} personen gezet via een gedeelde link. Je boodschappenlijst gaat mee.",
     "shareText_one": "{{title}} voor {{count}} persoon",
-    "shareText_other": "{{title}} voor {{count}} personen"
+    "shareText_other": "{{title}} voor {{count}} personen",
+    "forDrinks_one": "{{count}} glas",
+    "forDrinks_other": "{{count}} glazen",
+    "drinks": "Glazen",
+    "fewerDrinks": "Eén glas minder",
+    "moreDrinks": "Eén glas meer",
+    "drinksFor": "Glazen {{title}}",
+    "fewerDrinksFor": "Eén glas {{title}} minder",
+    "moreDrinksFor": "Eén glas {{title}} meer",
+    "madeCount_one": "Eén keer gemaakt, laatst op {{date}}",
+    "madeCount_other": "{{count}} keer gemaakt, laatst op {{date}}",
+    "neverMade": "Nog niet gemaakt",
+    "sharedDrinks_one": "Op {{count}} glas gezet via een gedeelde link. Je boodschappenlijst gaat mee.",
+    "sharedDrinks_other": "Op {{count}} glazen gezet via een gedeelde link. Je boodschappenlijst gaat mee.",
+    "shareDrinkText_one": "{{title}}, {{count}} glas",
+    "shareDrinkText_other": "{{title}}, {{count}} glazen"
+  },
+  "drink": {
+    "method": "Mixen",
+    "glass": "Glas",
+    "ice": "IJs",
+    "garnish": "Garnering",
+    "madeIt": "Gemaakt",
+    "madeToday": "Vandaag gemaakt. Proost!",
+    "madeTodayOffList": "Vandaag gemaakt. Proost! Hij staat niet meer op de boodschappenlijst.",
+    "clearedTicks": "De vinkjes zijn gewist voor het volgende rondje.",
+    "rowMeta": "{{method}} · {{glass}}",
+    "methods": {
+      "shaken": "Geshaket",
+      "stirred": "Geroerd",
+      "built": "In het glas gebouwd",
+      "blended": "Geblend"
+    },
+    "glasses": {
+      "coupe": "Coupe",
+      "nick-and-nora": "Nick & Nora",
+      "martini": "Martiniglas",
+      "rocks": "Tumbler",
+      "highball": "Longdrinkglas",
+      "wine": "Wijnglas",
+      "flute": "Flute",
+      "mug": "Mok"
+    },
+    "iceKinds": {
+      "none": "Geen, zonder ijs geserveerd",
+      "cubes": "Blokjes",
+      "large-cube": "Eén groot blok",
+      "crushed": "Crushed ijs"
+    }
   },
   "prep": {
     "progress": "{{done}} van {{total}} gedaan",
@@ -159,7 +208,12 @@
     "sprig_one": "takje",
     "sprig_other": "takjes",
     "can_one": "blik",
-    "can_other": "blikken"
+    "can_other": "blikken",
+    "cl": "cl",
+    "barspoon_one": "barlepel",
+    "barspoon_other": "barlepels",
+    "dash_one": "dash",
+    "dash_other": "dashes"
   },
   "languages": {
     "en": "Engels",
@@ -207,6 +261,8 @@
     "left_one": "Nog {{count}} ding te halen",
     "left_other": "Nog {{count}} dingen te halen",
     "haveAlready": "Al in huis",
-    "staples": "Keukenvoorraad staat er niet op: {{names}}."
+    "staples": "Keukenvoorraad staat er niet op: {{names}}.",
+    "bottle": "een fles",
+    "bottleLine": "{{name}}, een fles"
   }
 }

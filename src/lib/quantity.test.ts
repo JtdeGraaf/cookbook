@@ -67,16 +67,39 @@ describe('scaleQuantity', () => {
   })
 })
 
+describe('scaleQuantity for drinks', () => {
+  it('measures centilitres to the half, like a jigger', () => {
+    expect(scaleQuantity({ amount: 2.5, unit: 'cl' }, 3)).toEqual({ amount: 7.5, unit: 'cl' })
+    expect(scaleQuantity({ amount: 3, unit: 'cl' }, 1 / 4)).toEqual({ amount: 1, unit: 'cl' })
+  })
+
+  it('switches centilitres to litres for a party from 100 cl', () => {
+    expect(scaleQuantity({ amount: 5, unit: 'cl' }, 24)).toEqual({ amount: 1.2, unit: 'l' })
+  })
+
+  it('counts dashes in whole dashes, at least one', () => {
+    expect(scaleQuantity({ amount: 2, unit: 'dash' }, 2.5)).toEqual({ amount: 5, unit: 'dash' })
+    expect(scaleQuantity({ amount: 1, unit: 'dash' }, 0.25)).toEqual({ amount: 1, unit: 'dash' })
+  })
+
+  it('keeps half barspoons, never less than half', () => {
+    expect(scaleQuantity({ amount: 1, unit: 'barspoon' }, 1.5)).toEqual({ amount: 1.5, unit: 'barspoon' })
+    expect(scaleQuantity({ amount: 1, unit: 'barspoon' }, 0.2)).toEqual({ amount: 0.5, unit: 'barspoon' })
+  })
+})
+
 describe('formatAmount', () => {
   it('writes kitchen fractions for counted things', () => {
     expect(formatAmount({ amount: 1.5, unit: 'clove' }, 'en')).toBe('1½')
     expect(formatAmount({ amount: 0.5, unit: 'piece' }, 'nl')).toBe('½')
     expect(formatAmount({ amount: 2.75, unit: 'tsp' }, 'en')).toBe('2¾')
+    expect(formatAmount({ amount: 0.5, unit: 'barspoon' }, 'en')).toBe('½')
   })
 
   it('writes decimals for metric amounts in the language of the reader', () => {
     expect(formatAmount({ amount: 1.5, unit: 'kg' }, 'en')).toBe('1.5')
     expect(formatAmount({ amount: 1.5, unit: 'kg' }, 'nl')).toBe('1,5')
+    expect(formatAmount({ amount: 1.5, unit: 'cl' }, 'nl')).toBe('1,5')
   })
 })
 

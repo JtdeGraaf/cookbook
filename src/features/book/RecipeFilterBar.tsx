@@ -14,13 +14,15 @@ type RecipeFilterBarProps = {
   matchingRecipes: Recipe[]
   /** The tags offered: only those used by the recipes on this page. */
   tags: LocalizedText[]
+  /** False on a page of drinks, which have no time to filter by. */
+  offerTimeLimits: boolean
 }
 
 /**
  * Quick filters as chips, the tags folded behind one "Tags" chip so the row stays short, and a button that opens a
  * random matching recipe. While any filter is on, a line says how many recipes match and offers to clear them.
  */
-export function RecipeFilterBar({ filters, onFiltersChange, matchingRecipes, tags }: RecipeFilterBarProps) {
+export function RecipeFilterBar({ filters, onFiltersChange, matchingRecipes, tags, offerTimeLimits }: RecipeFilterBarProps) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const surprise = useSurpriseRecipe(matchingRecipes)
@@ -34,18 +36,19 @@ export function RecipeFilterBar({ filters, onFiltersChange, matchingRecipes, tag
     <div className="filter-bar" role="group" aria-label={t('filters.label')}>
       <div className="filter-bar__row">
         <ul className="filter-bar__chips">
-          {TIME_LIMITS.map((limit) => (
-            <li key={limit}>
-              <button
-                type="button"
-                className="chip-toggle"
-                aria-pressed={filters.maxMinutes === limit}
-                onClick={() => onFiltersChange({ ...filters, maxMinutes: filters.maxMinutes === limit ? null : limit })}
-              >
-                {timeLabels[limit]}
-              </button>
-            </li>
-          ))}
+          {offerTimeLimits &&
+            TIME_LIMITS.map((limit) => (
+              <li key={limit}>
+                <button
+                  type="button"
+                  className="chip-toggle"
+                  aria-pressed={filters.maxMinutes === limit}
+                  onClick={() => onFiltersChange({ ...filters, maxMinutes: filters.maxMinutes === limit ? null : limit })}
+                >
+                  {timeLabels[limit]}
+                </button>
+              </li>
+            ))}
           <li>
             <button
               type="button"

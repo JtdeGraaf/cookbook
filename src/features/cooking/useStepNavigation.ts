@@ -1,13 +1,13 @@
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
-import { recipeViewPath, type Recipe, type RecipeView } from '@/lib/book'
+import { recipeViewPath, type Dish, type RecipeView } from '@/lib/book'
 import { finishCooking } from './finish-cooking'
 
 /**
  * Turning the pages of the cooking steps: buttons, and the left and right arrow keys. Finishing the last step
  * closes the cooking session; an arrow key never does that by accident.
  */
-export function useStepNavigation(recipe: Recipe, stepNumber: number) {
+export function useStepNavigation(recipe: Dish, stepNumber: number) {
   const navigate = useNavigate()
   const isFirst = stepNumber === 1
   const isLast = stepNumber === recipe.cook.length

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { both, makeBook, makeFolder, makeRecipe } from '@/test/fixtures'
+import { both, makeBook, makeDrink, makeFolder, makeRecipe } from '@/test/fixtures'
 import { recipesInside } from './book'
 import {
   NO_FILTERS,
@@ -10,6 +10,7 @@ import {
   folderAsFiltered,
   filtersFromSearch,
   matchesFilters,
+  offersTimeLimits,
   parseFilterSearch,
   pickRandomRecipe,
   searchFromFilters,
@@ -40,6 +41,12 @@ describe('matchesFilters', () => {
     expect(matchesFilters(stew, under30, [])).toBe(false)
   })
 
+  it('leaves drinks out of a time limit, which asks for a meal', () => {
+    const under30 = { ...NO_FILTERS, maxMinutes: 30 as const }
+
+    expect(matchesFilters(makeDrink({ slug: 'negroni' }), under30, [])).toBe(false)
+  })
+
   it('filters on a tag, ignoring case', () => {
     expect(matchesFilters(quickPasta, { ...NO_FILTERS, tag: 'vegetarian' }, [])).toBe(true)
     expect(matchesFilters(stew, { ...NO_FILTERS, tag: 'vegetarian' }, [])).toBe(false)
@@ -50,6 +57,15 @@ describe('matchesFilters', () => {
 
     expect(matchesFilters(stew, favouritesOnly, ['mains/stew'])).toBe(true)
     expect(matchesFilters(quickPasta, favouritesOnly, ['mains/stew'])).toBe(false)
+  })
+})
+
+describe('offersTimeLimits', () => {
+  it('offers time limits where there is a dish, not on a page of drinks', () => {
+    const negroni = makeDrink({ slug: 'negroni' })
+
+    expect(offersTimeLimits([negroni, stew])).toBe(true)
+    expect(offersTimeLimits([negroni])).toBe(false)
   })
 })
 

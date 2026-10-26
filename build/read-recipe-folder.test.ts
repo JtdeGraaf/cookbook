@@ -2,7 +2,8 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { RecipeFolderError, readRecipeFolder } from './read-recipe-folder.ts'
+import type { Dish, Drink } from '../src/lib/book.ts'
+import { RecipeFolderError, readRecipeFolder, type ImagePath } from './read-recipe-folder.ts'
 
 const both = (text: string) => ({ en: text, nl: text })
 
@@ -17,6 +18,23 @@ function validRecipe(): Record<string, unknown> {
     ingredients: [{ id: 'bread', name: both('bread'), amount: 1, unit: 'slice' }],
     prep: [{ text: both('Take out the bread.'), ingredients: ['bread'] }],
     cook: [{ text: both('Toast it.'), timer: { minutes: 3, label: both('Toast') } }],
+  }
+}
+
+function validDrink(): Record<string, unknown> {
+  return {
+    kind: 'drink',
+    title: both('Gimlet'),
+    summary: both('Gin and lime.'),
+    servings: 1,
+    method: 'shaken',
+    glass: 'coupe',
+    ice: 'none',
+    ingredients: [
+      { id: 'gin', name: both('gin'), amount: 5, unit: 'cl', bottle: true },
+      { id: 'lime', name: both('lime wedge'), amount: 1, unit: 'piece', garnish: true },
+    ],
+    steps: [{ text: both('Shake with ice and strain.'), ingredients: ['gin'] }],
   }
 }
 
@@ -38,6 +56,19 @@ function addRecipe(folder: string, slug: string, recipe: unknown, images: string
   mkdirSync(recipeFolder, { recursive: true })
   writeFileSync(join(recipeFolder, 'recipe.json'), JSON.stringify(recipe))
   for (const image of images) writeFileSync(join(recipeFolder, image), '')
+}
+
+/** The first recipe of the first chapter, which these tests write as a dish. */
+function firstDish(): Dish<ImagePath> {
+  const recipe = readRecipeFolder(root).chapters[0].recipes[0]
+  if (recipe.kind !== 'dish') throw new Error(`${recipe.path} is not a dish`)
+  return recipe
+}
+
+function firstDrink(): Drink<ImagePath> {
+  const recipe = readRecipeFolder(root).chapters[0].recipes[0]
+  if (recipe.kind !== 'drink') throw new Error(`${recipe.path} is not a drink`)
+  return recipe
 }
 
 function problems(): string[] {
@@ -126,13 +157,13 @@ describe('readRecipeFolder', () => {
   it('turns missing optional fields into null or empty lists', () => {
     addRecipe('mains', 'toast', validRecipe())
 
-    const recipe = readRecipeFolder(root).chapters[0].recipes[0]
+    const recipe = firstDish()
 
     expect(recipe.tags).toEqual([])
     expect(recipe.source).toBeNull()
     expect(recipe.cover?.credit).toBeNull()
     expect(recipe.cook[0]).toMatchObject({ ingredientIds: [], tip: null, image: null })
-    expect(recipe.ingredients[0]).toMatchObject({ plural: null, note: null, pantry: false })
+    expect(recipe.ingredients[0]).toMatchObject({ plural: null, note: null, pantry: false, bottle: false, garnish: false })
   })
 
   it('reads the plural name of an ingredient', () => {
@@ -228,6 +259,64 @@ describe('readRecipeFolder', () => {
   })
 })
 
+describe('readRecipeFolder with drinks', () => {
+  it('reads a recipe.json with "kind": "drink" as a drink, with its glass, ice and one list of steps', () => {
+    addRecipe('cocktails', 'gimlet', validDrink(), [])
+
+    const drink = firstDrink()
+
+    expect(drink).toMatchObject({ kind: 'drink', method: 'shaken', glass: 'coupe', ice: 'none', servings: 1 })
+    expect(drink.steps[0]).toMatchObject({ ingredientIds: ['gin'], timer: null })
+    expect(drink.ingredients.map(({ id, bottle, garnish }) => ({ id, bottle, garnish }))).toEqual([
+      { id: 'gin', bottle: true, garnish: false },
+      { id: 'lime', bottle: false, garnish: true },
+    ])
+  })
+
+  it('reads a recipe.json without a kind as a dish', () => {
+    addRecipe('mains', 'toast', validRecipe())
+
+    expect(firstDish().kind).toBe('dish')
+  })
+
+  it('rejects a kind other than drink', () => {
+    addRecipe('mains', 'toast', { ...validRecipe(), kind: 'dish' })
+
+    expect(problems()).toEqual([`${join('mains', 'toast', 'recipe.json')}: "kind" must be "drink", or left out for a dish.`])
+  })
+
+  it('rejects dish fields on a drink, so a half-converted file fails the build', () => {
+    addRecipe('cocktails', 'gimlet', { ...validDrink(), prepMinutes: 2 }, [])
+
+    expect(problems()[0]).toContain('prepMinutes')
+  })
+
+  it('rejects a timer on a drink step', () => {
+    addRecipe('cocktails', 'gimlet', { ...validDrink(), steps: [{ text: both('Shake.'), timer: { minutes: 1, label: both('Shake') } }] }, [])
+
+    expect(problems()[0]).toContain('timer')
+  })
+
+  it('rejects a garnish in a dish', () => {
+    const parsley = { id: 'parsley', name: both('parsley'), garnish: true }
+    addRecipe('mains', 'toast', { ...validRecipe(), ingredients: [...(validRecipe().ingredients as unknown[]), parsley] })
+
+    expect(problems()[0]).toContain('garnish')
+  })
+
+  it('rejects a glass the book does not know', () => {
+    addRecipe('cocktails', 'gimlet', { ...validDrink(), glass: 'tankard' }, [])
+
+    expect(problems()[0]).toContain('glass')
+  })
+
+  it('names a drink step by its number when it uses an unknown ingredient', () => {
+    addRecipe('cocktails', 'gimlet', { ...validDrink(), steps: [{ text: both('Add soda.'), ingredients: ['soda'] }] }, [])
+
+    expect(problems()).toEqual([`${join('cocktails', 'gimlet', 'recipe.json')}: step 1 uses unknown ingredient "soda".`])
+  })
+})
+
 describe('readRecipeFolder with techniques', () => {
   const where = () => join('mains', 'toast', 'recipe.json')
 
@@ -235,7 +324,7 @@ describe('readRecipeFolder with techniques', () => {
     addTechniques({ toast: toastTechnique })
     addRecipe('mains', 'toast', recipeWithCookText('[[Toast|toast]] the bread.', 'Brood [[roosteren|toast]].'))
 
-    const step = readRecipeFolder(root).chapters[0].recipes[0].cook[0]
+    const step = firstDish().cook[0]
 
     expect(step.text).toEqual({ en: 'Toast the bread.', nl: 'Brood roosteren.' })
     expect(step.pieces.en).toEqual([

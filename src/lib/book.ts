@@ -1,4 +1,4 @@
-import type { ChapterColor, Language, LocalizedText, Unit } from './recipe-rules.ts'
+import type { ChapterColor, DrinkMethod, Glass, IceKind, Language, LocalizedText, Unit } from './recipe-rules.ts'
 
 /** The cookbook after the build has read and checked every file under `recipes/`. */
 
@@ -24,6 +24,10 @@ export type Ingredient = {
   note: LocalizedText | null
   /** A staple the kitchen always has, like salt or water; the shopping list leaves it off. */
   pantry: boolean
+  /** Bought by the bottle, like gin; the shopping list asks for a bottle instead of adding up amounts. */
+  bottle: boolean
+  /** Goes on a drink at the end, like a lime wedge; always false for a dish. */
+  garnish: boolean
 }
 
 export type StepTimer = { minutes: number; label: LocalizedText }
@@ -45,7 +49,8 @@ export type Step<File = ResponsiveImage> = {
   image: Picture<File> | null
 }
 
-export type Recipe<File = ResponsiveImage> = {
+/** What every recipe has, dish or drink. */
+type RecipeBase<File> = {
   slug: string
   /** Folder names from `recipes/` down to this recipe, like "mains/pasta/carbonara". Also its web address. */
   path: string
@@ -55,18 +60,35 @@ export type Recipe<File = ResponsiveImage> = {
   color: ChapterColor
   title: LocalizedText
   summary: LocalizedText
+  /** People for a dish, glasses for a drink. */
   servings: number
-  prepMinutes: number
-  cookMinutes: number
   tags: LocalizedText[]
   /** Null until someone adds a photo. */
   cover: Picture<File> | null
   /** Null for our own recipes. */
   source: RecipeSource | null
   ingredients: Ingredient[]
+}
+
+/** Food: a prep list to finish first, then cooking steps one at a time. */
+export type Dish<File = ResponsiveImage> = RecipeBase<File> & {
+  kind: 'dish'
+  prepMinutes: number
+  cookMinutes: number
   prep: Step<File>[]
   cook: Step<File>[]
 }
+
+/** A drink is made in one go, so it is read from one page: glass and ice up top, then the steps. */
+export type Drink<File = ResponsiveImage> = RecipeBase<File> & {
+  kind: 'drink'
+  method: DrinkMethod
+  glass: Glass
+  ice: IceKind
+  steps: Step<File>[]
+}
+
+export type Recipe<File = ResponsiveImage> = Dish<File> | Drink<File>
 
 /** A folder under `recipes/`. Top-level folders are the chapters; folders inside them are sections. */
 export type Folder<File = ResponsiveImage> = {
@@ -175,6 +197,14 @@ export function ingredientsForStep(recipe: Recipe, step: Step): Ingredient[] {
   return step.ingredientIds.flatMap((id) => recipe.ingredients.filter((ingredient) => ingredient.id === id))
 }
 
+/** A drink's garnishes are listed apart, after what goes in the glass. A dish has none. */
+export function splitGarnishes(ingredients: Ingredient[]): { mixed: Ingredient[]; garnishes: Ingredient[] } {
+  return {
+    mixed: ingredients.filter((ingredient) => !ingredient.garnish),
+    garnishes: ingredients.filter((ingredient) => ingredient.garnish),
+  }
+}
+
 /** The techniques a step explains, each once, in the order the text first uses them. */
 export function techniquesInStep(step: Step, language: Language): Technique[] {
   const techniques = new Map<string, Technique>()
@@ -226,15 +256,18 @@ export function resolveBookPath(book: Book, address: string): BookPage | null {
   const recipe = findRecipe(book, path)
   if (recipe) return { kind: 'recipe', recipe, view: { name: 'overview' } }
 
+  // Only dishes have prep, cooking and done pages; a drink is all on its own page.
   const last = parts.at(-1)
   if (last === 'prep' || last === 'done') {
     const owner = findRecipe(book, parts.slice(0, -1).join('/'))
-    return owner ? { kind: 'recipe', recipe: owner, view: { name: last } } : null
+    return owner?.kind === 'dish' ? { kind: 'recipe', recipe: owner, view: { name: last } } : null
   }
 
   if (parts.at(-2) !== 'cook') return null
   const owner = findRecipe(book, parts.slice(0, -2).join('/'))
   const stepNumber = Number(last)
-  if (!owner || !Number.isInteger(stepNumber) || stepNumber < 1 || stepNumber > owner.cook.length) return null
+  if (owner?.kind !== 'dish' || !Number.isInteger(stepNumber) || stepNumber < 1 || stepNumber > owner.cook.length) {
+    return null
+  }
   return { kind: 'recipe', recipe: owner, view: { name: 'cook', stepNumber } }
 }

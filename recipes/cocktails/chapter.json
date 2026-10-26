@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/chapter.schema.json",
+  "title": { "en": "Cocktails", "nl": "Cocktails" },
+  "intro": {
+    "en": "Classics made at home with a shaker, a long spoon and good ice. One page each: read it once and pour.",
+    "nl": "Klassiekers voor thuis, met een shaker, een lange lepel en goed ijs. Eén pagina per drankje: één keer lezen en schenken."
+  },
+  "order": 3,
+  "color": "sea"
+}

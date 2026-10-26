@@ -1,7 +1,15 @@
 import { Folio } from '@/components/Folio'
 import { usePageTitle } from '@/components/usePageTitle'
 import { recipesInside, type Folder } from '@/lib/book'
-import { bookAsFiltered, folderAsFiltered, hasFilters, searchFromFilters, tagsUsedIn, type RecipeFilters } from '@/lib/filters'
+import {
+  bookAsFiltered,
+  folderAsFiltered,
+  hasFilters,
+  offersTimeLimits,
+  searchFromFilters,
+  tagsUsedIn,
+  type RecipeFilters,
+} from '@/lib/filters'
 import { book, pageOf } from '@/features/book/book-data'
 import { NoMatches } from '@/features/book/NoMatches'
 import { RecipeFilterBar } from '@/features/book/RecipeFilterBar'
@@ -41,6 +49,7 @@ export function FolderPage({ folder, filters, onFiltersChange }: FolderPageProps
           onFiltersChange={onFiltersChange}
           matchingRecipes={matchingRecipes}
           tags={tagsUsedIn(recipesInside(folder))}
+          offerTimeLimits={offersTimeLimits(recipesInside(folder))}
         />
         {hasFilters(filters) && matchingRecipes.length === 0 ? (
           <NoMatches />

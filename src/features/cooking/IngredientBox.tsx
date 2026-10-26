@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Tick } from '@/components/Tick'
-import type { Recipe } from '@/lib/book'
+import { splitGarnishes, type Ingredient, type Recipe } from '@/lib/book'
 import { servingsFactor } from '@/lib/quantity'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { ServingsStepper } from './ServingsStepper'
@@ -10,37 +10,30 @@ import { useIngredientName, useQuantityText } from './useQuantityText'
 
 type IngredientBoxProps = { recipe: Recipe; controls: RecipeProgressControls }
 
-/** The boxed ingredient list with a servings counter in its header, each line tickable, and the shopping list below. */
+/**
+ * The boxed ingredient list with a servings counter in its header, each line tickable, and the shopping list below.
+ * A drink's garnishes follow under their own heading.
+ */
 export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
   const { t } = useTranslation()
-  const localized = useLocalized()
-  const quantityText = useQuantityText()
-  const ingredientName = useIngredientName()
-  const factor = servingsFactor(recipe.servings, controls.servings)
   const have = controls.progress.haveIngredientIds
+  const { mixed, garnishes } = splitGarnishes(recipe.ingredients)
+  const lines = { recipe, controls }
   return (
     <section className="ingredient-box" aria-labelledby={`ingredients-${recipe.slug}`}>
       <header className="ingredient-box__head">
         <h2 id={`ingredients-${recipe.slug}`} className="ingredient-box__title">
           {t('recipe.ingredients')}
         </h2>
-        <ServingsStepper servings={controls.servings} onChange={controls.setServings} />
+        <ServingsStepper kind={recipe.kind} servings={controls.servings} onChange={controls.setServings} />
       </header>
-      <ul className="ingredient-box__list">
-        {recipe.ingredients.map((ingredient) => (
-          <li key={ingredient.id}>
-            <label className="ingredient-line">
-              <Tick checked={have.includes(ingredient.id)} onChange={() => controls.toggleIngredient(ingredient.id)} />
-              <span className="ingredient-line__name">
-                {ingredientName(ingredient, factor)}
-                {ingredient.note && <span className="ingredient-line__note">{localized(ingredient.note)}</span>}
-              </span>
-              <span className="ingredient-line__leader" aria-hidden="true" />
-              <span className="ingredient-line__amount numbers">{quantityText(ingredient, factor)}</span>
-            </label>
-          </li>
-        ))}
-      </ul>
+      <IngredientLines ingredients={mixed} {...lines} />
+      {garnishes.length > 0 && (
+        <>
+          <h3 className="ingredient-box__group">{t('drink.garnish')}</h3>
+          <IngredientLines ingredients={garnishes} {...lines} />
+        </>
+      )}
       <footer className="ingredient-box__foot">
         <p className="ingredient-box__count numbers">
           {t('recipe.checkedCount', { checked: have.length, total: recipe.ingredients.length })}
@@ -48,5 +41,32 @@ export function IngredientBox({ recipe, controls }: IngredientBoxProps) {
         <ShoppingListToggle recipe={recipe} />
       </footer>
     </section>
+  )
+}
+
+type IngredientLinesProps = IngredientBoxProps & { ingredients: Ingredient[] }
+
+function IngredientLines({ recipe, controls, ingredients }: IngredientLinesProps) {
+  const localized = useLocalized()
+  const quantityText = useQuantityText()
+  const ingredientName = useIngredientName()
+  const factor = servingsFactor(recipe.servings, controls.servings)
+  const have = controls.progress.haveIngredientIds
+  return (
+    <ul className="ingredient-box__list">
+      {ingredients.map((ingredient) => (
+        <li key={ingredient.id}>
+          <label className="ingredient-line">
+            <Tick checked={have.includes(ingredient.id)} onChange={() => controls.toggleIngredient(ingredient.id)} />
+            <span className="ingredient-line__name">
+              {ingredientName(ingredient, factor)}
+              {ingredient.note && <span className="ingredient-line__note">{localized(ingredient.note)}</span>}
+            </span>
+            <span className="ingredient-line__leader" aria-hidden="true" />
+            <span className="ingredient-line__amount numbers">{quantityText(ingredient, factor)}</span>
+          </label>
+        </li>
+      ))}
+    </ul>
   )
 }

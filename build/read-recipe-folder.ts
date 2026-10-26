@@ -1,17 +1,20 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { z } from 'zod'
-import type { Book, Folder, Picture, Recipe, Step, StepTextPiece, Technique } from '../src/lib/book.ts'
+import type { Book, Folder, Ingredient, Picture, Recipe, Step, StepTextPiece, Technique } from '../src/lib/book.ts'
 import { CHAPTER_COLORS, RESERVED_CHAPTER_NAMES, type ChapterColor } from '../src/lib/recipe-rules.ts'
 import { plainText, splitTechniqueMarks } from '../src/lib/technique-marks.ts'
 import {
   chapterFileSchema,
+  dishFileSchema,
+  drinkFileSchema,
   findCrossReferenceProblems,
   listImageFiles,
-  recipeFileSchema,
   slugSchema,
   techniqueFileSchema,
   type ChapterFile,
+  type DishFile,
+  type DrinkFile,
   type RecipeFile,
 } from '../src/lib/recipe-file.ts'
 
@@ -27,12 +30,15 @@ export class RecipeFolderError extends Error {
   }
 }
 
+/** A recipe as read from disk, before it takes the colour of its chapter. */
+type RecipeOnDisk = Recipe<ImagePath> extends infer Each ? (Each extends unknown ? Omit<Each, 'color'> : never) : never
+
 /** A folder as read from disk, before colours are handed down from the chapter. */
 type FolderOnDisk = Omit<Folder<ImagePath>, 'color' | 'folders' | 'recipes'> & {
   color: ChapterColor | null
   order: number | null
   folders: FolderOnDisk[]
-  recipes: Omit<Recipe<ImagePath>, 'color'>[]
+  recipes: RecipeOnDisk[]
 }
 
 /** Techniques by id, from recipes/techniques.json. */
@@ -98,7 +104,7 @@ function readFolder(
 
   const folderFile = readFolderFile(absolutePath, root, problems)
   const folders: FolderOnDisk[] = []
-  const recipes: Omit<Recipe<ImagePath>, 'color'>[] = []
+  const recipes: RecipeOnDisk[] = []
   for (const child of children) {
     const childPath = `${path}/${child}`
     const childAbsolutePath = join(absolutePath, child)
@@ -150,7 +156,7 @@ function readRecipe(
   root: string,
   techniques: Techniques,
   problems: string[],
-): Omit<Recipe<ImagePath>, 'color'> | null {
+): RecipeOnDisk | null {
   const slug = path.split('/').at(-1) ?? path
   if (!slugSchema.safeParse(slug).success) {
     problems.push(`${path}: folder name must be lowercase letters, digits and dashes.`)
@@ -161,7 +167,7 @@ function readRecipe(
     return null
   }
   const filePath = join(folder, 'recipe.json')
-  const file = parseJsonFile(filePath, recipeFileSchema, root, problems)
+  const file = parseRecipeFile(filePath, root, problems)
   if (!file) return null
 
   const fileProblems = [
@@ -184,7 +190,7 @@ function toRecipe(
   path: string,
   folderPath: string,
   techniques: Techniques,
-): Omit<Recipe<ImagePath>, 'color'> {
+): RecipeOnDisk {
   const toPicture = (image: NonNullable<RecipeFile['cover']>): Picture<ImagePath> => ({
     file: join(folder, image.file),
     alt: image.alt,
@@ -195,59 +201,92 @@ function toRecipe(
     (splitTechniqueMarks(text) ?? []).map((piece) =>
       piece.kind === 'words' ? piece : { kind: 'technique', text: piece.text, technique: techniques.get(piece.techniqueId)! },
     )
-  const toStep = (step: RecipeFile['cook'][number]): Step<ImagePath> => {
+  const toStep = (step: StepOnDisk): Step<ImagePath> => {
     const pieces = { en: toPieces(step.text.en), nl: toPieces(step.text.nl) }
     return {
       text: { en: plainText(pieces.en), nl: plainText(pieces.nl) },
       pieces,
       ingredientIds: step.ingredients ?? [],
-      timer: step.timer ?? null,
+      timer: 'timer' in step ? (step.timer ?? null) : null,
       tip: step.tip ?? null,
       image: step.image ? toPicture(step.image) : null,
     }
   }
-  return {
+  const shared = {
     slug,
     path,
     folderPath,
     title: file.title,
     summary: file.summary,
     servings: file.servings,
-    prepMinutes: file.prepMinutes,
-    cookMinutes: file.cookMinutes,
     tags: file.tags ?? [],
     cover: file.cover ? toPicture(file.cover) : null,
     source: file.source ? { url: file.source.url, name: file.source.name ?? null } : null,
-    ingredients: file.ingredients.map((ingredient) => ({
-      id: ingredient.id,
-      name: ingredient.name,
-      // Leaving it out means the name is the same for any amount, like "garlic".
-      plural: ingredient.plural ?? null,
-      quantity:
-        ingredient.amount !== undefined && ingredient.unit !== undefined
-          ? { amount: ingredient.amount, unit: ingredient.unit }
-          : null,
-      note: ingredient.note ?? null,
-      // Leaving the flag out means it is a normal ingredient to buy.
-      pantry: ingredient.pantry ?? false,
-    })),
+    ingredients: file.ingredients.map(toIngredient),
+  }
+  if ('kind' in file) {
+    return { ...shared, kind: 'drink', method: file.method, glass: file.glass, ice: file.ice, steps: file.steps.map(toStep) }
+  }
+  return {
+    ...shared,
+    kind: 'dish',
+    prepMinutes: file.prepMinutes,
+    cookMinutes: file.cookMinutes,
     prep: file.prep.map(toStep),
     cook: file.cook.map(toStep),
   }
 }
 
-function parseJsonFile<T>(path: string, schema: z.ZodType<T>, root: string, problems: string[]): T | null {
-  const where = relative(root, path)
-  let json: unknown
-  try {
-    json = JSON.parse(readFileSync(path, 'utf8'))
-  } catch (error) {
-    problems.push(`${where}: not valid JSON (${(error as Error).message}).`)
-    return null
+type StepOnDisk = DishFile['cook'][number] | DrinkFile['steps'][number]
+
+function toIngredient(ingredient: RecipeFile['ingredients'][number]): Ingredient {
+  return {
+    id: ingredient.id,
+    name: ingredient.name,
+    // Leaving it out means the name is the same for any amount, like "garlic".
+    plural: ingredient.plural ?? null,
+    quantity:
+      ingredient.amount !== undefined && ingredient.unit !== undefined
+        ? { amount: ingredient.amount, unit: ingredient.unit }
+        : null,
+    note: ingredient.note ?? null,
+    // Leaving a flag out means a normal ingredient, bought by the amount.
+    pantry: ingredient.pantry ?? false,
+    bottle: ingredient.bottle ?? false,
+    garnish: 'garnish' in ingredient ? (ingredient.garnish ?? false) : false,
   }
+}
+
+/** A recipe.json with `"kind": "drink"` is a drink; without a kind it is a dish. */
+function parseRecipeFile(path: string, root: string, problems: string[]): RecipeFile | null {
+  const json = readJsonFile(path, root, problems)
+  if (json === undefined) return null
+  const kind = typeof json === 'object' && json !== null && 'kind' in json ? json.kind : undefined
+  if (kind === undefined) return checkJson(json, dishFileSchema, path, root, problems)
+  if (kind === 'drink') return checkJson(json, drinkFileSchema, path, root, problems)
+  problems.push(`${relative(root, path)}: "kind" must be "drink", or left out for a dish.`)
+  return null
+}
+
+function parseJsonFile<T>(path: string, schema: z.ZodType<T>, root: string, problems: string[]): T | null {
+  const json = readJsonFile(path, root, problems)
+  return json === undefined ? null : checkJson(json, schema, path, root, problems)
+}
+
+/** Undefined when the file is not valid JSON; the problem is noted. */
+function readJsonFile(path: string, root: string, problems: string[]): unknown {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'))
+  } catch (error) {
+    problems.push(`${relative(root, path)}: not valid JSON (${(error as Error).message}).`)
+    return undefined
+  }
+}
+
+function checkJson<T>(json: unknown, schema: z.ZodType<T>, path: string, root: string, problems: string[]): T | null {
   const result = schema.safeParse(json)
   if (!result.success) {
-    problems.push(`${where}:\n${indent(z.prettifyError(result.error))}`)
+    problems.push(`${relative(root, path)}:\n${indent(z.prettifyError(result.error))}`)
     return null
   }
   return result.data

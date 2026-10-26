@@ -8,6 +8,7 @@ import {
   bookAsFiltered,
   filterBook,
   matchesFilters,
+  offersTimeLimits,
   searchFromFilters,
   type FilterSearch,
   type RecipeFilters,
@@ -48,6 +49,7 @@ export function Contents({ filters, onFiltersChange }: ContentsProps) {
         onFiltersChange={onFiltersChange}
         matchingRecipes={allRecipes(shownBook)}
         tags={allTags(book)}
+        offerTimeLimits={offersTimeLimits(allRecipes(book))}
       />
 
       <section aria-label={t('book.contents')}>

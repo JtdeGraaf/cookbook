@@ -1,0 +1,437 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "const": "drink"
+    },
+    "title": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "en",
+        "nl"
+      ],
+      "additionalProperties": false,
+      "description": "The same text in English and Dutch."
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "en",
+        "nl"
+      ],
+      "additionalProperties": false,
+      "description": "The same text in English and Dutch."
+    },
+    "servings": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 24,
+      "description": "How many drinks the amounts are written for."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "en": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nl": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "en",
+          "nl"
+        ],
+        "additionalProperties": false,
+        "description": "The same text in English and Dutch."
+      }
+    },
+    "cover": {
+      "description": "The main photo. Leave out until you have one.",
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "pattern": "^[\\w-]+\\.(jpe?g|png|webp)$"
+        },
+        "alt": {
+          "type": "object",
+          "properties": {
+            "en": {
+              "type": "string",
+              "minLength": 1
+            },
+            "nl": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "en",
+            "nl"
+          ],
+          "additionalProperties": false,
+          "description": "What the photo shows, for people who cannot see it."
+        },
+        "credit": {
+          "description": "Leave out for your own photos.",
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Short licence name, like \"CC BY-SA 4.0\"."
+            },
+            "source": {
+              "type": "string",
+              "format": "uri",
+              "description": "Where the image comes from."
+            }
+          },
+          "required": [
+            "author",
+            "license",
+            "source"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "file",
+        "alt"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Web address of the original recipe."
+        },
+        "name": {
+          "description": "Who or where it is from, like \"Albert Heijn\". Leave out to show the website name.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "description": "Where this recipe comes from, if it is based on someone else's."
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "shaken",
+        "stirred",
+        "built",
+        "blended"
+      ]
+    },
+    "glass": {
+      "type": "string",
+      "enum": [
+        "coupe",
+        "nick-and-nora",
+        "martini",
+        "rocks",
+        "highball",
+        "wine",
+        "flute",
+        "mug"
+      ]
+    },
+    "ice": {
+      "type": "string",
+      "enum": [
+        "none",
+        "cubes",
+        "large-cube",
+        "crushed"
+      ],
+      "description": "What goes in the glass with the drink; \"none\" for a drink served up."
+    },
+    "ingredients": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Short name that steps use to point at this ingredient, like \"eggs\"."
+          },
+          "name": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false,
+            "description": "For things you count, the name of one, like \"egg\"."
+          },
+          "plural": {
+            "description": "The name for more than one, like \"eggs\". Leave out when the name never changes, like \"garlic\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
+          },
+          "amount": {
+            "description": "Leave out together with unit for \"to taste\".",
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "g",
+              "kg",
+              "ml",
+              "cl",
+              "l",
+              "tsp",
+              "tbsp",
+              "barspoon",
+              "dash",
+              "piece",
+              "clove",
+              "pinch",
+              "slice",
+              "sprig",
+              "can"
+            ]
+          },
+          "note": {
+            "description": "Extra detail shown after the name, like \"at room temperature\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
+          },
+          "pantry": {
+            "description": "A kitchen staple you always have, like salt or water. Left off the shopping list.",
+            "type": "boolean"
+          },
+          "bottle": {
+            "description": "Bought by the bottle, like gin or white wine. The shopping list asks for a bottle, not an amount.",
+            "type": "boolean"
+          },
+          "garnish": {
+            "description": "Goes on the drink at the end, like a lime wedge. Listed apart.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "steps": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false,
+            "description": "Mark a cooking term with [[words|technique-id]], like \"[[chop it finely|chop-finely]]\", to explain it from techniques.json."
+          },
+          "ingredients": {
+            "description": "Ids of the ingredients this step uses.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+            }
+          },
+          "tip": {
+            "description": "A short extra hint, shown as a \"Point\".",
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nl": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "en",
+              "nl"
+            ],
+            "additionalProperties": false
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "pattern": "^[\\w-]+\\.(jpe?g|png|webp)$"
+              },
+              "alt": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nl": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "en",
+                  "nl"
+                ],
+                "additionalProperties": false,
+                "description": "What the photo shows, for people who cannot see it."
+              },
+              "credit": {
+                "description": "Leave out for your own photos.",
+                "type": "object",
+                "properties": {
+                  "author": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "license": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Short licence name, like \"CC BY-SA 4.0\"."
+                  },
+                  "source": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Where the image comes from."
+                  }
+                },
+                "required": [
+                  "author",
+                  "license",
+                  "source"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "file",
+              "alt"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Everything from chilling the glass to the garnish, read on one page."
+    }
+  },
+  "required": [
+    "kind",
+    "title",
+    "summary",
+    "servings",
+    "method",
+    "glass",
+    "ice",
+    "ingredients",
+    "steps"
+  ],
+  "additionalProperties": false,
+  "description": "One drink. The folders it sits in are its chapter and sections.",
+  "title": "Cookbook drink"
+}

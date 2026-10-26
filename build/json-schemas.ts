@@ -1,10 +1,17 @@
 import { z } from 'zod'
-import { chapterFileSchema, recipeFileSchema, techniqueFileSchema } from '../src/lib/recipe-file.ts'
+import { chapterFileSchema, dishFileSchema, drinkFileSchema, techniqueFileSchema } from '../src/lib/recipe-file.ts'
 
-/** JSON Schema files so editors autocomplete and check recipe.json, chapter.json and techniques.json while typing. */
+/**
+ * JSON Schema files so editors autocomplete and check recipe.json, chapter.json and techniques.json while typing. A
+ * dish's recipe.json points at recipe.schema.json, a drink's at drink.schema.json.
+ */
 
 export function recipeJsonSchema(): string {
-  return toJsonText(recipeFileSchema, 'Cookbook recipe')
+  return toJsonText(dishFileSchema, 'Cookbook recipe')
+}
+
+export function drinkJsonSchema(): string {
+  return toJsonText(drinkFileSchema, 'Cookbook drink')
 }
 
 export function chapterJsonSchema(): string {

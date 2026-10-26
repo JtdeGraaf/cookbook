@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Icon } from '@/components/Icon'
+import type { Recipe } from '@/lib/book'
 import { hasTicks } from '@/lib/progress'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
 /** Unticks everything for this recipe, after asking. Hidden when there is nothing to clear. */
-export function ClearTicksButton({ controls }: { controls: RecipeProgressControls }) {
+export function ClearTicksButton({ recipe, controls }: { recipe: Recipe; controls: RecipeProgressControls }) {
   const { t } = useTranslation()
   const [asking, setAsking] = useState(false)
   if (!hasTicks(controls.progress)) return null
@@ -19,7 +20,7 @@ export function ClearTicksButton({ controls }: { controls: RecipeProgressControl
       <ConfirmDialog
         open={asking}
         title={t('recipe.clearTicksQuestion')}
-        explanation={t('recipe.clearTicksExplain')}
+        explanation={t(recipe.kind === 'drink' ? 'recipe.clearDrinkTicksExplain' : 'recipe.clearTicksExplain')}
         confirmLabel={t('recipe.confirmClear')}
         cancelLabel={t('recipe.cancel')}
         onConfirm={() => {

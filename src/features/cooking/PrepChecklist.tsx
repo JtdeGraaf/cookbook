@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Tick } from '@/components/Tick'
-import type { Recipe, Step } from '@/lib/book'
+import type { Dish, Step } from '@/lib/book'
 import { StepTimerButton } from '@/features/timers/StepTimerButton'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { IngredientChips } from './IngredientChips'
@@ -12,7 +12,7 @@ import { TechniqueNotes } from './TechniqueNotes'
 import { useTechniqueNotes } from './useTechniqueNotes'
 import type { RecipeProgressControls } from './useRecipeProgress'
 
-type PrepChecklistProps = { recipe: Recipe; controls: RecipeProgressControls }
+type PrepChecklistProps = { recipe: Dish; controls: RecipeProgressControls }
 
 /** Mise en place: every task before cooking, ticked off one by one. Cooking unlocks when all are done. */
 export function PrepChecklist({ recipe, controls }: PrepChecklistProps) {

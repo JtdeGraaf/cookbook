@@ -7,5 +7,6 @@ small frontend-only app: plain-English names, components only render, logic in `
 Verify with `npm run typecheck && npm test && npm run build`.
 
 Recipes are data: `recipes/<folders…>/<recipe>/recipe.json` plus photos next to it (folders nest; the top level are chapters), checked at build time by
-`build/read-recipe-folder.ts` against the Zod schema in `src/lib/recipe-file.ts`. After changing that schema, run
+`build/read-recipe-folder.ts` against the Zod schemas in `src/lib/recipe-file.ts`. A `recipe.json` with `"kind": "drink"`
+is a drink (one page, no prep or cooking mode); without a kind it is a dish. After changing that schema, run
 `npm run schemas` to refresh `schemas/*.schema.json`. The visual system is described in DESIGN.md.

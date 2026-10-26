@@ -8,7 +8,7 @@ export function scaleIngredient(ingredient: Ingredient, factor: number): Quantit
 
 /** Units counted in whole things, shown with kitchen fractions like ½ instead of decimals. */
 const COUNTED_UNITS: readonly Unit[] = ['piece', 'clove', 'slice', 'sprig', 'can']
-const SPOON_UNITS: readonly Unit[] = ['tsp', 'tbsp']
+const SPOON_UNITS: readonly Unit[] = ['tsp', 'tbsp', 'barspoon']
 const TEASPOONS_PER_TABLESPOON = 3
 
 const FRACTIONS: Record<string, string> = { '0.25': '¼', '0.5': '½', '0.75': '¾' }
@@ -23,11 +23,16 @@ export function scaleQuantity(quantity: Quantity, factor: number): Quantity {
     case 'ml':
     case 'l':
       return roundMetric(quantity.unit === 'l' ? amount * 1000 : amount, 'ml', 'l')
+    case 'cl':
+      return roundCentilitres(amount)
     case 'tsp':
     case 'tbsp':
       return roundSpoons(quantity.unit === 'tbsp' ? amount * TEASPOONS_PER_TABLESPOON : amount)
     case 'pinch':
-      return { amount: Math.max(1, Math.round(amount)), unit: 'pinch' }
+    case 'dash':
+      return { amount: Math.max(1, Math.round(amount)), unit: quantity.unit }
+    case 'barspoon':
+      return { amount: Math.max(0.5, roundToStep(amount, 0.5)), unit: 'barspoon' }
     case 'piece':
     case 'clove':
     case 'slice':
@@ -53,6 +58,12 @@ function roundMetric(smallAmount: number, smallUnit: Unit, largeUnit: Unit): Qua
   if (smallAmount >= 100) return { amount: roundToStep(smallAmount, 5), unit: smallUnit }
   if (smallAmount >= 10) return { amount: Math.round(smallAmount), unit: smallUnit }
   return { amount: Math.max(0.5, roundToStep(smallAmount, 0.5)), unit: smallUnit }
+}
+
+/** A jigger measures to half a centilitre; a party's worth switches to litres from 100 cl up. */
+function roundCentilitres(centilitres: number): Quantity {
+  if (centilitres >= 100) return { amount: roundToStep(centilitres / 100, 0.1), unit: 'l' }
+  return { amount: Math.max(0.5, roundToStep(centilitres, 0.5)), unit: 'cl' }
 }
 
 /** Teaspoons below one tablespoon, tablespoons from there. */

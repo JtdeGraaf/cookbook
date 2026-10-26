@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { both, makeBook, makeFolder, makeIngredient, makeRecipe, makeStep } from '@/test/fixtures'
+import { both, makeBook, makeDrink, makeFolder, makeIngredient, makeRecipe, makeStep } from '@/test/fixtures'
 import {
   allRecipes,
   findRecipe,
@@ -12,6 +12,7 @@ import {
   recipeViewPath,
   resolveBookPath,
   searchTermForMissingPage,
+  splitGarnishes,
   techniquesInStep,
   type Technique,
 } from './book'
@@ -141,11 +142,31 @@ describe('resolveBookPath', () => {
     expect(resolveBookPath(book, 'nothing/here')).toBeNull()
   })
 
+  it('finds a drink, which has only its own page', () => {
+    const negroni = makeDrink({ slug: 'negroni', folderPath: 'cocktails' })
+    const bar = makeBook([makeFolder({ path: 'cocktails', recipes: [negroni] })])
+
+    expect(resolveBookPath(bar, 'cocktails/negroni')).toEqual({ kind: 'recipe', recipe: negroni, view: { name: 'overview' } })
+    expect(resolveBookPath(bar, 'cocktails/negroni/prep')).toBeNull()
+    expect(resolveBookPath(bar, 'cocktails/negroni/cook/1')).toBeNull()
+    expect(resolveBookPath(bar, 'cocktails/negroni/done')).toBeNull()
+  })
+
   it('round-trips every recipe view address', () => {
     const views = [{ name: 'overview' }, { name: 'prep' }, { name: 'cook', stepNumber: 2 }, { name: 'done' }] as const
     for (const view of views) {
       expect(resolveBookPath(book, recipeViewPath(carbonara, view))).toEqual({ kind: 'recipe', recipe: carbonara, view })
     }
+  })
+})
+
+describe('splitGarnishes', () => {
+  it('lists the garnishes after what goes in the glass, each in book order', () => {
+    const gin = makeIngredient({ id: 'gin' })
+    const peel = makeIngredient({ id: 'peel', garnish: true })
+    const vermouth = makeIngredient({ id: 'vermouth' })
+
+    expect(splitGarnishes([gin, peel, vermouth])).toEqual({ mixed: [gin, vermouth], garnishes: [peel] })
   })
 })
 

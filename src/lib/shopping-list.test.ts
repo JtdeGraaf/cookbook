@@ -1,7 +1,7 @@
 import { book } from 'virtual:recipe-book'
 import { describe, expect, it } from 'vitest'
-import { both, makeIngredient, makeRecipe } from '@/test/fixtures'
-import { allRecipes } from './book'
+import { both, makeDrink, makeIngredient, makeRecipe } from '@/test/fixtures'
+import { allRecipes, type Recipe } from './book'
 import {
   EMPTY_SHOPPING_LIST,
   addToList,
@@ -48,7 +48,7 @@ const pancakes = makeRecipe({
   ],
 })
 
-const listed = (recipe: typeof carbonara, servings: number, haveIngredientIds: string[] = []) => ({
+const listed = (recipe: Recipe, servings: number, haveIngredientIds: string[] = []) => ({
   recipe,
   servings,
   haveIngredientIds,
@@ -123,6 +123,45 @@ describe('buildShoppingItems', () => {
 
     expect(linesNaming(/\begg/i)).toHaveLength(1)
     expect(linesNaming(/parmigiano|parmesan/i)).toHaveLength(1)
+  })
+})
+
+describe('buildShoppingItems with drinks', () => {
+  const negroni = makeDrink({
+    slug: 'negroni',
+    title: both('Negroni'),
+    servings: 1,
+    ingredients: [
+      makeIngredient({ id: 'gin', name: both('gin'), quantity: { amount: 3, unit: 'cl' }, bottle: true }),
+      makeIngredient({ id: 'syrup', name: both('sugar syrup', 'suikersiroop'), quantity: { amount: 1.5, unit: 'cl' } }),
+      makeIngredient({ id: 'bitters', name: both('Angostura bitters'), quantity: { amount: 2, unit: 'dash' }, bottle: true }),
+    ],
+  })
+  const gimlet = makeDrink({
+    slug: 'gimlet',
+    title: both('Gimlet'),
+    servings: 1,
+    ingredients: [
+      makeIngredient({ id: 'gin', name: both('gin'), quantity: { amount: 5, unit: 'cl' }, bottle: true }),
+      makeIngredient({ id: 'syrup', name: both('sugar syrup', 'suikersiroop'), quantity: { amount: 20, unit: 'ml' } }),
+    ],
+  })
+
+  it('asks for one bottle of gin, however many drinks need it, without an amount', () => {
+    const items = buildShoppingItems([listed(negroni, 4), listed(gimlet, 2)])
+
+    expect(items.find((item) => item.name.en === 'gin')).toMatchObject({
+      quantity: null,
+      bottle: true,
+      recipeTitles: [both('Negroni'), both('Gimlet')],
+    })
+  })
+
+  it('adds centilitres and millilitres together', () => {
+    const items = buildShoppingItems([listed(negroni, 4), listed(gimlet, 2)])
+
+    // 4 × 1.5 cl and 2 × 20 ml.
+    expect(items.find((item) => item.name.en === 'sugar syrup')?.quantity).toEqual({ amount: 100, unit: 'ml' })
   })
 })
 

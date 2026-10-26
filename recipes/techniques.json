@@ -83,5 +83,47 @@
       "en": "Lift and turn the pasta through the sauce with tongs or two spoons until every piece is coated. Keep going for a moment so the sauce clings.",
       "nl": "Schep de pasta met een tang of twee lepels door de saus tot elk stukje bedekt is. Blijf nog even scheppen, zodat de saus goed blijft hangen."
     }
+  },
+  "stir": {
+    "name": { "en": "Stir", "nl": "Roeren" },
+    "explanation": {
+      "en": "Fill a mixing glass two-thirds with ice, add the drink and turn a long spoon smoothly round the inside of the glass for about 30 seconds. It chills and dilutes the drink while keeping it clear and silky.",
+      "nl": "Vul een mengglas voor twee derde met ijs, voeg de drank toe en draai een lange lepel rustig langs de binnenkant van het glas, ongeveer 30 seconden. Zo koelt en verdunt de drank, terwijl hij helder en zijdezacht blijft."
+    }
+  },
+  "shake": {
+    "name": { "en": "Shake", "nl": "Shaken" },
+    "explanation": {
+      "en": "Fill the shaker with ice, close it tight and shake hard, back and forth, for 10 to 15 seconds, until the outside is too cold to hold comfortably.",
+      "nl": "Vul de shaker met ijs, sluit hem goed en schud hard heen en weer, 10 tot 15 seconden, tot de buitenkant bijna te koud is om vast te houden."
+    }
+  },
+  "dry-shake": {
+    "name": { "en": "Dry shake", "nl": "Droog shaken" },
+    "explanation": {
+      "en": "Shake everything without ice first, for about 15 seconds. Without the cold, egg white whips up into a thick, lasting foam.",
+      "nl": "Shake alles eerst zonder ijs, ongeveer 15 seconden. Zonder de kou klopt het eiwit op tot een dikke schuimlaag die blijft staan."
+    }
+  },
+  "double-strain": {
+    "name": { "en": "Double strain", "nl": "Dubbel zeven" },
+    "explanation": {
+      "en": "Pour through the shaker's own strainer and a small tea sieve at once, so no ice chips or pulp end up in the glass.",
+      "nl": "Schenk tegelijk door de zeef van de shaker en een klein theezeefje, zodat er geen ijssplinters of vruchtvlees in het glas komen."
+    }
+  },
+  "express-peel": {
+    "name": { "en": "Express a peel", "nl": "Schil uitknijpen" },
+    "explanation": {
+      "en": "Hold a strip of citrus peel skin-side down over the drink and pinch it, so a fine mist of oil sprays onto the surface. Rub the rim with it, then drop it in.",
+      "nl": "Houd een reep citrusschil met de buitenkant naar beneden boven de drank en knijp erin, zodat er een fijne nevel olie op het oppervlak spuit. Wrijf er de rand mee in en laat hem in het glas vallen."
+    }
+  },
+  "muddle": {
+    "name": { "en": "Muddle", "nl": "Kneuzen" },
+    "explanation": {
+      "en": "Press down and twist with a muddler or the end of a rolling pin, just enough to release the juice and oils. Mint only needs a gentle press; crushed leaves turn bitter.",
+      "nl": "Druk en draai met een stamper of het uiteinde van een deegroller, net genoeg om sap en olie vrij te maken. Munt hoeft alleen zacht aangedrukt te worden; fijngemalen blaadjes worden bitter."
+    }
   }
 }

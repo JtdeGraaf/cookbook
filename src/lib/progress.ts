@@ -1,5 +1,5 @@
 import { z } from 'zod/mini'
-import type { Recipe } from './book'
+import type { Dish, Recipe } from './book'
 import { MAX_SERVINGS, MIN_SERVINGS } from './recipe-rules'
 
 /**
@@ -47,13 +47,14 @@ export function togglePrepStep(progress: RecipeProgress, stepIndex: number, now:
   return { ...progress, donePrepSteps: toggle(progress.donePrepSteps, stepIndex), preppedAt: now }
 }
 
-/** Cooking may only start once every prep step is ticked off. */
+/** Cooking may only start once every prep step is ticked off. A drink has no prep list to finish. */
 export function isPrepDone(recipe: Recipe, progress: RecipeProgress): boolean {
+  if (recipe.kind === 'drink') return true
   return recipe.prep.every((_step, index) => progress.donePrepSteps.includes(index))
 }
 
 /** The first prep step still to do, by index in `recipe.prep`, or null once every step is ticked off. */
-export function firstOpenPrepStep(recipe: Recipe, progress: RecipeProgress): number | null {
+export function firstOpenPrepStep(recipe: Dish, progress: RecipeProgress): number | null {
   const index = recipe.prep.findIndex((_step, stepIndex) => !progress.donePrepSteps.includes(stepIndex))
   return index === -1 ? null : index
 }

@@ -1,16 +1,19 @@
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/components/Icon'
+import type { Recipe } from '@/lib/book'
 import { MAX_SERVINGS, MIN_SERVINGS } from '@/lib/recipe-rules'
 
 type ServingsStepperProps = {
+  /** A dish counts people, a drink counts glasses. */
+  kind: Recipe['kind']
   servings: number
   onChange: (servings: number) => void
   /** Names the recipe in the labels, for pages that show several steppers at once. */
   recipeTitle?: string
 }
 
-export function ServingsStepper({ servings, onChange, recipeTitle }: ServingsStepperProps) {
-  const labels = useServingsLabels(recipeTitle)
+export function ServingsStepper({ kind, servings, onChange, recipeTitle }: ServingsStepperProps) {
+  const labels = useServingsLabels(kind, recipeTitle)
   const { t } = useTranslation()
   return (
     <div className="servings" role="group" aria-label={labels.group}>
@@ -24,7 +27,7 @@ export function ServingsStepper({ servings, onChange, recipeTitle }: ServingsSte
         <Icon name="minus" size={18} />
       </button>
       <output className="servings__count numbers" aria-live="polite">
-        {t('recipe.forPeople', { count: servings })}
+        {kind === 'drink' ? t('recipe.forDrinks', { count: servings }) : t('recipe.forPeople', { count: servings })}
       </output>
       <button
         type="button"
@@ -39,14 +42,33 @@ export function ServingsStepper({ servings, onChange, recipeTitle }: ServingsSte
   )
 }
 
-function useServingsLabels(recipeTitle: string | undefined) {
+/** The stepper's labels: about people for a dish, about glasses for a drink. */
+const LABEL_KEYS = {
+  dish: {
+    group: 'recipe.servings',
+    fewer: 'recipe.fewerServings',
+    more: 'recipe.moreServings',
+    groupFor: 'recipe.servingsFor',
+    fewerFor: 'recipe.fewerServingsFor',
+    moreFor: 'recipe.moreServingsFor',
+  },
+  drink: {
+    group: 'recipe.drinks',
+    fewer: 'recipe.fewerDrinks',
+    more: 'recipe.moreDrinks',
+    groupFor: 'recipe.drinksFor',
+    fewerFor: 'recipe.fewerDrinksFor',
+    moreFor: 'recipe.moreDrinksFor',
+  },
+} as const
+
+function useServingsLabels(kind: Recipe['kind'], recipeTitle: string | undefined) {
   const { t } = useTranslation()
-  if (recipeTitle === undefined) {
-    return { group: t('recipe.servings'), fewer: t('recipe.fewerServings'), more: t('recipe.moreServings') }
-  }
+  const keys = LABEL_KEYS[kind]
+  if (recipeTitle === undefined) return { group: t(keys.group), fewer: t(keys.fewer), more: t(keys.more) }
   return {
-    group: t('recipe.servingsFor', { title: recipeTitle }),
-    fewer: t('recipe.fewerServingsFor', { title: recipeTitle }),
-    more: t('recipe.moreServingsFor', { title: recipeTitle }),
+    group: t(keys.groupFor, { title: recipeTitle }),
+    fewer: t(keys.fewerFor, { title: recipeTitle }),
+    more: t(keys.moreFor, { title: recipeTitle }),
   }
 }

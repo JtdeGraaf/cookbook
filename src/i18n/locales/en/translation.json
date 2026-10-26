@@ -63,6 +63,7 @@
     "clearTicks": "Clear ticks",
     "clearTicksQuestion": "Clear all ticks for this recipe?",
     "clearTicksExplain": "Every ticked ingredient and prep task is unticked, here and on the shopping list, so you can start over. Your servings stay.",
+    "clearDrinkTicksExplain": "Every ticked ingredient is unticked, here and on the shopping list. Your number of drinks stays.",
     "cancel": "Keep them",
     "confirmClear": "Clear ticks",
     "showIngredients": "Ingredients",
@@ -87,7 +88,55 @@
     "sharedServings_one": "Set to {{count}} person by a shared link. Your shopping list follows.",
     "sharedServings_other": "Set to {{count}} people by a shared link. Your shopping list follows.",
     "shareText_one": "{{title}} for {{count}} person",
-    "shareText_other": "{{title}} for {{count}} people"
+    "shareText_other": "{{title}} for {{count}} people",
+    "forDrinks_one": "{{count}} drink",
+    "forDrinks_other": "{{count}} drinks",
+    "drinks": "Drinks",
+    "fewerDrinks": "One drink fewer",
+    "moreDrinks": "One drink more",
+    "drinksFor": "Drinks of {{title}}",
+    "fewerDrinksFor": "One {{title}} fewer",
+    "moreDrinksFor": "One {{title}} more",
+    "madeCount_one": "Made once, last on {{date}}",
+    "madeCount_other": "Made {{count}} times, last on {{date}}",
+    "neverMade": "Not made yet",
+    "sharedDrinks_one": "Set to {{count}} drink by a shared link. Your shopping list follows.",
+    "sharedDrinks_other": "Set to {{count}} drinks by a shared link. Your shopping list follows.",
+    "shareDrinkText_one": "{{title}}, {{count}} drink",
+    "shareDrinkText_other": "{{title}}, {{count}} drinks"
+  },
+  "drink": {
+    "method": "Mix",
+    "glass": "Glass",
+    "ice": "Ice",
+    "garnish": "Garnish",
+    "madeIt": "Made it",
+    "madeToday": "Made today. Cheers!",
+    "madeTodayOffList": "Made today. Cheers! It’s off the shopping list.",
+    "clearedTicks": "The ticks are cleared for the next round.",
+    "rowMeta": "{{method}} · {{glass}}",
+    "methods": {
+      "shaken": "Shaken",
+      "stirred": "Stirred",
+      "built": "Built in the glass",
+      "blended": "Blended"
+    },
+    "glasses": {
+      "coupe": "Coupe",
+      "nick-and-nora": "Nick & Nora",
+      "martini": "Martini glass",
+      "rocks": "Rocks glass",
+      "highball": "Highball",
+      "wine": "Wine glass",
+      "flute": "Flute",
+      "mug": "Mug"
+    },
+    "iceKinds": {
+      "none": "None, served up",
+      "cubes": "Cubes",
+      "large-cube": "One large cube",
+      "crushed": "Crushed"
+    }
   },
   "prep": {
     "progress": "{{done}} of {{total}} done",
@@ -159,7 +208,12 @@
     "sprig_one": "sprig",
     "sprig_other": "sprigs",
     "can_one": "can",
-    "can_other": "cans"
+    "can_other": "cans",
+    "cl": "cl",
+    "barspoon_one": "barspoon",
+    "barspoon_other": "barspoons",
+    "dash_one": "dash",
+    "dash_other": "dashes"
   },
   "languages": {
     "en": "English",
@@ -207,6 +261,8 @@
     "left_one": "{{count}} thing left to buy",
     "left_other": "{{count}} things left to buy",
     "haveAlready": "Already have",
-    "staples": "Kitchen staples are left off: {{names}}."
+    "staples": "Kitchen staples are left off: {{names}}.",
+    "bottle": "a bottle",
+    "bottleLine": "{{name}}, a bottle"
   }
 }

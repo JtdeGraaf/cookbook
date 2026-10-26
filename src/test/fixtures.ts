@@ -1,4 +1,4 @@
-import type { Book, Folder, Ingredient, Picture, Recipe, Step } from '@/lib/book'
+import type { Book, Dish, Drink, Folder, Ingredient, Picture, Step } from '@/lib/book'
 import type { LocalizedText } from '@/lib/recipe-rules'
 
 export function both(en: string, nl: string = en): LocalizedText {
@@ -12,7 +12,16 @@ const picture: Picture = {
 }
 
 export function makeIngredient(overrides: Partial<Ingredient> & Pick<Ingredient, 'id'>): Ingredient {
-  return { name: both(overrides.id), plural: null, quantity: { amount: 1, unit: 'piece' }, note: null, pantry: false, ...overrides }
+  return {
+    name: both(overrides.id),
+    plural: null,
+    quantity: { amount: 1, unit: 'piece' },
+    note: null,
+    pantry: false,
+    bottle: false,
+    garnish: false,
+    ...overrides,
+  }
 }
 
 /** A step whose text has no techniques unless `pieces` says otherwise. */
@@ -29,10 +38,11 @@ export function makeStep(overrides: Partial<Step> = {}): Step {
   }
 }
 
-/** A recipe in folder `folderPath` (default "mains"); its path is worked out from the two. */
-export function makeRecipe(overrides: Partial<Recipe> & Pick<Recipe, 'slug'>): Recipe {
+/** A dish in folder `folderPath` (default "mains"); its path is worked out from the two. */
+export function makeRecipe(overrides: Partial<Dish> & Pick<Dish, 'slug'>): Dish {
   const folderPath = overrides.folderPath ?? 'mains'
   return {
+    kind: 'dish',
     path: `${folderPath}/${overrides.slug}`,
     folderPath,
     color: 'tomato',
@@ -47,6 +57,29 @@ export function makeRecipe(overrides: Partial<Recipe> & Pick<Recipe, 'slug'>): R
     ingredients: [makeIngredient({ id: 'salt' })],
     prep: [makeStep()],
     cook: [makeStep()],
+    ...overrides,
+  }
+}
+
+/** A drink in folder `folderPath` (default "cocktails"); its path is worked out from the two. */
+export function makeDrink(overrides: Partial<Drink> & Pick<Drink, 'slug'>): Drink {
+  const folderPath = overrides.folderPath ?? 'cocktails'
+  return {
+    kind: 'drink',
+    path: `${folderPath}/${overrides.slug}`,
+    folderPath,
+    color: 'sea',
+    title: both(overrides.slug),
+    summary: both('A summary'),
+    servings: 1,
+    tags: [],
+    cover: picture,
+    source: null,
+    method: 'stirred',
+    glass: 'rocks',
+    ice: 'large-cube',
+    ingredients: [makeIngredient({ id: 'gin', quantity: { amount: 3, unit: 'cl' }, bottle: true })],
+    steps: [makeStep()],
     ...overrides,
   }
 }

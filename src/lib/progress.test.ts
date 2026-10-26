@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeRecipe, makeStep } from '@/test/fixtures'
+import { makeDrink, makeRecipe, makeStep } from '@/test/fixtures'
 import {
   EMPTY_PROGRESS,
   SESSION_LENGTH_MS,
@@ -56,6 +56,10 @@ describe('recipe progress', () => {
 
     expect(isPrepDone(recipe, halfway)).toBe(false)
     expect(isPrepDone(recipe, togglePrepStep(halfway, 1, NOW))).toBe(true)
+  })
+
+  it('never holds a drink back, since it has no prep list', () => {
+    expect(isPrepDone(makeDrink({ slug: 'negroni' }), EMPTY_PROGRESS)).toBe(true)
   })
 
   it('clears ticks but keeps the servings', () => {

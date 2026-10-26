@@ -1,5 +1,14 @@
 import { z } from 'zod'
-import { CHAPTER_COLORS, LANGUAGES, MAX_SERVINGS, MIN_SERVINGS, UNITS } from './recipe-rules.ts'
+import {
+  CHAPTER_COLORS,
+  DRINK_METHODS,
+  GLASSES,
+  ICE_KINDS,
+  LANGUAGES,
+  MAX_SERVINGS,
+  MIN_SERVINGS,
+  UNITS,
+} from './recipe-rules.ts'
 import { splitTechniqueMarks, techniqueIds } from './technique-marks.ts'
 
 /** The shape of the hand-written JSON files under `recipes/`. Unknown keys are errors, so typos fail the build. */
@@ -39,24 +48,41 @@ export const recipeSourceSchema = z
   })
   .describe("Where this recipe comes from, if it is based on someone else's.")
 
-export const ingredientSchema = z
+const ingredientFields = {
+  id: slugSchema.describe('Short name that steps use to point at this ingredient, like "eggs".'),
+  name: localizedTextSchema.describe('For things you count, the name of one, like "egg".'),
+  plural: localizedTextSchema
+    .optional()
+    .describe('The name for more than one, like "eggs". Leave out when the name never changes, like "garlic".'),
+  amount: z.number().positive().optional().describe('Leave out together with unit for "to taste".'),
+  unit: z.enum(UNITS).optional(),
+  note: localizedTextSchema.optional().describe('Extra detail shown after the name, like "at room temperature".'),
+  pantry: z
+    .boolean()
+    .optional()
+    .describe('A kitchen staple you always have, like salt or water. Left off the shopping list.'),
+  bottle: z
+    .boolean()
+    .optional()
+    .describe('Bought by the bottle, like gin or white wine. The shopping list asks for a bottle, not an amount.'),
+}
+
+const AMOUNT_AND_UNIT_TOGETHER = {
+  message: 'Give amount and unit together, or leave both out for "to taste".',
+}
+
+function hasAmountAndUnitTogether(ingredient: { amount?: number; unit?: string }): boolean {
+  return (ingredient.amount === undefined) === (ingredient.unit === undefined)
+}
+
+export const ingredientSchema = z.strictObject(ingredientFields).refine(hasAmountAndUnitTogether, AMOUNT_AND_UNIT_TOGETHER)
+
+export const drinkIngredientSchema = z
   .strictObject({
-    id: slugSchema.describe('Short name that steps use to point at this ingredient, like "eggs".'),
-    name: localizedTextSchema.describe('For things you count, the name of one, like "egg".'),
-    plural: localizedTextSchema
-      .optional()
-      .describe('The name for more than one, like "eggs". Leave out when the name never changes, like "garlic".'),
-    amount: z.number().positive().optional().describe('Leave out together with unit for "to taste".'),
-    unit: z.enum(UNITS).optional(),
-    note: localizedTextSchema.optional().describe('Extra detail shown after the name, like "at room temperature".'),
-    pantry: z
-      .boolean()
-      .optional()
-      .describe('A kitchen staple you always have, like salt or water. Left off the shopping list.'),
+    ...ingredientFields,
+    garnish: z.boolean().optional().describe('Goes on the drink at the end, like a lime wedge. Listed apart.'),
   })
-  .refine((ingredient) => (ingredient.amount === undefined) === (ingredient.unit === undefined), {
-    message: 'Give amount and unit together, or leave both out for "to taste".',
-  })
+  .refine(hasAmountAndUnitTogether, AMOUNT_AND_UNIT_TOGETHER)
 
 export const timerSchema = z.strictObject({
   minutes: z.number().positive().max(24 * 60),
@@ -73,7 +99,10 @@ export const stepSchema = z.strictObject({
   image: imageSchema.optional(),
 })
 
-export const recipeFileSchema = z
+/** Drinks are made in one go, so their steps have no timers. */
+export const drinkStepSchema = stepSchema.omit({ timer: true })
+
+export const dishFileSchema = z
   .strictObject({
     $schema: z.string().optional(),
     title: localizedTextSchema,
@@ -91,7 +120,28 @@ export const recipeFileSchema = z
       .describe('Mise en place: everything to do before anything goes on the heat.'),
     cook: z.array(stepSchema).min(1).describe('The cooking steps, done one at a time after all prep.'),
   })
-  .describe('One recipe. The folders it sits in are its chapter and sections.')
+  .describe('One dish. The folders it sits in are its chapter and sections.')
+
+export const drinkFileSchema = z
+  .strictObject({
+    $schema: z.string().optional(),
+    kind: z.literal('drink'),
+    title: localizedTextSchema,
+    summary: localizedTextSchema,
+    servings: z.number().int().min(MIN_SERVINGS).max(MAX_SERVINGS).describe('How many drinks the amounts are written for.'),
+    tags: z.array(localizedTextSchema).optional(),
+    cover: imageSchema.optional().describe('The main photo. Leave out until you have one.'),
+    source: recipeSourceSchema.optional(),
+    method: z.enum(DRINK_METHODS),
+    glass: z.enum(GLASSES),
+    ice: z.enum(ICE_KINDS).describe('What goes in the glass with the drink; "none" for a drink served up.'),
+    ingredients: z.array(drinkIngredientSchema).min(1),
+    steps: z
+      .array(drinkStepSchema)
+      .min(1)
+      .describe('Everything from chilling the glass to the garnish, read on one page.'),
+  })
+  .describe('One drink. The folders it sits in are its chapter and sections.')
 
 export const chapterFileSchema = z
   .strictObject({
@@ -119,7 +169,9 @@ export const techniqueFileSchema = z
   })
   .describe('Cooking techniques that steps explain behind an (i) button, by id.')
 
-export type RecipeFile = z.infer<typeof recipeFileSchema>
+export type DishFile = z.infer<typeof dishFileSchema>
+export type DrinkFile = z.infer<typeof drinkFileSchema>
+export type RecipeFile = DishFile | DrinkFile
 export type ChapterFile = z.infer<typeof chapterFileSchema>
 export type TechniqueFile = z.infer<typeof techniqueFileSchema>
 
@@ -135,22 +187,29 @@ export function findCrossReferenceProblems(recipe: RecipeFile, knownTechniqueIds
     if (seen.has(id)) problems.push(`Ingredient id "${id}" is used twice.`)
     seen.add(id)
   }
-  const phases = [
-    ['prep', recipe.prep],
-    ['cook', recipe.cook],
-  ] as const
-  for (const [phase, steps] of phases) {
+  for (const [stepName, steps] of stepsByPhase(recipe)) {
     steps.forEach((step, index) => {
       for (const id of step.ingredients ?? []) {
-        if (!seen.has(id)) problems.push(`${phase} step ${index + 1} uses unknown ingredient "${id}".`)
+        if (!seen.has(id)) problems.push(`${stepName} ${index + 1} uses unknown ingredient "${id}".`)
       }
-      problems.push(...findTechniqueProblems(step.text, knownTechniqueIds).map((problem) => `${phase} step ${index + 1} ${problem}`))
+      problems.push(...findTechniqueProblems(step.text, knownTechniqueIds).map((problem) => `${stepName} ${index + 1} ${problem}`))
     })
   }
   return problems
 }
 
-function findTechniqueProblems(text: RecipeFile['cook'][number]['text'], knownTechniqueIds: ReadonlySet<string>): string[] {
+type StepFile = DishFile['cook'][number] | DrinkFile['steps'][number]
+
+/** A dish's prep and cook steps, or a drink's one list, each with what a problem calls one of its steps. */
+function stepsByPhase(recipe: RecipeFile): [string, StepFile[]][] {
+  if ('kind' in recipe) return [['step', recipe.steps]]
+  return [
+    ['prep step', recipe.prep],
+    ['cook step', recipe.cook],
+  ]
+}
+
+function findTechniqueProblems(text: StepFile['text'], knownTechniqueIds: ReadonlySet<string>): string[] {
   const problems: string[] = []
   const idsByLanguage = LANGUAGES.map((language) => {
     const pieces = splitTechniqueMarks(text[language])
@@ -173,6 +232,7 @@ function findTechniqueProblems(text: RecipeFile['cook'][number]['text'], knownTe
 
 /** Every image file a recipe points at, cover first. */
 export function listImageFiles(recipe: RecipeFile): string[] {
-  const stepImages = [...recipe.prep, ...recipe.cook].flatMap((step) => (step.image ? [step.image.file] : []))
+  const steps = stepsByPhase(recipe).flatMap(([, phaseSteps]) => phaseSteps)
+  const stepImages = steps.flatMap((step) => (step.image ? [step.image.file] : []))
   return recipe.cover ? [recipe.cover.file, ...stepImages] : stepImages
 }

@@ -24,7 +24,7 @@ type RecipeRowProps = {
 
 /**
  * One line of the contents, the same everywhere: thumbnail, title with a heart or basket when it is a favourite or
- * on the shopping list, time, dotted leader, page number.
+ * on the shopping list, time (for a drink, how it is mixed and served), dotted leader, page number.
  */
 export function RecipeRow({
   recipe,
@@ -76,7 +76,12 @@ export function RecipeRow({
           {showSummary && <span className="recipe-row__summary">{localized(recipe.summary)}</span>}
           <span className="recipe-row__meta">
             {folders.length > 0 && <>{folders.join(' › ')} · </>}
-            {t('book.totalTime', { count: recipe.prepMinutes + recipe.cookMinutes })}
+            {recipe.kind === 'drink'
+              ? t('drink.rowMeta', {
+                  method: t(`drink.methods.${recipe.method}`),
+                  glass: t(`drink.glasses.${recipe.glass}`),
+                })
+              : t('book.totalTime', { count: recipe.prepMinutes + recipe.cookMinutes })}
             {matchedIngredients.length > 0 && (
               <> · {t('search.uses', { ingredients: matchedIngredients.map(localized).join(', ') })}</>
             )}

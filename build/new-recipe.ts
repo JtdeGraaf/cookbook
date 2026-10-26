@@ -1,9 +1,14 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { recipeTemplate } from '../src/lib/recipe-template.ts'
+import { drinkTemplate, recipeTemplate } from '../src/lib/recipe-template.ts'
 
-// Usage: npm run new-recipe -- mains/pasta/lasagne
-const path = process.argv[2]?.replace(/^recipes\//, '').replace(/\/+$/, '')
+// Usage: npm run new-recipe -- mains/pasta/lasagne, or npm run new-recipe -- cocktails/gimlet --drink
+const isDrink = process.argv.includes('--drink')
+const path = process.argv
+  .slice(2)
+  .find((argument) => !argument.startsWith('--'))
+  ?.replace(/^recipes\//, '')
+  .replace(/\/+$/, '')
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/
 
 if (!path || !path.includes('/')) {
@@ -22,7 +27,8 @@ if (existsSync(folder)) {
 }
 
 mkdirSync(folder, { recursive: true })
-writeFileSync(join(folder, 'recipe.json'), recipeTemplate(path.split('/').slice(0, -1).join('/')))
+const folderPath = path.split('/').slice(0, -1).join('/')
+writeFileSync(join(folder, 'recipe.json'), isDrink ? drinkTemplate(folderPath) : recipeTemplate(folderPath))
 console.log(`Created ${join(folder, 'recipe.json')}.`)
 console.log('Fill it in, put a photo next to it and add "cover": { "file": "cover.jpg", "alt": { ... } }.')
 console.log('Run npm run dev to see it; a push to main publishes it.')

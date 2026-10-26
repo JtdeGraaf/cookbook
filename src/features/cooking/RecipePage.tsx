@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
 import { Icon } from '@/components/Icon'
 import { usePageTitle } from '@/components/usePageTitle'
-import { recipeViewPath, type Recipe, type RecipeView } from '@/lib/book'
+import { recipeViewPath, type Dish, type Drink, type Recipe, type RecipeView } from '@/lib/book'
 import { useLocalized } from '@/features/settings/useLanguage'
 import { CookStep } from './CookStep'
+import { DrinkSpread } from './DrinkSpread'
 import { wasCookedToday } from './finish-cooking'
 import { Finished } from './Finished'
 import { PrepChecklist } from './PrepChecklist'
@@ -26,7 +27,10 @@ type RecipePageProps = {
   onLinkedServingsUsed: () => void
 }
 
-/** Every page of one recipe. Ticks and servings are the recipe's one shared record, so they carry over everywhere. */
+/**
+ * Every page of one recipe. Ticks and servings are the recipe's one shared record, so they carry over everywhere. A
+ * drink has just the one page.
+ */
 export function RecipePage({ recipe, view, linkedServings, onLinkedServingsUsed }: RecipePageProps) {
   const controls = useRecipeProgress(recipe)
   // Remembered for this visit, so the note about the shared link stays after the address is cleaned up.
@@ -34,12 +38,16 @@ export function RecipePage({ recipe, view, linkedServings, onLinkedServingsUsed 
   useLinkedServings(controls, linkedServings, onLinkedServingsUsed)
   return (
     <div data-color={recipe.color}>
-      <RecipeViewContent recipe={recipe} view={view} controls={controls} sharedServings={sharedServings} />
+      {recipe.kind === 'drink' ? (
+        <DrinkView recipe={recipe} controls={controls} sharedServings={sharedServings} />
+      ) : (
+        <RecipeViewContent recipe={recipe} view={view} controls={controls} sharedServings={sharedServings} />
+      )}
     </div>
   )
 }
 
-type ViewProps = { recipe: Recipe; controls: RecipeProgressControls }
+type ViewProps = { recipe: Dish; controls: RecipeProgressControls }
 
 type RecipeViewContentProps = ViewProps & { view: RecipeView; sharedServings: number | null }
 
@@ -58,6 +66,14 @@ function RecipeViewContent({ recipe, view, controls, sharedServings }: RecipeVie
     case 'done':
       return <DoneView recipe={recipe} controls={controls} />
   }
+}
+
+type DrinkViewProps = { recipe: Drink; controls: RecipeProgressControls; sharedServings: number | null }
+
+function DrinkView({ recipe, controls, sharedServings }: DrinkViewProps) {
+  const localized = useLocalized()
+  usePageTitle(localized(recipe.title))
+  return <DrinkSpread recipe={recipe} controls={controls} sharedServings={sharedServings} />
 }
 
 function OverviewView({ recipe, controls, sharedServings }: ViewProps & { sharedServings: number | null }) {
@@ -122,7 +138,7 @@ function CookingView({ recipe, controls, stepNumber }: ViewProps & { stepNumber:
  * Shown instead of a cooking step while the prep list has open tasks. Right after Finish (say, the Back button)
  * it says the recipe was finished, rather than blaming missing prep.
  */
-function PrepFirst({ recipe }: { recipe: Recipe }) {
+function PrepFirst({ recipe }: { recipe: Dish }) {
   const { t } = useTranslation()
   const localized = useLocalized()
   const { journal } = useRecipeJournal(recipe)

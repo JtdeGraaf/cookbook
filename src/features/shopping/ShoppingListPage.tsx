@@ -74,6 +74,7 @@ export function ShoppingListPage() {
                   {localized(recipe.title)}
                 </BookLink>
                 <ServingsStepper
+                  kind={recipe.kind}
                   servings={servings}
                   onChange={(next) => shopping.changeServings(recipe, next)}
                   recipeTitle={localized(recipe.title)}
@@ -150,7 +151,9 @@ function ShoppingLines({ items, onToggle }: { items: ShoppingItem[]; onToggle: (
               )}
             </span>
             <span className="ingredient-line__leader" aria-hidden="true" />
-            <span className="ingredient-line__amount numbers">{quantityLabel(item.quantity)}</span>
+            <span className="ingredient-line__amount numbers">
+              {item.bottle ? t('shopping.bottle') : quantityLabel(item.quantity)}
+            </span>
           </label>
         </li>
       ))}

@@ -23,11 +23,21 @@ export function tagKey(tag: LocalizedText): string {
   return tag.en.toLowerCase()
 }
 
+/** A time limit asks for a meal that fits the evening, so a drink never matches one. */
 export function matchesFilters(recipe: Recipe, filters: RecipeFilters, favourites: string[]): boolean {
-  if (filters.maxMinutes !== null && recipe.prepMinutes + recipe.cookMinutes > filters.maxMinutes) return false
+  if (filters.maxMinutes !== null && !fitsTimeLimit(recipe, filters.maxMinutes)) return false
   if (filters.tag !== null && !recipe.tags.some((tag) => tagKey(tag) === filters.tag)) return false
   if (filters.favouritesOnly && !favourites.includes(recipe.path)) return false
   return true
+}
+
+function fitsTimeLimit(recipe: Recipe, maxMinutes: number): boolean {
+  return recipe.kind === 'dish' && recipe.prepMinutes + recipe.cookMinutes <= maxMinutes
+}
+
+/** Time limits are only offered where there is a dish to time, so a page of drinks doesn't show them. */
+export function offersTimeLimits(recipes: Recipe[]): boolean {
+  return recipes.some((recipe) => recipe.kind === 'dish')
 }
 
 /**
