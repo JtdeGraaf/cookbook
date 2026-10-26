@@ -72,8 +72,14 @@
   display: none;
 }
 
+/* Without the tree, the column keeps the width it would have beside it instead of stretching the leaders. */
+.browser[data-tree='false'] {
+  max-width: 820px;
+  margin-inline: auto;
+}
+
 @media (min-width: 900px) {
-  .browser {
+  .browser[data-tree='true'] {
     grid-template-columns: 260px minmax(0, 1fr);
     align-items: start;
     gap: var(--space-7);

@@ -4,6 +4,7 @@ import {
   allRecipes,
   findRecipe,
   folderTrail,
+  hasSeveralChapters,
   nearestFolderOrRecipe,
   ingredientsForStep,
   numberPages,
@@ -75,6 +76,16 @@ describe('finding things in the book', () => {
 
   it('splits a path into its parents', () => {
     expect(parentPaths('mains/pasta/carbonara')).toEqual(['mains', 'mains/pasta', 'mains/pasta/carbonara'])
+  })
+})
+
+describe('hasSeveralChapters', () => {
+  it('is true for a book with two chapters', () => {
+    expect(hasSeveralChapters(book)).toBe(true)
+  })
+
+  it('is false for a book with one chapter, however many sections it has', () => {
+    expect(hasSeveralChapters(makeBook([makeFolder({ path: 'mains', recipes: [stew], folders: [pasta] })]))).toBe(false)
   })
 })
 

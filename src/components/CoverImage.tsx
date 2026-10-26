@@ -1,5 +1,6 @@
 import type { Recipe } from '@/lib/book'
 import { useLocalized } from '@/features/settings/useLanguage'
+import { EmptyPlate } from './EmptyPlate'
 import { Photo } from './Photo'
 
 type CoverImageProps = {
@@ -10,7 +11,7 @@ type CoverImageProps = {
   eager?: boolean
 }
 
-/** The recipe's photo, or a block of chapter colour with its first letter until a photo is added. */
+/** The recipe's photo, or an empty plate on the chapter wash until a photo is added. */
 export function CoverImage({ recipe, sizes, className, showCredit = true, eager = false }: CoverImageProps) {
   const localized = useLocalized()
   if (recipe.cover) {
@@ -18,7 +19,7 @@ export function CoverImage({ recipe, sizes, className, showCredit = true, eager 
   }
   return (
     <div className={['cover-placeholder', className].filter(Boolean).join(' ')} data-color={recipe.color} aria-hidden="true">
-      <span className="cover-placeholder__letter">{localized(recipe.title).charAt(0)}</span>
+      <EmptyPlate title={localized(recipe.title)} />
     </div>
   )
 }

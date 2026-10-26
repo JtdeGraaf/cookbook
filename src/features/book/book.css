@@ -131,9 +131,7 @@
 }
 
 .recipe-row__thumb--empty {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.75rem;
+  container-type: size;
 }
 
 .folder-row__tile {

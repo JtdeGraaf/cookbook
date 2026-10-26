@@ -30,12 +30,5 @@
   aspect-ratio: 4 / 3;
   border-radius: var(--radius);
   background: var(--chapter-wash);
-  color: var(--chapter-ink);
-}
-
-.cover-placeholder__letter {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(2rem, 8vw, 5rem);
-  line-height: 1;
+  container-type: size;
 }

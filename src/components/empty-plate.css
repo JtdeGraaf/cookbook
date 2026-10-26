@@ -1,0 +1,31 @@
+/*
+ * A white plate lying on the chapter wash: a rim, a hairline where the well starts, and the first letter in the
+ * middle. Sized from the tile it sits in, so the same plate works as a 64px thumbnail and as the spread's photo.
+ */
+
+.empty-plate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 66cqmin;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--sheet);
+  box-shadow: 0 4cqmin 9cqmin -3cqmin var(--shade);
+}
+
+.empty-plate::before {
+  content: '';
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 max(1px, 0.8cqmin) var(--rule);
+}
+
+.empty-plate__letter {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 24cqmin;
+  line-height: 1;
+  color: var(--chapter-ink);
+}

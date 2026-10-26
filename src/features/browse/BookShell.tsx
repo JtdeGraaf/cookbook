@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { Book } from '@/lib/book'
+import { hasSeveralChapters, type Book } from '@/lib/book'
 import type { FilterSearch } from '@/lib/filters'
 import { book } from '@/features/book/book-data'
 import { FolderTree } from './FolderTree'
@@ -15,13 +15,19 @@ type BookShellProps = {
   children: ReactNode
 }
 
-/** The frame of every index page (the contents, each folder, search): the folder tree beside one column. */
+/**
+ * The frame of every index page (the contents, each folder, search): the folder tree beside one column. With a single
+ * chapter the tree has nothing to move between, so the column stands alone.
+ */
 export function BookShell({ currentPath, shownBook = book, filterSearch = {}, children }: BookShellProps) {
+  const showTree = hasSeveralChapters(book)
   return (
-    <div className="browser">
-      <aside className="browser__tree">
-        <FolderTree shownBook={shownBook} currentPath={currentPath} filterSearch={filterSearch} />
-      </aside>
+    <div className="browser" data-tree={showTree}>
+      {showTree && (
+        <aside className="browser__tree">
+          <FolderTree shownBook={shownBook} currentPath={currentPath} filterSearch={filterSearch} />
+        </aside>
+      )}
       <div className="browser__main">{children}</div>
     </div>
   )

@@ -86,6 +86,11 @@ export type RecipeView = { name: 'overview' } | { name: 'prep' } | { name: 'cook
 /** What a web address inside the book points at. */
 export type BookPage = { kind: 'folder'; folder: Folder } | { kind: 'recipe'; recipe: Recipe; view: RecipeView }
 
+/** A thumb index and folder tree only help once there is more than one chapter to move between. */
+export function hasSeveralChapters(book: Book): boolean {
+  return book.chapters.length > 1
+}
+
 export function findFolder(book: Book, path: string): Folder | null {
   return allFolders(book).find((folder) => folder.path === path) ?? null
 }

@@ -196,10 +196,10 @@ Each colour comes in three tokens: the fill (`--tomato`), a darker or lighter **
 
 The page is a centred column up to 1180px (`--page-width`) with 16px gutters on phones. From 760px it gets 32px gutters, with an extra 44px (`--tab-width`) on the right where the thumb index sits. Spacing follows a 4-8-12-16-24-32-48-72 scale. Sections are separated by 48-72px, and a folio closes each page 72px below the content.
 
-- **Index pages** (contents, every folder, search) share one shell: from 900px a sticky 260px folder tree on the left beside one main column; below 900px the main column alone. The contents page is the top folder: a one-line title with tagline and a 92px tilted seal, the filter row, then chapters stacked in one column. Folder pages: path bar, a plain title line a size down (intro beneath, then recipe count and page in small display type), then the same rows. No coloured banner inside a folder.
-- **Recipe spread:** one sheet, split into two pages with a centre fold from 1024px.
+- **Index pages** (contents, every folder, search) share one shell: from 900px a sticky 260px folder tree on the left beside one main column; below 900px the main column alone. While the book has a single chapter there is no tree at any width, and the column is centred at up to 820px. The contents page is the top folder: a one-line title with tagline and a 92px tilted seal, the filter row, then chapters stacked in one column. Folder pages: path bar, a plain title line a size down (intro beneath, then recipe count and page in small display type), then the same rows. No coloured banner inside a folder.
+- **Recipe spread:** one sheet, split into two pages with a centre fold from 1024px: photo and ingredients on the left, title block, prep and method on the right. Below 1024px it is one page in the order photo, title block, ingredients, prep, method, so the title is never below the ingredient list. The title block comes first in the markup, so reading and focus order start there too.
 - **Prep and cook:** a main column plus a sticky 340px ingredient box from 1024px. Below that, a floating ingredients pill opens a bottom sheet (max 560px, 86dvh).
-- **Chrome:** a sticky, blurred running head on top and a fixed 76px timer shelf at the bottom (the page pads itself to make room). On recipe pages under 760px, search collapses to an icon and the tabs hide so the step gets the room.
+- **Chrome:** a sticky, blurred running head on top and a fixed 76px timer shelf at the bottom (the page pads itself to make room). On recipe pages under 760px, search collapses to an icon and the tabs hide so the step gets the room. While the book has a single chapter the thumb index is left out entirely and the page drops the 44px it keeps for it.
 - **Breakpoints:** 560, 640, 760, 900, 1000 and 1024px.
 
 ## Elevation & Depth
@@ -254,12 +254,15 @@ Line styles carry meaning:
 
 ### Navigation
 - **Running head:** sticky, with 92% paper and a 10px blur. It holds the tomato wordmark block (on the cover, only the round mark), search, the language switch (a segmented pill) and the theme switch.
-- **Thumb index:** from 760px, chapter-coloured tabs with vertical text are fixed to the right edge, pushed 8px out. Hover pulls a tab in to 2px; the current tab sits flush and is taller and wider. On phones they hang from under the head as a scrollable row.
+- **Thumb index:** shown only once the book has two or more chapters. From 760px, chapter-coloured tabs with vertical text are fixed to the right edge, pushed 8px out. Hover pulls a tab in to 2px; the current tab sits flush and is taller and wider. On phones they hang from under the head as a scrollable row.
 - **Folio:** a hairline-topped foot with the page number in a chapter pill.
 - **Link out of the book:** underlined chapter-ink text in the display face at 700, followed by a 16px arrow-out-of-box icon, opening in a new tab. Used for "Original recipe" under the spread summary; print hides the icon and writes the address out.
 
 ### Contents Row (signature)
-Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Every folder, chapter or section, heads its rows with the same light line: a folder icon, the name in chapter ink (1.5rem for a chapter, 1.1875rem for a section) and its page. No coloured banners: the tree and thumb index already carry the colour.
+Contents are rows, not a card grid, and the same size on every index page: a 72px rounded thumbnail (64px on phones; a folder shows a wash tile with a folder icon, a recipe without a photo shows the empty plate), the title in the display face, a dotted leader, and the page number in chapter ink. Folder pages add one line of summary. Hover tints the row with the chapter wash. Every folder, chapter or section, heads its rows with the same light line: a folder icon, the name in chapter ink (1.5rem for a chapter, 1.1875rem for a section) and its page. No coloured banners: the tree and thumb index already carry the colour.
+
+### Empty plate (signature)
+Stands in for a recipe photo that hasn't been taken yet, at every size: on the chapter wash, a white sheet-coloured circle (66% of the tile's short side) with a Lift-style shadow, a hairline rule ring inset 15% where the well starts, and the recipe's first letter in the display face at 900 in chapter ink. It scales with its tile through container units, so the 64px thumbnail and the spread photo are the same drawing. On the finished page the plate fills the round dish slot and takes the same sheet and chapter rings a photo would.
 
 ### Point (signature)
 A paper-coloured hint box (12px) beside a step, with a yolk "Point" label in the display face at 900.

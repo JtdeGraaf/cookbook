@@ -18,6 +18,10 @@
   .page {
     padding: var(--space-7) calc(var(--space-6) + var(--tab-width)) var(--space-8) var(--space-6);
   }
+
+  .book[data-chapter-tabs='false'] .page {
+    padding-right: var(--space-6);
+  }
 }
 
 /* Running head */

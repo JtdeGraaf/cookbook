@@ -30,7 +30,10 @@ type RecipeSpreadProps = {
   sharedServings: number | null
 }
 
-/** A recipe as an open book: photo and ingredients on the left page, prep and method on the right. */
+/**
+ * A recipe as an open book: photo and ingredients on the left page, title, prep and method on the right. The title
+ * comes first in the page so it is read first, and on one narrow page it follows straight after the photo.
+ */
 export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadProps) {
   const { t } = useTranslation()
   const { language } = useLanguage()
@@ -44,49 +47,49 @@ export function RecipeSpread({ recipe, controls, sharedServings }: RecipeSpreadP
     <>
       <PathBar folderPath={recipe.folderPath} currentTitle={localized(recipe.title)} />
       <article className="spread">
+        <header className="spread__head">
+          <h1 className="spread__title">{localized(recipe.title)}</h1>
+          {secondTitle !== localized(recipe.title) && (
+            <p className="spread__second-title" lang={secondLanguage}>
+              {secondTitle}
+            </p>
+          )}
+          <p className="spread__summary">{localized(recipe.summary)}</p>
+          <OriginalRecipe recipe={recipe} />
+          <dl className="spread__times">
+            <div>
+              <dt>{t('recipe.prepTime')}</dt>
+              <dd className="numbers">{t('book.minutes', { count: recipe.prepMinutes })}</dd>
+            </div>
+            <div>
+              <dt>{t('recipe.cookTime')}</dt>
+              <dd className="numbers">{t('book.minutes', { count: recipe.cookMinutes })}</dd>
+            </div>
+          </dl>
+          <TimesCooked recipe={recipe} />
+          {recipe.tags.length > 0 && (
+            <ul className="spread__tags">
+              {recipe.tags.map((tag) => (
+                <li key={tag.en}>
+                  <Link to="/" search={{ tag: tagKey(tag) }} className="spread__tag">
+                    {localized(tag)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          <RecipeActions recipe={recipe} servings={controls.servings} />
+          {sharedServings !== null && (
+            <p className="spread__shared-note">{t('recipe.sharedServings', { count: sharedServings })}</p>
+          )}
+        </header>
+
         <div className="spread__page spread__page--left">
           <CoverImage recipe={recipe} sizes="(min-width: 1024px) 520px, 100vw" className="spread__photo" eager />
           <IngredientBox recipe={recipe} controls={controls} />
         </div>
 
         <div className="spread__page spread__page--right">
-          <header className="spread__head">
-            <h1 className="spread__title">{localized(recipe.title)}</h1>
-            {secondTitle !== localized(recipe.title) && (
-              <p className="spread__second-title" lang={secondLanguage}>
-                {secondTitle}
-              </p>
-            )}
-            <p className="spread__summary">{localized(recipe.summary)}</p>
-            <OriginalRecipe recipe={recipe} />
-            <dl className="spread__times">
-              <div>
-                <dt>{t('recipe.prepTime')}</dt>
-                <dd className="numbers">{t('book.minutes', { count: recipe.prepMinutes })}</dd>
-              </div>
-              <div>
-                <dt>{t('recipe.cookTime')}</dt>
-                <dd className="numbers">{t('book.minutes', { count: recipe.cookMinutes })}</dd>
-              </div>
-            </dl>
-            <TimesCooked recipe={recipe} />
-            {recipe.tags.length > 0 && (
-              <ul className="spread__tags">
-                {recipe.tags.map((tag) => (
-                  <li key={tag.en}>
-                    <Link to="/" search={{ tag: tagKey(tag) }} className="spread__tag">
-                      {localized(tag)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <RecipeActions recipe={recipe} servings={controls.servings} />
-            {sharedServings !== null && (
-              <p className="spread__shared-note">{t('recipe.sharedServings', { count: sharedServings })}</p>
-            )}
-          </header>
-
           <section className="before-heat" aria-labelledby="before-heat-title">
             <h2 id="before-heat-title" className="before-heat__title">
               {t('recipe.prepTitle')}

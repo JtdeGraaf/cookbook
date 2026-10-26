@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { BookLink } from '@/components/BookLink'
+import { EmptyPlate } from '@/components/EmptyPlate'
 import { Icon } from '@/components/Icon'
 import { folderTrail, type Recipe } from '@/lib/book'
 import type { LocalizedText } from '@/lib/recipe-rules'
@@ -52,8 +53,8 @@ export function RecipeRow({
             decoding="async"
           />
         ) : (
-          <span className="recipe-row__thumb recipe-row__thumb--empty" aria-hidden="true">
-            {localized(recipe.title).charAt(0)}
+          <span className="recipe-row__thumb recipe-row__thumb--empty">
+            <EmptyPlate title={localized(recipe.title)} />
           </span>
         )}
         <span className="recipe-row__text">
