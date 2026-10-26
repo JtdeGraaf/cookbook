@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schemas/drink.schema.json",
+  "kind": "drink",
+  "title": { "en": "Ume sour", "nl": "Ume sour" },
+  "summary": {
+    "en": "Jameson and Choya umeshu with lemon: sweet and sour, round and a little like almonds. The whiskey and the plum liqueur work surprisingly well together.",
+    "nl": "Jameson en Choya umeshu met citroen: zoetzuur, rond en een beetje amandelig. De whiskey en de pruimenlikeur werken verrassend goed samen."
+  },
+  "servings": 1,
+  "method": "shaken",
+  "glass": "rocks",
+  "ice": "large-cube",
+  "tags": [
+    { "en": "sour", "nl": "zuur" },
+    { "en": "whiskey", "nl": "whiskey" }
+  ],
+  "ingredients": [
+    { "id": "jameson", "bottle": true, "name": { "en": "Jameson", "nl": "Jameson" }, "amount": 4, "unit": "cl" },
+    { "id": "choya", "bottle": true, "name": { "en": "Choya umeshu", "nl": "Choya umeshu" }, "amount": 3, "unit": "cl" },
+    { "id": "lemon", "name": { "en": "lemon", "nl": "citroen" }, "plural": { "en": "lemons", "nl": "citroenen" }, "amount": 0.5, "unit": "piece", "note": { "en": "freshly squeezed, about 2 cl", "nl": "vers geperst, ongeveer 2 cl" } },
+    { "id": "syrup", "name": { "en": "sugar syrup", "nl": "suikersiroop" }, "amount": 0.5, "unit": "cl", "note": { "en": "optional", "nl": "optioneel" } },
+    { "id": "egg", "name": { "en": "egg", "nl": "ei" }, "plural": { "en": "eggs", "nl": "eieren" }, "amount": 1, "unit": "piece", "note": { "en": "only the white, optional", "nl": "alleen het eiwit, optioneel" } }
+  ],
+  "steps": [
+    {
+      "text": {
+        "en": "Pare a strip of zest from the lemon before you squeeze it.",
+        "nl": "Schil een reepje zeste van de citroen voordat je hem uitperst."
+      },
+      "ingredients": ["lemon"]
+    },
+    {
+      "text": {
+        "en": "Using egg white? Put everything in the shaker and [[dry shake|dry-shake]] it first, for a nice layer of foam.",
+        "nl": "Gebruik je eiwit? Doe alles in de shaker en [[shake eerst droog|dry-shake]], voor een mooie schuimlaag."
+      },
+      "ingredients": ["jameson", "choya", "lemon", "syrup", "egg"]
+    },
+    {
+      "text": {
+        "en": "Add ice and [[shake|shake]] hard until the shaker feels ice cold. Without egg white, put everything straight in with the ice.",
+        "nl": "Voeg ijs toe en [[shake|shake]] hard tot de shaker ijskoud aanvoelt. Zonder eiwit doe je alles meteen met het ijs in de shaker."
+      },
+      "tip": {
+        "en": "Taste it first without the syrup: Choya is quite sweet already. Too sour? Add the 0.5 cl.",
+        "nl": "Proef eerst zonder suikersiroop: Choya is al vrij zoet. Te zuur? Voeg dan de 0,5 cl toe."
+      }
+    },
+    {
+      "text": {
+        "en": "Strain onto a large ice cube in a rocks glass, [[express the zest|express-peel]] over it and drop it in.",
+        "nl": "Zeef op een groot ijsblok in een tumbler, [[knijp de zeste uit|express-peel]] erboven en laat hem erin vallen."
+      },
+      "tip": {
+        "en": "With egg white it is also lovely without ice in a coupe. Got an ume plum from the bottle? Put it in the glass.",
+        "nl": "Met eiwit is hij ook mooi zonder ijs in een coupe. Heb je een ume-pruim uit de fles? Leg die in het glas."
+      }
+    }
+  ]
+}

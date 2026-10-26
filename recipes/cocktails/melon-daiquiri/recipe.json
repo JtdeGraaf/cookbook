@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../schemas/drink.schema.json",
+  "kind": "drink",
+  "title": { "en": "Melon daiquiri", "nl": "Melon daiquiri" },
+  "summary": {
+    "en": "A fresh daiquiri with a sweet touch of melon: white rum, De Kuyper Melon and lime, shaken hard and served up.",
+    "nl": "Een frisse daiquiri met een zoete meloentoets: witte rum, De Kuyper Melon en limoen, hard geshaket en zonder ijs geserveerd."
+  },
+  "servings": 1,
+  "method": "shaken",
+  "glass": "coupe",
+  "ice": "none",
+  "tags": [
+    { "en": "fresh", "nl": "fris" },
+    { "en": "rum", "nl": "rum" }
+  ],
+  "ingredients": [
+    { "id": "rum", "bottle": true, "name": { "en": "white rum", "nl": "witte rum" }, "amount": 5, "unit": "cl", "note": { "en": "a light one, like Havana Club 3 Años", "nl": "een lichte, zoals Havana Club 3 Años" } },
+    { "id": "melon", "bottle": true, "name": { "en": "De Kuyper Melon", "nl": "De Kuyper Melon" }, "amount": 2, "unit": "cl" },
+    { "id": "lime", "name": { "en": "lime", "nl": "limoen" }, "plural": { "en": "limes", "nl": "limoenen" }, "amount": 1, "unit": "piece", "note": { "en": "freshly squeezed, about 2.5 cl", "nl": "vers geperst, ongeveer 2,5 cl" } },
+    { "id": "syrup", "name": { "en": "sugar syrup", "nl": "suikersiroop" }, "amount": 0.5, "unit": "cl", "note": { "en": "optional", "nl": "optioneel" } }
+  ],
+  "steps": [
+    {
+      "text": {
+        "en": "Chill a coupe: put it in the freezer, or fill it with ice and water.",
+        "nl": "Koel een coupe: zet hem in de vriezer, of vul hem met ijs en water."
+      }
+    },
+    {
+      "text": {
+        "en": "Cut a wedge from the lime for the garnish and squeeze the rest.",
+        "nl": "Snijd een partje van de limoen voor de garnering en pers de rest uit."
+      },
+      "ingredients": ["lime"]
+    },
+    {
+      "text": {
+        "en": "Put the rum, melon liqueur, lime juice and syrup in the shaker and [[shake|shake]] hard with ice.",
+        "nl": "Doe de rum, meloenlikeur, het limoensap en de siroop in de shaker en [[shake|shake]] hard met ijs."
+      },
+      "ingredients": ["rum", "melon", "lime", "syrup"],
+      "tip": {
+        "en": "Taste it first without the syrup: the melon liqueur is quite sweet already.",
+        "nl": "Proef eerst zonder suikersiroop: de meloenlikeur is al vrij zoet."
+      }
+    },
+    {
+      "text": {
+        "en": "Tip the ice water out of the glass and [[double strain|double-strain]] the drink into it. Put the lime wedge on the rim.",
+        "nl": "Gooi het ijswater uit het glas en [[zeef de drank dubbel|double-strain]] erin. Zet het limoenpartje op de rand."
+      },
+      "tip": {
+        "en": "For a frozen one, blend everything with a handful of ice and a few pieces of ripe galia or honeydew melon.",
+        "nl": "Voor een frozen versie: blend alles met een handvol ijs en een paar stukjes rijpe galia- of honingmeloen."
+      }
+    }
+  ]
+}
