@@ -1,0 +1,181 @@
+{
+  "$schema": "../../../schemas/recipe.schema.json",
+  "title": { "en": "Creamy chicken pie with spinach and herb cheese", "nl": "Romige chicken pie met spinazie en kruidenkaas" },
+  "summary": {
+    "en": "Chicken thigh, courgette and spinach in a creamy herb cheese sauce, baked under a crisscross of golden puff pastry strips.",
+    "nl": "Kippendij, courgette en spinazie in een romige saus met kruidenkaas, gebakken onder een rooster van goudbruine reepjes bladerdeeg."
+  },
+  "servings": 2,
+  "prepMinutes": 15,
+  "cookMinutes": 50,
+  "tags": [
+    { "en": "chicken", "nl": "kip" },
+    { "en": "oven", "nl": "oven" },
+    { "en": "comfort food", "nl": "comfortfood" }
+  ],
+  "ingredients": [
+    {
+      "id": "puff-pastry",
+      "name": { "en": "square puff pastry sheet", "nl": "vierkant bladerdeegvelletje" },
+      "plural": { "en": "square puff pastry sheets", "nl": "vierkante bladerdeegvelletjes" },
+      "amount": 5,
+      "unit": "piece",
+      "note": { "en": "frozen", "nl": "diepvries" }
+    },
+    { "id": "onion", "name": { "en": "white onion", "nl": "witte ui" }, "plural": { "en": "white onions", "nl": "witte uien" }, "amount": 1, "unit": "piece" },
+    { "id": "garlic", "name": { "en": "garlic", "nl": "knoflook" }, "amount": 2, "unit": "clove" },
+    { "id": "chicken", "name": { "en": "chicken thigh fillet", "nl": "kippendijfilet" }, "amount": 400, "unit": "g" },
+    { "id": "courgette", "name": { "en": "courgette", "nl": "courgette" }, "plural": { "en": "courgettes", "nl": "courgettes" }, "amount": 1, "unit": "piece" },
+    { "id": "spring-onion", "name": { "en": "spring onion", "nl": "bosui" }, "plural": { "en": "spring onions", "nl": "bosuitjes" }, "amount": 1, "unit": "piece" },
+    { "id": "chives", "name": { "en": "fresh chives", "nl": "verse bieslook" }, "note": { "en": "to garnish", "nl": "ter garnering" } },
+    { "id": "butter", "name": { "en": "unsalted butter", "nl": "ongezouten roomboter" }, "amount": 15, "unit": "g", "note": { "en": "a heaped tablespoon", "nl": "een flinke eetlepel" } },
+    { "id": "chili-flakes", "name": { "en": "chili flakes", "nl": "chilivlokken" } },
+    { "id": "flour", "name": { "en": "plain flour", "nl": "bloem" }, "amount": 3, "unit": "tbsp" },
+    {
+      "id": "milk",
+      "name": { "en": "semi-skimmed milk", "nl": "halfvolle melk" },
+      "amount": 400,
+      "unit": "ml",
+      "note": { "en": "about; as much as you need for a thick sauce", "nl": "ongeveer; zoveel als nodig voor een dikke saus" }
+    },
+    {
+      "id": "stock-cube",
+      "name": { "en": "chicken stock cube", "nl": "kippenbouillonblokje" },
+      "plural": { "en": "chicken stock cubes", "nl": "kippenbouillonblokjes" },
+      "amount": 1,
+      "unit": "piece"
+    },
+    {
+      "id": "herb-cheese",
+      "name": { "en": "light herb cream cheese", "nl": "kruidenkaas light" },
+      "amount": 100,
+      "unit": "g",
+      "note": { "en": "or Boursin", "nl": "of Boursin" }
+    },
+    { "id": "spinach", "name": { "en": "spinach", "nl": "spinazie" }, "amount": 100, "unit": "g" },
+    { "id": "salt-pepper", "pantry": true, "name": { "en": "salt and black pepper", "nl": "zout en zwarte peper" } }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Take the puff pastry out of the freezer and lay the sheets out side by side to thaw.",
+        "nl": "Haal het bladerdeeg uit de vriezer en leg de velletjes naast elkaar om te ontdooien."
+      },
+      "ingredients": ["puff-pastry"],
+      "timer": { "minutes": 10, "label": { "en": "Thaw the pastry", "nl": "Bladerdeeg ontdooien" } }
+    },
+    {
+      "text": { "en": "Heat the oven to 200 °C.", "nl": "Verwarm de oven voor op 200 °C." }
+    },
+    {
+      "text": {
+        "en": "[[Chop the onion and garlic finely|chop-finely]].",
+        "nl": "[[Snijd de ui en knoflook fijn|chop-finely]]."
+      },
+      "ingredients": ["onion", "garlic"]
+    },
+    {
+      "text": {
+        "en": "Cut the chicken into bite-sized pieces and the courgette [[into small cubes|dice]].",
+        "nl": "Snijd de kip in hapklare stukken en de courgette [[in kleine blokjes|dice]]."
+      },
+      "ingredients": ["chicken", "courgette"]
+    },
+    {
+      "text": {
+        "en": "Slice the spring onion thinly and snip the chives.",
+        "nl": "Snijd de bosui in dunne ringetjes en knip de bieslook fijn."
+      },
+      "ingredients": ["spring-onion", "chives"]
+    },
+    {
+      "text": {
+        "en": "Cut the thawed puff pastry into strips about 2 cm wide.",
+        "nl": "Snijd het ontdooide bladerdeeg in reepjes van ongeveer 2 cm breed."
+      },
+      "ingredients": ["puff-pastry"]
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Melt the butter in a large, deep frying pan and [[soften|soften]] the onion.",
+        "nl": "Smelt de boter in een grote, diepe koekenpan en [[fruit|soften]] de ui."
+      },
+      "ingredients": ["butter", "onion"],
+      "timer": { "minutes": 5, "label": { "en": "Soften the onion", "nl": "Ui fruiten" } }
+    },
+    {
+      "text": {
+        "en": "Add the chicken, season with pepper and chili flakes, and fry until golden brown.",
+        "nl": "Doe de kip erbij, breng op smaak met peper en chilivlokken en bak goudbruin."
+      },
+      "ingredients": ["chicken", "salt-pepper", "chili-flakes"],
+      "timer": { "minutes": 5, "label": { "en": "Brown the chicken", "nl": "Kip bruin bakken" } }
+    },
+    {
+      "text": {
+        "en": "Add the garlic and courgette and fry along with it.",
+        "nl": "Bak de knoflook en courgette mee."
+      },
+      "ingredients": ["garlic", "courgette"],
+      "timer": { "minutes": 3, "label": { "en": "Fry the courgette", "nl": "Courgette meebakken" } }
+    },
+    {
+      "text": {
+        "en": "Stir in the flour and cook it for 2 minutes, stirring.",
+        "nl": "Roer de bloem erdoor en bak hem al roerend 2 minuten mee."
+      },
+      "ingredients": ["flour"],
+      "timer": { "minutes": 2, "label": { "en": "Cook the flour", "nl": "Bloem meebakken" } }
+    },
+    {
+      "text": {
+        "en": "Pour in the milk a little at a time, stirring, until you have a creamy sauce as thick as you like.",
+        "nl": "Schenk de melk er beetje bij beetje bij en blijf roeren tot je een romige saus hebt die zo dik is als je wilt."
+      },
+      "ingredients": ["milk"],
+      "tip": {
+        "en": "Stir each splash smooth before adding the next, and the sauce will not go lumpy.",
+        "nl": "Roer elk scheutje glad voor je het volgende toevoegt, dan krijg je geen klontjes."
+      }
+    },
+    {
+      "text": {
+        "en": "Crumble in the stock cube, add the herb cheese and spinach, and [[simmer|simmer]] until the chicken is cooked through and the spinach has wilted.",
+        "nl": "Verkruimel het bouillonblokje erboven, voeg de kruidenkaas en spinazie toe en [[laat pruttelen|simmer]] tot de kip gaar is en de spinazie geslonken."
+      },
+      "ingredients": ["stock-cube", "herb-cheese", "spinach"],
+      "timer": { "minutes": 5, "label": { "en": "Simmer the filling", "nl": "Vulling laten pruttelen" } }
+    },
+    {
+      "text": {
+        "en": "Stir in the spring onion and taste; add salt and pepper if it needs it.",
+        "nl": "Roer de bosui erdoor en proef; voeg zout en peper toe als het nodig is."
+      },
+      "ingredients": ["spring-onion", "salt-pepper"],
+      "tip": {
+        "en": "The stock cube and herb cheese are already salty, so taste before you add more salt.",
+        "nl": "Het bouillonblokje en de kruidenkaas zijn al zout, dus proef voor je er meer zout bij doet."
+      }
+    },
+    {
+      "text": {
+        "en": "Spoon the filling into an ovenproof dish and lay the pastry strips crisscross on top.",
+        "nl": "Schep de vulling in een ovenschaal en leg de reepjes bladerdeeg kruislings bovenop."
+      },
+      "ingredients": ["puff-pastry"]
+    },
+    {
+      "text": {
+        "en": "Bake until the pastry is puffed and golden brown.",
+        "nl": "Bak tot het bladerdeeg gerezen en goudbruin is."
+      },
+      "timer": { "minutes": 30, "label": { "en": "Bake the pie", "nl": "Pie bakken" } }
+    },
+    {
+      "text": { "en": "Scatter the chives over the top and serve.", "nl": "Strooi de bieslook erover en serveer." },
+      "ingredients": ["chives"]
+    }
+  ]
+}
