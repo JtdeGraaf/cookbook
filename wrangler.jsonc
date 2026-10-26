@@ -11,7 +11,7 @@
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api/*"]
   },
-  // One Durable Object per shared space, keeping its entries in SQLite. See packages/unsafe-device-sync.
+  // One Durable Object per shared space, keeping its entries in SQLite. See @graaf/unsafe-device-sync.
   "durable_objects": {
     "bindings": [{ "name": "SYNC_SPACES", "class_name": "SyncSpace" }]
   },

@@ -1,5 +1,0 @@
-export { handleSyncRequest } from './handle-sync-request'
-export { createSpace, exchangeChanges } from './exchange'
-export { MemoryEntryTable, type EntryTable } from './entry-table'
-export { memorySpaces, type Spaces } from './spaces'
-export { SqliteEntryTable, type SqlDatabase } from './sqlite-entry-table'

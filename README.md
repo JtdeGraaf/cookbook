@@ -32,7 +32,7 @@ A personal cookbook, in English and Dutch, that reads like a real book and cooks
 
 - **Sync between phones** (optional). Phones that know the same four Dutch words share favourites, the shopping list, ticks, servings and the journal. Start on one phone, scan its QR code with the other. Timers, theme and language stay on each phone.
 
-Everything you tick or choose is stored in your browser. Syncing goes through one small Worker with a Durable Object per shared book, using [`@graaf/unsafe-device-sync`](packages/unsafe-device-sync): no accounts, and anyone with the words can read and change what is shared. Fine for a shopping list, not for secrets.
+Everything you tick or choose is stored in your browser. Syncing goes through one small Worker with a Durable Object per shared book, using [`@graaf/unsafe-device-sync`](https://github.com/JtdeGraaf/unsafe-device-sync): no accounts, and anyone with the words can read and change what is shared. Fine for a shopping list, not for secrets.
 
 ## Recipes are files
 

@@ -4,8 +4,9 @@ Frontend-only Vite + React + TypeScript app, deployed to https://cookbook.graaf.
 
 Follow the `house-style` and `react-slices` skills from the `graaf` marketplace (JtdeGraaf/agents), scaled to a
 small frontend-only app: plain-English names, components only render, logic in `lib/` with tests. No backend beyond
-the sync Worker: `worker/index.ts` answers `/api/*` with `packages/unsafe-device-sync` (an npm workspace, kept
-app-agnostic so other apps can reuse it; unsafe on purpose, see its README). What syncs and how it merges lives in
+the sync Worker: `worker/index.ts` answers `/api/*` with `@graaf/unsafe-device-sync`
+(https://github.com/JtdeGraaf/unsafe-device-sync, installed from a git tag; unsafe on purpose, see its README). Change
+the lib in its own repo, tag it, then bump the tag in package.json. What syncs and how it merges lives in
 `src/lib/synced-data.ts`. `npx wrangler dev` after a build runs the site and the Worker together.
 Verify with `npm run typecheck && npm test && npm run build`.
 
