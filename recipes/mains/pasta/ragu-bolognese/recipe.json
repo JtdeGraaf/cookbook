@@ -1,0 +1,213 @@
+{
+  "$schema": "../../../../schemas/recipe.schema.json",
+  "title": { "en": "Ragù alla bolognese (weeknight)", "nl": "Ragù alla bolognese (doordeweeks)" },
+  "summary": {
+    "en": "The real Bolognese meat sauce with pancetta, white wine and milk, in about an hour. Hard browning and a little tomato paste make up for the shorter simmer.",
+    "nl": "De echte Bolognese vleessaus met pancetta, witte wijn en melk, in ongeveer een uur. Het vlees goed bruin bakken en een beetje tomatenpuree maken de kortere kooktijd goed."
+  },
+  "servings": 4,
+  "prepMinutes": 15,
+  "cookMinutes": 65,
+  "tags": [
+    { "en": "pasta", "nl": "pasta" },
+    { "en": "Italian", "nl": "Italiaans" },
+    { "en": "beef", "nl": "rundvlees" }
+  ],
+  "ingredients": [
+    { "id": "water", "pantry": true, "name": { "en": "water", "nl": "water" }, "amount": 3, "unit": "l" },
+    { "id": "salt", "pantry": true, "name": { "en": "salt", "nl": "zout" } },
+    { "id": "olive-oil", "pantry": true, "name": { "en": "olive oil", "nl": "olijfolie" }, "amount": 1, "unit": "tbsp" },
+    { "id": "pancetta", "name": { "en": "diced pancetta", "nl": "pancettablokjes" }, "amount": 120, "unit": "g" },
+    { "id": "onion", "name": { "en": "onion", "nl": "ui" }, "plural": { "en": "onions", "nl": "uien" }, "amount": 1, "unit": "piece", "note": { "en": "small", "nl": "klein" } },
+    { "id": "carrot", "name": { "en": "carrot", "nl": "wortel" }, "plural": { "en": "carrots", "nl": "wortels" }, "amount": 1, "unit": "piece", "note": { "en": "small", "nl": "klein" } },
+    { "id": "celery", "name": { "en": "celery stalk", "nl": "stengel bleekselderij" }, "plural": { "en": "celery stalks", "nl": "stengels bleekselderij" }, "amount": 1, "unit": "piece" },
+    { "id": "beef", "name": { "en": "ground beef", "nl": "rundergehakt" }, "amount": 400, "unit": "g" },
+    { "id": "tomato-paste", "name": { "en": "tomato paste", "nl": "tomatenpuree" }, "amount": 2, "unit": "tbsp" },
+    { "id": "white-wine", "name": { "en": "dry white wine", "nl": "droge witte wijn" }, "amount": 100, "unit": "ml" },
+    { "id": "passata", "name": { "en": "tomato passata", "nl": "passata" }, "amount": 250, "unit": "g" },
+    { "id": "milk", "name": { "en": "whole milk", "nl": "volle melk" }, "amount": 150, "unit": "ml" },
+    { "id": "stock", "pantry": true, "name": { "en": "beef or vegetable stock", "nl": "runder- of groentebouillon" }, "amount": 150, "unit": "ml", "note": { "en": "water works too", "nl": "water kan ook" } },
+    { "id": "tagliatelle", "name": { "en": "tagliatelle", "nl": "tagliatelle" }, "amount": 400, "unit": "g", "note": { "en": "or spaghetti", "nl": "of spaghetti" } },
+    { "id": "parmigiano", "name": { "en": "Parmigiano Reggiano", "nl": "Parmigiano Reggiano" }, "amount": 50, "unit": "g" },
+    { "id": "pepper", "pantry": true, "name": { "en": "black pepper", "nl": "zwarte peper" } }
+  ],
+  "prep": [
+    {
+      "text": {
+        "en": "Peel the onion and carrot and trim the celery. [[Chop all three finely|chop-finely]], as small as you can: together they are the soffritto, the base of the sauce.",
+        "nl": "Pel de ui, schil de wortel en snijd de uiteinden van de bleekselderij. [[Snijd alle drie heel fijn|chop-finely]], zo klein als je kunt: samen zijn ze de soffritto, de basis van de saus."
+      },
+      "ingredients": ["onion", "carrot", "celery"],
+      "tip": {
+        "en": "A food processor does this in ten seconds: pulse in short bursts until fine, but stop before it turns to mush. Smaller pieces cook faster, which is what makes the quick version work.",
+        "nl": "Een keukenmachine doet dit in tien seconden: pulseer kort tot alles fijn is, maar stop voordat het moes wordt. Kleinere stukjes zijn sneller gaar, en daardoor werkt de snelle versie."
+      }
+    },
+    {
+      "text": {
+        "en": "If your pancetta is in slices or a piece rather than cubes, [[chop it finely|chop-finely]] too.",
+        "nl": "Zit je pancetta in plakjes of een stuk in plaats van blokjes? [[Snijd hem dan ook fijn|chop-finely]]."
+      },
+      "ingredients": ["pancetta"]
+    },
+    {
+      "text": {
+        "en": "Measure out the wine in one glass and the milk and stock together in a jug. Open the passata and spoon out the tomato paste.",
+        "nl": "Meet de wijn af in een glas en de melk en bouillon samen in een maatbeker. Open de passata en schep de tomatenpuree eruit."
+      },
+      "ingredients": ["white-wine", "milk", "stock", "passata", "tomato-paste"],
+      "tip": {
+        "en": "Any cheap dry white you would drink is fine. No wine at home? Use extra stock with a splash of vinegar.",
+        "nl": "Elke goedkope droge witte wijn die je zelf zou drinken is prima. Geen wijn in huis? Neem extra bouillon met een scheutje azijn."
+      }
+    },
+    {
+      "text": { "en": "[[Grate the Parmigiano finely|grate]].", "nl": "[[Rasp de Parmigiano fijn|grate]]." },
+      "ingredients": ["parmigiano"]
+    },
+    {
+      "text": {
+        "en": "Get out a wide frying pan or sauté pan (not a deep pot), a wooden spoon, a large pan for the pasta, a colander and a mug for the pasta water.",
+        "nl": "Pak een brede koekenpan of hapjespan (geen diepe pan), een houten lepel, een grote pan voor de pasta, een vergiet en een mok voor het pastawater."
+      },
+      "tip": {
+        "en": "The wide pan matters: in a deep pot the meat steams grey instead of browning, and the sauce takes much longer to thicken.",
+        "nl": "Die brede pan is belangrijk: in een diepe pan stoomt het vlees grijs in plaats van bruin te bakken, en duurt het veel langer voor de saus dik wordt."
+      }
+    }
+  ],
+  "cook": [
+    {
+      "text": {
+        "en": "Heat the oil in the wide pan over medium heat and fry the pancetta until the fat runs out and it turns glassy.",
+        "nl": "Verhit de olie in de brede pan op middelhoog vuur en bak de pancetta tot het vet eruit loopt en hij glazig wordt."
+      },
+      "ingredients": ["olive-oil", "pancetta"],
+      "timer": { "minutes": 3, "label": { "en": "Fry the pancetta", "nl": "Pancetta bakken" } }
+    },
+    {
+      "text": {
+        "en": "Add the soffritto and [[soften it|soften]], stirring now and then.",
+        "nl": "Voeg de soffritto toe en [[fruit hem|soften]], af en toe roeren."
+      },
+      "ingredients": ["onion", "carrot", "celery"],
+      "timer": { "minutes": 7, "label": { "en": "Soften the soffritto", "nl": "Soffritto fruiten" } },
+      "tip": {
+        "en": "Done when the carrot is soft and the onion is see-through. Turn the heat down if it starts to brown.",
+        "nl": "Klaar als de wortel zacht is en de ui doorschijnend. Zet het vuur lager als het bruin begint te worden."
+      }
+    },
+    {
+      "text": {
+        "en": "Push the vegetables to the edge, turn the heat to high and put the beef in the middle. [[Brown it|brown]]: leave it alone for the first few minutes, then break it up with the spoon and keep frying until there are brown crispy bits all over.",
+        "nl": "Schuif de groente naar de rand, zet het vuur hoog en leg het gehakt in het midden. [[Bak het bruin|brown]]: laat het de eerste minuten met rust, maak het daarna los met de lepel en bak door tot er overal bruine, knapperige stukjes zitten."
+      },
+      "ingredients": ["beef"],
+      "timer": { "minutes": 10, "label": { "en": "Brown the beef", "nl": "Gehakt bruin bakken" } },
+      "tip": {
+        "en": "At first the meat lets out water and looks grey. That is normal: keep going until the water has boiled off and it starts to sizzle again. This browning is where most of the flavour comes from, so don't rush it.",
+        "nl": "Eerst komt er vocht uit het vlees en ziet het er grijs uit. Dat is normaal: ga door tot het vocht verdampt is en het weer begint te sissen. Hier komt de meeste smaak vandaan, dus haast je niet."
+      }
+    },
+    {
+      "text": {
+        "en": "Stir the tomato paste through the meat and keep stirring until it turns a shade darker and starts to stick to the bottom of the pan.",
+        "nl": "Roer de tomatenpuree door het vlees en blijf roeren tot hij een tintje donkerder wordt en aan de bodem van de pan begint te plakken."
+      },
+      "ingredients": ["tomato-paste"],
+      "timer": { "minutes": 1.5, "label": { "en": "Toast the tomato paste", "nl": "Tomatenpuree bakken" } },
+      "tip": {
+        "en": "Brown is good, black is burnt. If it smells sharp or bitter, go straight on with the wine.",
+        "nl": "Bruin is goed, zwart is aangebrand. Ruikt het scherp of bitter, ga dan meteen door met de wijn."
+      }
+    },
+    {
+      "text": {
+        "en": "Pour in the wine and [[deglaze the pan|deglaze]], scraping all the brown bits off the bottom. Let it [[reduce|reduce]] until almost all the liquid is gone.",
+        "nl": "Schenk de wijn erbij en [[blus de pan af|deglaze]]: schraap alle bruine stukjes van de bodem los. Laat het [[inkoken|reduce]] tot bijna al het vocht weg is."
+      },
+      "ingredients": ["white-wine"],
+      "timer": { "minutes": 2, "label": { "en": "Reduce the wine", "nl": "Wijn inkoken" } },
+      "tip": {
+        "en": "Smell it: when the sharp alcohol smell is gone, it is ready for the next step.",
+        "nl": "Ruik eraan: als de scherpe alcohollucht weg is, kun je door naar de volgende stap."
+      }
+    },
+    {
+      "text": {
+        "en": "Add the passata, milk and stock, bring to the boil, then turn the heat right down and [[simmer|simmer]] without a lid. Stir every 10 minutes or so, scraping the bottom.",
+        "nl": "Voeg de passata, melk en bouillon toe, breng aan de kook en zet het vuur dan zo laag mogelijk. [[Laat zachtjes koken|simmer]] zonder deksel. Roer ongeveer elke 10 minuten en schraap daarbij over de bodem."
+      },
+      "ingredients": ["passata", "milk", "stock"],
+      "timer": { "minutes": 40, "label": { "en": "Simmer the ragù", "nl": "Ragù laten pruttelen" } },
+      "tip": {
+        "en": "The milk may look a bit curdled at first; it disappears into the sauce as it cooks. If the sauce gets dry and starts to catch before the time is up, add a splash of water.",
+        "nl": "De melk kan er in het begin wat geschift uitzien; dat verdwijnt tijdens het koken in de saus. Wordt de saus te droog en begint hij aan te zetten voordat de tijd om is, doe er dan een scheutje water bij."
+      }
+    },
+    {
+      "text": {
+        "en": "When the sauce has about 15 minutes to go, put the large pan with the water on a high heat with the lid on.",
+        "nl": "Als de saus nog ongeveer 15 minuten moet, zet je de grote pan met het water met deksel op hoog vuur."
+      },
+      "ingredients": ["water"]
+    },
+    {
+      "text": {
+        "en": "Check the sauce: it should be thick and glossy, with no watery layer. Taste it and season with salt and pepper. Keep it warm on the lowest heat.",
+        "nl": "Controleer de saus: hij moet dik en glanzend zijn, zonder waterig laagje. Proef en breng op smaak met zout en peper. Houd hem warm op het laagste vuur."
+      },
+      "ingredients": ["salt", "pepper"],
+      "tip": {
+        "en": "Test: drag the spoon across the bottom of the pan. If the trail stays open for a second, it is thick enough. Still runny? Turn the heat up a little for a few minutes, stirring.",
+        "nl": "Test: trek de lepel over de bodem van de pan. Blijft het spoor een tel open, dan is hij dik genoeg. Nog te dun? Zet het vuur een paar minuten iets hoger en blijf roeren."
+      }
+    },
+    {
+      "text": {
+        "en": "Add a good handful of salt to the boiling water, add the tagliatelle and [[cook until al dente|al-dente]]. Stir once or twice at the start so the strands don't stick together.",
+        "nl": "Doe een flinke hand zout in het kokende water, voeg de tagliatelle toe en [[kook hem beetgaar|al-dente]]. Roer in het begin een of twee keer, zodat de slierten niet aan elkaar plakken."
+      },
+      "ingredients": ["salt", "tagliatelle"],
+      "timer": { "minutes": 7, "label": { "en": "Tagliatelle", "nl": "Tagliatelle" } },
+      "tip": {
+        "en": "Packets differ: go by the time on yours, and take a minute off since the pasta finishes in the sauce.",
+        "nl": "Verpakkingen verschillen: houd de tijd op die van jou aan en haal er een minuut af, want de pasta wordt in de saus nog gaar."
+      }
+    },
+    {
+      "text": {
+        "en": "Scoop a mug of pasta water out of the pan, then [[drain the pasta|drain]].",
+        "nl": "Schep een mok pastawater uit de pan en [[giet de pasta daarna af|drain]]."
+      },
+      "ingredients": ["tagliatelle"],
+      "tip": {
+        "en": "Easy to forget: get the mug of water out before you pour the pasta into the colander.",
+        "nl": "Makkelijk vergeten: schep het pastawater eruit voordat je de pasta in het vergiet giet."
+      }
+    },
+    {
+      "text": {
+        "en": "Tip the pasta into the pan with the ragù and [[toss it through|toss]] over low heat, adding a splash of pasta water until the sauce coats every strand.",
+        "nl": "Doe de pasta in de pan met de ragù en [[schep hem erdoor|toss]] op laag vuur. Voeg een scheutje pastawater toe tot de saus om elke sliert heen zit."
+      },
+      "ingredients": ["tagliatelle"],
+      "timer": { "minutes": 1, "label": { "en": "Toss the pasta", "nl": "Pasta door de saus" } },
+      "tip": {
+        "en": "In Bologna the pasta is mixed with the sauce, not served with a scoop of sauce on top.",
+        "nl": "In Bologna wordt de pasta door de saus geschept, niet geserveerd met een schep saus erbovenop."
+      }
+    },
+    {
+      "text": {
+        "en": "Serve straight away with the Parmigiano on top.",
+        "nl": "Serveer direct met de Parmigiano erover."
+      },
+      "ingredients": ["parmigiano"],
+      "tip": {
+        "en": "Leftover ragù keeps for 3 days in the fridge or 3 months in the freezer, and tastes even better the next day.",
+        "nl": "Overgebleven ragù blijft 3 dagen goed in de koelkast of 3 maanden in de vriezer, en smaakt de volgende dag nog lekkerder."
+      }
+    }
+  ]
+}

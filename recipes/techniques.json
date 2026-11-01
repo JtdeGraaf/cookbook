@@ -84,6 +84,27 @@
       "nl": "Schep de pasta met een tang of twee lepels door de saus tot elk stukje bedekt is. Blijf nog even scheppen, zodat de saus goed blijft hangen."
     }
   },
+  "brown": {
+    "name": { "en": "Brown", "nl": "Bruin bakken" },
+    "explanation": {
+      "en": "Fry over high heat without stirring too often, so the meat gets a dark crust instead of just turning grey. Spread it out in a wide pan; piled up, it steams in its own juices.",
+      "nl": "Bak op hoog vuur zonder te vaak te roeren, zodat het vlees een donker korstje krijgt in plaats van alleen grijs te worden. Verdeel het over een brede pan; op een hoop stoomt het in zijn eigen vocht."
+    }
+  },
+  "deglaze": {
+    "name": { "en": "Deglaze", "nl": "Afblussen" },
+    "explanation": {
+      "en": "Pour a liquid such as wine into the hot pan and scrape the brown bits off the bottom with a wooden spoon. Those bits dissolve into the sauce and carry a lot of flavour.",
+      "nl": "Schenk een vloeistof zoals wijn in de hete pan en schraap met een houten lepel de bruine aanbaksels van de bodem. Die lossen op in de saus en geven veel smaak."
+    }
+  },
+  "reduce": {
+    "name": { "en": "Reduce", "nl": "Inkoken" },
+    "explanation": {
+      "en": "Let a liquid bubble without a lid so the water evaporates. It thickens and the flavour gets stronger; with wine, the harsh alcohol taste cooks off.",
+      "nl": "Laat een vloeistof zonder deksel borrelen, zodat het water verdampt. Zo wordt het dikker en de smaak sterker; bij wijn kookt de scherpe alcoholsmaak eruit."
+    }
+  },
   "stir": {
     "name": { "en": "Stir", "nl": "Roeren" },
     "explanation": {
