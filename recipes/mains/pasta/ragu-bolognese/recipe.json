@@ -67,8 +67,8 @@
     },
     {
       "text": {
-        "en": "Get out a wide frying pan or sauté pan (not a deep pot), a wooden spoon, a large pan for the pasta, a colander and a mug for the pasta water.",
-        "nl": "Pak een brede koekenpan of hapjespan (geen diepe pan), een houten lepel, een grote pan voor de pasta, een vergiet en een mok voor het pastawater."
+        "en": "Get out a wide frying pan or sauté pan (not a deep pot), a wooden spoon, a plate for the vegetables, a large pan for the pasta, a colander and a mug for the pasta water.",
+        "nl": "Pak een brede koekenpan of hapjespan (geen diepe pan), een houten lepel, een bord voor de groente, een grote pan voor de pasta, een vergiet en een mok voor het pastawater."
       },
       "tip": {
         "en": "The wide pan matters: in a deep pot the meat steams grey instead of browning, and the sauce takes much longer to thicken.",
@@ -99,8 +99,19 @@
     },
     {
       "text": {
-        "en": "Push the vegetables to the edge, turn the heat to high and put the beef in the middle. [[Brown it|brown]]: leave it alone for the first few minutes, then break it up with the spoon and keep frying until there are brown crispy bits all over.",
-        "nl": "Schuif de groente naar de rand, zet het vuur hoog en leg het gehakt in het midden. [[Bak het bruin|brown]]: laat het de eerste minuten met rust, maak het daarna los met de lepel en bak door tot er overal bruine, knapperige stukjes zitten."
+        "en": "Scoop the pancetta and soffritto onto the plate, leaving the fat in the pan.",
+        "nl": "Schep de pancetta en soffritto op het bord en laat het vet in de pan."
+      },
+      "ingredients": ["pancetta", "onion", "carrot", "celery"],
+      "tip": {
+        "en": "Finely chopped vegetables burn quickly on high heat, so they wait on the side while the meat browns.",
+        "nl": "Fijngesneden groente brandt snel aan op hoog vuur, dus die wacht even op een bord terwijl het vlees bruin bakt."
+      }
+    },
+    {
+      "text": {
+        "en": "Turn the heat to high and spread the beef out over the empty pan. [[Brown it|brown]]: leave it alone for the first few minutes, then break it up with the spoon and keep frying until there are brown crispy bits all over.",
+        "nl": "Zet het vuur hoog en verdeel het gehakt over de lege pan. [[Bak het bruin|brown]]: laat het de eerste minuten met rust, maak het daarna los met de lepel en bak door tot er overal bruine, knapperige stukjes zitten."
       },
       "ingredients": ["beef"],
       "timer": { "minutes": 10, "label": { "en": "Brown the beef", "nl": "Gehakt bruin bakken" } },
@@ -111,10 +122,10 @@
     },
     {
       "text": {
-        "en": "Stir the tomato paste through the meat and keep stirring until it turns a shade darker and starts to stick to the bottom of the pan.",
-        "nl": "Roer de tomatenpuree door het vlees en blijf roeren tot hij een tintje donkerder wordt en aan de bodem van de pan begint te plakken."
+        "en": "Turn the heat back to medium and stir the pancetta and soffritto back in. Add the tomato paste and keep stirring until it turns a shade darker and starts to stick to the bottom of the pan.",
+        "nl": "Zet het vuur terug naar middelhoog en roer de pancetta en soffritto er weer door. Voeg de tomatenpuree toe en blijf roeren tot hij een tintje donkerder wordt en aan de bodem van de pan begint te plakken."
       },
-      "ingredients": ["tomato-paste"],
+      "ingredients": ["pancetta", "onion", "carrot", "celery", "tomato-paste"],
       "timer": { "minutes": 1.5, "label": { "en": "Toast the tomato paste", "nl": "Tomatenpuree bakken" } },
       "tip": {
         "en": "Brown is good, black is burnt. If it smells sharp or bitter, go straight on with the wine.",
